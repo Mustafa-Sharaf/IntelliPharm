@@ -129,12 +129,22 @@ class SignInScreen extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
+                            fontFamily: 'Cairo',
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.07,),
+                  //SizedBox(height: MediaQuery.of(context).size.height * 0.07,),
+                  Text("Don’t have an account",style: TextStyle(
+                    fontFamily: 'Pacifico',
+                  ),),
+                  Text("مرحبا يا شباب شو الاخبار",style: TextStyle(
+                    fontFamily: 'Pacifico',
+                  ),),
+                  Text("Don’t have an account",),
+                  Text("مرحبا يا شباب شو الاخبار",),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -38,6 +38,7 @@ class HeaderScreen extends StatelessWidget {
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.4,
+
                     ),
                   ),
                   SizedBox(height: 6),
@@ -46,6 +47,7 @@ class HeaderScreen extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 14,
+                      fontFamily: 'Cairo',
                     ),
                   ),
                 ],

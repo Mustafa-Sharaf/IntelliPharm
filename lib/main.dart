@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'modules/SignIn/SignIn_Screen.dart';
+import 'modules/Splash/Splash_Screen.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home:  SignInScreen(),
+      home:  SplashScreen(),
       getPages: [
         GetPage(name: '/signIn', page: ()=>const SignInScreen()),
 
