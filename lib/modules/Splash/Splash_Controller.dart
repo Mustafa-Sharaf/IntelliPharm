@@ -4,7 +4,7 @@ import 'dart:async';
 
 class SplashController extends GetxController {
   final imageSize = 25.0.obs;
-  final nameApp = 'INTELLI\nPHARM';
+  final nameApp = 'INTELLI_PHARMA'.tr;
   final displayedText = ''.obs;
   Timer? _timer;
   int _charIndex = 0;

@@ -51,17 +51,25 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscureText: _isObscured,
         keyboardType: widget.keyboardType,
         maxLines: widget.obscureText ? 1 : (widget.maxLines ?? 1),
-        style: const TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16, fontFamily: 'Cairo'),
         decoration: InputDecoration(
           prefixIcon: widget.icon != null
               ? Icon(widget.icon, color: AppColors.primaryColor)
               : null,
-
           labelText: widget.label,
-          floatingLabelStyle: TextStyle(
-            color: AppColors.primaryColor,
-            fontWeight: FontWeight.bold,
+          labelStyle: const TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 16,
+            color: Colors.grey,
+            fontWeight: FontWeight.normal,
           ),
+          floatingLabelStyle: const TextStyle(
+            fontFamily: 'Cairo',
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primaryColor,
+          ),
+
           filled: true,
           fillColor: AppColors.white,
           contentPadding: const EdgeInsets.symmetric(
@@ -76,7 +84,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
           ),
-
           suffixIcon: widget.obscureText
               ? IconButton(
                   icon: Icon(

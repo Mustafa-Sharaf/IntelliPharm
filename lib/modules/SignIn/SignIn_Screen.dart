@@ -1,7 +1,8 @@
+
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../../Widgets/CustomTextField.dart';
+import '../../Widgets/ForgotPasswordComponent.dart';
 import '../../Widgets/Header_Screen.dart';
 import '../../app_theme/AppColors.dart';
 import 'SignIn_Controller.dart';
@@ -17,18 +18,15 @@ class SignInScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderScreen(title: "Sign In", body: "Welcome Back!",),
-            //Welcome! Let’s get started
-
-            const SizedBox(height: 60),
-
-            // ===== FORM =====
+            HeaderScreen(title: "SignIn".tr, body: "WelcomeBack".tr,),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+            /// ===== FORM =====
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05,),
               child: Column(
                 children: [
                   CustomTextField(
-                    label: "Email Address",
+                    label: "EmailAddress".tr,
                     icon: Icons.email_outlined,
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -39,77 +37,8 @@ class SignInScreen extends StatelessWidget {
                     obscureText: true,
                     controller: controller.passwordController,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Forgot password",
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.03,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Login with Facebook or Google",
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Cairo',
-                          )),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 100, right: 100),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueGrey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              print("object");
-                            },
-                            child: const Icon(
-                              FontAwesomeIcons.facebook,
-                              color: Color(0xFF1877f2),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: 60,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blueGrey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: GestureDetector(
-                            onTap: () async {
-                            },
-                            child: const Icon(
-                              FontAwesomeIcons.google,
-                              color: Color(0xFFdb4437),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 15),
+                  ForgotPasswordComponent(),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
                   Center(
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
@@ -122,7 +51,9 @@ class SignInScreen extends StatelessWidget {
                           ),
                           elevation: 3,
                         ),
-                        onPressed: (){},
+                        onPressed: (){
+                          Get.offAllNamed("/homeScreen");///Deletes all previous pages
+                        },
                         child: Text(
                           "Log In".tr,
                           style: TextStyle(
@@ -135,32 +66,17 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  //SizedBox(height: MediaQuery.of(context).size.height * 0.07,),
-                  Text("Don’t have an account",style: TextStyle(
-                    fontFamily: 'Pacifico',
-                  ),),
-                  Text("مرحبا يا شباب شو الاخبار",style: TextStyle(
-                    fontFamily: 'Pacifico',
-                  ),),
-                  Text("Don’t have an account",),
-                  Text("مرحبا يا شباب شو الاخبار",),
-
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don’t have an account",),
-                      TextButton(
-                        onPressed: () {
-                          Get.toNamed('/signUp');
-                        },
-                        child: Text(
-                          "Sign Up".tr,
-                          style: TextStyle(
-                            color: AppColors.primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      Text("Don’tHaveLoginCredentialsContactAdmin".tr,
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15,
+                            //fontWeight: FontWeight.w700,
+                            fontFamily: 'Cairo',
+                          )),
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.07),
@@ -172,5 +88,4 @@ class SignInScreen extends StatelessWidget {
       ),
     );
   }
-
 }

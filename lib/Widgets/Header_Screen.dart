@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_theme/AppColors.dart';
 
-
 class HeaderScreen extends StatelessWidget {
   const HeaderScreen({super.key,required this.title,required this.body});
   final String title;
@@ -34,18 +33,18 @@ class HeaderScreen extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.4,
-
+                      fontFamily: 'Cairo',
                     ),
                   ),
                   SizedBox(height: 6),
                   Text(
                     body,
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: AppColors.white,
                       fontSize: 14,
                       fontFamily: 'Cairo',
                     ),
@@ -54,8 +53,7 @@ class HeaderScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // ===== PROFILE IMAGE =====
+          /// ===== PROFILE IMAGE =====
           Positioned(
             bottom: -25,
             child: Container(
@@ -77,7 +75,7 @@ class HeaderScreen extends StatelessWidget {
 }
 
 
-// ===== CLIPPER =====
+/// ===== CLIPPER =====
 class HeaderClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
