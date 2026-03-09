@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
+import '../app_theme/theme_controller.dart';
 import 'LanguageBottomSheet.dart';
 
 class DrawerHome extends StatelessWidget {
@@ -9,6 +9,7 @@ class DrawerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeController = Get.find<ThemeController>();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -35,7 +36,7 @@ class DrawerHome extends StatelessWidget {
                     backgroundImage: AssetImage('assets/images/LogoSmall.png'),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                   Text(
+                  Text(
                     'MySitting'.tr,
                     style: TextStyle(
                       fontSize: 18,
@@ -92,8 +93,9 @@ class DrawerHome extends StatelessWidget {
                 fontFamily: 'Cairo',
               ),
             ),
-            onTap: () {},
+            onTap: () => themeController.toggleTheme(),
           ),
+
           ListTile(
             leading: Icon(Icons.support),
             title: Text(

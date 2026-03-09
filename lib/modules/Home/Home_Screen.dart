@@ -33,15 +33,15 @@ class HomeScreen extends StatelessWidget {
             ),
             HomeCard(
               icon: Icons.groups,
-              title: "Customers".tr,
+              title: "Pharmacists".tr,
               color: const Color(0xFF2196F3),
-              onTap: () => (),
+              onTap: () => Get.toNamed('/pharmacistsScreen'),
             ),
             HomeCard(
               icon: Icons.add_business,
               title: "Add_pharmacy".tr,
               color: const Color(0xFFFF9800),
-              onTap: () => (),
+              onTap: () => Get.toNamed('/addPharmacyScreen'),
             ),
             HomeCard(
               icon: Icons.account_balance_wallet,

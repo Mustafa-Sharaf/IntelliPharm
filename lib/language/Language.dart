@@ -73,7 +73,7 @@ class MyLanguage implements Translations{
       "IntelliPharma": "إنتلي فارما",
       "Let's_get_started": "لنبدأ",
       "Add_Order": "إضافة طلب",
-      "Customers": "الصيادلة",
+      "Pharmacists": "الصيادلة",
       "Add_pharmacy": "إضافة صيدلية",
       "Pharmacist_debt_management": "إدارة ديون الصيادلة",
       "Track_the_route": "تتبع المسار",

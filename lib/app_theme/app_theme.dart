@@ -6,7 +6,7 @@ class AppThemes {
   static final lightTheme = ThemeData.light().copyWith(
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
-      selectionColor: Colors.green.withOpacity(0.4),
+      selectionColor: Colors.green.withValues(alpha: 0.4),
       selectionHandleColor: Colors.green,
     ),
   );
@@ -14,7 +14,7 @@ class AppThemes {
   static final darkTheme = ThemeData.dark().copyWith(
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
-      selectionColor: Colors.green.withOpacity(0.4),
+      selectionColor: Colors.green.withValues(alpha: 0.4),
       selectionHandleColor: Colors.green,
     ),
 
