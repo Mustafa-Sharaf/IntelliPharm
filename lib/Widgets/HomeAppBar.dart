@@ -1,11 +1,18 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final double height;
 
-  const HomeAppBar({super.key, required this.height});
+  final double height;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const HomeAppBar({
+    super.key,
+    required this.height,
+    required this.scaffoldKey,
+  });
 
   @override
   Size get preferredSize => Size.fromHeight(height);
@@ -13,13 +20,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,///Hide the default menu button
       backgroundColor: Colors.transparent,
       elevation: 0,
-      toolbarHeight:height ,
+      toolbarHeight: height,
       flexibleSpace: Container(
-        padding:  EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.035,///left and right
-          vertical: MediaQuery.of(context).size.height * 0.02,///top and bottom
+        padding: EdgeInsets.symmetric(
+          ///left and right
+          horizontal: MediaQuery.of(context).size.width * 0.035,
+          ///top and bottom
+          vertical: MediaQuery.of(context).size.height * 0.02,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -54,11 +64,18 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.menu, color: Colors.white),
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
                 ),
               ),
               SizedBox(width: MediaQuery.of(context).size.width * 0.03),
+
               /// Texts
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +94,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Row(
                     children: [
                       Text(
-                        "Let's start",
+                        "Let's_get_started".tr,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white70,
@@ -85,10 +102,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
               const Spacer(),
+
               /// Notifications
               Stack(
                 children: [
@@ -99,7 +117,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     child: IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.notifications, color: Colors.white),
+                      icon: const Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -113,8 +134,25 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                         shape: BoxShape.circle,
                       ),
                     ),
-                  )
+                  ),
                 ],
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.03),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                    size: 22,
+                  ),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
               ),
             ],
           ),

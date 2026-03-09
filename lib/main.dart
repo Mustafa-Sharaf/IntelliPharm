@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       translations: MyLanguage(),
       getPages: [
         GetPage(name: '/signIn', page: ()=>const SignInScreen()),
-        GetPage(name: '/homeScreen', page: ()=>const HomeScreen()),
+        GetPage(name: '/homeScreen', page: ()=> HomeScreen()),
 
       ],
     );

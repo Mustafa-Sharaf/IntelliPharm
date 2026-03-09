@@ -55,7 +55,7 @@ class SignInScreen extends StatelessWidget {
                           Get.offAllNamed("/homeScreen");///Deletes all previous pages
                         },
                         child: Text(
-                          "Log In".tr,
+                          "Log_In".tr,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
