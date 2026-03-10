@@ -1,20 +1,26 @@
 
 import 'package:flutter/material.dart';
 
+
 class AppColors{
-  static const  backgroundColor = Color(0xfff8edde);
-  static const  primaryColor = Color(0xffFC8B22);
-  static const  primaryColor2 = Color(0xffef9850);
-  static const white = Colors.white;
-  static const black = Colors.black;
-  static const backgroundHome = Color(0xffDCE0E9);
-  static const darkGray = Color(0xff575757);
-  static const textDark = Color(0xFF252525);
+  //هي اللوان يلي لح استخدمها
+  static const  backgroundColorLight1 = Color(0xfff8edde);
+  static const  backgroundColorLight2 = Colors.white;
   static const componentDark = Color(0xFF212934);
   static const backgroundDark = Color(0xFF111111);
+  static const  primaryColor = Color(0xffFC8B22);
+  static const  primaryColor2 = Color(0xffef9850);
+  static const white70 = Colors.white70;
+  static const white = Colors.white;
+  static const black = Colors.black;
+  static const gray = Colors.grey;
+}
 
 
- /*
+/*
+   //static const textDark = Color(0xFF252525);
+ //static const darkGray = Color(0xff575757);
+  //static const backgroundHome = Color(0xffDCE0E9);
  static const  backgroundColor = Color(0xffF2F4F7);
   static const background = Color(0xFFEEF0F3);
   static const Gray = Colors.grey;
@@ -36,5 +42,3 @@ class AppColors{
 /*static const  primaryColor = Color(0xff3C339C);
   static const  primaryColor2 = Color(0xff8F50DC);
    static const  backgroundColor = Color(0xffD9C2F0);*/
-
-}

@@ -1,9 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../app_theme/AppColors.dart';
-import '../app_theme/theme_controller.dart';
+import '../app_theme/theme_extension.dart';
 
 
 class HomeCard extends StatelessWidget {
@@ -22,13 +19,16 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find();
+    final theme = Theme.of(context);
+    final colors = theme.extension<ThemeColors>()!;
     return InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color:themeController.isDarkMode.value?AppColors.componentDark :color.withValues(alpha: 0.12),
+          color: theme.brightness == Brightness.dark
+              ? colors.component
+              : color.withValues(alpha: 0.12),
           borderRadius: BorderRadius.circular(18),
         ),
         child: Column(

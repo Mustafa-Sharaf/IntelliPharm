@@ -1,7 +1,7 @@
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
-import '../app_theme/theme_controller.dart';
+import '../app_theme/theme_extension.dart';
 
 class CustomTextField extends StatefulWidget {
   final String label;
@@ -36,7 +36,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find();
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
@@ -59,10 +59,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ? Icon(widget.icon, color: AppColors.primaryColor)
               : null,
           labelText: widget.label,
-          labelStyle: const TextStyle(
+          labelStyle: TextStyle(
             fontFamily: 'Cairo',
             fontSize: 16,
-            color: Colors.grey,
+            color: AppColors.gray,
             fontWeight: FontWeight.normal,
           ),
           floatingLabelStyle: const TextStyle(
@@ -73,9 +73,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
 
           filled: true,
-          fillColor: themeController.isDarkMode.value
-              ? AppColors.componentDark
-              : AppColors.white,
+          fillColor: colors.component,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 18,
             horizontal: 16,

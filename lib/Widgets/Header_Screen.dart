@@ -64,7 +64,7 @@ class HeaderScreen extends StatelessWidget {
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(color: AppColors.white, width: 2),
                 image: DecorationImage(
                   image: themeController.isDarkMode.value
                       ? const AssetImage('assets/images/login_img_dark.png')

@@ -5,6 +5,7 @@ import '../../Widgets/HomeAppBar.dart';
 import '../../Widgets/MenuHome.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_controller.dart';
+import '../../app_theme/theme_extension.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -12,9 +13,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find();
+    //final ThemeController themeController = Get.find();
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Scaffold(
-      backgroundColor: themeController.isDarkMode.value?AppColors.backgroundDark : AppColors.white,
+      backgroundColor: colors.backgroundMain,
+      //backgroundColor: themeController.isDarkMode.value?AppColors.backgroundDark : AppColors.white,
       key: scaffoldKey,
       drawer: const DrawerHome(),
       appBar: HomeAppBar(
@@ -50,7 +53,7 @@ class HomeScreen extends StatelessWidget {
             HomeCard(
               icon: Icons.account_balance_wallet,
               title: "Pharmacist_debt_management".tr,
-              color: const Color(0xFF9C27B0),
+              color: const Color(0xFF9C27B0),//Color(0xFF9C27B0)
               onTap: () => (),
             ),
             HomeCard(

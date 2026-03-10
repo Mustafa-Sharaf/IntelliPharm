@@ -27,14 +27,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final myLanguageController = Get.find<MyLanguageController>();
     final ThemeController themeController = Get.find();
-    return GetMaterialApp(
+    return Obx(() =>GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home:  SignInScreen(),
       locale:myLanguageController.intiLanguage.value,
       translations: MyLanguage(),
+      /*theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,*/
       theme: AppThemes.lightTheme,
       darkTheme: AppThemes.darkTheme,
-      themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
+
+      themeMode: themeController.isDarkMode.value
+          ? ThemeMode.dark
+          : ThemeMode.light,
+
       getPages: [
         GetPage(name: '/signIn', page: ()=>const SignInScreen()),
         GetPage(name: '/homeScreen', page: ()=> HomeScreen()),
@@ -43,7 +50,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/addOrderScreen', page: ()=> AddOrderScreen()),
 
       ],
-    );
+    ));
   }
 }
 

@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-
   final double height;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
@@ -20,7 +18,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,///Hide the default menu button
+      automaticallyImplyLeading: false,
+
+      ///Hide the default menu button
       backgroundColor: Colors.transparent,
       elevation: 0,
       toolbarHeight: height,
@@ -28,6 +28,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: EdgeInsets.symmetric(
           ///left and right
           horizontal: MediaQuery.of(context).size.width * 0.035,
+
           ///top and bottom
           vertical: MediaQuery.of(context).size.height * 0.02,
         ),
@@ -66,7 +67,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: IconButton(
                   icon: const Icon(
                     Icons.menu,
-                    color: Colors.white,
+                    color: AppColors.white,
                     size: 22,
                   ),
                   onPressed: () {
@@ -86,7 +87,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontFamily: 'Cairo',
                     ),
                   ),
@@ -97,7 +98,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                         "Let's_get_started".tr,
                         style: TextStyle(
                           fontSize: 14,
-                          color: Colors.white70,
+                          color: AppColors.white70,
                           fontFamily: 'Cairo',
                         ),
                       ),
@@ -119,7 +120,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.notifications,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),
@@ -146,11 +147,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 child: IconButton(
                   icon: const Icon(
                     Icons.logout,
-                    color: Colors.white,
+                    color: AppColors.white,
                     size: 22,
                   ),
                   onPressed: () {
-                    Scaffold.of(context).openDrawer();
+                    Get.toNamed("/signIn");
                   },
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
 import '../app_theme/theme_controller.dart';
+import '../app_theme/theme_extension.dart';
 import 'LanguageBottomSheet.dart';
 
 class DrawerHome extends StatelessWidget {
@@ -10,6 +11,7 @@ class DrawerHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeController = Get.find<ThemeController>();
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -27,7 +29,7 @@ class DrawerHome extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppColors.white,
                       fontFamily: 'Cairo',
                     ),
                   ),
@@ -40,7 +42,7 @@ class DrawerHome extends StatelessWidget {
                     'MySitting'.tr,
                     style: TextStyle(
                       fontSize: 18,
-                      color: Colors.white70,
+                      color: AppColors.white70,
                       fontFamily: 'Cairo',
                     ),
                   ),
@@ -55,7 +57,7 @@ class DrawerHome extends StatelessWidget {
               'My_Profile'.tr,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: colors.text,
                 fontFamily: 'Cairo',
               ),
             ),
@@ -69,7 +71,7 @@ class DrawerHome extends StatelessWidget {
               'Application_language'.tr,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: colors.text,
                 fontFamily: 'Cairo',
               ),
             ),
@@ -89,7 +91,7 @@ class DrawerHome extends StatelessWidget {
               'Theme_Toggle'.tr,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: colors.text,
                 fontFamily: 'Cairo',
               ),
             ),
@@ -102,7 +104,7 @@ class DrawerHome extends StatelessWidget {
               'Support'.tr,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: colors.text,
                 fontFamily: 'Cairo',
               ),
             ),
@@ -113,7 +115,7 @@ class DrawerHome extends StatelessWidget {
               'Share_Application'.tr,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: colors.text,
                 fontFamily: 'Cairo',
               ),
             ),
@@ -124,7 +126,7 @@ class DrawerHome extends StatelessWidget {
               'Privacy_Policy'.tr,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: colors.text,
                 fontFamily: 'Cairo',
               ),
             ),

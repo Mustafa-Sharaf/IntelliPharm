@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../language/Language_Controller.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
-
   final MyLanguageController langController = Get.find<MyLanguageController>();
 
-   LanguageBottomSheet({super.key});
+  LanguageBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +16,22 @@ class LanguageBottomSheet extends StatelessWidget {
         children: [
           Text(
             "LanguageEditing".tr,
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Cairo',
+            ),
           ),
-          SizedBox(height: 25),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
           ListTile(
-            leading: Image.asset("assets/images/Syria.png", width: 35),
-            title: Text("العربية", style: TextStyle(fontSize: 18)),
+            leading: Image.asset("assets/images/Syria.png", width: 50),
+            title: Text(
+                "العربية",
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: 'Cairo',
+              ),
+            ),
             trailing: Icon(Icons.arrow_forward_ios_rounded),
             onTap: () {
               langController.changeLanguage("ar");
@@ -32,8 +40,11 @@ class LanguageBottomSheet extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Image.asset("assets/images/Britain.png", width: 35),
-            title: Text("English", style: TextStyle(fontSize: 18)),
+            leading: Image.asset("assets/images/Britain.png", width: 50),
+            title: Text("English",  style: TextStyle(
+              fontSize: 18,
+              fontFamily: 'Cairo',
+            ),),
             trailing: Icon(Icons.arrow_forward_ios_rounded),
             onTap: () {
               langController.changeLanguage("en");
@@ -42,8 +53,11 @@ class LanguageBottomSheet extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Image.asset("assets/images/Franca.png", width: 35),
-            title: Text("Français", style: TextStyle(fontSize: 18)),
+            leading: Image.asset("assets/images/Franca.png", width: 50),
+            title: Text("Français",  style: TextStyle(
+              fontSize: 18,
+              fontFamily: 'Cairo',
+            ),),
             trailing: Icon(Icons.arrow_forward_ios_rounded),
             onTap: () {
               langController.changeLanguage("fr");
@@ -52,8 +66,11 @@ class LanguageBottomSheet extends StatelessWidget {
           ),
           Divider(),
           ListTile(
-            leading: Image.asset("assets/images/Turkce.png", width: 35),
-            title: Text("Türkçe", style: TextStyle(fontSize: 18)),
+            leading: Image.asset("assets/images/Turkce.png", width: 50),
+            title: Text("Türkçe",  style: TextStyle(
+              fontSize: 18,
+              fontFamily: 'Cairo',
+            ),),
             trailing: Icon(Icons.arrow_forward_ios_rounded),
             onTap: () {
               langController.changeLanguage("tr");

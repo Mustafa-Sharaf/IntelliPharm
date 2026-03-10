@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/CustomTextField.dart';
 import '../../Widgets/ForgotPasswordComponent.dart';
 import '../../Widgets/Header_Screen.dart';
 import '../../app_theme/AppColors.dart';
-import '../../app_theme/theme_controller.dart';
+import '../../app_theme/theme_extension.dart';
 import 'SignIn_Controller.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -14,17 +13,20 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignInController());
-    final ThemeController themeController = Get.find();
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Scaffold(
-      backgroundColor: themeController.isDarkMode.value?AppColors.backgroundDark : AppColors.backgroundColor,
+      backgroundColor: colors.backgroundMain,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderScreen(title: "SignIn".tr, body: "WelcomeBack".tr,),
+            HeaderScreen(title: "SignIn".tr, body: "WelcomeBack".tr),
             SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+
             /// ===== FORM =====
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05,),
+              padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.05,
+              ),
               child: Column(
                 children: [
                   CustomTextField(
@@ -53,8 +55,10 @@ class SignInScreen extends StatelessWidget {
                           ),
                           elevation: 3,
                         ),
-                        onPressed: (){
-                          Get.offAllNamed("/homeScreen");///Deletes all previous pages
+                        onPressed: () {
+                          Get.offAllNamed("/homeScreen");
+
+                          ///Deletes all previous pages
                         },
                         child: Text(
                           "Log_In".tr,
@@ -68,16 +72,18 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.04,),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don’tHaveLoginCredentialsContactAdmin".tr,
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                            fontFamily: 'Cairo',
-                          )),
+                      Text(
+                        "Don’tHaveLoginCredentialsContactAdmin".tr,
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.07),
