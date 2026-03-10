@@ -11,6 +11,8 @@ class AppColors{
   static const darkGray = Color(0xff575757);
   static const textDark = Color(0xFF252525);
   static const componentDark = Color(0xFF212934);
+  static const backgroundDark = Color(0xFF111111);
+
 
  /*
  static const  backgroundColor = Color(0xffF2F4F7);

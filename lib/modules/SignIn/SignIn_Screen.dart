@@ -5,6 +5,7 @@ import '../../Widgets/CustomTextField.dart';
 import '../../Widgets/ForgotPasswordComponent.dart';
 import '../../Widgets/Header_Screen.dart';
 import '../../app_theme/AppColors.dart';
+import '../../app_theme/theme_controller.dart';
 import 'SignIn_Controller.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -13,8 +14,9 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignInController());
+    final ThemeController themeController = Get.find();
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: themeController.isDarkMode.value?AppColors.backgroundDark : AppColors.backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -74,7 +76,6 @@ class SignInScreen extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.grey,
                             fontSize: 15,
-                            //fontWeight: FontWeight.w700,
                             fontFamily: 'Cairo',
                           )),
                     ],

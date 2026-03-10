@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../../Widgets/HomeCard.dart';
 import '../../Widgets/HomeAppBar.dart';
 import '../../Widgets/MenuHome.dart';
+import '../../app_theme/AppColors.dart';
+import '../../app_theme/theme_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -10,7 +12,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find();
     return Scaffold(
+      backgroundColor: themeController.isDarkMode.value?AppColors.backgroundDark : AppColors.white,
       key: scaffoldKey,
       drawer: const DrawerHome(),
       appBar: HomeAppBar(

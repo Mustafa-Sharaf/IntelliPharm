@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
+import '../app_theme/theme_controller.dart';
 
 class CustomTextField extends StatefulWidget {
   final String label;
@@ -34,13 +36,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    //final ThemeController themeController = Get.find();
+    final ThemeController themeController = Get.find();
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.15),
+            color: Colors.grey.withValues(alpha: 0.15),
             blurRadius: 10,
             offset: const Offset(0, 5),
           ),
@@ -71,7 +73,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
 
           filled: true,
-          fillColor: AppColors.white,
+          fillColor: themeController.isDarkMode.value
+              ? AppColors.componentDark
+              : AppColors.white,
           contentPadding: const EdgeInsets.symmetric(
             vertical: 18,
             horizontal: 16,

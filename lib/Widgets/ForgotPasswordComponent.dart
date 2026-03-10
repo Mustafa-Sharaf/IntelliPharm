@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
+import '../app_theme/theme_controller.dart';
 class ForgotPasswordComponent extends StatelessWidget {
   const ForgotPasswordComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -15,8 +17,12 @@ class ForgotPasswordComponent extends StatelessWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
+                backgroundColor: themeController.isDarkMode.value
+                    ? AppColors.componentDark
+                    : AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
+
                 ),
                 title: Row(
                   children: [
@@ -37,7 +43,7 @@ class ForgotPasswordComponent extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Cairo',
                     fontSize: 15,
-                    color: Colors.grey[800],
+                    color: Colors.grey,
                   ),
                 ),
                 actions: [

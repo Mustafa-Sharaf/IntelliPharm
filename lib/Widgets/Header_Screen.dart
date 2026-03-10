@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
+import '../app_theme/theme_controller.dart';
 
 class HeaderScreen extends StatelessWidget {
   const HeaderScreen({super.key,required this.title,required this.body});
@@ -8,6 +10,7 @@ class HeaderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeController themeController = Get.find();
     return Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -56,18 +59,20 @@ class HeaderScreen extends StatelessWidget {
           /// ===== PROFILE IMAGE =====
           Positioned(
             bottom: -25,
-            child: Container(
+            child: Obx(() => Container(
               width: 100,
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 4),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/login_img.png'),
+                border: Border.all(color: Colors.white, width: 2),
+                image: DecorationImage(
+                  image: themeController.isDarkMode.value
+                      ? const AssetImage('assets/images/login_img_dark.png')
+                      : const AssetImage('assets/images/login_img.png'),
                   fit: BoxFit.cover,
                 ),
               ),
-            ),
+            )),
           ),
         ],
     );
