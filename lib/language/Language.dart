@@ -34,10 +34,10 @@ class MyLanguage implements Translations{
       "View_Orders":"View Orders",
       "My_Balance":"My Balance",
       "Log_In":"Log In",
-      "":"",
-      "":"",
-      "":"",
-      "":"",
+      "LocationCreation":"Location Creation",
+      "Pharmacist'sName":"Pharmacist's Name",
+      "PhoneNumber":"Phone Number",
+      "PharmacyName":"Pharmacy Name",
       "":"",
       "":"",
       "":"",
@@ -80,6 +80,7 @@ class MyLanguage implements Translations{
       "View_Orders": "عرض الطلبات",
       "My_Balance": "رصيدي",
       "Log_In":"تسجيل الدخول",
+      "LocationCreation":"إنشاء الموقع",
 
 
 

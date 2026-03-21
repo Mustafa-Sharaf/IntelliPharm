@@ -2,17 +2,10 @@ import 'package:flutter/material.dart';
 
 class ThemeColors extends ThemeExtension<ThemeColors> {
 
-  /// الخلفية الرئيسية
   final Color backgroundMain;
-
-  /// خلفية ثانية لبعض الشاشات
   final Color backgroundSecondary;
-
-  /// لون الكومبوننت (cards / containers)
   final Color component;
-
-  /// لون النصوص
-   final Color text;
+  final Color text;
 
   const ThemeColors({
     required this.backgroundMain,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 
 class AppColors{
-  //هي اللوان يلي لح استخدمها
   static const  backgroundColorLight1 = Color(0xfff8edde);
   static const  backgroundColorLight2 = Colors.white;
   static const componentDark = Color(0xFF212934);

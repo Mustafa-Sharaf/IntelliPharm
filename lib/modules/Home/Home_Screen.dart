@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               icon: Icons.receipt_long,
               title: "Add_Order".tr,
               color: const Color(0xFF4CAF50),
-              onTap: () => (),
+              onTap: () => Get.toNamed('/addOrderScreen'),
             ),
             HomeCard(
               icon: Icons.groups,

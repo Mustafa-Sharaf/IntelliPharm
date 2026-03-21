@@ -1,25 +1,4 @@
-/*import 'package:flutter/material.dart';
-import 'AppColors.dart';
 
-
-class AppThemes {
-  static final lightTheme = ThemeData.light().copyWith(
-    textSelectionTheme: TextSelectionThemeData(
-      cursorColor: AppColors.primaryColor,
-      selectionColor: Colors.green.withValues(alpha: 0.4),
-      selectionHandleColor: Colors.green,
-    ),
-  );
-
-  static final darkTheme = ThemeData.dark().copyWith(
-    textSelectionTheme: TextSelectionThemeData(
-      cursorColor: AppColors.primaryColor,
-      selectionColor: Colors.green.withValues(alpha: 0.4),
-      selectionHandleColor: Colors.green,
-    ),
-
-  );
-}*/
 import 'package:flutter/material.dart';
 import 'package:intellipharm/app_theme/theme_extension.dart';
 import 'AppColors.dart';
@@ -28,6 +7,7 @@ import 'AppColors.dart';
 class AppThemes {
 
   /// LIGHT THEME
+  /// Use the default Light theme and then modify it using copyWith
   static final lightTheme = ThemeData.light().copyWith(
 
     scaffoldBackgroundColor: AppColors.backgroundColorLight1,
@@ -35,7 +15,7 @@ class AppThemes {
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
       selectionColor: Colors.green.withValues(alpha: 0.4),
-      selectionHandleColor: Colors.green,
+      selectionHandleColor: AppColors.primaryColor,
     ),
 
     extensions: const [
@@ -58,7 +38,7 @@ class AppThemes {
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
       selectionColor: Colors.green.withValues(alpha: 0.4),
-      selectionHandleColor: Colors.green,
+      selectionHandleColor: AppColors.primaryColor,
     ),
 
     extensions: const [
