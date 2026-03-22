@@ -47,27 +47,29 @@ class SignInScreen extends StatelessWidget {
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.06,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      child: Obx(
+                        () => ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 3,
                           ),
-                          elevation: 3,
-                        ),
-                        onPressed: () {
-                          Get.offAllNamed("/homeScreen");
-
-                          ///Deletes all previous pages
-                        },
-                        child: Text(
-                          "Log_In".tr,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Cairo',
-                          ),
+                          onPressed: controller.isLoading.value
+                              ? null
+                              : () => controller.login(),
+                          child: controller.isLoading.value
+                              ? CircularProgressIndicator(color: Colors.white)
+                              : Text(
+                                  "Log_In".tr,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontFamily: 'Cairo',
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -96,3 +98,25 @@ class SignInScreen extends StatelessWidget {
     );
   }
 }
+
+/* ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          elevation: 3,
+                        ),
+                        onPressed: () {
+                          controller.login();
+                        },
+                        child: Text(
+                          "Log_In".tr,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: 'Cairo',
+                          ),
+                        ),
+                      ),*/
