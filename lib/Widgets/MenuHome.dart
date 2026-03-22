@@ -97,7 +97,6 @@ class DrawerHome extends StatelessWidget {
             ),
             onTap: () => themeController.toggleTheme(),
           ),
-
           ListTile(
             leading: Icon(Icons.support),
             title: Text(
@@ -119,6 +118,18 @@ class DrawerHome extends StatelessWidget {
                 fontFamily: 'Cairo',
               ),
             ),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text(
+              'Logout'.tr,
+              style: TextStyle(
+                fontSize: 16,
+                color: colors.text,
+                fontFamily: 'Cairo',
+              ),
+            ),
+            onTap: ()=>Get.toNamed("/signIn"),
           ),
           ListTile(
             leading: Icon(Icons.privacy_tip),

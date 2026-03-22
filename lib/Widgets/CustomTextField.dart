@@ -10,6 +10,8 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController? controller;
   final TextInputType keyboardType;
   final int? maxLines;
+  final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
 
   const CustomTextField({
     super.key,
@@ -19,6 +21,8 @@ class CustomTextField extends StatefulWidget {
     this.controller,
     this.keyboardType = TextInputType.text,
     this.maxLines,
+    this.onChanged,
+    this.onSubmitted
   });
 
   @override
@@ -53,6 +57,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscureText: _isObscured,
         keyboardType: widget.keyboardType,
         maxLines: widget.obscureText ? 1 : (widget.maxLines ?? 1),
+        onChanged: widget.onChanged,
+        onSubmitted: widget.onSubmitted,
         style: const TextStyle(fontSize: 16, fontFamily: 'Cairo'),
         decoration: InputDecoration(
           prefixIcon: widget.icon != null

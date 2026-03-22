@@ -30,7 +30,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           horizontal: MediaQuery.of(context).size.width * 0.035,
 
           ///top and bottom
-          vertical: MediaQuery.of(context).size.height * 0.02,
+          //vertical: MediaQuery.of(context).size.height * 0.02,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -56,6 +56,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
         child: SafeArea(
+          bottom: false,
           child: Row(
             children: [
               /// menu
@@ -146,12 +147,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: IconButton(
                   icon: const Icon(
-                    Icons.logout,
+                    Icons.search_rounded,
                     color: AppColors.white,
                     size: 22,
                   ),
                   onPressed: () {
-                    Get.toNamed("/signIn");
+
                   },
                 ),
               ),

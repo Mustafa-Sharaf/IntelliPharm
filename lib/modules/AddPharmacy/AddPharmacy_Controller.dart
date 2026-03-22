@@ -7,10 +7,9 @@ class AddPharmacyController extends GetxController {
   var pharmacyNameController = TextEditingController();
   var pharmacistsNameController = TextEditingController();
   var commentsController = TextEditingController();
-
   var phoneControllers = <TextEditingController>[TextEditingController()].obs;
 
-  var latitude = 33.5138.obs; // موقع افتراضي (دمشق)
+  var latitude = 33.5138.obs;
   var longitude = 36.2765.obs;
 
   // GoogleMap Controller
@@ -22,8 +21,12 @@ class AddPharmacyController extends GetxController {
     position: LatLng(33.5138, 36.2765),
   ).obs;
 
-  void addPhoneField() => phoneControllers.add(TextEditingController());
+  void addPhoneField() {
+    if (phoneControllers.length < 2) {
+      phoneControllers.add(TextEditingController());
+    }
 
+  }
   void removePhoneField(int index) {
     if (phoneControllers.length > 1) {
       phoneControllers[index].dispose();

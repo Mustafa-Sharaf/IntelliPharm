@@ -11,6 +11,8 @@ import 'modules/Home/Home_Screen.dart';
 import 'modules/Pharmacists/Pharmacists_Screen.dart';
 import 'modules/SignIn/SignIn_Screen.dart';
 import 'modules/Splash/Splash_Screen.dart';
+import 'modules/TrackRoute/TrackRoute_Screen.dart';
+import 'modules/ViewOrders/ViewOrders_Screen.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/pharmacistsScreen', page: ()=> PharmacistsScreen()),
         GetPage(name: '/addPharmacyScreen', page: ()=> AddPharmacyScreen()),
         GetPage(name: '/addOrderScreen', page: ()=> AddOrderScreen()),
+        GetPage(name: '/viewOrdersScreen', page: ()=> ViewOrdersScreen()),
+        GetPage(name: '/trackRouteScreen', page: ()=> TrackRouteScreen()),
 
       ],
     ));

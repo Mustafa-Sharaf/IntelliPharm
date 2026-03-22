@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../Widgets/CustomAppBar.dart';
 import 'AddPharmacy_Controller.dart';
 import '../../Widgets/CustomTextField.dart';
 import '../../app_theme/AppColors.dart';
@@ -16,19 +17,7 @@ class AddPharmacyScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        foregroundColor: AppColors.white,
-        title: Text(
-          "Add_pharmacy".tr,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontFamily: 'Cairo',
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(title: "Add_pharmacy".tr),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.03),
         child: SingleChildScrollView(
@@ -57,7 +46,7 @@ class AddPharmacyScreen extends StatelessWidget {
                           keyboardType: TextInputType.phone,
                         ),
                       ),
-                      index == 0
+                      index == 0 && controller.phoneControllers.length < 2
                           ? IconButton(
                         onPressed: controller.addPhoneField,
                         icon: Icon(
@@ -66,14 +55,16 @@ class AddPharmacyScreen extends StatelessWidget {
                           size: 28,
                         ),
                       )
-                          : IconButton(
+                          : index != 0
+                          ? IconButton(
                         onPressed: () => controller.removePhoneField(index),
                         icon: const Icon(
                           Icons.remove_circle,
                           color: Colors.red,
                           size: 28,
                         ),
-                      ),
+                      )
+                          : const SizedBox()
                     ],
                   ),
                 ),
