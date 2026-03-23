@@ -7,7 +7,7 @@ class AuthService {
     required String password,
   }) async {
     return await DioClient.dio.post(
-      "/erp/v1/login",
+      "/auth/v2/login",
       data: {
         "email": email,
         "password": password,

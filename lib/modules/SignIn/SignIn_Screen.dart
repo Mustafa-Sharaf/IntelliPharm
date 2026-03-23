@@ -99,24 +99,4 @@ class SignInScreen extends StatelessWidget {
   }
 }
 
-/* ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          elevation: 3,
-                        ),
-                        onPressed: () {
-                          controller.login();
-                        },
-                        child: Text(
-                          "Log_In".tr,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontFamily: 'Cairo',
-                          ),
-                        ),
-                      ),*/
+
