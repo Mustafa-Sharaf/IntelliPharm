@@ -141,6 +141,7 @@ class DrawerHome extends StatelessWidget {
                 fontFamily: 'Cairo',
               ),
             ),
+            onTap:()=>Get.toNamed("/signIn"),
           ),
         ],
       ),

@@ -39,7 +39,7 @@ class MyLanguage implements Translations{
       "PhoneNumber":"Phone Number",
       "PharmacyName":"Pharmacy Name",
       "View_Order":"View Order",
-      "Track_Route":"Track_Route",
+      "Track_Route":"Track Route",
       "Order_Management":"Order Management",
       "Pharmacy_Management":"Pharmacy Management",
       "Financial_Management":"Financial Management",
@@ -47,11 +47,20 @@ class MyLanguage implements Translations{
       "Quantity":"Quantity",
       "Total":"Total:",
       "Send_Order":"Send Order",
+      "Error":"Error",
+      "Success":"Success",
+      "Please_enter_a_valid_email_address":"Please enter a valid email address",
+      "Please_fill_in_all_fields":"Please fill in all fields",
+      "Password_must_contain_letters_numbers_and_special_characters":"Password must contain letters, numbers, and special characters",
+      "Phone_number_must_start_with_09_and_be_exactly_10_digits":"Phone number must start with 09 and be exactly 10 digits",
+      "Password_must_beat_least_8_characters":"Password must be at least 8 characters",
       "":"",
       "":"",
       "":"",
       "":"",
       "":"",
+      "":"",
+
 
 
 
@@ -100,6 +109,13 @@ class MyLanguage implements Translations{
       "Quantity":"الكمية",
       "Total":"الإجمالي:",
       "Send_Order":"إرسال الطلب",
+      "Error":"خطأ",
+      "Success":"نجاح",
+      "Please_enter_a_valid_email_address":"يرجى إدخال عنوان بريد إلكتروني صالح",
+      "Please_fill_in_all_fields":"يرجى ملء جميع الحقول",
+      "Password_must_contain_letters_numbers_and_special_characters":"يجب أن تحتوي كلمة المرور على أحرف وأرقام ورموز خاصة",
+      "Phone_number_must_start_with_09_and_be_exactly_10_digits":"يجب أن يبدأ رقم الهاتف بـ 09 وأن يتكون من 10 أرقام بالضبط",
+      "Password_must_beat_least_8_characters":"يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
 
 
 

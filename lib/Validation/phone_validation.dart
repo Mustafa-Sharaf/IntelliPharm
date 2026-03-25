@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'validation_strategy.dart';
 
 class PhoneValidation implements ValidationStrategy {
@@ -8,7 +9,7 @@ class PhoneValidation implements ValidationStrategy {
   @override
   String? validate() {
     if (phone.length != 10 || !phone.startsWith("09")) {
-      return "Phone number must start with 09 and be exactly 10 digits";
+      return "Phone_number_must_start_with_09_and_be_exactly_10_digits".tr;
     }
     return null;
   }

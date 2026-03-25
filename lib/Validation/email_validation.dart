@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'validation_strategy.dart';
 
 class EmailValidation implements ValidationStrategy {
@@ -8,7 +10,7 @@ class EmailValidation implements ValidationStrategy {
   @override
   String? validate() {
     if (!email.contains('@') || !email.contains('.')) {
-      return "Please enter a valid email address";
+      return "Please_enter_a_valid_email_address".tr;
     }
     return null;
   }

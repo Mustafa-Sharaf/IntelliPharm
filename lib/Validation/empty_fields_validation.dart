@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'validation_strategy.dart';
 
 class EmptyFieldsValidation implements ValidationStrategy {
@@ -8,7 +10,7 @@ class EmptyFieldsValidation implements ValidationStrategy {
   @override
   String? validate() {
     if (fields.any((f) => f.trim().isEmpty)) {
-      return "Please fill in all fields";
+      return "Please_fill_in_all_fields".tr;
     }
     return null;
   }

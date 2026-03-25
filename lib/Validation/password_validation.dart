@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'validation_strategy.dart';
 
 class PasswordValidation implements ValidationStrategy {
@@ -10,9 +12,13 @@ class PasswordValidation implements ValidationStrategy {
 
   @override
   String? validate() {
-    if (!regex.hasMatch(password)) {
-      return "Password must contain letters, numbers, and special characters";
+    if (password.length < 8) {
+      return "Password_must_beat_least_8_characters".tr;
     }
+    if (!regex.hasMatch(password)) {
+      return "Password_must_contain_letters_numbers_and_special_characters".tr;
+    }
+
     return null;
   }
 }
