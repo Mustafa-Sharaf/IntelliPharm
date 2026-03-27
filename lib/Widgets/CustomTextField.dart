@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
   final Function(String)? onChanged;
   final Function(String)? onSubmitted;
 
+
   const CustomTextField({
     super.key,
     required this.label,
@@ -22,7 +23,7 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.maxLines,
     this.onChanged,
-    this.onSubmitted
+    this.onSubmitted,
   });
 
   @override
@@ -85,11 +86,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
             horizontal: 16,
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: Colors.grey.shade300, width: 1.2),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(color: AppColors.primaryColor, width: 2),
           ),
           suffixIcon: widget.obscureText
