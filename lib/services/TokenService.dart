@@ -23,10 +23,11 @@ class TokenService {
     return token;
   }
 
-  Future<String?> _performRefresh() async {
+  /*Future<String?> _performRefresh() async {
     try {
       final box = GetStorage();
-      final token = box.read<String>("token");
+      //final token = box.read<String>("token");
+      final refreshToken = box.read<String>("refresh_token");
 
       print("🔄 Sending refresh request...");
 
@@ -34,7 +35,8 @@ class TokenService {
         "https://api.intelli-pharma.limebyte.org/api/auth/v2/refresh",
         options: Options(
           headers: {
-            "Authorization": "Bearer $token",
+           // "Authorization": "Bearer $token",
+            "refresh_token": refreshToken, // 🔥 أهم سطر
           },
         ),
       );
@@ -45,6 +47,38 @@ class TokenService {
         print("✅ Refresh success");
 
         box.write("token", newToken);
+
+        return newToken;
+      }
+    } catch (e) {
+      print("💥 Refresh error: $e");
+    }
+
+    return null;
+  }*/
+  Future<String?> _performRefresh() async {
+    try {
+      final box = GetStorage();
+
+      final refreshToken = box.read<String>("refresh_token");
+
+      print("🔄 Sending refresh request...");
+
+      final response = await _dio.post(
+        "https://api.intelli-pharma.limebyte.org/api/auth/v2/refresh",
+        data: {
+          "refresh_token": refreshToken,
+        },
+      );
+
+      if (response.data["isSuccess"] == true) {
+        String newToken = response.data["data"]["access_token"];
+        String newRefresh = response.data["data"]["refresh_token"];
+
+        print("✅ Refresh success");
+
+        box.write("token", newToken);
+        box.write("refresh_token", newRefresh);
 
         return newToken;
       }

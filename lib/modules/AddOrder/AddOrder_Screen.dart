@@ -35,7 +35,8 @@ class AddOrderScreen extends StatelessWidget {
                       label: "Search_for_the_medicine".tr,
                       icon: Icons.search,
                       controller: controller.searchController,
-                      onChanged: controller.filterMedicines,
+                      //onChanged: controller.filterMedicines,
+                      onChanged: controller.onSearchChanged,
                     ),
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.01),
@@ -57,33 +58,35 @@ class AddOrderScreen extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 maxLines: 2,
               ),
+
               Obx(
-                () =>
-                    controller.showDropdown.value &&
-                        controller.filteredMedicines.isNotEmpty
+                () => controller.showDropdown.value
                     ? Container(
-                        constraints: BoxConstraints(maxHeight: 150),
+                        constraints: BoxConstraints(maxHeight: 200),
                         margin: EdgeInsets.only(top: 5),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.grey.shade300),
                         ),
-                        child: ListView.builder(
-                          itemCount: controller.filteredMedicines.length,
-                          itemBuilder: (context, index) {
-                            final med = controller.filteredMedicines[index];
-                            return ListTile(
-                              title: Text(med["name"] as String),
-                              onTap: () {
-                                controller.selectedMedicine.value = med;
-                                controller.searchController.text =
-                                    med["name"] as String;
-                                controller.tryAddOrder();
-                              },
-                            );
-                          },
-                        ),
+                        child: controller.isLoading.value
+                            ? Center(child: CircularProgressIndicator())
+                            : ListView.builder(
+                                itemCount: controller.medicines.length,
+                                itemBuilder: (context, index) {
+                                  final med = controller.medicines[index];
+
+                                  return ListTile(
+                                    title: Text(med.name),
+                                    subtitle: Text(
+                                      "💰 ${med.price} | 📦 ${med.availableQuantity} | ${med.isImported ? "Imported" : "Local"}",
+                                    ),
+                                    onTap: () {
+                                      controller.selectMedicine(med);
+                                    },
+                                  );
+                                },
+                              ),
                       )
                     : SizedBox(),
               ),
@@ -189,3 +192,34 @@ class AddOrderScreen extends StatelessWidget {
     );
   }
 }
+
+/* Obx(
+                () =>
+                    controller.showDropdown.value &&
+                        controller.filteredMedicines.isNotEmpty
+                    ? Container(
+                        constraints: BoxConstraints(maxHeight: 150),
+                        margin: EdgeInsets.only(top: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        child: ListView.builder(
+                          itemCount: controller.filteredMedicines.length,
+                          itemBuilder: (context, index) {
+                            final med = controller.filteredMedicines[index];
+                            return ListTile(
+                              title: Text(med["name"] as String),
+                              onTap: () {
+                                controller.selectedMedicine.value = med;
+                                controller.searchController.text =
+                                    med["name"] as String;
+                                controller.tryAddOrder();
+                              },
+                            );
+                          },
+                        ),
+                      )
+                    : SizedBox(),
+              ),*/
