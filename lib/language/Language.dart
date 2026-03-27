@@ -59,9 +59,9 @@ class MyLanguage implements Translations{
       "Reason_details":"Reason details",
       "Send":"Send",
       "Search_for_an_area...":"Search for an area...",
-      "":"",
-      "":"",
-      "":"",
+      "Plan_update":"Plan update",
+      "New_plan":"New plan",
+      "ROUTES":"ROUTES",
       "":"",
       "":"",
       "":"",
@@ -129,6 +129,9 @@ class MyLanguage implements Translations{
       "Reason_details":"سبب التغير",
       "Send":"إرسال",
       "Search_for_an_area...":"ابحث عن منطقة...",
+      "Plan_update":"تحديث الخطة",
+      "New_plan":"خطة جديدة",
+      "ROUTES":"المسارات",
 
 
 

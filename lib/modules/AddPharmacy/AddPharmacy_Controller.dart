@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -69,13 +70,34 @@ class AddPharmacyController extends GetxController {
 
     await setLocation(position.latitude, position.longitude);
   }
+  Future<void> setDarkMapStyle() async {
+    if (mapController.value == null) return;
+
+    final style = await rootBundle.loadString('assets/map_dark.json');
+    mapController.value!.setMapStyle(style);
+  }
+
+  void applyMapStyle() {
+    if (mapController.value == null) return;
+
+    if (Get.isDarkMode) {
+      setDarkMapStyle();
+    } else {
+      mapController.value!.setMapStyle(null);
+    }
+  }
 
   @override
   void onClose() {
+    ever(Get.isDarkMode.obs, (isDark) {
+      applyMapStyle();
+    });
     pharmacyNameController.dispose();
     pharmacistsNameController.dispose();
     commentsController.dispose();
-    phoneControllers.forEach((c) => c.dispose());
+    for (var c in phoneControllers) {
+      c.dispose();
+    }
     super.onClose();
   }
 }

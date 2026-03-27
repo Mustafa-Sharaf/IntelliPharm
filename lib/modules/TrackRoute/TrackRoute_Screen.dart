@@ -11,12 +11,11 @@ import 'TrackRoute_Controller.dart';
 class TrackRouteScreen extends StatelessWidget {
   TrackRouteScreen({super.key});
 
-  final controller = Get.put(TrackRouteController());
-
-  final List<String> types = ["خطة جديدة", "تحديث خطة"];
+  final List<String> types = ["New_plan".tr, "Plan_update".tr];
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(TrackRouteController());
     final colors = Theme.of(context).extension<ThemeColors>()!;
     return Scaffold(
       body: Stack(
@@ -88,18 +87,47 @@ class TrackRouteScreen extends StatelessWidget {
                       iconColor: AppColors.primaryColor,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Obx(
-                    () => BuildSelector(
-                      title: "Plan_type".tr,
-                      value: controller.selectedType.value,
-                      icon: Icons.sync_alt,
-                      iconColor: AppColors.primaryColor,
-                      onTap: () => _showBottomList(
-                        context,
-                        "اختر النوع",
-                        types,
-                        (val) => controller.selectedType.value = val,
+                    () => Container(
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: colors.component,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        children: types.map((type) {
+                          final isSelected =
+                              controller.selectedType.value == type;
+
+                          return Expanded(
+                            child: GestureDetector(
+                              onTap: () => controller.selectedType.value = type,
+                              child: AnimatedContainer(
+                                duration: Duration(milliseconds: 200),
+                                padding: EdgeInsets.symmetric(vertical: 12),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? AppColors.primaryColor
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    type,
+                                    style: TextStyle(
+                                      fontFamily: 'Cairo',
+                                      fontSize: 16,
+                                      color: isSelected
+                                          ? Colors.white
+                                          : AppColors.gray,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ),
@@ -137,42 +165,6 @@ class TrackRouteScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  /// ================= BOTTOM LIST =================
-  void _showBottomList(
-    BuildContext context,
-    String title,
-    List<String> items,
-    Function(String) onSelect,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) {
-        return ListView(
-          padding: EdgeInsets.all(16),
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            ...items.map(
-              (e) => ListTile(
-                title: Text(e),
-                onTap: () {
-                  onSelect(e);
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

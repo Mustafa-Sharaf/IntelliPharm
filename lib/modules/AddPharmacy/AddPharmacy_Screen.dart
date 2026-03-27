@@ -81,21 +81,30 @@ class AddPharmacyScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 child: SizedBox(
                   height: 280,
-                  child: Obx(() => GoogleMap(
-                    onMapCreated: (mapCtrl) {
-                      controller.mapController.value = mapCtrl;
-                    },
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(controller.latitude.value, controller.longitude.value),
-                      zoom: 14,
+                  child: Obx(
+                        () => GoogleMap(
+                      onMapCreated: (mapCtrl) async {
+                        controller.mapController.value = mapCtrl;
+
+                        await Future.delayed(Duration(milliseconds: 100));
+
+                        controller.applyMapStyle();
+                      },
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                          controller.latitude.value,
+                          controller.longitude.value,
+                        ),
+                        zoom: 14,
+                      ),
+                      markers: {controller.pharmacyMarker.value},
+                      onTap: (point) {
+                        controller.setLocation(point.latitude, point.longitude);
+                      },
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: false,
                     ),
-                    markers: {controller.pharmacyMarker.value},
-                    onTap: (point) {
-                      controller.setLocation(point.latitude, point.longitude);
-                    },
-                    myLocationEnabled: true,
-                    myLocationButtonEnabled: false,
-                  )),
+                  ),
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),

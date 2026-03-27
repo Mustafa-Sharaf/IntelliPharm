@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
 
             /// ---------------- Routes ----------------
             buildSection(
-              title: "ROUTES",
+              title: "ROUTES".tr,
               children: [
                 HomeCard(
                   icon: Icons.route,
