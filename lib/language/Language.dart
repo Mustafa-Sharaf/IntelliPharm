@@ -54,6 +54,14 @@ class MyLanguage implements Translations{
       "Password_must_contain_letters_numbers_and_special_characters":"Password must contain letters, numbers, and special characters",
       "Phone_number_must_start_with_09_and_be_exactly_10_digits":"Phone number must start with 09 and be exactly 10 digits",
       "Password_must_beat_least_8_characters":"Password must be at least 8 characters",
+      "Region":"Region",
+      "Plan_type":"Plan type",
+      "Reason_details":"Reason details",
+      "Send":"Send",
+      "Search_for_an_area...":"Search for an area...",
+      "":"",
+      "":"",
+      "":"",
       "":"",
       "":"",
       "":"",
@@ -116,6 +124,11 @@ class MyLanguage implements Translations{
       "Password_must_contain_letters_numbers_and_special_characters":"يجب أن تحتوي كلمة المرور على أحرف وأرقام ورموز خاصة",
       "Phone_number_must_start_with_09_and_be_exactly_10_digits":"يجب أن يبدأ رقم الهاتف بـ 09 وأن يتكون من 10 أرقام بالضبط",
       "Password_must_beat_least_8_characters":"يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "Region":"المنطقة",
+      "Plan_type":"نوع الخطة",
+      "Reason_details":"سبب التغير",
+      "Send":"إرسال",
+      "Search_for_an_area...":"ابحث عن منطقة...",
 
 
 
