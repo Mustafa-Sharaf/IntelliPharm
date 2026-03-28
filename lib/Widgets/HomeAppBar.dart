@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
+import '../modules/Searching/Searching_Screen.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
@@ -151,8 +152,15 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     color: AppColors.white,
                     size: 22,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    final result = await Get.bottomSheet(
+                      MedicineSearchSheet(),
+                      isScrollControlled: true,
+                    );
 
+                    if (result != null) {
+                      print("Selected: ${result.name}");
+                    }
                   },
                 ),
               ),

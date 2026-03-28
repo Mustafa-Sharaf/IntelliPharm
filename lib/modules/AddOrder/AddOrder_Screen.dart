@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/CustomAppBar.dart';
+import '../../app_theme/theme_extension.dart';
 import 'AddOrder_Controller.dart';
 import '../../Widgets/CustomTextField.dart';
 import '../../app_theme/AppColors.dart';
@@ -11,6 +12,7 @@ class AddOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(AddOrderController());
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -36,7 +38,7 @@ class AddOrderScreen extends StatelessWidget {
                       icon: Icons.search,
                       controller: controller.searchController,
                       //onChanged: controller.filterMedicines,
-                      onChanged: controller.onSearchChanged,
+                      onChanged:controller.onSearchChanged,
                     ),
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.01),
@@ -65,7 +67,7 @@ class AddOrderScreen extends StatelessWidget {
                         constraints: BoxConstraints(maxHeight: 200),
                         margin: EdgeInsets.only(top: 5),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: colors.component,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.grey.shade300),
                         ),
@@ -75,11 +77,9 @@ class AddOrderScreen extends StatelessWidget {
                                 itemCount: controller.medicines.length,
                                 itemBuilder: (context, index) {
                                   final med = controller.medicines[index];
-
                                   return ListTile(
-                                    title: Text(med.name),
-                                    subtitle: Text(
-                                      "💰 ${med.price} | 📦 ${med.availableQuantity} | ${med.isImported ? "Imported" : "Local"}",
+                                    title: Text(
+                                      "${med.name}   ${med.price}  ${med.availableQuantity} ",
                                     ),
                                     onTap: () {
                                       controller.selectMedicine(med);

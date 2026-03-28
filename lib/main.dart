@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intellipharm/services/DioClient.dart';
 import 'app_theme/app_theme.dart';
 import 'app_theme/theme_controller.dart';
+import 'helper/mapHelper/dart/MapHelper_Controller.dart';
 import 'language/Language.dart';
 import 'language/Language_Controller.dart';
 import 'modules/AddOrder/AddOrder_Screen.dart';
@@ -20,6 +21,7 @@ void main()async {
   await GetStorage.init();
   DioClient.init();
   Get.put(MyLanguageController());
+  //Get.put(MapHelperController());
   final themeController =Get.put(ThemeController());
   themeController.loadThemeFromStorage();
   final box = GetStorage();

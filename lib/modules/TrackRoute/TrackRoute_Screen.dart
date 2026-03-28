@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../Widgets/BuildSelector.dart';
 import '../../Widgets/CustomTextField.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
+import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import 'TrackRoute_Controller.dart';
 
 class TrackRouteScreen extends StatelessWidget {
@@ -17,42 +18,16 @@ class TrackRouteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(TrackRouteController());
     final colors = Theme.of(context).extension<ThemeColors>()!;
+    Get.lazyPut(() => MapHelperController(), tag: "route");
     return Scaffold(
       body: Stack(
         children: [
-          Obx(
-            () => GoogleMap(
-              onMapCreated: (mapCtrl) async {
-                controller.mapController.value = mapCtrl;
-
-                await Future.delayed(Duration(milliseconds: 100));
-
-                controller.applyMapStyle();
-              },
-              initialCameraPosition: CameraPosition(
-                target: LatLng(
-                  controller.latitude.value,
-                  controller.longitude.value,
-                ),
-                zoom: 14,
-              ),
-              markers: {controller.pharmacyMarker.value},
-              onTap: (point) {
-                controller.setLocation(point.latitude, point.longitude);
-              },
-              myLocationEnabled: true,
-              myLocationButtonEnabled: false,
-            ),
-          ),
-          Positioned(
+          MapHelperScreen(
+            tag:"route" ,
             right: MediaQuery.of(context).size.height * 0.01,
             bottom: MediaQuery.of(context).size.height * 0.33,
-            child: FloatingActionButton(
-              onPressed: controller.moveToCurrentLocation,
-              backgroundColor: colors.component,
-              child: Icon(Icons.my_location, color: AppColors.primaryColor),
-            ),
           ),
+
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(

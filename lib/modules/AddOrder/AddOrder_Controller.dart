@@ -1,4 +1,3 @@
-
 /*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,13 +112,15 @@ class AddOrderController extends GetxController {
   var commentController = TextEditingController();
 
   /// Data
-  var medicines = <MedicineModel>[].obs;
+  //var medicines = <MedicineModel>[].obs;
   var selectedMedicine = Rxn<MedicineModel>();
   var orders = <Map<String, dynamic>>[].obs;
 
   var showDropdown = false.obs;
   var isLoading = false.obs;
 
+  var medicines = <MedicineModel>[].obs;
+  //var showDropdown = false.obs;
   Timer? _debounce;
 
   /// ================= FETCH FROM API =================
@@ -129,17 +130,13 @@ class AddOrderController extends GetxController {
 
       final response = await ApiService.get(
         '/erp/v1/medicines',
-        query: {
-          "per_page": 5, // 🔥 هون التعديل
-          if (query.isNotEmpty) "search": query, // حسب API
-        },
+        query: {"per_page": 5, if (query.isNotEmpty) "search": query},
       );
 
       if (response.data["isSuccess"]) {
         final List data = response.data["data"]["data"];
 
-        medicines.value =
-            data.map((e) => MedicineModel.fromJson(e)).toList();
+        medicines.value = data.map((e) => MedicineModel.fromJson(e)).toList();
       }
     } catch (e) {
       print("Error: $e");
@@ -147,6 +144,7 @@ class AddOrderController extends GetxController {
       isLoading.value = false;
     }
   }
+
 
   /// ================= SEARCH (SERVER SIDE) =================
   void onSearchChanged(String value) {
@@ -159,6 +157,10 @@ class AddOrderController extends GetxController {
     });
   }
 
+
+
+
+
   /// ================= SELECT =================
   void selectMedicine(MedicineModel med) {
     selectedMedicine.value = med;
@@ -167,8 +169,9 @@ class AddOrderController extends GetxController {
 
   /// ================= ADD ORDER =================
   void tryAddOrder() {
-    if (selectedMedicine.value == null ||
-        quantityController.text.isEmpty) return;
+    if (selectedMedicine.value == null || quantityController.text.isEmpty) {
+      return;
+    }
 
     int? qty = int.tryParse(quantityController.text);
     if (qty == null) return;
