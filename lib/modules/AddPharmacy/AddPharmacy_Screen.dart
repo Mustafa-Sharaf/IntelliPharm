@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Widgets/BuildGestureDetector.dart';
 import '../../Widgets/CustomAppBar.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
@@ -78,75 +79,30 @@ class AddPharmacyScreen extends StatelessWidget {
               Obx(
                 () => Row(
                   children: [
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () =>
-                            controller.pickOpenTime(context, colors.component),
-                        child: Container(
-                          padding: EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: colors.component,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.access_time,
-                                color: AppColors.primaryColor,
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.001,
-                              ),
-                              Text(
-                                controller.openTime.value == null
-                                    ? "Opening Time".tr
-                                    : controller.openTime.value!.format(
-                                        context,
-                                      ),
-                                style: TextStyle(
-                                  color: AppColors.gray,
-                                  fontFamily: 'Cairo',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                    BuildGestureDetector(
+                      onTap: () => controller.pickTime(
+                        context: context,
+                        targetTime: controller.openTime,
+                        backgroundColor: colors.component,
                       ),
+                      text: controller.openTime.value == null
+                          ? "Opening Time".tr
+                          : controller.openTime.value!.format(context),
+                      icon: Icons.access_time,
                     ),
+
                     SizedBox(width: 10),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () =>
-                            controller.pickCloseTime(context, colors.component),
-                        child: Container(
-                          padding: EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: colors.component,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.access_time_filled,
-                                color: AppColors.primaryColor,
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                controller.closeTime.value == null
-                                    ? "Closing Time".tr
-                                    : controller.closeTime.value!.format(
-                                        context,
-                                      ),
-                                style: TextStyle(
-                                  color: AppColors.gray,
-                                  fontFamily: 'Cairo',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+
+                    BuildGestureDetector(
+                      onTap: () => controller.pickTime(
+                        context: context,
+                        targetTime: controller.closeTime,
+                        backgroundColor: colors.component,
                       ),
+                      text: controller.closeTime.value == null
+                          ? "Closing Time".tr
+                          : controller.closeTime.value!.format(context),
+                      icon: Icons.access_time_filled,
                     ),
                   ],
                 ),
