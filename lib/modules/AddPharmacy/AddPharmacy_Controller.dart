@@ -14,6 +14,8 @@ class AddPharmacyController extends GetxController {
   var openTime = Rx<TimeOfDay?>(null);
   var closeTime = Rx<TimeOfDay?>(null);
   LatLng? tempPosition;
+  var selectedRegion = ''.obs;
+  var selectedType = ''.obs;
 
   void addPhoneField() {
     if (phoneControllers.length < 2) {

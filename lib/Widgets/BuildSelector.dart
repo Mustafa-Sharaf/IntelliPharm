@@ -21,30 +21,47 @@ class BuildSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
+
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 14),
-        decoration: BoxDecoration(
-          color: colors.component, //Colors.grey[200]
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, color: iconColor),
-            SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                value.isEmpty ? title : "$title: $value",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.gray,
-                  fontFamily: 'Cairo',
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 4, top: 4),
+        child: InputDecorator(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: colors.component,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(color: Colors.grey.shade300, width: 1.2),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide(color: AppColors.primaryColor, width: 1.5),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 17,
+            ),
+          ),
+
+          child: Row(
+            children: [
+              Icon(icon, color: iconColor),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.04),
+              Expanded(
+                child: Text(
+                  value.isEmpty ? title : "$title: $value",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: value.isEmpty ? AppColors.gray : Colors.black,
+                    fontFamily: 'Cairo',
+                  ),
                 ),
               ),
-            ),
-            Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
-          ],
+
+              Icon(Icons.arrow_drop_down, color: AppColors.primaryColor),
+            ],
+          ),
         ),
       ),
     );

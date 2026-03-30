@@ -1,51 +1,36 @@
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import '../../services/RegionService.dart';
+import 'RegionSelector_Model.dart';
+
 
 class RegionController extends GetxController {
   final TextEditingController searchController = TextEditingController();
 
-  final List<String> regions = [
-    "الميدان",
-    "الشاغور",
-    "ركن الدين",
-    "المزة",
-    "كفرسوسة",
-    "دمر",
-    "برزة",
-    "القابون",
-    "جوبر",
-    "ساروجة",
-    "الصالحية",
-    "المهاجرين",
-    "القنوات",
-    "القدم",
-    "اليرموك",
-    "أبو رمانة",
-    "المالكي",
-    "الشعلان",
-    "البرامكة",
-    "القصاع",
-    "باب توما",
-    "جرمانا",
-    "صحنايا",
-    "داريا",
-    "قدسيا",
-    "التل",
-    "دوما",
-    "حرستا",
-    "سقبا",
-    "كفربطنا",
-    "عين ترما",
-    "زملكا",
-    "المليحة",
-  ];
-
-  var filteredRegions = <String>[].obs;
+  var regions = <RegionModel>[].obs;
+  var filteredRegions = <RegionModel>[].obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
-    filteredRegions.value = regions;
     super.onInit();
+    fetchRegions();
+  }
+
+  Future<void> fetchRegions() async {
+    try {
+      isLoading.value = true;
+
+      final data = await RegionService.getRegions();
+
+      regions.value = data;
+      filteredRegions.value = data;
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void filter(String value) {
@@ -54,13 +39,13 @@ class RegionController extends GetxController {
     } else {
       filteredRegions.value = regions
           .where((region) =>
-          region.toLowerCase().contains(value.toLowerCase()))
+          region.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     }
   }
 
-  void selectRegion(String region) {
-    print("Selected: $region");
-    Get.back();
+  void selectRegion(RegionModel region) {
+    //print("Selected: ${region.name}");
+    Get.back(result: region);
   }
 }

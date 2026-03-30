@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/BuildGestureDetector.dart';
+import '../../Widgets/BuildSelector.dart';
 import '../../Widgets/CustomAppBar.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import 'AddPharmacy_Controller.dart';
@@ -36,6 +38,28 @@ class AddPharmacyScreen extends StatelessWidget {
                 label: "Pharmacist'sName".tr,
                 icon: Icons.person,
                 controller: controller.pharmacistsNameController,
+              ),
+              Obx(
+                    () => BuildSelector(
+                  title: "Region".tr,
+                  value: controller.selectedRegion.value,
+                  icon: Icons.map,
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      builder: (context) {
+                        return RegionSelector();
+                      },
+                    );
+                  },
+                  iconColor: AppColors.primaryColor,
+                ),
               ),
               Obx(
                 () => Column(
@@ -107,13 +131,13 @@ class AddPharmacyScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              CustomTextField(
+             /* CustomTextField(
                 label: "Comments".tr,
                 icon: Icons.notes,
                 controller: controller.commentsController,
                 keyboardType: TextInputType.text,
                 maxLines: 2,
-              ),
+              ),*/
               SizedBox(height: MediaQuery.of(context).size.height * 0.007),
               MapHelperScreen(
                 tag: "addPharmacy",

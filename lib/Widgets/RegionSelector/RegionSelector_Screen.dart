@@ -19,7 +19,9 @@ class RegionSelector extends StatelessWidget {
         right: MediaQuery.of(context).size.width * 0.02,
         top: MediaQuery.of(context).size.width * 0.02,
       ),
+
       child: SizedBox(
+
         height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           children: [
@@ -46,19 +48,21 @@ class RegionSelector extends StatelessWidget {
                 () => ListView.builder(
                   itemCount: controller.filteredRegions.length,
                   itemBuilder: (context, index) {
+                    //final region = controller.filteredRegions[index];
                     final region = controller.filteredRegions[index];
 
                     return Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
+
                       child: ListTile(
                         leading: Icon(
                           Icons.location_city,
                           color: AppColors.primaryColor,
                         ),
                         title: Text(
-                          region,
+                          region.name,
                           style: TextStyle(
                             fontFamily: 'Cairo',
                             fontWeight: FontWeight.bold,
