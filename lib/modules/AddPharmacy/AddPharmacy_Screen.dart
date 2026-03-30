@@ -121,7 +121,7 @@ class AddPharmacyScreen extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.007),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: controller.addPharmacy,
                 icon: const Icon(
                   Icons.my_location,
                   color: AppColors.primaryColor,

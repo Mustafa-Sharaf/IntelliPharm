@@ -39,8 +39,9 @@ class SignInController extends GetxController {
         UserModel user = UserModel.fromJson(data["data"]);
 
         box.write("token", data["data"]["access_token"]);
-        GetStorage().write("refresh_token", data["refresh_token"]); // 🔥 مهم
-        box.write("user", user.name);
+        box.write("refresh_token", data["data"]["refresh_token"]);
+        //GetStorage().write("refresh_token", data["refresh_token"]);
+        box.write("user", data["data"]);
 
         AppSnackBar.success(data["message"]);
         Get.offAllNamed("/homeScreen");

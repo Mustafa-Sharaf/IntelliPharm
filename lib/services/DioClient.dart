@@ -35,34 +35,34 @@ class DioClient {
         onError: (DioException err, handler) async {
           final statusCode = err.response?.statusCode;
 
-          print("❌ Error: $statusCode");
+          print("Error: $statusCode");
 
           if (statusCode == 401 || statusCode == 403) {
             try {
-              print("🔄 Token expired → refreshing...");
+              print("Token expired → refreshing...");
 
               final newToken = await _tokenService.refreshToken();
 
               if (newToken != null) {
-                print("✅ New token received");
+                print("New token received");
 
                 final requestOptions = err.requestOptions;
 
                 requestOptions.headers["Authorization"] =
                 "Bearer $newToken";
 
-                print("🔁 Retrying request...");
+                print("Retrying request...");
 
                 final response = await dio.fetch(requestOptions);
 
                 return handler.resolve(response);
               } else {
-                print("❌ Refresh failed → logout");
+                print("Refresh failed → logout");
 
                 _logout();
               }
             } catch (e) {
-              print("💥 Refresh exception: $e");
+              print("Refresh exception: $e");
 
               _logout();
             }
@@ -73,9 +73,9 @@ class DioClient {
       ),
     );
   }
-
   static void _logout() {
-    GetStorage().remove("token");
+    final box = GetStorage();
+    box.erase();
     Get.offAllNamed("/signIn");
   }
 }

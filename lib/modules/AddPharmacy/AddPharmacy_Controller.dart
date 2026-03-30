@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../app_theme/AppColors.dart';
+import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
+import '../../services/ApiService.dart';
+import 'AddPharmacy_Model.dart';
 
 class AddPharmacyController extends GetxController {
   var pharmacyNameController = TextEditingController();
@@ -66,6 +69,54 @@ class AddPharmacyController extends GetxController {
     if (picked != null) {
       targetTime.value = picked;
     }
+  }
+
+
+
+  Future<void> addPharmacy() async {
+    try {
+      if (openTime.value == null || closeTime.value == null) {
+        Get.snackbar("Error", "Please select working hours");
+        return;
+      }
+
+      final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
+
+      final pharmacy = PharmacyModel(
+        regionId: 1,
+        name: pharmacyNameController.text,
+        latitude: mapController.latitude.value,
+        longitude: mapController.longitude.value,
+        openingTime: formatTime(openTime.value!),
+        closingTime: formatTime(closeTime.value!),
+        isActive: true,
+        pharmacistName: pharmacistsNameController.text,
+        pharmacistPhone: phoneControllers[0].text,
+        pharmacistAlt: phoneControllers.length > 1
+            ? phoneControllers[1].text
+            : null,
+      );
+
+      final response = await ApiService.post(
+        "/erp/v1/pharmacies",
+        data: pharmacy.toJson(),
+      );
+
+      if (response.data["isSuccess"]) {
+        Get.snackbar("Success", "Pharmacy added successfully");
+        Get.back();
+      } else {
+        Get.snackbar("Error", response.data["message"]);
+      }
+    } catch (e) {
+      print("❌ Error: $e");
+      Get.snackbar("Error", "Something went wrong");
+    }
+  }
+  String formatTime(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return "$hour:$minute";
   }
 
   @override
