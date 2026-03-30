@@ -1,6 +1,7 @@
+
 class PharmacyModel {
-  final int regionId;
   final String name;
+  final int regionId;
   final double latitude;
   final double longitude;
   final String openingTime;
@@ -8,11 +9,11 @@ class PharmacyModel {
   final bool isActive;
   final String pharmacistName;
   final String pharmacistPhone;
-  final String? pharmacistAlt;
+  final String? pharmacistAltPhone;
 
   PharmacyModel({
-    required this.regionId,
     required this.name,
+    required this.regionId,
     required this.latitude,
     required this.longitude,
     required this.openingTime,
@@ -20,13 +21,13 @@ class PharmacyModel {
     required this.isActive,
     required this.pharmacistName,
     required this.pharmacistPhone,
-    this.pharmacistAlt,
+    this.pharmacistAltPhone,
   });
 
   Map<String, dynamic> toJson() {
     return {
-      "region_id": regionId,
       "name": name,
+      "region_id": regionId,
       "latitude": latitude,
       "longitude": longitude,
       "opening_time": openingTime,
@@ -34,7 +35,7 @@ class PharmacyModel {
       "is_active": isActive,
       "pharmacist_name": pharmacistName,
       "pharmacist_phone": pharmacistPhone,
-      "pharmacist_alt": pharmacistAlt,
+      "pharmacist_alt_phone": pharmacistAltPhone,
     };
   }
 }

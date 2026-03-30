@@ -62,6 +62,15 @@ class MyLanguage implements Translations{
       "Plan_update":"Plan update",
       "New_plan":"New plan",
       "ROUTES":"ROUTES",
+      "Pharmacy_created_successfully":"Pharmacy created successfully",
+      "Closing_Time":"Closing_Time",
+      "Opening_Time":"Opening_Time",
+      "":"",
+      "":"",
+      "":"",
+      "":"",
+      "":"",
+      "":"",
       "":"",
       "":"",
       "":"",
@@ -132,6 +141,11 @@ class MyLanguage implements Translations{
       "Plan_update":"تحديث الخطة",
       "New_plan":"خطة جديدة",
       "ROUTES":"المسارات",
+      "Pharmacy_created_successfully":"تم إنشاء الصيدلية بنجاح",
+      "Closing_Time":"وقت الإغلاق",
+      "Opening_Time":"وقت الافتتاح",
+      "Pharmacist'sName":"اسم الصيدلي",
+      "PhoneNumber":"رقم الهاتف",
 
 
 

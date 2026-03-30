@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../Widgets/BuildGestureDetector.dart';
 import '../../Widgets/BuildSelector.dart';
 import '../../Widgets/CustomAppBar.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
@@ -17,8 +18,8 @@ class AddPharmacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
+    Get.put(MapHelperController(), tag: "addPharmacy");
     final controller = Get.put(AddPharmacyController());
-    Get.lazyPut(() => MapHelperController(), tag: "addPharmacy");
     return Scaffold(
       backgroundColor: colors.backgroundMain,
       appBar: CustomAppBar(title: "Add_pharmacy".tr),
@@ -40,23 +41,22 @@ class AddPharmacyScreen extends StatelessWidget {
                 controller: controller.pharmacistsNameController,
               ),
               Obx(
-                    () => BuildSelector(
+                () => BuildSelector(
                   title: "Region".tr,
-                  value: controller.selectedRegion.value,
+                  value: controller.selectedRegion.value?.name ?? "",
                   icon: Icons.map,
-                  onTap: () {
-                    showModalBottomSheet(
+                  onTap: () async {
+                    final result = await showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
-                        ),
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                       ),
-                      builder: (context) {
-                        return RegionSelector();
-                      },
+                      builder: (_) => RegionSelector(),
                     );
+                    if (result != null && result is RegionModel) {
+                      controller.selectedRegion.value = result;
+                    }
                   },
                   iconColor: AppColors.primaryColor,
                 ),
@@ -110,13 +110,11 @@ class AddPharmacyScreen extends StatelessWidget {
                         backgroundColor: colors.component,
                       ),
                       text: controller.openTime.value == null
-                          ? "Opening Time".tr
+                          ? "Opening_Time".tr
                           : controller.openTime.value!.format(context),
                       icon: Icons.access_time,
                     ),
-
-                    SizedBox(width: 10),
-
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.05),
                     BuildGestureDetector(
                       onTap: () => controller.pickTime(
                         context: context,
@@ -124,34 +122,27 @@ class AddPharmacyScreen extends StatelessWidget {
                         backgroundColor: colors.component,
                       ),
                       text: controller.closeTime.value == null
-                          ? "Closing Time".tr
+                          ? "Closing_Time".tr
                           : controller.closeTime.value!.format(context),
                       icon: Icons.access_time_filled,
                     ),
                   ],
                 ),
               ),
-             /* CustomTextField(
-                label: "Comments".tr,
-                icon: Icons.notes,
-                controller: controller.commentsController,
-                keyboardType: TextInputType.text,
-                maxLines: 2,
-              ),*/
               SizedBox(height: MediaQuery.of(context).size.height * 0.007),
               MapHelperScreen(
                 tag: "addPharmacy",
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height * 0.45,
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.007),
               ElevatedButton.icon(
-                onPressed: controller.addPharmacy,
+                onPressed: controller.createPharmacy,
                 icon: const Icon(
-                  Icons.my_location,
+                  Icons.add_business_rounded,
                   color: AppColors.primaryColor,
                 ),
                 label: Text(
-                  "Add a pharmacy".tr,
+                  "Add_pharmacy".tr,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

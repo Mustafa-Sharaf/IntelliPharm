@@ -53,7 +53,7 @@ class BuildSelector extends StatelessWidget {
                   value.isEmpty ? title : "$title: $value",
                   style: TextStyle(
                     fontSize: 16,
-                    color: value.isEmpty ? AppColors.gray : Colors.black,
+                    color: AppColors.gray,
                     fontFamily: 'Cairo',
                   ),
                 ),

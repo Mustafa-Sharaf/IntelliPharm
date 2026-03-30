@@ -10,7 +10,7 @@ class LoginValidator {
     final validator = ValidationContext([
       EmptyFieldsValidation([email, password]),
       EmailValidation(email),
-      //PasswordValidation(password),
+      PasswordValidation(password),
     ]);
 
     return validator.validateAll();

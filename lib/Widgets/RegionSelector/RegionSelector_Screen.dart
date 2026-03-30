@@ -25,7 +25,6 @@ class RegionSelector extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           children: [
-            /// 🔍 Search
             TextField(
               controller: controller.searchController,
               onChanged: controller.filter,
@@ -48,9 +47,7 @@ class RegionSelector extends StatelessWidget {
                 () => ListView.builder(
                   itemCount: controller.filteredRegions.length,
                   itemBuilder: (context, index) {
-                    //final region = controller.filteredRegions[index];
                     final region = controller.filteredRegions[index];
-
                     return Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
