@@ -26,7 +26,7 @@ class PharmacistsController extends GetxController{
       isLoading.value = true;
 
       final data = await PharmacyService.getPharmacies(
-        selectedRegion.value!.name,
+        selectedRegion.value!.id,
       );
 
       pharmacies.value = data;

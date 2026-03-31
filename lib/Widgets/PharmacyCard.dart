@@ -56,10 +56,7 @@ class PharmacyCard extends StatelessWidget {
                           fontFamily: 'Cairo',
                         ),
                       ),
-
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.005,
-                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
                       Row(
                         children: [
                           Text("🗺️️", style: TextStyle(fontSize: 14)),
@@ -76,10 +73,7 @@ class PharmacyCard extends StatelessWidget {
                           ),
                         ],
                       ),
-
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.005,
-                      ),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
                       Row(
                         children: [
                           Text("👨‍⚕️", style: TextStyle(fontSize: 14)),
