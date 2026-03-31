@@ -23,7 +23,7 @@ class PharmacistsScreen extends StatelessWidget {
             Obx(
               () => BuildSelector(
                 title: "Region".tr,
-                value: controller.selectedRegion.value?.name ?? "",
+                value: controller.selectedRegion.value!.name,
                 icon: Icons.map,
                 onTap: () async {
                   final result = await showModalBottomSheet(
@@ -48,24 +48,25 @@ class PharmacistsScreen extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  );
                 }
 
                 if (controller.pharmacies.isEmpty) {
-                  return const Center(child: Text("No pharmacies found"));
+                  return Center(child: Text("No_pharmacies_found".tr));
                 }
 
                 return ListView.builder(
-                  //padding: const EdgeInsets.all(10),
                   itemCount: controller.pharmacies.length,
                   itemBuilder: (context, index) {
-                    return PharmacyCard(
-                      pharmacy: controller.pharmacies[index],
-                    );
+                    return PharmacyCard(pharmacy: controller.pharmacies[index]);
                   },
                 );
               }),
-            )
+            ),
           ],
         ),
       ),

@@ -65,8 +65,8 @@ class MyLanguage implements Translations{
       "Pharmacy_created_successfully":"Pharmacy created successfully",
       "Closing_Time":"Closing_Time",
       "Opening_Time":"Opening_Time",
-      "":"",
-      "":"",
+      "No_pharmacies_found":"No pharmacies found",
+      "No_name":"No_name",
       "":"",
       "":"",
       "":"",
@@ -146,6 +146,8 @@ class MyLanguage implements Translations{
       "Opening_Time":"وقت الافتتاح",
       "Pharmacist'sName":"اسم الصيدلي",
       "PhoneNumber":"رقم الهاتف",
+      "No_pharmacies_found":"لم يتم العثور على أي صيدليات",
+      "No_name":"بلا اسم",
 
 
 

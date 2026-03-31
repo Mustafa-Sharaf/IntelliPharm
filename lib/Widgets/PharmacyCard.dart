@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/Pharmacists/Pharmacists_Model.dart';
@@ -56,7 +57,9 @@ class PharmacyCard extends StatelessWidget {
                           fontFamily: 'Cairo',
                         ),
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.005,
+                      ),
                       Row(
                         children: [
                           Text("🗺️️", style: TextStyle(fontSize: 14)),
@@ -73,7 +76,9 @@ class PharmacyCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.005,),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.005,
+                      ),
                       Row(
                         children: [
                           Text("👨‍⚕️", style: TextStyle(fontSize: 14)),
@@ -81,7 +86,7 @@ class PharmacyCard extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.01,
                           ),
                           Text(
-                            pharmacy.pharmacistName ?? "No name",
+                            pharmacy.pharmacistName ?? "No_name".tr,
                             style: const TextStyle(
                               fontSize: 13.5,
                               fontFamily: 'Cairo',
@@ -112,7 +117,6 @@ class PharmacyCard extends StatelessWidget {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.005,
                       ),
-
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -152,16 +156,19 @@ class PharmacyCard extends StatelessWidget {
                 Column(
                   children: [
                     _buildActionButton(
-                      icon: FontAwesomeIcons.telegram,
-                      color: const Color(0xFF0088cc),
-                      onTap: () {},
+                        icon: FontAwesomeIcons.whatsapp,
+                        color: const Color(0xFF25D366),
+                        onTap: () {},
+                        context: context
                     ),
-                    const SizedBox(height: 20),
+                     SizedBox(height: MediaQuery.of(context).size.height *0.03),
                     _buildActionButton(
-                      icon: FontAwesomeIcons.whatsapp,
-                      color: const Color(0xFF25D366),
-                      onTap: () {},
+                        icon: FontAwesomeIcons.telegram,
+                        color: const Color(0xFF0088cc),
+                        onTap: () {},
+                        context: context
                     ),
+
                   ],
                 ),
               ],
@@ -176,6 +183,7 @@ class PharmacyCard extends StatelessWidget {
     required IconData icon,
     required Color color,
     required VoidCallback onTap,
+    required context,
   }) {
     return Material(
       color: color.withValues(alpha: 0.12),
@@ -186,10 +194,10 @@ class PharmacyCard extends StatelessWidget {
         splashColor: color.withValues(alpha: 0.4),
         highlightColor: color.withValues(alpha: 0.2),
         child: Container(
-          width: 40,
-          height: 40,
+          width:  MediaQuery.of(context).size.width * 0.1,
+          height: MediaQuery.of(context).size.width * 0.1,
           alignment: Alignment.center,
-          child: FaIcon(icon, color: color, size: 16),
+          child: FaIcon(icon, color: color, size: 25),
         ),
       ),
     );
