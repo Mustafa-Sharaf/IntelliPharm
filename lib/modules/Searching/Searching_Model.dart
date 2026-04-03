@@ -5,6 +5,7 @@ class Medicine {
   final double price;
   final int quantity;
   final bool isImported;
+  final bool inStock;
 
   Medicine({
     required this.id,
@@ -12,6 +13,7 @@ class Medicine {
     required this.price,
     required this.quantity,
     required this.isImported,
+    required this.inStock,
   });
 
   factory Medicine.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,7 @@ class Medicine {
       price: double.parse(json["price"]),
       quantity: json["available_quantity"],
       isImported: json["is_imported"],
+      inStock: json['in_stock'] ?? false,
     );
   }
 }
