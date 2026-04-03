@@ -1,6 +1,6 @@
 
-import '../modules/Pharmacists/Pharmacists_Model.dart';
-import 'ApiService.dart';
+import '../../modules/Pharmacists/Pharmacists_Model.dart';
+import '../ApiService.dart';
 
 class PharmacyService {
   static Future<List<PharmaciesModel>> getPharmacies(int id) async {

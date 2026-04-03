@@ -10,7 +10,7 @@ import '../../Widgets/AppSnackBar.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../helper/Time/dart/timeHelper.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
-import '../../services/PharmacyService.dart';
+import '../../services/ServiceApi/PharmacyService.dart';
 import 'AddPharmacy_Model.dart';
 
 class AddPharmacyController extends GetxController {

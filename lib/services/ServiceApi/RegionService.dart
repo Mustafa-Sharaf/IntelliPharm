@@ -1,5 +1,5 @@
-import '../Widgets/RegionSelector/RegionSelector_Model.dart';
-import 'ApiService.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
+import '../ApiService.dart';
 
 class RegionService {
   static Future<List<RegionModel>> getRegions() async {

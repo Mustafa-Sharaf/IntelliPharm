@@ -7,7 +7,7 @@ import 'TokenService.dart';
 class DioClient {
   static final Dio dio = Dio(
     BaseOptions(
-      baseUrl: "https://api.intelli-pharma.limebyte.org/api",//https://api.intelli-pharma.limebyte.org/api/auth/v1/login
+      baseUrl: "https://api.intelli-pharma.limebyte.org/api",
       receiveDataWhenStatusError: true,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),

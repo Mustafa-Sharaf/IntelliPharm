@@ -1,7 +1,7 @@
 
 
-import '../modules/AddPharmacy/AddPharmacy_Model.dart';
-import 'ApiService.dart';
+import '../../modules/AddPharmacy/AddPharmacy_Model.dart';
+import '../ApiService.dart';
 
 class PharmacyService {
   static Future createPharmacy(PharmacyModel request) async {

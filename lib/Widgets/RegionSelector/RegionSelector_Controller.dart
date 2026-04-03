@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import '../../services/RegionService.dart';
+import '../../services/ServiceApi/RegionService.dart';
 import 'RegionSelector_Model.dart';
 
 

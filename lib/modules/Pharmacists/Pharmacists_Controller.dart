@@ -3,7 +3,7 @@
 
 import 'package:get/get.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
-import '../../services/PharmaciesService.dart';
+import '../../services/ServiceApi/PharmaciesService.dart';
 
 import 'Pharmacists_Model.dart';
 
