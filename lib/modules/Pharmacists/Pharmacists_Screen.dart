@@ -23,7 +23,7 @@ class PharmacistsScreen extends StatelessWidget {
             Obx(
               () => BuildSelector(
                 title: "Region".tr,
-                value: controller.selectedRegion.value!.name,
+                value: controller.selectedRegion.value?.name ?? "",
                 icon: Icons.map,
                 onTap: () async {
                   final result = await showModalBottomSheet(
@@ -38,7 +38,6 @@ class PharmacistsScreen extends StatelessWidget {
                   );
                   if (result != null && result is RegionModel) {
                     controller.selectedRegion.value = result;
-
                     controller.fetchPharmacies();
                   }
                 },

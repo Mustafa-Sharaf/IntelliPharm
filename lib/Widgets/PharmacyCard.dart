@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
+import '../helper/ContactLauncher/ContactLauncher.dart';
 import '../modules/Pharmacists/Pharmacists_Model.dart';
 
 class PharmacyCard extends StatelessWidget {
@@ -57,9 +58,11 @@ class PharmacyCard extends StatelessWidget {
                           fontFamily: 'Cairo',
                         ),
                       ),
-                      SizedBox(
+                    /*  SizedBox(
                         height: MediaQuery.of(context).size.height * 0.005,
-                      ),
+                      ),*/
+                      const SizedBox(height: 6),
+
                       Row(
                         children: [
                           Text("🗺️️", style: TextStyle(fontSize: 14)),
@@ -76,9 +79,10 @@ class PharmacyCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                     /* SizedBox(
                         height: MediaQuery.of(context).size.height * 0.005,
-                      ),
+                      ),*/
+                      const SizedBox(height: 6),
                       Row(
                         children: [
                           Text("👨‍⚕️", style: TextStyle(fontSize: 14)),
@@ -114,9 +118,11 @@ class PharmacyCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                     /* SizedBox(
                         height: MediaQuery.of(context).size.height * 0.005,
-                      ),
+                      ),*/
+                      const SizedBox(height: 6),
+
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,
@@ -158,14 +164,26 @@ class PharmacyCard extends StatelessWidget {
                     _buildActionButton(
                         icon: FontAwesomeIcons.whatsapp,
                         color: const Color(0xFF25D366),
-                        onTap: () {},
+                        onTap: () async {
+                          try {
+                            await ContactLauncher.openWhatsApp(pharmacy.pharmacistPhone);
+                          } catch (e) {
+                            Get.snackbar("Error", "WhatsApp not available");
+                          }
+                        },
                         context: context
                     ),
                      SizedBox(height: MediaQuery.of(context).size.height *0.03),
                     _buildActionButton(
                         icon: FontAwesomeIcons.telegram,
                         color: const Color(0xFF0088cc),
-                        onTap: () {},
+                        onTap: () async {
+                          try {
+                            await ContactLauncher.openTelegram(pharmacy.pharmacistPhone);
+                          } catch (e) {
+                            Get.snackbar("Error", "Telegram not available");
+                          }
+                        },
                         context: context
                     ),
 
