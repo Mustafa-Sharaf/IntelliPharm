@@ -153,14 +153,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     size: 22,
                   ),
                   onPressed: () async {
-                    final result = await Get.bottomSheet(
-                      MedicineSearchSheet(),
-                      isScrollControlled: true,
-                    );
+                    final result = await Get.to(() => MedicineSearchSheet());
 
-                    if (result != null) {
+                   /* if (result != null) {
                       print("Selected: ${result.name}");
-                    }
+                    }*/
                   },
                 ),
               ),

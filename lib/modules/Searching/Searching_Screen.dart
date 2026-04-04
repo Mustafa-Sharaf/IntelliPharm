@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/CustomTextField.dart';
 import '../../app_theme/theme_extension.dart';
 import 'Searching_Controller.dart';
@@ -19,9 +20,8 @@ class MedicineSearchSheet extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         child: Column(
           children: [
-            const SizedBox(height: 20),
-
-            /// 🔍 Search Field
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            /// Search Field
             CustomTextField(
               label: "Search medicine...".tr,
               controller: controller.searchController,
@@ -30,32 +30,27 @@ class MedicineSearchSheet extends StatelessWidget {
               icon: Icons.search,
             ),
 
-            /// 📦 CONTENT
+            /// CONTENT
             Expanded(
               child: Obx(() {
-                /// =========================
-                /// 💤 حالة البداية
-                /// =========================
                 if (controller.searchText.value.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Text(
-                      "Start typing to search",
-                      style: TextStyle(color: Colors.grey),
+                      "Start_typing_to_search".tr,
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontFamily: 'Cairo',),
                     ),
                   );
                 }
-
-                /// =========================
-                /// 🔄 Loading أولي
-                /// =========================
                 if (controller.isLoading.value &&
                     controller.medicines.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  );
                 }
-
-                /// =========================
-                /// 🔍 Suggestions (مثل Google)
-                /// =========================
                 if (controller.suggestions.isNotEmpty &&
                     controller.medicines.isEmpty) {
                   return ListView.builder(
@@ -65,45 +60,50 @@ class MedicineSearchSheet extends StatelessWidget {
 
                       return ListTile(
                         leading: const Icon(Icons.search),
-                        title: Text(med.name),
+                        title: Text(med.name,style: TextStyle(fontFamily: 'Cairo',),),
                         onTap: () => controller.onSuggestionTap(med),
                       );
                     },
                   );
                 }
-
-                /// =========================
-                /// ❌ لا يوجد نتائج
-                /// =========================
                 if (controller.medicines.isEmpty) {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.medication_outlined,
-                          size: 60, color: Colors.grey),
-                      SizedBox(height: 10),
-                      Text("No medicines found",
-                          style: TextStyle(color: Colors.grey)),
+                    children: [
+                      Icon(
+                        Icons.medication_outlined,
+                        size: 60,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      Text(
+                        "No_medicines_found".tr,
+                        style: TextStyle(color: Colors.grey,
+                          fontFamily: 'Cairo',),
+                      ),
                     ],
                   );
                 }
 
-                /// =========================
-                /// 📋 LIST + Infinite Scroll
-                /// =========================
                 return ListView.builder(
                   controller: controller.scrollController,
                   itemCount: controller.medicines.length + 1,
                   itemBuilder: (context, index) {
-                    /// 🔽 Loader تحت
                     if (index == controller.medicines.length) {
-                      return Obx(() => controller.isLoadingMore.value
-                          ? const Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Center(
-                            child: CircularProgressIndicator()),
-                      )
-                          : const SizedBox());
+                      return Obx(
+                        () => controller.isLoadingMore.value
+                            ? Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      );
                     }
 
                     final med = controller.medicines[index];
@@ -112,56 +112,61 @@ class MedicineSearchSheet extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(vertical: 6),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: med.inStock
-                            ? colors.component
-                            : Colors.grey.shade200,
+                        color: colors.component,
                         boxShadow: const [
                           BoxShadow(blurRadius: 6, color: Colors.black12),
                         ],
                       ),
                       child: ListTile(
-                        leading:
-                        CircleAvatar(child: Text(med.name[0])),
+                        leading: CircleAvatar(
+                          backgroundColor: AppColors.primaryColor,
+                            child: Text(
+                                med.name[0],style: TextStyle(
+                              fontFamily: 'Cairo',
+
+                            ),
+                            )),
 
                         title: Text(
                           med.name,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold),
+                              fontWeight: FontWeight.bold,
+                            fontFamily: 'Cairo',),
                         ),
 
                         subtitle: Column(
-                          crossAxisAlignment:
-                          CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Price: ${med.price}"),
-                            Text("Qty: ${med.quantity}"),
+                            Text("Price: ${med.price}",style: TextStyle(fontFamily: 'Cairo',),),
+                            Text("Qty: ${med.quantity}",style: TextStyle(fontFamily: 'Cairo',),),
 
-                            /// 🔥 حالة المخزون
                             if (!med.inStock)
-                              const Text(
-                                "Out of stock",
-                                style: TextStyle(color: Colors.red),
+                              Text(
+                                "Out_of_stock".tr,
+                                style: TextStyle(color: Colors.red,fontFamily: 'Cairo',),
                               ),
                           ],
                         ),
 
                         trailing: Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
                           decoration: BoxDecoration(
                             color: med.isImported
                                 ? Colors.green.shade100
                                 : Colors.blue.shade100,
-                            borderRadius:
-                            BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            med.isImported ? "Imported" : "Local",
+                            med.isImported ? "Imported".tr : "Local".tr,
                             style: TextStyle(
                               color: med.isImported
                                   ? Colors.green
                                   : Colors.blue,
                               fontWeight: FontWeight.bold,
+                              fontFamily: 'Cairo',
                             ),
                           ),
                         ),

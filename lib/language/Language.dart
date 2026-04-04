@@ -67,11 +67,11 @@ class MyLanguage implements Translations{
       "Opening_Time":"Opening_Time",
       "No_pharmacies_found":"No pharmacies found",
       "No_name":"No_name",
-      "":"",
-      "":"",
-      "":"",
-      "":"",
-      "":"",
+      "Start_typing_to_search":"Start typing to search",
+      "No_medicines_found":"No medicines found",
+      "Out_of_stock":"Out of stock",
+      "Imported":"Imported",
+      "Local":"Local",
       "":"",
       "":"",
       "":"",
@@ -148,6 +148,11 @@ class MyLanguage implements Translations{
       "PhoneNumber":"رقم الهاتف",
       "No_pharmacies_found":"لم يتم العثور على أي صيدليات",
       "No_name":"بلا اسم",
+      "Start_typing_to_search":"ابدأ الكتابة للبحث",
+      "No_medicines_found":"لم يتم العثور على أي أدوية",
+      "Out_of_stock":"إنتهى من المخزن",
+      "Imported":"مستورد",
+      "Local":"محلي",
 
 
 
