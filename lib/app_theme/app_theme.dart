@@ -10,7 +10,7 @@ class AppThemes {
   /// Use the default Light theme and then modify it using copyWith
   static final lightTheme = ThemeData.light().copyWith(
 
-    scaffoldBackgroundColor: AppColors.backgroundColorLight1,
+    scaffoldBackgroundColor: AppColors.backgroundColorLight,
 
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: AppColors.primaryColor,
@@ -21,8 +21,8 @@ class AppThemes {
     extensions: const [
 
       ThemeColors(
-        backgroundMain: AppColors.backgroundColorLight1,
-        backgroundSecondary: AppColors.backgroundColorLight2,
+        backgroundMain: AppColors.backgroundColorLight,
+        backgroundSecondary: AppColors.white,
         component: Colors.white,
         text: Colors.black,
       ),

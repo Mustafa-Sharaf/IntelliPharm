@@ -26,7 +26,7 @@ class HeaderScreen extends StatelessWidget {
                   end: Alignment.bottomRight,
                   colors: [
                     AppColors.primaryColor,
-                    AppColors.primaryColor2,
+                    AppColors.primaryColor,
                   ],
                 ),
               ),

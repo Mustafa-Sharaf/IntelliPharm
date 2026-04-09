@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../../app_theme/theme_extension.dart';
 import 'NavItem.dart';
 
 class CustomBottomNav extends StatelessWidget {
@@ -14,11 +15,13 @@ class CustomBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height= MediaQuery.of(context).size.height;
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Container(
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: height * 0.08,
+      padding: EdgeInsets.symmetric(horizontal: height * 0.008),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colors.backgroundMain,
         boxShadow: [
           BoxShadow(
             blurRadius: 20,
@@ -31,7 +34,6 @@ class CustomBottomNav extends StatelessWidget {
         children: List.generate(items.length, (index) {
           final item = items[index];
           final isSelected = currentIndex == index;
-
           return Expanded(
             child: GestureDetector(
               onTap: () => onTap(index),
@@ -39,8 +41,7 @@ class CustomBottomNav extends StatelessWidget {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                padding: const EdgeInsets.symmetric(vertical: 6),
+                margin: EdgeInsets.symmetric(vertical: height * 0.008, horizontal: height * 0.004),
                 decoration: BoxDecoration(
                   color: isSelected
                       ? const Color(0xff0C8A7B).withValues(alpha: 0.12)
@@ -58,17 +59,18 @@ class CustomBottomNav extends StatelessWidget {
                         color: isSelected
                             ? const Color(0xff0C8A7B)
                             : Colors.grey,
-                        size: 22,
+                        size: height * 0.03,
                       ),
                     ),
 
-                    const SizedBox(height: 4),
+                     SizedBox(height: height * 0.002),
 
                     AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: TextStyle(
                         fontSize: isSelected ? 11 : 10,
                         fontWeight: FontWeight.w600,
+                        fontFamily: 'Cairo',
                         color: isSelected
                             ? const Color(0xff0C8A7B)
                             : Colors.grey,

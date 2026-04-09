@@ -10,7 +10,7 @@ class SplashScreen extends GetView<SplashController> {
   Widget build(BuildContext context) {
     final controller = Get.put(SplashController());
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorLight1,
+      backgroundColor: AppColors.backgroundColorLight,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
