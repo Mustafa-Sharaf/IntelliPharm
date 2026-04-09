@@ -45,7 +45,7 @@ class TrackRouteScreen extends StatelessWidget {
                       title: "Region".tr,
                       value: controller.selectedRegion.value,
                       icon: Icons.map,
-                      onTap: () {
+                      /*onTap: () {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
@@ -58,6 +58,24 @@ class TrackRouteScreen extends StatelessWidget {
                             return RegionSelector();
                           },
                         );
+                      },*/
+                      onTap: () async {
+                        final result = await showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20),
+                            ),
+                          ),
+                          builder: (context) {
+                            return RegionSelector();
+                          },
+                        );
+
+                        if (result != null) {
+                          controller.selectedRegion.value = result.id.toString();
+                        }
                       },
                       iconColor: AppColors.primaryColor,
                     ),
@@ -109,12 +127,35 @@ class TrackRouteScreen extends StatelessWidget {
                   CustomTextField(
                     label: "Reason_details".tr,
                     icon: Icons.edit_note,
-                    //controller: controller.pharmacyNameController,
+                    controller: controller.detailsController,
                   ),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                        onPressed: () async {
+                          final controller = Get.find<TrackRouteController>();
+
+                          /// 📍 لازم تجيب الموقع الحالي
+                          final mapController = Get.find<MapHelperController>(tag: "route");
+
+                          final currentLocation = await mapController.getCurrentLocation();
+
+                          if (controller.selectedRegion.value.isEmpty) {
+                            Get.snackbar("Error", "Please select region");
+                            return;
+                          }
+
+                          if (controller.selectedType.value.isEmpty) {
+                            Get.snackbar("Error", "Please select plan type");
+                            return;
+                          }
+
+                          await controller.initiatePlan(
+                            lat: currentLocation.latitude,
+                            lng: currentLocation.longitude,
+                            regionId: int.parse(controller.selectedRegion.value),
+                          );
+                        },
                       icon: const Icon(Icons.send, color: Colors.white),
                       label: Text(
                         "Send".tr,

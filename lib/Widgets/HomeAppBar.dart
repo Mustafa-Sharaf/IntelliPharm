@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
@@ -155,9 +156,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: () async {
                     final result = await Get.to(() => MedicineSearchSheet());
 
-                   /* if (result != null) {
+                   */
+/* if (result != null) {
                       print("Selected: ${result.name}");
-                    }*/
+                    }*//*
+
                   },
                 ),
               ),
@@ -168,3 +171,4 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
+*/

@@ -82,7 +82,8 @@ class AddPharmacyController extends GetxController {
 
       ///Create Pharmacy
       final request = PharmacyModel(
-        name: pharmacyNameController.text,
+        nameAr: pharmacyNameController.text,
+        nameEn: pharmacyNameController.text,
         regionId: selectedRegion.value!.id,
         latitude: mapController.latitude.value,
         longitude: mapController.longitude.value,

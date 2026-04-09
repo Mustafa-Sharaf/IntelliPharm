@@ -24,13 +24,19 @@ class MapHelperScreen extends StatelessWidget {
             height: height,
             child: Obx(
               () => GoogleMap(
-                onMapCreated: (mapCtrl) async {
+                /*onMapCreated: (mapCtrl) async {
                   mapHelperController.mapController.value = mapCtrl;
 
                   await Future.delayed(Duration(milliseconds: 100));
 
                   mapHelperController.applyMapStyle();
+                },*/
+                onMapCreated: (mapCtrl) {
+                  mapHelperController.setMapController(mapCtrl);
                 },
+
+                polylines: mapHelperController.polylines,
+                markers: mapHelperController.markers, // ✅ لازم هيك
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
                     mapHelperController.latitude.value,
@@ -38,7 +44,8 @@ class MapHelperScreen extends StatelessWidget {
                   ),
                   zoom: 14,
                 ),
-                markers: {mapHelperController.pharmacyMarker.value},
+                //markers: {mapHelperController.pharmacyMarker.value},
+
                 onTap: (point) {
                   mapHelperController.setLocation(
                     point.latitude,
