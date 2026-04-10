@@ -221,6 +221,8 @@ class PharmacyCard extends StatelessWidget {
     );
   }
 }*/
+
+//New code
 import 'package:flutter/material.dart';
 import '../app_theme/theme_extension.dart';
 
@@ -306,6 +308,7 @@ class PharmacyCard extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 /// ADDRESS
                 Text(
                   address,
@@ -318,6 +321,7 @@ class PharmacyCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: size.height * 0.008),
+
                 /// STATUS
                 Container(
                   padding: EdgeInsets.symmetric(
