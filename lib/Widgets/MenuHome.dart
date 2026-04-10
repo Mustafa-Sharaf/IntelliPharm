@@ -19,7 +19,7 @@ class DrawerHome extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.21,
               child: SizedBox(
                 child: DrawerHeader(
                   padding: EdgeInsets.zero,
@@ -48,7 +48,7 @@ class DrawerHome extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 10),
+                        padding: const EdgeInsets.only(left: 15, top: 10,right: 15),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -62,7 +62,7 @@ class DrawerHome extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.001,
+                              height: MediaQuery.of(context).size.height * 0.008,
                             ),
                             CircleAvatar(
                               radius: 30,

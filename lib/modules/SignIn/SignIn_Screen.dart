@@ -88,7 +88,6 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
                 ],
               ),
             ),
@@ -98,5 +97,3 @@ class SignInScreen extends StatelessWidget {
     );
   }
 }
-
-

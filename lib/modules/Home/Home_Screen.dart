@@ -4,13 +4,14 @@ import '../../Widgets/AppBarHome.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNav.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNavController.dart';
 import '../../Widgets/MenuHome.dart';
+import '../HomeContent/HomeContent_Screen.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   final pages = [
-    Center(child: Text("HOME")),
+    HomeContentScreen(),
     Center(child: Text("ORDERS")),
     Center(child: Text("ROUTE")),
     Center(child: Text("NOTES")),
