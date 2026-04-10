@@ -18,7 +18,7 @@ class AppThemes {
       selectionHandleColor: AppColors.primaryColor,
     ),
 
-    extensions: const [
+ /*   extensions: const [
 
       ThemeColors(
         backgroundMain: AppColors.backgroundColorLight,
@@ -27,6 +27,17 @@ class AppThemes {
         text: Colors.black,
       ),
 
+    ],*/
+    extensions: const [
+      ThemeColors(
+        backgroundMain: AppColors.backgroundColorLight,
+        backgroundSecondary: AppColors.white,
+        component: Colors.white,
+
+        textPrimary: AppColors.textLightPrimary,
+        textSecondary: AppColors.textLightSecondary,
+        textDefault: Colors.black,
+      ),
     ],
   );
 
@@ -41,7 +52,7 @@ class AppThemes {
       selectionHandleColor: AppColors.primaryColor,
     ),
 
-    extensions: const [
+/*    extensions: const [
 
       ThemeColors(
         backgroundMain: AppColors.backgroundDark,
@@ -50,6 +61,17 @@ class AppThemes {
         text: Colors.white,
       ),
 
+    ],*/
+    extensions: const [
+      ThemeColors(
+        backgroundMain: AppColors.backgroundDark,
+        backgroundSecondary: Color(0xFF1B1B1B),
+        component: AppColors.componentDark,
+
+        textPrimary: AppColors.textDarkPrimary,
+        textSecondary: AppColors.textDarkSecondary,
+        textDefault: Colors.white,
+      ),
     ],
   );
 }

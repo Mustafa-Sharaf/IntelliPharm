@@ -2,6 +2,8 @@
 
 //New code
 import 'package:flutter/material.dart';
+
+import '../app_theme/theme_extension.dart';
 class StatCard extends StatelessWidget {
   final IconData icon;
   final String value;
@@ -17,12 +19,16 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Padding(
-      padding: EdgeInsets.only(left: size.width * 0.033, top: size.width * 0.029),
+      padding: EdgeInsetsDirectional.only(
+        start: size.width * 0.033,
+        top: size.width * 0.029,
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Container(
-          color: Colors.white,
+          color: colors.component,
           height: size.height * 0.14,
           width: size.width * 0.29,
           child:  Column(
@@ -30,7 +36,7 @@ class StatCard extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: Color(0xff002653),
+                color: colors.textPrimary,
                 size: size.height * 0.045,
               ),
               SizedBox(height:size.height * 0.007),
@@ -41,7 +47,7 @@ class StatCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xff002653),
+                  color:colors.textPrimary,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -52,7 +58,7 @@ class StatCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Color(0xff43474F),
+                  color: colors.textSecondary,
                   fontFamily: 'Cairo',
                 ),
               ),

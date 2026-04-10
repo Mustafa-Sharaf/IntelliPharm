@@ -61,7 +61,7 @@ class PharmacistsScreen extends StatelessWidget {
                 return ListView.builder(
                   itemCount: controller.pharmacies.length,
                   itemBuilder: (context, index) {
-                    return PharmacyCard(pharmacy: controller.pharmacies[index]);
+                    //return PharmacyCard(pharmacy: controller.pharmacies[index]);
                   },
                 );
               }),

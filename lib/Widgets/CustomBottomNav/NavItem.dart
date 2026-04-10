@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 /// Model
 class NavItem {
@@ -10,10 +10,10 @@ class NavItem {
 }
 
 /// Items
-const List<NavItem> items = [
-  NavItem(Icons.home_rounded, "HOME"),
-  NavItem(Icons.receipt_long_rounded, "ORDERS"),
-  NavItem(Icons.route_rounded, "ROUTE"),
-  NavItem(Icons.account_balance_wallet, "Debts"),
-  NavItem(Icons.local_pharmacy, "Pharmacies"),
+List<NavItem> items = [
+  NavItem(Icons.home_rounded, "HOME".tr),
+  NavItem(Icons.receipt_long_rounded, "ORDERS".tr),
+  NavItem(Icons.route_rounded, "ROUTE".tr),
+  NavItem(Icons.account_balance_wallet, "Debts".tr),
+  NavItem(Icons.local_pharmacy, "Pharmacies".tr),
 ];

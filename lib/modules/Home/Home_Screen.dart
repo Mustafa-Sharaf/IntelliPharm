@@ -4,6 +4,7 @@ import '../../Widgets/AppBarHome.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNav.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNavController.dart';
 import '../../Widgets/MenuHome.dart';
+import '../../app_theme/theme_extension.dart';
 import '../HomeContent/HomeContent_Screen.dart';
 //New code
 class HomeScreen extends StatelessWidget {
@@ -21,9 +22,11 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CustomBottomNavController());
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Obx(() => Scaffold(
       key: scaffoldKey,
-      backgroundColor: Color(0xfff2f2f2),
+      //backgroundColor: Color(0xfff2f2f2),
+      backgroundColor: colors.backgroundMain,
       /// Drawer
       drawer: const DrawerHome(),
       /// AppBar

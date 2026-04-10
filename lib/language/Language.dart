@@ -25,6 +25,25 @@ class MyLanguage implements Translations{
       "My_Profile":"My Profile",
       "MySitting":"My Sitting",
       "IntelliPharma":"IntelliPharma",
+      "Visits":"Visits",
+      "Deals":"Deals",
+      "Order":"Order",
+      "See_All":"See All",
+      "Today's_Visits":"Today's Visits",
+      "Active_Offers":"Active Offers",
+      "HOME":"HOME",
+      "ORDERS":"ORDERS",
+      "ROUTE":"ROUTE",
+      "Debts":"Debts",
+      "Pharmacies":"Pharmacies",
+      "Plan_Today's_Route":"Plan Today's\nRoute",
+      "":"",
+      "":"",
+
+
+
+
+
       "Let's_get_started":"Let's get started",
       "Add_Order":"Add Order",
       "Customers":"Customers",
@@ -106,6 +125,26 @@ class MyLanguage implements Translations{
       "My_Profile": "ملفي الشخصي",
       "MySitting": "الإعدادات",
       "IntelliPharma": "إنتلي فارما",
+      "Visits":"الزيارات",
+      "Deals":"المبيعات",
+      "Order":"الطلبات",
+      "See_All":"عرض الكل",
+      "Today's_Visits":"زيارات اليوم",
+      "Active_Offers":"العروض المتوفرة",
+      "HOME":"الرئيسية",
+      "ORDERS":"طلبات",
+      "ROUTE":"المسار",
+      "Debts":"الديون",
+      "Pharmacies":"الصيدليات",
+      "Plan_Today's_Route": "خطط مسار\nاليوم",
+
+
+
+
+
+
+
+
       "Let's_get_started": "لنبدأ",
       "Add_Order": "إضافة طلب",
       "Pharmacists": "الصيادلة",

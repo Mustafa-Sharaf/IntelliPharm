@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import '../app_theme/theme_extension.dart';
 import '../helper/DateHelper.dart';
 
 //New code
@@ -18,9 +19,10 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
     final user = box.read("user");
     final name = user?["name"] ?? "User";
     final width = MediaQuery.of(context).size.width;
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: const Color(0xfff2f2f2),
+      backgroundColor: colors.backgroundMain,
       elevation: 0,
       title: Row(
         children: [
@@ -31,7 +33,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
             },
             icon: Icon(
               Icons.menu,
-              color: Color(0xff002653),
+              color:colors.textPrimary ,//Color(0xff002653)
               size: width * 0.06,
             ),
           ),
@@ -49,7 +51,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'Cairo',
-                    color: Color(0xff002653),
+                    color: colors.textPrimary,
                     fontWeight: FontWeight.bold,
                     height: 1,
                   ),
@@ -62,7 +64,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(
                     fontSize: 10,
                     fontFamily: 'Cairo',
-                    color: Color(0xff43474F),
+                    color: colors.textSecondary,//Color(0xff43474F),
                     height: 1,
                   ),
                 ),
@@ -79,7 +81,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {},
                 icon: Icon(
                   Icons.notifications_none,
-                  color: Color(0xff002653),
+                  color: colors.textPrimary,
                   size: width * 0.06,
                 ),
               ),

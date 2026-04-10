@@ -96,7 +96,7 @@ class DrawerHome extends StatelessWidget {
                 'My_Profile'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -110,7 +110,7 @@ class DrawerHome extends StatelessWidget {
                 'My Targets'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -124,7 +124,7 @@ class DrawerHome extends StatelessWidget {
                 'Application_language'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -144,7 +144,7 @@ class DrawerHome extends StatelessWidget {
                 'Theme_Toggle'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -156,7 +156,7 @@ class DrawerHome extends StatelessWidget {
                 'Support'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -167,7 +167,7 @@ class DrawerHome extends StatelessWidget {
                 'Share_Application'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -178,7 +178,7 @@ class DrawerHome extends StatelessWidget {
                 'Logout'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),
@@ -190,7 +190,7 @@ class DrawerHome extends StatelessWidget {
                 'Privacy_Policy'.tr,
                 style: TextStyle(
                   fontSize: 16,
-                  color: colors.text,
+                  color: colors.textDefault,
                   fontFamily: 'Cairo',
                 ),
               ),

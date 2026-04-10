@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 //New code
 class PlanRouteCard extends StatelessWidget {
@@ -31,7 +32,7 @@ class PlanRouteCard extends StatelessWidget {
                     ),
                   ),
                   Align(
-                    alignment: Alignment.centerRight,
+                    alignment: AlignmentDirectional.centerEnd,
                     child: Padding(
                       padding: EdgeInsets.only(right: size.width * 0.03),
                       child: Icon(
@@ -56,7 +57,7 @@ class PlanRouteCard extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          "Plan Today's\nRoute",
+                          "Plan_Today's_Route".tr,
                           style: TextStyle(
                             fontSize: size.width * 0.055,
                             fontWeight: FontWeight.bold,
