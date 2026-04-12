@@ -1,3 +1,4 @@
+/*
 
 class Medicine {
   final int id;
@@ -26,4 +27,4 @@ class Medicine {
       inStock: json['in_stock'] ?? false,
     );
   }
-}
+}*/

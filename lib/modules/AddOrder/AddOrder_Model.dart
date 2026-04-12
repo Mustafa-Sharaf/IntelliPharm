@@ -1,3 +1,7 @@
+
+
+/*
+
 class MedicineModel {
   final int id;
   final int categoryId;
@@ -31,4 +35,4 @@ class MedicineModel {
       inStock: json['in_stock'],
     );
   }
-}
+}*/

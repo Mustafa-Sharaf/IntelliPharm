@@ -1,4 +1,112 @@
 import 'package:flutter/material.dart';
+import '../../Widgets/MedicineCard.dart';
+import '../../app_theme/theme_extension.dart';
+import '../Searching/Searching_Controller.dart';
+import '../Searching/Searching_Screen.dart';
+
+
+class AddOrderScreen extends StatelessWidget {
+   AddOrderScreen({super.key});
+
+  final searchController = SearchControllerX();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<ThemeColors>()!;
+    final width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      backgroundColor: colors.backgroundMain,
+      appBar: AppBar(
+        backgroundColor: colors.backgroundMain,
+        foregroundColor: colors.textPrimary,
+        title: Row(
+          children: [
+            SizedBox(width: width * 0.25),
+            Text(
+              "Medicines",
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: 'Cairo',
+                color: colors.textPrimary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(width: width * 0.25),
+            Stack(
+              children: [
+                Icon(Icons.shopping_cart_rounded,size: 30,),
+                Positioned(
+                  right: 2,
+                  child: CircleAvatar(
+                    radius: width * 0.013,
+                    backgroundColor: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding:EdgeInsets.all(width * 0.03),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+
+              CustomSearchField(controller: searchController),
+
+              const SizedBox(height: 10),
+
+              MedicineCard(
+                name: "Amoxicillin CL",
+                description: "Antibiotic | 500mg Cap",
+                price: "\$12.50",
+                stockQuantity: "120",
+                status: "مستورد",
+                discount: "15% OFF",
+                image: "assets/images/icon.png",
+                controller: TextEditingController(),
+                onAdd: () {
+                  // add logic
+                },
+              ),
+              MedicineCard(
+                name: "Amoxicillin CL Amoxicillin CL Amoxicillin CL",
+                description: "Antibiotic | 500mg Cap Amoxicillin CL Amoxicillin CL",
+                price: "\$12.50sadfgh",
+                stockQuantity: "120234567",
+                status: "imported",
+                discount: "15% OFF",
+                image: "assets/images/LogoSmall.png",
+                controller: TextEditingController(),
+                onAdd: () {
+                  // add logic
+                },
+              ),
+              MedicineCard(
+                name: "Amoxicillin CL",
+                description: "Antibiotic | 500mg Cap",
+                price: "\$12.50",
+                stockQuantity: "120",
+                status: "in stock",
+                discount: "0",
+                image: "assets/images/Franca.png",
+                controller: TextEditingController(),
+                onAdd: () {
+                  // add logic
+                },
+              )
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+
+/*
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/CustomAppBar.dart';
 import '../../app_theme/theme_extension.dart';
@@ -192,6 +300,7 @@ class AddOrderScreen extends StatelessWidget {
     );
   }
 }
+*/
 
 /* Obx(
                 () =>

@@ -13,6 +13,7 @@ class BuildAppbar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       backgroundColor: colors.backgroundMain,
+      foregroundColor: colors.textPrimary,
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: true,

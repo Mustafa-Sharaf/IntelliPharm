@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 
+
+//New code
 class ForgotPasswordComponent extends StatelessWidget {
   const ForgotPasswordComponent({super.key});
 

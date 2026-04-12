@@ -25,7 +25,6 @@ class MyOrdersScreen extends StatelessWidget {
               onTap: controller.changeTab,
             )),
              SizedBox(height: size.height * 0.01),
-            /// 🔹 List
             Expanded(
               child: ListView(
                 children: [
@@ -65,9 +64,20 @@ class MyOrdersScreen extends StatelessWidget {
                     status: "CANCELLED",
                     statusColor: Colors.red,
                   ),
+                  OrderCard(
+                    orderId: "1035",
+                    pharmacyName: "Green Cross Pharma",
+                    date: "3 Apr 2026",
+                    itemsCount: "3 items",
+                    price: "\$89.20",
+                    status: "DELIVERED",
+                    statusColor: Colors.green,
+                  ),
                 ],
               ),
-            )
+            ),
+
+
           ],
         ),
 

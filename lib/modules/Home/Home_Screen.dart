@@ -5,7 +5,9 @@ import '../../Widgets/CustomBottomNav/CustomBottomNav.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNavController.dart';
 import '../../Widgets/MenuHome.dart';
 import '../../app_theme/theme_extension.dart';
+import '../AddOrder/AddOrder_Screen.dart';
 import '../HomeContent/HomeContent_Screen.dart';
+import '../MyOrders/FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
 import 'BuildAppBar.dart';
 
@@ -30,12 +32,16 @@ class HomeScreen extends StatelessWidget {
       () => Scaffold(
         key: scaffoldKey,
         backgroundColor: colors.backgroundMain,
+
         /// Drawer
         drawer: const DrawerHome(),
+
         /// AppBar
         appBar: _buildAppBar(controller.currentIndex.value, scaffoldKey),
+
         /// Change pages
         body: pages[controller.currentIndex.value],
+
         /// Navbar
         bottomNavigationBar: CustomBottomNav(
           currentIndex: controller.currentIndex.value,
@@ -43,15 +49,22 @@ class HomeScreen extends StatelessWidget {
             controller.changeIndex(index);
           },
         ),
+        floatingActionButton: controller.currentIndex.value == 1
+            ? FloatingAction(
+                onPressed: () {
+                  Get.to(AddOrderScreen());
+                },
+              )
+            : null,
       ),
     );
   }
 }
 
 PreferredSizeWidget? _buildAppBar(
-    int index,
-    GlobalKey<ScaffoldState> scaffoldKey,
-    ) {
+  int index,
+  GlobalKey<ScaffoldState> scaffoldKey,
+) {
   switch (index) {
     case 0:
       return AppbarHome(scaffoldKey: scaffoldKey);

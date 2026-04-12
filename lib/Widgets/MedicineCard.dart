@@ -1,0 +1,234 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import '../app_theme/theme_extension.dart';
+
+class MedicineCard extends StatelessWidget {
+  final String name;
+  final String description;
+  final String price;
+  final String stockQuantity;
+  final String status;
+  final String discount;
+  final String image;
+  final TextEditingController controller;
+  final VoidCallback onAdd;
+
+  const MedicineCard({
+    super.key,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.stockQuantity,
+    required this.status,
+    required this.discount,
+    required this.image,
+    required this.controller,
+    required this.onAdd,
+  });
+
+  Color getStatusColor() {
+    if (status.toLowerCase() == "imported") {
+      return Colors.red;
+    }
+    return Colors.green;
+  }
+
+  bool get hasDiscount => discount.trim().isNotEmpty && discount != "0";
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<ThemeColors>()!;
+    final size = MediaQuery.of(context).size;
+
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(vertical: size.height * 0.006),
+          padding: EdgeInsets.all(size.height * 0.012),
+          decoration: BoxDecoration(
+            color: colors.component,
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: size.width * 0.15,
+                    height: size.width * 0.15,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(image, fit: BoxFit.cover),
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.02),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: size.width * 0.03,
+                            vertical: size.width * 0.01,
+                          ),
+                          decoration: BoxDecoration(
+                            color: getStatusColor().withValues(alpha: 0.15),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            status,
+                            style: TextStyle(
+                              color: getStatusColor(),
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Cairo',
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                name,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: colors.textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  fontFamily: 'Cairo',
+                                ),
+                              ),
+                            ),
+                            Text(
+                              price,
+                              style: TextStyle(
+                                color: colors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        //const SizedBox(height: 6),
+
+                        /// الوصف + المخزون
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                description,
+                                style: TextStyle(
+                                  color: colors.textSecondary,
+                                  fontSize: 12,
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              "Qua:$stockQuantity",
+                              style: TextStyle(
+                                color: colors.textSecondary,
+                                fontSize: 11,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: size.height * 0.01),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: size.width * 0.2,
+                    height: size.height * 0.04,
+                    decoration: BoxDecoration(
+                      color: colors.backgroundMain,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: TextField(
+                      controller: controller,
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "0",
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(width: size.width * 0.02),
+
+                  SizedBox(
+                    width: size.width * 0.3,
+                    height: size.height * 0.04,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff0C8A7B),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        "Add to cart",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        if (hasDiscount)
+          Positioned(
+            top: 5,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: const BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(16),
+                  bottomLeft: Radius.circular(12),
+                ),
+              ),
+              child: Text(
+                discount,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

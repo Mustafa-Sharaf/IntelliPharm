@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/homeScreen', page: ()=> HomeScreen()),
         GetPage(name: '/pharmacistsScreen', page: ()=> PharmacistsScreen()),
         GetPage(name: '/addPharmacyScreen', page: ()=> AddPharmacyScreen()),
-        GetPage(name: '/addOrderScreen', page: ()=> AddOrderScreen()),
+        //GetPage(name: '/addOrderScreen', page: ()=> AddOrderScreen()),
         //GetPage(name: '/viewOrdersScreen', page: ()=> ViewOrdersScreen()),
         GetPage(name: '/trackRouteScreen', page: ()=> TrackRouteScreen()),
         GetPage(name: '/trackRouteScreen', page: ()=> TrackRouteScreen()),
