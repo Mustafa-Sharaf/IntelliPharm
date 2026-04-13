@@ -40,6 +40,7 @@ class PharmacyModel {
     };
   }
 }*/
+/*
 class PharmacyModel {
   final String nameEn;
   final String nameAr;
@@ -84,4 +85,4 @@ class PharmacyModel {
       "pharmacist_alt_phone": pharmacistAltPhone,
     };
   }
-}
+}*/

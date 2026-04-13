@@ -11,7 +11,7 @@ class MedicineService {
       query: {
         "page_number": page,
         "per_page": 15,
-        "name": query,
+        "name_starts_with": query,
       },
     );
 

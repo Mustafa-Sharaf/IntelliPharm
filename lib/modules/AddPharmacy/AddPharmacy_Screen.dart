@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/BuildGestureDetector.dart';
@@ -158,3 +159,4 @@ class AddPharmacyScreen extends StatelessWidget {
     );
   }
 }
+*/

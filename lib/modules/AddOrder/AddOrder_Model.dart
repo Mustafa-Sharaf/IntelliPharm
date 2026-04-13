@@ -1,7 +1,4 @@
 
-
-/*
-
 class MedicineModel {
   final int id;
   final int categoryId;
@@ -11,6 +8,7 @@ class MedicineModel {
   final bool isActive;
   final int availableQuantity;
   final bool inStock;
+  final String barcode;
 
   MedicineModel({
     required this.id,
@@ -21,18 +19,20 @@ class MedicineModel {
     required this.isActive,
     required this.availableQuantity,
     required this.inStock,
+    required this.barcode,
   });
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) {
     return MedicineModel(
       id: json['id'],
       categoryId: json['category_id'],
-      name: json['name'],
-      price: double.parse(json['price']),
-      isImported: json['is_imported'],
-      isActive: json['is_active'],
-      availableQuantity: json['available_quantity'],
-      inStock: json['in_stock'],
+      name: json['name'] ?? '',
+      price: double.tryParse(json['price'].toString()) ?? 0.0,
+      isImported: json['is_imported'] ?? false,
+      isActive: json['is_active'] ?? false,
+      availableQuantity: json['available_quantity'] ?? 0,
+      inStock: json['in_stock'] ?? false,
+      barcode: json['barcode'] ?? '',
     );
   }
-}*/
+}

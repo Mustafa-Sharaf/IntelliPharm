@@ -120,9 +120,8 @@ class MedicineCard extends StatelessWidget {
                           ],
                         ),
 
-                        //const SizedBox(height: 6),
 
-                        /// الوصف + المخزون
+
                         Row(
                           children: [
                             Expanded(
@@ -136,7 +135,6 @@ class MedicineCard extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            SizedBox(width: 8),
                             Text(
                               "Qua:$stockQuantity",
                               style: TextStyle(
@@ -178,12 +176,35 @@ class MedicineCard extends StatelessWidget {
                   ),
 
                   SizedBox(width: size.width * 0.02),
-
                   SizedBox(
                     width: size.width * 0.3,
                     height: size.height * 0.04,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff0C8A7B),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        "Alternatives",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.3,
+                    height: size.height * 0.04,
+                    child: ElevatedButton(
+                      onPressed: () {
+
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff0C8A7B),
                         shape: RoundedRectangleBorder(

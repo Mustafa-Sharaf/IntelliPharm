@@ -7,7 +7,7 @@ import '../../Widgets/MenuHome.dart';
 import '../../app_theme/theme_extension.dart';
 import '../AddOrder/AddOrder_Screen.dart';
 import '../HomeContent/HomeContent_Screen.dart';
-import '../MyOrders/FloatingAction.dart';
+import 'FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
 import 'BuildAppBar.dart';
 
@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
         floatingActionButton: controller.currentIndex.value == 1
             ? FloatingAction(
                 onPressed: () {
-                  Get.to(AddOrderScreen());
+                  Get.to(() =>AddOrderScreen());
                 },
               )
             : null,

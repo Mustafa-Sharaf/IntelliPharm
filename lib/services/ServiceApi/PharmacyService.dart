@@ -1,4 +1,5 @@
 
+/*
 
 import '../../modules/AddPharmacy/AddPharmacy_Model.dart';
 import '../ApiService.dart';
@@ -12,4 +13,4 @@ class PharmacyService {
 
     return response.data;
   }
-}
+}*/

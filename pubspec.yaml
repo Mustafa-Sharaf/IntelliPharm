@@ -38,6 +38,7 @@ dependencies:
   dio: ^5.9.2
   google_maps_webservice: ^0.0.19
   url_launcher: ^6.3.2
+  speech_to_text: ^7.3.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -13,7 +13,7 @@ class NavItem {
 List<NavItem> items = [
   NavItem(Icons.home_rounded, "HOME".tr),
   NavItem(Icons.receipt_long_rounded, "ORDERS".tr),
-  NavItem(Icons.route_rounded, "ROUTE".tr),
+  NavItem(Icons.chat, "Ask Gemini".tr),
   NavItem(Icons.account_balance_wallet, "Debts".tr),
   NavItem(Icons.local_pharmacy, "Pharmacies".tr),
 ];

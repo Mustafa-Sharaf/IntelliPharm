@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intellipharm/app_theme/AppColors.dart';
+import 'package:get/get.dart';
+import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../AddOrder/AddOrder_Controller.dart';
 import 'Searching_Controller.dart';
 
 class CustomSearchField extends StatelessWidget {
@@ -31,7 +33,10 @@ class CustomSearchField extends StatelessWidget {
             builder: (context, value, _) {
               return TextField(
                 controller: controller.textController,
-                onChanged: controller.onChanged,
+                onChanged: (value) {
+                  controller.onChanged(value);
+                  Get.find<AddOrderController>().onSearchChanged(value);
+                },
                 decoration: InputDecoration(
                   hintText: "Search medicines...",
                   hintStyle: TextStyle(
@@ -42,7 +47,10 @@ class CustomSearchField extends StatelessWidget {
                   suffixIcon: value.isNotEmpty
                       ? IconButton(
                           icon: Icon(Icons.close, color: colors.textSecondary),
-                          onPressed: controller.clear,
+                          onPressed: () {
+                            controller.clear();
+                            Get.find<AddOrderController>().onSearchChanged('');
+                          },
                         )
                       : null,
 
@@ -58,7 +66,13 @@ class CustomSearchField extends StatelessWidget {
           width: size.width * 0.13,
           height: size.width * 0.13,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              if (!controller.isListening) {
+                await controller.startListening();
+              } else {
+                controller.stopListening();
+              }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.textPrimary,
               elevation: 3,
@@ -66,7 +80,7 @@ class CustomSearchField extends StatelessWidget {
               shape: const CircleBorder(),
             ),
             child: Icon(
-              Icons.mic,
+              controller.isListening ? Icons.mic : Icons.mic_none,
               color: AppColors.backgroundColorLight,
               size: size.width * 0.06,
             ),
