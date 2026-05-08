@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class AppColors{
   ///light mode
   //static const backgroundColorLight = Color(0xffe8e8e8);
-  static const backgroundColorLight = Color(0xfff2f2f2);
+  //backgroundColor: const Color(0xfff2f2f2),
+  static const backgroundColorLight = Color(0xffF5F6FA);
   static const backgroundDark = Color(0xFF111111);
   static const textLightPrimary=Color(0xff002653);
   static const textLightSecondary=Color(0xff43474F);

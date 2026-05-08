@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../modules/PlanYourRoute/PlanYourRoute_Screen.dart';
+
 
 //New code
 class PlanRouteCard extends StatelessWidget {
@@ -10,7 +12,9 @@ class PlanRouteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.to(PlanYourRouteScreen());
+      },
       child: SizedBox(
         height: size.height * 0.21,
         width: size.width * 0.96,

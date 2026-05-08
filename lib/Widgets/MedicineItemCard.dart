@@ -27,6 +27,7 @@ class MedicineItemCard extends StatelessWidget {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.symmetric(vertical: size.width * 0.01),
       padding: EdgeInsets.all(size.width * 0.02),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -57,13 +58,16 @@ class MedicineItemCard extends StatelessWidget {
                   maxLines: 2,
                 ),
               ),
-              Text(
-                "\$${price.toStringAsFixed(2)}",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Cairo',
-                  color: colors.textPrimary,
+              Padding(
+                padding: EdgeInsets.only(right:  size.width * 0.03),
+                child: Text(
+                  "\$${price.toStringAsFixed(2)}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Cairo',
+                    color: colors.textPrimary,
+                  ),
                 ),
               ),
             ],

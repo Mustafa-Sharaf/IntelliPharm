@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
-import '../../NewOrder/NewOrder_Screen.dart';
+import '../../Widgets/Tabs.dart';
+import '../NewOrder/NewOrder_Screen.dart';
 import '../../Widgets/MedicineCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../Searching/Searching_Controller.dart';
@@ -62,7 +63,14 @@ class AddOrderScreen extends StatelessWidget {
           child: Column(
             children: [
               CustomSearchField(controller: searchController),
-              SizedBox(height: size.height * 0.001),
+              SizedBox(height: size.height * 0.03),
+              Obx(() => Tabs(
+                tabs: addOrderController.tabs,
+                selectedIndex: addOrderController.selectedTab.value,
+                onTap: addOrderController.changeTab,
+              )),
+
+              SizedBox(height: size.height * 0.03),
               Obx(() {
                 if (addOrderController.isLoading.value) {
                   return Center(

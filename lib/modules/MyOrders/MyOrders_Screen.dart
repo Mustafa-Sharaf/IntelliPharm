@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/OrderCard.dart';
-import '../../Widgets/OrderTabs.dart';
+import '../../Widgets/Tabs.dart';
 import '../../app_theme/theme_extension.dart';
 import 'MyOrders_Controller.dart';
 
@@ -19,7 +19,7 @@ class MyOrdersScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Obx(() => OrderTabs(
+            Obx(() => Tabs(
               tabs: controller.tabs,
               selectedIndex: controller.selectedTab.value,
               onTap: controller.changeTab,

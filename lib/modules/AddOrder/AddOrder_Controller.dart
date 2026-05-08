@@ -23,6 +23,13 @@ class AddOrderController extends GetxController {
   /// debounce
   Timer? _debounce;
 
+  var selectedTab = 0.obs;
+  final tabs = ["All", "Pending", "Confirmed", "Delivered"];
+
+  void changeTab(int index) {
+    selectedTab.value = index;
+  }
+
   @override
   void onInit() {
     super.onInit();

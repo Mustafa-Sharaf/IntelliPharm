@@ -1,14 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 import '../app_theme/theme_extension.dart';
+
 //New code
-class OrderTabs extends StatelessWidget {
+class Tabs extends StatelessWidget {
   final List<String> tabs;
   final int selectedIndex;
   final Function(int) onTap;
 
-  const OrderTabs({
+  const Tabs({
     super.key,
     required this.tabs,
     required this.selectedIndex,
@@ -27,21 +26,24 @@ class OrderTabs extends StatelessWidget {
         return GestureDetector(
           onTap: () => onTap(index),
           child: Container(
-            margin: EdgeInsets.only(right: size.width * 0.02),
-            padding: EdgeInsets.symmetric(horizontal: size.width * 0.03, vertical:size.width * 0.02),
+            height: 40,
+            margin: EdgeInsets.only(right: size.width * 0.03),
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.03,
+              vertical: size.width * 0.02,
+            ),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? Colors.teal
-                  : colors.backgroundSecondary,
+              color: isSelected ? Colors.teal : colors.backgroundSecondary,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(
-              tabs[index],
-              style: TextStyle(
-                color: isSelected
-                    ? Colors.white
-                    : colors.textSecondary,
-                fontWeight: FontWeight.w500,
+            child: Center(
+              child: Text(
+                tabs[index],
+                style: TextStyle(
+                  color: isSelected ? Colors.white : colors.textSecondary,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Cairo',
+                ),
               ),
             ),
           ),
