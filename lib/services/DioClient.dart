@@ -28,6 +28,8 @@ class DioClient {
           if (token != null) {
             options.headers["Authorization"] = "Bearer $token";
           }
+          options.headers["Accept-Language"] =
+              Get.locale?.languageCode ?? "en";
 
           handler.next(options);
         },

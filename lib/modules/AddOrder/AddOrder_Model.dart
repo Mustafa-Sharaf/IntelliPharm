@@ -2,23 +2,21 @@
 class MedicineModel {
   final int id;
   final int categoryId;
-  final String name;
+  final String commercialName;
+  final String scientificName;
   final double price;
   final bool isImported;
-  final bool isActive;
   final int availableQuantity;
-  final bool inStock;
   final String barcode;
 
   MedicineModel({
     required this.id,
     required this.categoryId,
-    required this.name,
+    required this.commercialName,
+    required this.scientificName,
     required this.price,
     required this.isImported,
-    required this.isActive,
     required this.availableQuantity,
-    required this.inStock,
     required this.barcode,
   });
 
@@ -26,12 +24,11 @@ class MedicineModel {
     return MedicineModel(
       id: json['id'],
       categoryId: json['category_id'],
-      name: json['name'] ?? '',
+      commercialName: json['commercial_name'] ?? '',
+      scientificName: json['scientific_name'] ?? '',
       price: double.tryParse(json['price'].toString()) ?? 0.0,
       isImported: json['is_imported'] ?? false,
-      isActive: json['is_active'] ?? false,
       availableQuantity: json['available_quantity'] ?? 0,
-      inStock: json['in_stock'] ?? false,
       barcode: json['barcode'] ?? '',
     );
   }

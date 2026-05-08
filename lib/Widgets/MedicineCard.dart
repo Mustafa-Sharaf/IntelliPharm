@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import '../app_theme/theme_extension.dart';
 
 class MedicineCard extends StatelessWidget {
-  final String name;
-  final String description;
+  final String commercialName;
+  final String scientificName;
   final String price;
   final String stockQuantity;
   final String status;
@@ -15,8 +15,8 @@ class MedicineCard extends StatelessWidget {
 
   const MedicineCard({
     super.key,
-    required this.name,
-    required this.description,
+    required this.commercialName,
+    required this.scientificName,
     required this.price,
     required this.stockQuantity,
     required this.status,
@@ -44,7 +44,10 @@ class MedicineCard extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.symmetric(vertical: size.height * 0.006),
-          padding: EdgeInsets.all(size.height * 0.012),
+          padding: EdgeInsets.symmetric(
+            vertical: size.height * 0.022,
+            horizontal: size.height * 0.018,
+          ),
           decoration: BoxDecoration(
             color: colors.component,
             borderRadius: BorderRadius.circular(16),
@@ -97,7 +100,7 @@ class MedicineCard extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Text(
-                                name,
+                                commercialName,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -120,13 +123,11 @@ class MedicineCard extends StatelessWidget {
                           ],
                         ),
 
-
-
                         Row(
                           children: [
                             Expanded(
                               child: Text(
-                                description,
+                                scientificName,
                                 style: TextStyle(
                                   color: colors.textSecondary,
                                   fontSize: 12,
@@ -180,31 +181,7 @@ class MedicineCard extends StatelessWidget {
                     width: size.width * 0.3,
                     height: size.height * 0.04,
                     child: ElevatedButton(
-                      onPressed: () {
-
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff0C8A7B),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: Text(
-                        "Alternatives",
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Cairo',
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.3,
-                    height: size.height * 0.04,
-                    child: ElevatedButton(
-                      onPressed: () {
-
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff0C8A7B),
                         shape: RoundedRectangleBorder(
@@ -220,6 +197,26 @@ class MedicineCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    width: size.width * 0.3,
+                    height: size.height * 0.04,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        "Alternatives",
+                        style: const TextStyle(
+                          color: Color(0xff0C8A7B),
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -228,10 +225,13 @@ class MedicineCard extends StatelessWidget {
 
         if (hasDiscount)
           Positioned(
-            top: 5,
+            top: size.height * 0.006,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              padding: EdgeInsets.symmetric(
+                horizontal: size.height * 0.01,
+                vertical: size.height * 0.005,
+              ),
               decoration: const BoxDecoration(
                 color: Colors.green,
                 borderRadius: BorderRadius.only(

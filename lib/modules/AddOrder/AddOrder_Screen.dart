@@ -63,14 +63,16 @@ class AddOrderScreen extends StatelessWidget {
           child: Column(
             children: [
               CustomSearchField(controller: searchController),
-              SizedBox(height: size.height * 0.03),
-              Obx(() => Tabs(
-                tabs: addOrderController.tabs,
-                selectedIndex: addOrderController.selectedTab.value,
-                onTap: addOrderController.changeTab,
-              )),
+              SizedBox(height: size.height * 0.025),
 
-              SizedBox(height: size.height * 0.03),
+              Obx(
+                    () => Tabs(
+                  tabs: addOrderController.categories.map((e) => e.name).toList(),
+                  selectedIndex: addOrderController.selectedTab.value,
+                  onTap: addOrderController.changeTab,
+                ),
+              ),
+              SizedBox(height: size.height * 0.025),
               Obx(() {
                 if (addOrderController.isLoading.value) {
                   return Center(
@@ -88,8 +90,8 @@ class AddOrderScreen extends StatelessWidget {
                     final med = addOrderController.medicines[index];
 
                     return MedicineCard(
-                      name: med.name,
-                      description: "Antibiotic | 500mg Cap",
+                      commercialName: med.commercialName,
+                      scientificName: med.scientificName,
                       price: "${med.price.toString()} S.P",
                       stockQuantity: med.availableQuantity.toString(),
                       status: med.isImported ? "imported" : "local",
@@ -108,4 +110,3 @@ class AddOrderScreen extends StatelessWidget {
     );
   }
 }
-

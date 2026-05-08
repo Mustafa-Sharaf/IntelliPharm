@@ -67,11 +67,7 @@ class CustomSearchField extends StatelessWidget {
           height: size.width * 0.13,
           child: ElevatedButton(
             onPressed: () async {
-              if (!controller.isListening) {
-                await controller.startListening();
-              } else {
-                controller.stopListening();
-              }
+
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.textPrimary,
@@ -79,8 +75,7 @@ class CustomSearchField extends StatelessWidget {
               padding: EdgeInsets.zero,
               shape: const CircleBorder(),
             ),
-            child: Icon(
-              controller.isListening ? Icons.mic : Icons.mic_none,
+            child: Icon(Icons.tune,
               color: AppColors.backgroundColorLight,
               size: size.width * 0.06,
             ),

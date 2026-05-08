@@ -19,36 +19,29 @@ class Tabs extends StatelessWidget {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
 
-    return Row(
-      children: List.generate(tabs.length, (index) {
-        final isSelected = index == selectedIndex;
+    return SizedBox(
+      height: size.height * 0.05,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: tabs.length,
+        separatorBuilder: (_, __) => SizedBox(width: size.width * 0.02),
+        itemBuilder: (context, index) {
+          final isSelected = index == selectedIndex;
 
-        return GestureDetector(
-          onTap: () => onTap(index),
-          child: Container(
-            height: 40,
-            margin: EdgeInsets.only(right: size.width * 0.03),
-            padding: EdgeInsets.symmetric(
-              horizontal: size.width * 0.03,
-              vertical: size.width * 0.02,
-            ),
-            decoration: BoxDecoration(
-              color: isSelected ? Colors.teal : colors.backgroundSecondary,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Text(
-                tabs[index],
-                style: TextStyle(
-                  color: isSelected ? Colors.white : colors.textSecondary,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Cairo',
-                ),
+          return GestureDetector(
+            onTap: () => onTap(index),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: isSelected ? Colors.teal : colors.backgroundSecondary,
+                borderRadius: BorderRadius.circular(20),
               ),
+              alignment: Alignment.center,
+              child: Text(tabs[index]),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

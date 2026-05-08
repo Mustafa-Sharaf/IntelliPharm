@@ -1,42 +1,70 @@
+
 import 'dart:async';
 import 'package:get/get.dart';
 
+import '../../services/ServiceApi/CategoryService.dart';
 import '../../services/ServiceApi/MedicineService.dart';
 import 'AddOrder_Model.dart';
-
+import 'CategoryModel.dart';
 
 class AddOrderController extends GetxController {
-  /// 🔍 البحث
+  /// search text
   RxString searchQuery = ''.obs;
 
-  /// 📦 البيانات
+  /// medicines list
   RxList<MedicineModel> medicines = <MedicineModel>[].obs;
 
-  /// ⏳ حالات
+  /// categories list
+  RxList<CategoryModel> categories = <CategoryModel>[].obs;
+
+  /// loading states
   RxBool isLoading = false.obs;
   RxBool isPaginationLoading = false.obs;
 
-  /// 📄 Pagination
+  /// pagination
   int currentPage = 1;
   int lastPage = 1;
+
+  /// selected tab
+  var selectedTab = 0.obs;
+
+  /// selected category id
+  int? selectedCategoryId;
 
   /// debounce
   Timer? _debounce;
 
-  var selectedTab = 0.obs;
-  final tabs = ["All", "Pending", "Confirmed", "Delivered"];
-
-  void changeTab(int index) {
-    selectedTab.value = index;
-  }
-
   @override
   void onInit() {
     super.onInit();
+    fetchCategories();
     fetchMedicines();
   }
 
-  /// 🔄 جلب البيانات
+  /// fetch categories
+  Future<void> fetchCategories() async {
+    try {
+      final response = await CategoryService.getCategories(page: 1);
+
+      final List list = response['data']['data'];
+
+      categories.value =
+          list.map((e) => CategoryModel.fromJson(e)).toList();
+    } catch (e) {
+      print("Categories Error: $e");
+    }
+  }
+
+  /// change selected category
+  void changeTab(int index) {
+    selectedTab.value = index;
+
+    selectedCategoryId = categories[index].id;
+
+    fetchMedicines();
+  }
+
+  /// fetch medicines
   Future<void> fetchMedicines({bool isLoadMore = false}) async {
     try {
       if (isLoadMore) {
@@ -48,18 +76,16 @@ class AddOrderController extends GetxController {
 
       final response = await MedicineService.getMedicines(
         page: currentPage,
-        //query: searchQuery.value,
-        query: searchQuery.value.isEmpty ? '' : searchQuery.value,
+        query: searchQuery.value,
+        categoryId: selectedCategoryId,
       );
 
       final data = response['data'];
-
       final List list = data['data'];
 
       final fetchedMedicines =
       list.map((e) => MedicineModel.fromJson(e)).toList();
 
-      /// 📄 pagination info
       lastPage = data['meta']['last_page'];
 
       if (isLoadMore) {
@@ -68,25 +94,30 @@ class AddOrderController extends GetxController {
         medicines.value = fetchedMedicines;
       }
     } catch (e) {
-      print("Error: $e");
+      print("Medicines Error: $e");
     } finally {
       isLoading.value = false;
       isPaginationLoading.value = false;
     }
   }
 
-  /// 🔍 البحث مع debounce
+  /// search with debounce
   void onSearchChanged(String value) {
     searchQuery.value = value;
 
-    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    if (_debounce?.isActive ?? false) {
+      _debounce!.cancel();
+    }
 
-    _debounce = Timer(const Duration(milliseconds: 500), () {
-      fetchMedicines();
-    });
+    _debounce = Timer(
+      const Duration(milliseconds: 500),
+          () {
+        fetchMedicines();
+      },
+    );
   }
 
-  /// 📄 تحميل المزيد
+  /// load more pagination
   void loadMore() {
     if (currentPage < lastPage && !isPaginationLoading.value) {
       currentPage++;
