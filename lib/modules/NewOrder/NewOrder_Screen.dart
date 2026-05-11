@@ -4,7 +4,9 @@ import 'package:intellipharm/app_theme/AppColors.dart';
 import 'package:intellipharm/modules/NewOrder/NewOrder_Controller.dart';
 import '../../Widgets/AddMedicineButton.dart';
 import '../../Widgets/MedicineItemCard.dart';
-import '../../Widgets/PharmacyList/PharmacyList_Screen.dart';
+
+import '../../Widgets/PharmacySelector/PharmacyList_Controller.dart';
+import '../../Widgets/PharmacySelector/PharmacySelector_Screen.dart';
 import '../../app_theme/theme_extension.dart';
 import '../AddOrder/AddOrder_Controller.dart';
 
@@ -13,7 +15,7 @@ class NewOrderScreen extends StatelessWidget {
 
   final controller = Get.find<AddOrderController>();
   final newOrderController = Get.find<NewOrderController>();
-
+  final pharmacySelectorController = Get.put(PharmacySelectorController(), permanent: true,);
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
@@ -63,7 +65,15 @@ class NewOrderScreen extends StatelessWidget {
                 ],
               ),
             ),
-            PharmacySelectorWidget(),
+            //PharmacySelectorWidget(),
+            PharmacySelectorWidget(
+              onSelected: (pharmacy) {
+                pharmacySelectorController.selectedPharmacy.value = pharmacy;
+               /* pharmacySelectorController.selectedPharmacy.value?.name
+                pharmacySelectorController.selectedPharmacy.value?.region
+                pharmacySelectorController.selectedPharmacy.value?.id*/
+              },
+            ),
             SizedBox(height: size.height * 0.015),
             Padding(
               padding: EdgeInsets.only(

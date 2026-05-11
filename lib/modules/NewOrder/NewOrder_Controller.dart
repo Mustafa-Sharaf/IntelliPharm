@@ -1,16 +1,11 @@
 
-
-
 import 'package:get/get.dart';
-
 import '../AddOrder/AddOrder_Model.dart';
 import 'CartItem.dart';
 
-class NewOrderController extends GetxController{
-
+class NewOrderController extends GetxController {
   /// cart (MAIN)
   RxList<CartItem> cart = <CartItem>[].obs;
-
 
   void addToCart(MedicineModel med, int qty) {
     print("ADD TO CART CALLED");
@@ -57,8 +52,4 @@ class NewOrderController extends GetxController{
   void removeItem(CartItem item) {
     cart.remove(item);
   }
-
-
-
-
 }
