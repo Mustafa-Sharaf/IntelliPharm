@@ -8,6 +8,8 @@ class MedicineModel {
   final bool isImported;
   final int availableQuantity;
   final String barcode;
+  final List<String> images;
+  final GiftModel? gift;
 
   MedicineModel({
     required this.id,
@@ -18,6 +20,8 @@ class MedicineModel {
     required this.isImported,
     required this.availableQuantity,
     required this.barcode,
+    required this.images,
+    required this.gift,
   });
 
   factory MedicineModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +34,31 @@ class MedicineModel {
       isImported: json['is_imported'] ?? false,
       availableQuantity: json['available_quantity'] ?? 0,
       barcode: json['barcode'] ?? '',
+      images: (json['images'] as List?)
+          ?.map((e) => e.toString())
+          .toList() ??
+          [],
+      gift: json['gift'] != null
+          ? GiftModel.fromJson(json['gift'])
+          : null,
+    );
+  }
+}
+
+
+class GiftModel {
+  final int giftQuantity;
+  final int requiredQuantity;
+
+  GiftModel({
+    required this.giftQuantity,
+    required this.requiredQuantity,
+  });
+
+  factory GiftModel.fromJson(Map<String, dynamic> json) {
+    return GiftModel(
+      giftQuantity: json['gift_quantity'] ?? 0,
+      requiredQuantity: json['required_quantity'] ?? 0,
     );
   }
 }

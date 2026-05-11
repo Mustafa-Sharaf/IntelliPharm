@@ -66,8 +66,10 @@ class AddOrderScreen extends StatelessWidget {
               SizedBox(height: size.height * 0.025),
 
               Obx(
-                    () => Tabs(
-                  tabs: addOrderController.categories.map((e) => e.name).toList(),
+                () => Tabs(
+                  tabs: addOrderController.categories
+                      .map((e) => e.name)
+                      .toList(),
                   selectedIndex: addOrderController.selectedTab.value,
                   onTap: addOrderController.changeTab,
                 ),
@@ -95,10 +97,24 @@ class AddOrderScreen extends StatelessWidget {
                       price: "${med.price.toString()} S.P",
                       stockQuantity: med.availableQuantity.toString(),
                       status: med.isImported ? "imported" : "local",
-                      discount: "15% OFF",
-                      image: "assets/images/icon.png",
-                      controller: TextEditingController(),
-                      onAdd: () {},
+                      discount: (med.gift != null &&
+                          med.gift!.giftQuantity > 0 &&
+                          med.gift!.requiredQuantity > 0)
+                          ? "Buy ${med.gift!.requiredQuantity} Get ${med.gift!.giftQuantity} Free"
+                          : "",
+                      image: med.images.isNotEmpty
+                          ? med.images.first
+                          : "assets/images/icon.png",
+                      controller: addOrderController.getController(med.id),
+                      onAdd: () {
+                        final qty =
+                            int.tryParse(
+                              addOrderController.getController(med.id).text,
+                            ) ??
+                            0;
+
+                        addOrderController.addToCart(med, qty);
+                      },
                     );
                   },
                 );

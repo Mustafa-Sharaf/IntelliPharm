@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 
 class MedicineCard extends StatelessWidget {
@@ -69,7 +70,12 @@ class MedicineCard extends StatelessWidget {
                     height: size.width * 0.15,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child: Image.asset(image, fit: BoxFit.cover),
+                      child:Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => Image.asset(image, fit: BoxFit.cover),//Icon(Icons.image_not_supported,color: AppColors.primaryColor,),
+                      )
+                      /*Image.asset(image, fit: BoxFit.cover),*/
                     ),
                   ),
                   SizedBox(width: size.width * 0.02),
@@ -181,7 +187,7 @@ class MedicineCard extends StatelessWidget {
                     width: size.width * 0.3,
                     height: size.height * 0.04,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: onAdd,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xff0C8A7B),
                         shape: RoundedRectangleBorder(
