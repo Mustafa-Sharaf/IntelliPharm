@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../app_theme/theme_extension.dart';
 
 class MedicineItemCard extends StatelessWidget {
@@ -59,9 +58,9 @@ class MedicineItemCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(right:  size.width * 0.03),
+                padding: EdgeInsets.only(right: size.width * 0.03),
                 child: Text(
-                  "\$${price.toStringAsFixed(2)}",
+                  "${price.toStringAsFixed(2)} S.P",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -107,20 +106,6 @@ class MedicineItemCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    /*    Expanded(
-                      child: Center(
-                        child: Text(
-                          quantity.toString(),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: size.width * 0.04,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Cairo',
-                          ),
-                        ),
-                      ),
-                    ),*/
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
@@ -137,7 +122,7 @@ class MedicineItemCard extends StatelessWidget {
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
                         child: IconButton(
-                          onPressed: onDecrease,
+                          onPressed: onIncrease,
                           icon: const Icon(Icons.add, color: Colors.black),
                           padding: EdgeInsets.zero,
                           constraints: BoxConstraints(),

@@ -1,5 +1,5 @@
 
-import 'AddOrder_Model.dart';
+import '../AddOrder/AddOrder_Model.dart';
 
 class CartItem {
   final MedicineModel medicine;

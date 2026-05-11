@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/Tabs.dart';
+import '../NewOrder/NewOrder_Controller.dart';
 import '../NewOrder/NewOrder_Screen.dart';
 import '../../Widgets/MedicineCard.dart';
 import '../../app_theme/theme_extension.dart';
@@ -19,6 +20,7 @@ class AddOrderScreen extends StatelessWidget {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
     final addOrderController = Get.put(AddOrderController());
+    final newOrderController =Get.put(NewOrderController());
     return Scaffold(
       backgroundColor: colors.backgroundMain,
       appBar: AppBar(
@@ -113,7 +115,7 @@ class AddOrderScreen extends StatelessWidget {
                             ) ??
                             0;
 
-                        addOrderController.addToCart(med, qty);
+                        newOrderController.addToCart(med, qty);
                       },
                     );
                   },
