@@ -3,10 +3,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 
-import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
-import '../../app_theme/theme_extension.dart';
-import 'PlanYourRoute_Controller.dart';
+import 'RegionSelector/RegionSelector_Screen.dart';
+import '../app_theme/theme_extension.dart';
+import '../modules/PlanYourRoute/PlanYourRoute_Controller.dart';
 class ActiveRegionComponent extends StatelessWidget {
   const ActiveRegionComponent({super.key});
 
@@ -18,13 +19,13 @@ class ActiveRegionComponent extends StatelessWidget {
     return Column(
       children: [
         /// Active Region
-        const Align(
+         Align(
           alignment: Alignment.centerLeft,
           child: Text(
             "ACTIVE REGION",
             style: TextStyle(
               fontSize: 11,
-              color: Colors.grey,
+              color: colors.textSecondary,
               fontFamily: 'Cairo',
               fontWeight: FontWeight.w600,
               letterSpacing: 1,
@@ -62,8 +63,8 @@ class ActiveRegionComponent extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0xffC9D8EB),
               borderRadius: BorderRadius.circular(14),
-              border: const Border(
-                bottom: BorderSide(color: Color(0xff002755), width: 3),
+              border:  Border(
+                bottom: BorderSide(color: colors.textPrimary, width: 3),
               ),
             ),
             child: Row(

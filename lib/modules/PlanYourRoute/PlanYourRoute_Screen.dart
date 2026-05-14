@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/DateCard.dart';
+import '../../Widgets/EmptyCard.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
-import '../../app_theme/AppColors.dart';
+import '../../Widgets/SelectablePharmacyCard.dart';
 import '../../app_theme/theme_extension.dart';
-import '../../helper/DateHelper.dart';
 import '../TrackRoute/TrackRoute_Screen.dart';
-import 'ActiveRegionComponent.dart';
+import '../../Widgets/ActiveRegionComponent.dart';
 import 'PlanYourRoute_Controller.dart';
 
 class PlanYourRouteScreen extends StatelessWidget {
@@ -50,8 +51,6 @@ class PlanYourRouteScreen extends StatelessWidget {
               SizedBox(height: size.height * 0.022),
               ActiveRegionComponent(),
               SizedBox(height: size.height * 0.024),
-
-              /// Pharmacies title
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -73,21 +72,13 @@ class PlanYourRouteScreen extends StatelessWidget {
                       color: const Color(0xff52E0D3),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: /*const Text(
-                      "4 selected",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: 'Cairo',
-                        color: Color(0xff0D2C5A),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )*/Obx(
-                          () => Text(
+                    child: Obx(
+                      () => Text(
                         "${controller.selectedPharmacies.length} selected",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontFamily: 'Cairo',
-                          color: Color(0xff0D2C5A),
+                          color: AppColors.textLightPrimary,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -96,104 +87,120 @@ class PlanYourRouteScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: size.height * 0.014),
-
-              /// Search
-              TextField(
-                decoration: InputDecoration(
-                  hintText: "Search pharmacy name or ZIP...",
-                  prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                  filled: true,
-                  fillColor: colors.component,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide.none,
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      onChanged: controller.setSearch,
+                      decoration: InputDecoration(
+                        hintText: "Search pharmacy name ...",
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                        ),
+                        filled: true,
+                        fillColor: colors.component,
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(14),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
 
+                  SizedBox(width: size.width * 0.02),
+                  Obx(() {
+                    final isAll = controller.isAllSelected;
+                    return GestureDetector(
+                      onTap: controller.toggleSelectAll,
+                      child: Container(
+                        width: size.width * 0.06,
+                        height: size.width * 0.06,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isAll ? colors.textPrimary : colors.component,
+                          border: Border.all(
+                            color: colors.textPrimary,
+                            width: 2,
+                          ),
+                        ),
+                        child: Icon(
+                          isAll ? Icons.check : Icons.done_all,
+                          color: isAll ? Colors.white : colors.textPrimary,
+                          size: 15,
+                        ),
+                      ),
+                    );
+                  }),
+                ],
+              ),
               SizedBox(height: size.height * 0.02),
 
-              /// Pharmacy List
               Expanded(
                 child: Obx(() {
-
                   if (controller.isLoading.value) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   }
 
                   if (controller.pharmacies.isEmpty) {
-                    return const Center(
-                      child: Text("No pharmacies found"),
+                    return Center(
+                      child: EmptyPlanCard(
+                        title: "Nothing pharmacies yet.",
+                        subtitle:
+                            "The pharmacies will appear here once you have selected the area you will be visiting.",
+                        buttonText: "Select Region",
+                        onPressed: () async {
+                          final result = await showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                              ),
+                            ),
+                            builder: (context) {
+                              return RegionSelector();
+                            },
+                          );
+
+                          if (result != null) {
+                            controller.selectedRegion.value = result;
+                            controller.fetchPharmacies(result.id);
+                          }
+                        },
+                      ),
                     );
                   }
 
                   return ListView.builder(
-
-                    itemCount: controller.pharmacies.length,
-
+                    itemCount: controller.filteredPharmacies.length,
                     itemBuilder: (context, index) {
+                      final pharmacy = controller.filteredPharmacies[index];
 
-                      final pharmacy = controller.pharmacies[index];
+                      return Obx(() {
+                        final isSelected = controller.selectedPharmacies
+                            .contains(pharmacy.id);
 
-                      final isSelected = controller.selectedPharmacies
-                          .contains(pharmacy.id);
-
-                      return GestureDetector(
-
-                        onTap: () {
-                          controller.togglePharmacy(pharmacy.id);
-                        },
-
-                        child: PharmacyCard(
-
-                          title: pharmacy.name,
-
-                          subtitle: pharmacy.region,
-
-                          colorDot: Colors.teal,
-
-                          checked: isSelected,
-                        ),
-                      );
+                        return GestureDetector(
+                          onTap: () {
+                            controller.togglePharmacy(pharmacy.id);
+                          },
+                          child: SelectablePharmacyCard(
+                            id: pharmacy.id,
+                            title: pharmacy.name,
+                            subtitle: pharmacy.region,
+                            checked: isSelected,
+                          ),
+                        );
+                      });
                     },
                   );
                 }),
               ),
-            /*  Expanded(
-                child: ListView(
-                  children: const [
-                    PharmacyCard(
-                      title: "Central Care Pharma",
-                      subtitle: "122 Medical Plaza, Ste 402, North District",
-                      colorDot: Colors.red,
-                      checked: true,
-                    ),
-                    PharmacyCard(
-                      title: "MedPlus Express",
-                      subtitle: "88 Health Blvd, North District",
-                      colorDot: Colors.orange,
-                      checked: true,
-                    ),
-                    PharmacyCard(
-                      title: "Wellness Hub 24/7",
-                      subtitle: "15 Park Lane, North District",
-                      colorDot: Colors.teal,
-                      checked: false,
-                    ),
-                    PharmacyCard(
-                      title: "St. Jude Medical",
-                      subtitle: "75 Care Avenue, North District",
-                      colorDot: Colors.red,
-                      checked: true,
-                    ),
-                  ],
-                ),
-              ),*/
 
-              /// Button
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 18),
@@ -209,89 +216,27 @@ class PlanYourRouteScreen extends StatelessWidget {
                     ),
                     elevation: 0,
                   ),
-                  child: const Text(
-                    "Generate Optimal Route",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.auto_awesome, color: Colors.white, size: 20),
+                      SizedBox(width: size.width * 0.05),
+                      Text(
+                        "Generate Optimal Route",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontFamily: 'Cairo',
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class PharmacyCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Color colorDot;
-  final bool checked;
-
-  const PharmacyCard({
-    super.key,
-    required this.title,
-    required this.subtitle,
-    required this.colorDot,
-    required this.checked,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: checked ? Colors.white : const Color(0xffF0F1F5),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-              color: checked ? const Color(0xff0D2C5A) : Colors.transparent,
-              borderRadius: BorderRadius.circular(6),
-              border: Border.all(
-                color: checked ? const Color(0xff0D2C5A) : Colors.grey.shade400,
-              ),
-            ),
-            child: checked
-                ? const Icon(Icons.check, size: 16, color: Colors.white)
-                : null,
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: checked ? Colors.black : Colors.grey,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: checked ? Colors.grey : Colors.grey.shade500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          CircleAvatar(radius: 4, backgroundColor: colorDot),
-        ],
       ),
     );
   }

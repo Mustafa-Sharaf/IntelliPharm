@@ -2,7 +2,6 @@
 
 
 import 'package:flutter/material.dart';
-
 import '../app_theme/theme_extension.dart';
 import '../helper/DateHelper.dart';
 class DateCard extends StatelessWidget {
@@ -31,8 +30,9 @@ class DateCard extends StatelessWidget {
                 "DELIVERY DATE",
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey,
+                  color: colors.textSecondary,
                   fontFamily: 'Cairo',
+                  fontWeight: FontWeight.bold,
                   letterSpacing: 1,
                 ),
               ),
