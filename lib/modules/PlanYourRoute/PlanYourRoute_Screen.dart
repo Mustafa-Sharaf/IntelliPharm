@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../Widgets/DateCard.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
+import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../../helper/DateHelper.dart';
+import '../TrackRoute/TrackRoute_Screen.dart';
+import 'ActiveRegionComponent.dart';
+import 'PlanYourRoute_Controller.dart';
 
 class PlanYourRouteScreen extends StatelessWidget {
   const PlanYourRouteScreen({super.key});
@@ -8,6 +16,7 @@ class PlanYourRouteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(PlanYourRouteController());
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
@@ -36,110 +45,17 @@ class PlanYourRouteScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
           child: Column(
             children: [
-               SizedBox(height: size.height * 0.02),
-
-              /// Date Card
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 14,
-                ),
-                decoration: BoxDecoration(
-                  color: colors.component,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:  [
-                    Icon(Icons.chevron_left, color: Colors.grey),
-                    Column(
-                      children: [
-                        Text(
-                          "DELIVERY DATE",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                            fontFamily: 'Cairo',
-                            letterSpacing: 1,
-                          ),
-                        ),
-                        SizedBox(height: size.height * 0.004),
-                        Text(
-                          "Monday, Oct 24, 2023",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'Cairo',
-                            color: colors.textPrimary,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Icon(Icons.chevron_right, color: Colors.grey),
-                  ],
-                ),
-              ),
-
+              SizedBox(height: size.height * 0.02),
+              DateCard(),
               SizedBox(height: size.height * 0.022),
-
-              /// Active Region
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "ACTIVE REGION",
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.grey,
-                    fontFamily: 'Cairo',
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
-               SizedBox(height: size.height * 0.008),
-
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xffC9D8EB),
-                  borderRadius: BorderRadius.circular(14),
-                  border: const Border(
-                    bottom: BorderSide(
-                      color: Color(0xff002755),
-                      width: 3,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.map_outlined, color: colors.textPrimary),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        "North Region",
-
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Cairo',
-                          color: Color(0xff1E1E1E),
-                        ),
-                      ),
-                    ),
-                    Icon(Icons.keyboard_arrow_down, color: Colors.grey),
-                  ],
-                ),
-              ),
-
-               SizedBox(height: size.height * 0.024),
+              ActiveRegionComponent(),
+              SizedBox(height: size.height * 0.024),
 
               /// Pharmacies title
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Text(
+                  Text(
                     "Select Pharmacies to Visit",
                     style: TextStyle(
                       fontSize: 16,
@@ -157,7 +73,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                       color: const Color(0xff52E0D3),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
+                    child: /*const Text(
                       "4 selected",
                       style: TextStyle(
                         fontSize: 12,
@@ -165,11 +81,21 @@ class PlanYourRouteScreen extends StatelessWidget {
                         color: Color(0xff0D2C5A),
                         fontWeight: FontWeight.w600,
                       ),
+                    )*/Obx(
+                          () => Text(
+                        "${controller.selectedPharmacies.length} selected",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Cairo',
+                          color: Color(0xff0D2C5A),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
-               SizedBox(height: size.height * 0.014),
+              SizedBox(height: size.height * 0.014),
 
               /// Search
               TextField(
@@ -186,10 +112,57 @@ class PlanYourRouteScreen extends StatelessWidget {
                 ),
               ),
 
-               SizedBox(height: size.height * 0.02),
+              SizedBox(height: size.height * 0.02),
 
               /// Pharmacy List
               Expanded(
+                child: Obx(() {
+
+                  if (controller.isLoading.value) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (controller.pharmacies.isEmpty) {
+                    return const Center(
+                      child: Text("No pharmacies found"),
+                    );
+                  }
+
+                  return ListView.builder(
+
+                    itemCount: controller.pharmacies.length,
+
+                    itemBuilder: (context, index) {
+
+                      final pharmacy = controller.pharmacies[index];
+
+                      final isSelected = controller.selectedPharmacies
+                          .contains(pharmacy.id);
+
+                      return GestureDetector(
+
+                        onTap: () {
+                          controller.togglePharmacy(pharmacy.id);
+                        },
+
+                        child: PharmacyCard(
+
+                          title: pharmacy.name,
+
+                          subtitle: pharmacy.region,
+
+                          colorDot: Colors.teal,
+
+                          checked: isSelected,
+                        ),
+                      );
+                    },
+                  );
+                }),
+              ),
+            /*  Expanded(
                 child: ListView(
                   children: const [
                     PharmacyCard(
@@ -218,14 +191,16 @@ class PlanYourRouteScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
+              ),*/
 
               /// Button
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 18),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(TrackRouteScreen());
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff00796B),
                     padding: const EdgeInsets.symmetric(vertical: 18),

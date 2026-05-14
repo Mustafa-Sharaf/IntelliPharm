@@ -1,7 +1,8 @@
 
-/*
 
-import '../../modules/AddPharmacy/AddPharmacy_Model.dart';
+
+
+/*import '../../modules/AddPharmacy/AddPharmacy_Model.dart';
 import '../ApiService.dart';
 
 class PharmacyService {
