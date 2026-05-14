@@ -29,7 +29,7 @@ class MedicineItemCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: size.width * 0.01),
       padding: EdgeInsets.all(size.width * 0.02),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: colors.component,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(

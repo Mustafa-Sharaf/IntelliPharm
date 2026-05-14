@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../app_theme/theme_extension.dart';
+import '../modules/ShowOrder/ShowOrder_Screen.dart';
 
 //New code
 class OrderCard extends StatelessWidget {
@@ -66,6 +68,7 @@ class OrderCard extends StatelessWidget {
                         style: TextStyle(
                           color: colors.textSecondary,
                           fontSize: 12,
+                          fontFamily: 'Cairo',
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -83,6 +86,7 @@ class OrderCard extends StatelessWidget {
                           status,
                           style: TextStyle(
                             color: statusColor,
+                            fontFamily: 'Cairo',
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
                           ),
@@ -99,6 +103,7 @@ class OrderCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: colors.textPrimary,
+                      fontFamily: 'Cairo',
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -116,6 +121,7 @@ class OrderCard extends StatelessWidget {
                         date,
                         style: TextStyle(
                           color: colors.textSecondary,
+                          fontFamily: 'Cairo',
                           fontSize: 12,
                         ),
                       ),
@@ -133,6 +139,7 @@ class OrderCard extends StatelessWidget {
                           itemsCount,
                           style: TextStyle(
                             color: colors.textSecondary,
+                            fontFamily: 'Cairo',
                             fontSize: 11,
                           ),
                         ),
@@ -150,10 +157,23 @@ class OrderCard extends StatelessWidget {
                         style: TextStyle(
                           color: colors.textPrimary,
                           fontSize: 18,
+                          fontFamily: 'Cairo',
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Icon(Icons.chevron_right, color: colors.textSecondary),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(
+                                () => OrderDetailsScreen(
+                              orderId: int.parse(orderId),
+                            ),
+                          );
+                        },
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: colors.textSecondary,
+                        ),
+                      )
                     ],
                   ),
                 ],

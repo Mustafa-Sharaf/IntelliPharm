@@ -70,7 +70,7 @@ class PharmacySelectorWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      pharmacy?.region ?? "",
+                      pharmacy?.region ?? "Region",
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontFamily: 'Cairo',

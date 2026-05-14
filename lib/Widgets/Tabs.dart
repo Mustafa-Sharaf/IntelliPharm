@@ -37,7 +37,7 @@ class Tabs extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               alignment: Alignment.center,
-              child: Text(tabs[index]),
+              child: Text(tabs[index],style: TextStyle(fontFamily: 'Cairo',),),
             ),
           );
         },

@@ -31,6 +31,7 @@ class PharmacyBottomSheet extends StatelessWidget {
             onChanged: controller.filter,
             decoration: InputDecoration(
               hintText: "Search pharmacy...",
+              hintStyle: TextStyle(fontFamily: 'Cairo'),
               prefixIcon: Icon(Icons.search, color: AppColors.primaryColor),
               filled: true,
               fillColor: colors.component,
@@ -59,8 +60,8 @@ class PharmacyBottomSheet extends StatelessWidget {
                               Icons.local_pharmacy,
                               color: AppColors.primaryColor,
                             ),
-                            title: Text(pharmacy.name),
-                            subtitle: Text(pharmacy.region),
+                            title: Text(pharmacy.name,style: TextStyle(fontFamily: 'Cairo'),),
+                            subtitle: Text(pharmacy.region,style: TextStyle(fontFamily: 'Cairo'),),
                             onTap: () {
                               controller.selectPharmacy(pharmacy);
                               onSelected?.call(pharmacy);

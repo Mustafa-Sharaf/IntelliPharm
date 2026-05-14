@@ -4,7 +4,6 @@ import 'package:intellipharm/app_theme/AppColors.dart';
 import 'package:intellipharm/modules/NewOrder/NewOrder_Controller.dart';
 import '../../Widgets/AddMedicineButton.dart';
 import '../../Widgets/MedicineItemCard.dart';
-
 import '../../Widgets/PharmacySelector/PharmacyList_Controller.dart';
 import '../../Widgets/PharmacySelector/PharmacySelector_Screen.dart';
 import '../../app_theme/theme_extension.dart';
@@ -15,7 +14,10 @@ class NewOrderScreen extends StatelessWidget {
 
   final controller = Get.find<AddOrderController>();
   final newOrderController = Get.find<NewOrderController>();
-  final pharmacySelectorController = Get.put(PharmacySelectorController(), permanent: true,);
+  final pharmacySelectorController = Get.put(
+    PharmacySelectorController(),
+    permanent: true,
+  );
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
@@ -38,7 +40,7 @@ class NewOrderScreen extends StatelessWidget {
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
-          child: Container(color: Colors.grey.shade300, height: 1),
+          child: Container(color: colors.textSecondary, height: 1),
         ),
       ),
       body: Padding(
@@ -59,7 +61,6 @@ class NewOrderScreen extends StatelessWidget {
                       fontSize: 15,
                       fontFamily: 'Cairo',
                       color: colors.textSecondary,
-                      //fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
@@ -69,9 +70,6 @@ class NewOrderScreen extends StatelessWidget {
             PharmacySelectorWidget(
               onSelected: (pharmacy) {
                 pharmacySelectorController.selectedPharmacy.value = pharmacy;
-               /* pharmacySelectorController.selectedPharmacy.value?.name
-                pharmacySelectorController.selectedPharmacy.value?.region
-                pharmacySelectorController.selectedPharmacy.value?.id*/
               },
             ),
             SizedBox(height: size.height * 0.015),
@@ -142,10 +140,11 @@ class NewOrderScreen extends StatelessWidget {
                         vertical: size.height * 0.005,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: colors.component,
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: TextField(
+                        controller: newOrderController.notesController,
                         maxLines: 2,
                         style: const TextStyle(
                           fontFamily: 'Cairo',
@@ -167,9 +166,43 @@ class NewOrderScreen extends StatelessWidget {
             ),
 
             SizedBox(height: size.height * 0.01),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: colors.component,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Price",
+                      style: TextStyle(
+                        fontFamily: 'Cairo',
+                        fontSize: 16,
+                        color: colors.textSecondary,
+                      ),
+                    ),
+                    Text(
+                      "${newOrderController.totalPrice.toStringAsFixed(0)} S.P",
+                      style: const TextStyle(
+                        fontFamily: 'Cairo',
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: size.height * 0.01),
 
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                newOrderController.submitOrder();
+              },
               child: Container(
                 width: double.infinity,
                 padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
@@ -178,14 +211,18 @@ class NewOrderScreen extends StatelessWidget {
                   color: AppColors.primaryColor,
                 ),
                 child: Center(
-                  child: Text(
-                    "Submit Order",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Cairo',
-                      fontSize: 20,
-                    ),
+                  child: Obx(
+                    () => newOrderController.isSubmitting.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(
+                            "Submit Order",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Cairo',
+                              fontSize: 20,
+                            ),
+                          ),
                   ),
                 ),
               ),

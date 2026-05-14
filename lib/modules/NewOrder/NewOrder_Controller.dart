@@ -1,23 +1,25 @@
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Widgets/AppSnackBar.dart';
+import '../../Widgets/PharmacySelector/PharmacyList_Controller.dart';
+import '../../services/ServiceApi/OrderService.dart';
 import '../AddOrder/AddOrder_Model.dart';
 import 'CartItem.dart';
 
 class NewOrderController extends GetxController {
-  /// cart (MAIN)
+  final notesController = TextEditingController();
+  RxBool isSubmitting = false.obs;
+
   RxList<CartItem> cart = <CartItem>[].obs;
 
   void addToCart(MedicineModel med, int qty) {
-    print("ADD TO CART CALLED");
-    print("QTY = $qty");
-
     if (qty <= 0) {
-      Get.snackbar("Error", "Quantity is 0");
+      AppSnackBar.error("Quantity is 0");
       return;
     }
 
     if (qty > med.availableQuantity) {
-      Get.snackbar("Error", "Not enough stock");
+      AppSnackBar.error("Not enough stock");
       return;
     }
 
@@ -30,7 +32,7 @@ class NewOrderController extends GetxController {
       cart.refresh();
     }
 
-    print("CART SIZE = ${cart.length}");
+    AppSnackBar.success("Added to cart successfully");
   }
 
   void increase(CartItem item) {
@@ -51,5 +53,55 @@ class NewOrderController extends GetxController {
 
   void removeItem(CartItem item) {
     cart.remove(item);
+  }
+
+  double get totalPrice {
+    return cart.fold(0, (sum, item) => sum + item.totalPrice);
+  }
+
+  Future<void> submitOrder() async {
+    try {
+      final pharmacyController = Get.find<PharmacySelectorController>();
+
+      final pharmacy = pharmacyController.selectedPharmacy.value;
+
+      if (pharmacy == null) {
+        AppSnackBar.error("Please select pharmacy");
+        return;
+      }
+
+      if (cart.isEmpty) {
+        AppSnackBar.error("Cart is empty");
+        return;
+      }
+
+      isSubmitting.value = true;
+
+      final items = cart.map((item) {
+        return {"medicine_id": item.medicine.id, "quantity": item.quantity};
+      }).toList();
+
+      final response = await OrderService.createOrder(
+        pharmacyId: pharmacy.id,
+        items: items,
+        notes: notesController.text.trim(),
+      );
+
+      if (response["isSuccess"] == true) {
+        AppSnackBar.success(
+          response["message"] ?? "Order created successfully",
+        );
+
+        cart.clear();
+        notesController.clear();
+
+        pharmacyController.selectedPharmacy.value = null;
+      }
+    } catch (e) {
+      AppSnackBar.error("Failed to create order");
+      print(e);
+    } finally {
+      isSubmitting.value = false;
+    }
   }
 }

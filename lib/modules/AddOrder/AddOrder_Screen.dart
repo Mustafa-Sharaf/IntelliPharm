@@ -20,7 +20,7 @@ class AddOrderScreen extends StatelessWidget {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
     final addOrderController = Get.put(AddOrderController());
-    final newOrderController =Get.put(NewOrderController());
+    final newOrderController = Get.put(NewOrderController(), permanent: true);
     return Scaffold(
       backgroundColor: colors.backgroundMain,
       appBar: AppBar(
@@ -99,9 +99,10 @@ class AddOrderScreen extends StatelessWidget {
                       price: "${med.price.toString()} S.P",
                       stockQuantity: med.availableQuantity.toString(),
                       status: med.isImported ? "imported" : "local",
-                      discount: (med.gift != null &&
-                          med.gift!.giftQuantity > 0 &&
-                          med.gift!.requiredQuantity > 0)
+                      discount:
+                          (med.gift != null &&
+                              med.gift!.giftQuantity > 0 &&
+                              med.gift!.requiredQuantity > 0)
                           ? "Buy ${med.gift!.requiredQuantity} Get ${med.gift!.giftQuantity} Free"
                           : "",
                       image: med.images.isNotEmpty
