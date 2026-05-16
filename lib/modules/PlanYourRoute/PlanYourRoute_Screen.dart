@@ -6,6 +6,7 @@ import '../../Widgets/EmptyCard.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../Widgets/SelectablePharmacyCard.dart';
 import '../../app_theme/theme_extension.dart';
+import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
 import '../TrackRoute/TrackRoute_Screen.dart';
 import '../../Widgets/ActiveRegionComponent.dart';
 import 'PlanYourRoute_Controller.dart';
@@ -206,7 +207,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 18),
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.to(TrackRouteScreen());
+                    Get.to(ActiveOptimizedRouteTrackingScreen());
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff00796B),
