@@ -4,7 +4,10 @@ import '../../app_theme/theme_extension.dart';
 import 'AddPharmacy_Controller.dart';
 
 class PharmacyContactSection extends StatelessWidget {
-  const PharmacyContactSection({super.key, required this.addPharmacyController});
+  const PharmacyContactSection({
+    super.key,
+    required this.addPharmacyController,
+  });
 
   final AddPharmacyController addPharmacyController;
 
@@ -22,7 +25,6 @@ class PharmacyContactSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // --- اسم الصيدلاني (اختياري) ---
           Text(
             'Pharmacist Name (Optional)',
             style: TextStyle(
@@ -46,7 +48,7 @@ class PharmacyContactSection extends StatelessWidget {
                 size: 20,
                 color: colors.textSecondary.withValues(alpha: 0.6),
               ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 10),
+              contentPadding: EdgeInsets.symmetric(vertical: size.width * 0.02),
               fillColor: colors.backgroundMain,
               filled: true,
               border: OutlineInputBorder(
@@ -56,8 +58,6 @@ class PharmacyContactSection extends StatelessWidget {
             ),
           ),
           SizedBox(height: size.height * 0.005),
-
-          // --- عنوان رقم الهاتف المطلـوب ---
           Row(
             children: [
               Text(
@@ -73,7 +73,6 @@ class PharmacyContactSection extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.005),
 
-          // --- حقل رقم الهاتف الأساسي الذكي (بدون Obx) ---
           TextFormField(
             controller: addPharmacyController.phoneController,
             keyboardType: TextInputType.phone,
@@ -101,40 +100,50 @@ class PharmacyContactSection extends StatelessWidget {
                 fontFamily: 'Cairo',
               ),
               prefixIcon: Builder(
-                  builder: (context) {
-                    final FormFieldState? formFieldState = context.findAncestorStateOfType<FormFieldState>();
-                    final bool hasError = formFieldState?.hasError ?? false;
+                builder: (context) {
+                  final FormFieldState? formFieldState = context
+                      .findAncestorStateOfType<FormFieldState>();
+                  final bool hasError = formFieldState?.hasError ?? false;
 
-                    return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          right: BorderSide(color: hasError ? Colors.red : const Color(0xFFCFD8DC)),
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 12,
+                    ),
+                    margin: EdgeInsets.only(right: size.width * 0.02),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: BorderSide(
+                          color: hasError
+                              ? Colors.red
+                              : const Color(0xFFCFD8DC),
                         ),
                       ),
-                      // استخدام كود الدولة بشكل آمن ومباشر
-                      child: Text(
-                        addPharmacyController.countryCode.value,
-                        style: TextStyle(
-                          color: colors.textSecondary.withValues(alpha: 0.6),
-                          fontFamily: 'Cairo',
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    child: Text(
+                      addPharmacyController.countryCode.value,
+                      style: TextStyle(
+                        color: colors.textSecondary.withValues(alpha: 0.6),
+                        fontFamily: 'Cairo',
+                        fontWeight: FontWeight.bold,
                       ),
-                    );
-                  }
+                    ),
+                  );
+                },
               ),
               suffixIcon: Builder(
-                  builder: (context) {
-                    final FormFieldState? formFieldState = context.findAncestorStateOfType<FormFieldState>();
-                    final bool hasError = formFieldState?.hasError ?? false;
+                builder: (context) {
+                  final FormFieldState? formFieldState = context
+                      .findAncestorStateOfType<FormFieldState>();
+                  final bool hasError = formFieldState?.hasError ?? false;
 
-                    return Icon(
-                      hasError ? Icons.error : Icons.phone_android_outlined,
-                      color: hasError ? Colors.red : colors.textSecondary.withValues(alpha: 0.4),
-                    );
-                  }
+                  return Icon(
+                    hasError ? Icons.error : Icons.phone_android_outlined,
+                    color: hasError
+                        ? Colors.red
+                        : colors.textSecondary.withValues(alpha: 0.4),
+                  );
+                },
               ),
               contentPadding: const EdgeInsets.symmetric(vertical: 10),
               fillColor: colors.backgroundMain,
@@ -149,7 +158,10 @@ class PharmacyContactSection extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1.5),
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                  width: 1.5,
+                ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -164,7 +176,6 @@ class PharmacyContactSection extends StatelessWidget {
 
           SizedBox(height: size.height * 0.01),
 
-          // --- الهاتف البديل (اختياري) ---
           Text(
             'Alternative Phone (Optional)',
             style: TextStyle(
@@ -176,7 +187,7 @@ class PharmacyContactSection extends StatelessWidget {
           SizedBox(height: size.height * 0.005),
 
           TextFormField(
-            controller: addPharmacyController.altPhoneController, // تعديل الكنترولر الصحيح
+            controller: addPharmacyController.altPhoneController,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(
               hintText: 'Enter phone number',
@@ -186,12 +197,13 @@ class PharmacyContactSection extends StatelessWidget {
                 fontSize: 13,
               ),
               prefixIcon: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                margin: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 12,
+                ),
+                margin: EdgeInsets.only(right: size.width * 0.02),
                 decoration: const BoxDecoration(
-                  border: Border(
-                    right: BorderSide(color: Color(0xFFCFD8DC)),
-                  ),
+                  border: Border(right: BorderSide(color: Color(0xFFCFD8DC))),
                 ),
                 child: Text(
                   addPharmacyController.countryCode.value,
@@ -203,9 +215,12 @@ class PharmacyContactSection extends StatelessWidget {
                 ),
               ),
               contentPadding: const EdgeInsets.symmetric(vertical: 10),
+              suffixIcon: Icon(
+                Icons.phone_android_outlined,
+                color: colors.textSecondary.withValues(alpha: 0.4),
+              ),
               fillColor: colors.backgroundMain,
               filled: true,
-              // حقل اختياري، حدوده الافتراضية مخفية ولا يظهر أحمر إلا لو أردت إضافة فحص خاص به
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide.none,
@@ -216,7 +231,10 @@ class PharmacyContactSection extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 1.5),
+                borderSide: BorderSide(
+                  color: Theme.of(context).primaryColor,
+                  width: 1.5,
+                ),
               ),
             ),
           ),

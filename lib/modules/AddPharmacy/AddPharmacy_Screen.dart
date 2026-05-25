@@ -142,9 +142,9 @@ class AddPharmacyScreen extends StatelessWidget {
 
                       // --- SECTION: ACTIVE STATUS ---
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 4,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.02,
+                          vertical: size.width * 0.01,
                         ),
                         decoration: BoxDecoration(
                           color: colors.component,
@@ -191,37 +191,6 @@ class AddPharmacyScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // --- BOTTOM BUTTON: SAVE PHARMACY ---
-              /*Container(
-                padding: EdgeInsets.all(size.width * 0.03),
-                color: colors.component,
-                child: SizedBox(
-                  width: double.infinity,
-                  height: size.height * 0.06,
-                  child: ElevatedButton.icon(
-                    onPressed: (){},
-                    icon: const Icon(Icons.save_outlined, color: Colors.white),
-                    label: const Text(
-                      'SAVE PHARMACY',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        fontFamily: 'Cairo',
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 0,
-                    ),
-                  ),
-                ),
-              ),*/
               // --- BOTTOM BUTTON: SAVE PHARMACY ---
               Container(
                 padding: EdgeInsets.all(size.width * 0.03),
@@ -229,9 +198,7 @@ class AddPharmacyScreen extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   height: size.height * 0.06,
-                  // تغليف الزر بـ Obx لمراقبة حالة الـ isLoading ريل تايم
                   child: Obx(() => ElevatedButton.icon(
-                    // إذا كان يحمل يمنع الضغط المتكرر، وإلا يستدعي دالة الحفظ
                     onPressed: addPharmacyController.isLoading.value
                         ? null
                         : () => addPharmacyController.savePharmacy(),

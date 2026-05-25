@@ -26,7 +26,7 @@ class BuildGestureDetector extends StatelessWidget {
             fillColor: colors.component,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(color: Colors.grey.shade300, width: 1.2),
+              borderSide: BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
