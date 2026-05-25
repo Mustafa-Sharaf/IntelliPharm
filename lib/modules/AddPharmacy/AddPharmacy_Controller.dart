@@ -1,45 +1,101 @@
-/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../Validation/LocationValidation.dart';
-import '../../Validation/RegionValidation.dart';
-import '../../Validation/empty_fields_validation.dart';
-import '../../Validation/phone_validation.dart';
-import '../../Validation/validation_context.dart';
-import '../../Widgets/AppSnackBar.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../helper/Time/dart/timeHelper.dart';
-import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
+import '../../helper/mapHelper/dart/MapHelper_Controller.dart'; // تأكد من المسار الصحيح
 import '../../services/ServiceApi/PharmacyService.dart';
-import 'AddPharmacy_Model.dart';
+import 'AddPharmacy_Model.dart'; // تأكد من مسار الموديل
+
 
 class AddPharmacyController extends GetxController {
-  ///Definitions of variables
-  var pharmacyNameController = TextEditingController();
-  var pharmacistsNameController = TextEditingController();
-  var phoneControllers = <TextEditingController>[TextEditingController()].obs;
   var openTime = Rx<TimeOfDay?>(null);
   var closeTime = Rx<TimeOfDay?>(null);
-  LatLng? tempPosition;
+  final formKey = GlobalKey<FormState>();
   var selectedRegion = Rxn<RegionModel>();
+
+  final nameEnController = TextEditingController();
+  final nameArController = TextEditingController();
+  final pharmacistNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final altPhoneController = TextEditingController();
+
+  var isActive = true.obs;
+  var countryCode = "+963".obs;
+
+  // 1. إضافة متغير حالة التحميل لمنع التكرار وعرض مؤشر للمستخدم
   var isLoading = false.obs;
-  final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
 
-  void addPhoneField() {
-    if (phoneControllers.length < 2) {
-      phoneControllers.add(TextEditingController());
+  /// دالة مساعدة لتحويل TimeOfDay إلى نص HH:mm متوافق مع الـ API
+  String _formatTimeOfDay(TimeOfDay? time) {
+    if (time == null) return "";
+    final hours = time.hour.toString().padLeft(2, '0');
+    final minutes = time.minute.toString().padLeft(2, '0');
+    return "$hours:$minutes";
+  }
+
+  /// 2. دالة حفظ الصيدلية وإرسالها للباك إند
+  Future<void> savePharmacy() async {
+    // أ- فحص الـ Form Validation للحقول النصية
+    if (!formKey.currentState!.validate()) return;
+
+    // ب- فحص هل تم اختيار المنطقة
+    if (selectedRegion.value == null) {
+      Get.snackbar("تنبيه", "الرجاء اختيار المنطقة أولاً", snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    // ج- فحص هل تم اختيار أوقات الدوام
+    if (openTime.value == null || closeTime.value == null) {
+      Get.snackbar("تنبيه", "الرجاء تحديد أوقات الفتح والإغلاق", snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    // د- جلب إحداثيات الخريطة من الـ MapHelperController
+    final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
+    if (mapController.latitude.value == 0.0 || mapController.longitude.value == 0.0) {
+      Get.snackbar("تنبيه", "الرجاء تحديد موقع الصيدلية على الخريطة", snackPosition: SnackPosition.BOTTOM);
+      return;
+    }
+
+    try {
+      isLoading.value = true;
+
+      // هـ- بناء الـ Request Model وتجهيز البيانات بالكامل
+      CreatePharmacyModel requestData = CreatePharmacyModel(
+        nameEn: nameEnController.text.trim(),
+        nameAr: nameArController.text.trim(),
+        regionId: selectedRegion.value!.id, // نأخذ الـ id من موديل المنطقة المحدد
+        latitude: mapController.latitude.value,
+        longitude: mapController.longitude.value,
+        openingTime: _formatTimeOfDay(openTime.value),
+        closingTime: _formatTimeOfDay(closeTime.value),
+        isActive: isActive.value,
+        pharmacistName: pharmacistNameController.text.trim(),
+        pharmacistPhone: phoneController.text.trim(),
+        // نرسل الهاتف البديل null إذا كان فارغاً
+        pharmacistAltPhone: altPhoneController.text.trim().isEmpty ? null : altPhoneController.text.trim(),
+      );
+
+      // و- إرسال البيانات إلى السيرفس
+      final result = await PharmacyService.createPharmacy(requestData);
+
+      // ز- نجاح العملية
+      Get.snackbar("نجاح", "تمت إضافة الصيدلية بنجاح",
+          backgroundColor: Colors.green, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+
+      // يمكنك هنا عمل Back أو تفريغ الحقول حسب منطق تطبيقك
+      Get.back();
+
+    } catch (e) {
+      // ح- معالجة الأخطاء
+      Get.snackbar("خطأ", "فشلت عملية الحفظ: $e",
+          backgroundColor: Colors.red, colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+    } finally {
+      isLoading.value = false;
     }
   }
 
-  void removePhoneField(int index) {
-    if (phoneControllers.length > 1) {
-      phoneControllers[index].dispose();
-      phoneControllers.removeAt(index);
-    }
-  }
-
-  ///Time selection
+  /// Time selection
   Future<void> pickTime({
     required BuildContext context,
     required Rx<TimeOfDay?> targetTime,
@@ -56,70 +112,13 @@ class AddPharmacyController extends GetxController {
     }
   }
 
-  ///Verification
-  Future<void> createPharmacy() async {
-    try {
-      final validation = ValidationContext([
-        EmptyFieldsValidation([
-          pharmacyNameController.text,
-          pharmacistsNameController.text,
-          phoneControllers[0].text,
-          openTime.value?.toString() ?? "",
-          closeTime.value?.toString() ?? "",
-        ]),
-        PhoneValidation(phoneControllers[0].text),
-        RegionValidation(selectedRegion.value),
-        LocationValidation(
-          mapController.latitude.value,
-          mapController.longitude.value,
-        ),
-      ]);
-      final error = validation.validateAll();
-      if (error != null) {
-        AppSnackBar.error(error);
-        return;
-      }
-      isLoading.value = true;
-
-      ///Create Pharmacy
-      final request = PharmacyModel(
-        nameAr: pharmacyNameController.text,
-        nameEn: pharmacyNameController.text,
-        regionId: selectedRegion.value!.id,
-        latitude: mapController.latitude.value,
-        longitude: mapController.longitude.value,
-        openingTime: TimeHelper.formatTime(openTime.value!),
-        closingTime: TimeHelper.formatTime(closeTime.value!),
-        isActive: true,
-        pharmacistName: pharmacistsNameController.text,
-        pharmacistPhone: phoneControllers[0].text,
-        pharmacistAltPhone: phoneControllers.length > 1
-            ? phoneControllers[1].text
-            : null,
-      );
-
-      final response = await PharmacyService.createPharmacy(request);
-      if (response["isSuccess"] == true) {
-        AppSnackBar.success("Pharmacy_created_successfully".tr);
-        Get.offAllNamed("/homeScreen");
-      } else {
-        AppSnackBar.error(response["message"]);
-      }
-    } catch (e) {
-      AppSnackBar.error(e.toString());
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   @override
   void onClose() {
-    pharmacyNameController.dispose();
-    pharmacistsNameController.dispose();
-    for (var c in phoneControllers) {
-      c.dispose();
-    }
+    nameEnController.dispose();
+    nameArController.dispose();
+    pharmacistNameController.dispose();
+    phoneController.dispose();
+    altPhoneController.dispose();
     super.onClose();
   }
 }
-*/

@@ -23,7 +23,7 @@ class PlanYourRouteController extends GetxController {
       isLoading.value = true;
 
       final result =
-      await PharmacyService.getPharmacies(regionId);
+      await PharmaciesService.getPharmacies(regionId);
 
       pharmacies.value = result;
 

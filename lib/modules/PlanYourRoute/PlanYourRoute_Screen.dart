@@ -18,7 +18,7 @@ class PlanYourRouteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-    final controller = Get.put(PlanYourRouteController());
+    final planYourRouteController = Get.put(PlanYourRouteController());
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
@@ -50,7 +50,15 @@ class PlanYourRouteScreen extends StatelessWidget {
               SizedBox(height: size.height * 0.02),
               DateCard(),
               SizedBox(height: size.height * 0.022),
-              ActiveRegionComponent(),
+              // في شاشة تخطيط المسارات:
+              Obx(() => ActiveRegionComponent(
+                text: "REGION",
+                selectedRegionName: planYourRouteController.selectedRegion.value?.name,
+                onRegionSelected: (region) {
+                  planYourRouteController.selectedRegion.value = region;
+                  planYourRouteController.fetchPharmacies(region.id);
+                },
+              )),
               SizedBox(height: size.height * 0.024),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,7 +83,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                     ),
                     child: Obx(
                       () => Text(
-                        "${controller.selectedPharmacies.length} selected",
+                        "${planYourRouteController.selectedPharmacies.length} selected",
                         style: TextStyle(
                           fontSize: 12,
                           fontFamily: 'Cairo',
@@ -92,7 +100,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      onChanged: controller.setSearch,
+                      onChanged: planYourRouteController.setSearch,
                       decoration: InputDecoration(
                         hintText: "Search pharmacy name ...",
                         prefixIcon: const Icon(
@@ -114,9 +122,9 @@ class PlanYourRouteScreen extends StatelessWidget {
 
                   SizedBox(width: size.width * 0.02),
                   Obx(() {
-                    final isAll = controller.isAllSelected;
+                    final isAll = planYourRouteController.isAllSelected;
                     return GestureDetector(
-                      onTap: controller.toggleSelectAll,
+                      onTap: planYourRouteController.toggleSelectAll,
                       child: Container(
                         width: size.width * 0.06,
                         height: size.width * 0.06,
@@ -142,11 +150,11 @@ class PlanYourRouteScreen extends StatelessWidget {
 
               Expanded(
                 child: Obx(() {
-                  if (controller.isLoading.value) {
+                  if (planYourRouteController.isLoading.value) {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  if (controller.pharmacies.isEmpty) {
+                  if (planYourRouteController.pharmacies.isEmpty) {
                     return Center(
                       child: EmptyPlanCard(
                         title: "Nothing pharmacies yet.",
@@ -168,8 +176,8 @@ class PlanYourRouteScreen extends StatelessWidget {
                           );
 
                           if (result != null) {
-                            controller.selectedRegion.value = result;
-                            controller.fetchPharmacies(result.id);
+                            planYourRouteController.selectedRegion.value = result;
+                            planYourRouteController.fetchPharmacies(result.id);
                           }
                         },
                       ),
@@ -177,17 +185,17 @@ class PlanYourRouteScreen extends StatelessWidget {
                   }
 
                   return ListView.builder(
-                    itemCount: controller.filteredPharmacies.length,
+                    itemCount: planYourRouteController.filteredPharmacies.length,
                     itemBuilder: (context, index) {
-                      final pharmacy = controller.filteredPharmacies[index];
+                      final pharmacy = planYourRouteController.filteredPharmacies[index];
 
                       return Obx(() {
-                        final isSelected = controller.selectedPharmacies
+                        final isSelected = planYourRouteController.selectedPharmacies
                             .contains(pharmacy.id);
 
                         return GestureDetector(
                           onTap: () {
-                            controller.togglePharmacy(pharmacy.id);
+                            planYourRouteController.togglePharmacy(pharmacy.id);
                           },
                           child: SelectablePharmacyCard(
                             id: pharmacy.id,

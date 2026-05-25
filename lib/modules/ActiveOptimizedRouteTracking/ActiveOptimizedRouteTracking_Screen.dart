@@ -6,6 +6,7 @@ import '../../Widgets/RouteStepItem.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
+import 'CurrentRouteHeader.dart';
 
 
 class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
@@ -26,92 +27,13 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
               children: [
                 MapHelperScreen(
                   tag: "route",
-                  right: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.01,
-                  bottom: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.02,
-                  RefreshButtonBottom: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.1,
-                  RefreshButtonRight: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.01,
+                  right: MediaQuery.of(context).size.height * 0.01,
+                  bottom: MediaQuery.of(context).size.height * 0.02,
+                  RefreshButtonBottom: MediaQuery.of(context).size.height * 0.1,
+                  RefreshButtonRight: MediaQuery.of(context).size.height * 0.01,
                   showRefreshButton: true,
                 ),
-                SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.all(size.height * 0.01),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.height * 0.015,
-                        vertical: size.height * 0.01,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colors.component,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            borderRadius:
-                            BorderRadius.circular(10),
-                            onTap: () => Get.back(),
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 15),
-                              child: Icon(
-                                Icons.arrow_back_ios_new,
-                                size: 20,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "CURRENT ROUTE",
-                                  style: TextStyle(
-                                      color: AppColors.primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Cairo',
-                                      letterSpacing: 2,
-                                      height: 2
-                                  ),
-                                ),
-                                Text(
-                                  "5 stops  •  2h 35m  •  28.4 km",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: colors.textDefault,
-                                      fontSize: 16,
-                                      fontFamily: 'Cairo'
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: AppColors.primaryColor,
-
-                            radius: 25,
-
-                            child: Icon(
-                              Icons.person, size: 30, color: AppColors.white,),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                CurrentRouteHeader(),
               ],
             ),
           ),
@@ -143,7 +65,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
 
                     /// Next Destination Section
                     Text(
-                      "NEXT DESTINATION",
+                      "NEXT_DESTINATION".tr,
                       style: TextStyle(
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -202,7 +124,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         ElevatedButton.icon(
                           onPressed: () {},
                           icon: const Icon(Icons.navigation_outlined, size: 18),
-                          label: const Text("Navigate", style: TextStyle(
+                          label: Text("Navigate".tr, style: TextStyle(
                               fontFamily: 'Cairo', fontSize: 15),),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primaryColor,
@@ -216,7 +138,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.width * 0.06),
                     Text(
-                      "ROUTE SCHEDULE",
+                      "ROUTE_SCHEDULE".tr,
                       style: TextStyle(
                         color: Colors.grey[500],
                         fontWeight: FontWeight.bold,
@@ -227,7 +149,6 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: size.width * 0.04),
-
                     RouteStepItem(
                       title: "Pharmacy One",
                       subtitle: "2.3 km away",

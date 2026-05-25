@@ -32,7 +32,7 @@ class MapHelperScreen extends StatelessWidget {
                   await Future.delayed(Duration(milliseconds: 100));
 
                   mapHelperController.applyMapStyle();
-                },*//*
+                },*/ /*
 
                 onMapCreated: (mapCtrl) {
                   mapHelperController.setMapController(mapCtrl);
@@ -87,9 +87,9 @@ class MapHelperScreen extends StatelessWidget {
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../app_theme/AppColors.dart';
 import '../../../app_theme/theme_extension.dart';
+import '../../../modules/RePlanRoute/RePlanRoute_Screen.dart';
 import 'MapHelper_Controller.dart';
 
 class MapHelperScreen extends StatelessWidget {
@@ -114,29 +114,23 @@ class MapHelperScreen extends StatelessWidget {
   final double? RefreshButtonBottom;
   final double? RefreshButtonRight;
 
-
-
   @override
   Widget build(BuildContext context) {
-    final mapHelperController =
-    Get.find<MapHelperController>(tag: tag);
+    final mapHelperController = Get.find<MapHelperController>(tag: tag);
 
-    final colors =
-    Theme.of(context).extension<ThemeColors>()!;
+    final colors = Theme.of(context).extension<ThemeColors>()!;
 
     return Stack(
       children: [
-
         /// MAP
         ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
           child: SizedBox(
             height: height,
             child: Obx(
-                  () => GoogleMap(
+              () => GoogleMap(
                 onMapCreated: (mapCtrl) {
-                  mapHelperController
-                      .setMapController(mapCtrl);
+                  mapHelperController.setMapController(mapCtrl);
                 },
 
                 polylines: mapHelperController.polylines,
@@ -166,12 +160,10 @@ class MapHelperScreen extends StatelessWidget {
 
         /// FIRST BUTTON
         if (showMyLocationButton)
-          Positioned(
+          /*    Positioned(
             right: right,
             bottom: bottom,
             child: FloatingActionButton(
-             // heroTag: "location_btn_$tag",
-              //mini: true,
               onPressed:
               mapHelperController.moveToCurrentLocation,
               backgroundColor: colors.component,
@@ -180,19 +172,36 @@ class MapHelperScreen extends StatelessWidget {
                 color: AppColors.primaryColor,
               ),
             ),
+          )*/
+          Positioned(
+            right: right,
+            bottom: bottom,
+            child: FloatingActionButton(
+              mini: true,
+              onPressed: mapHelperController.moveToCurrentLocation,
+              backgroundColor: colors.component,
+              child: Icon(
+                Icons.my_location,
+                color: AppColors.primaryColor,
+                size: 18,
+              ),
+            ),
           ),
 
         if (showRefreshButton)
           Positioned(
-            right: RefreshButtonRight ,
-            bottom: RefreshButtonBottom ,
+            right: RefreshButtonRight,
+            bottom: RefreshButtonBottom,
             child: FloatingActionButton(
-              //heroTag: "second_btn_$tag",
-              //mini: true,
-              onPressed: mapHelperController.moveToCurrentLocation,
+              mini: true,
+              onPressed: () {
+                Get.to(() => RePlanRouteScreen());
+              },
               backgroundColor: colors.component,
-              child: Icon(Icons.refresh,
+              child: Icon(
+                Icons.refresh,
                 color: AppColors.primaryColor,
+                size: 18,
               ),
             ),
           ),

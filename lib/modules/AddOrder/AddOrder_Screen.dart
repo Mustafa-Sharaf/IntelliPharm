@@ -30,7 +30,7 @@ class AddOrderScreen extends StatelessWidget {
           children: [
             SizedBox(width: size.width * 0.25),
             Text(
-              "Medicines",
+              "Medicines".tr,
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: 'Cairo',
@@ -66,7 +66,6 @@ class AddOrderScreen extends StatelessWidget {
             children: [
               CustomSearchField(controller: searchController),
               SizedBox(height: size.height * 0.025),
-
               Obx(
                 () => Tabs(
                   tabs: addOrderController.categories

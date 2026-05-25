@@ -6,6 +6,7 @@ import '../../Widgets/CustomBottomNav/CustomBottomNavController.dart';
 import '../../Widgets/MenuHome.dart';
 import '../../app_theme/theme_extension.dart';
 import '../AddOrder/AddOrder_Screen.dart';
+import '../AddPharmacy/AddPharmacy_Screen.dart';
 import '../HomeContent/HomeContent_Screen.dart';
 import 'FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
     MyOrdersScreen(),
     Center(child: Text("ROUTE")),
     Center(child: Text("NOTES")),
-    Center(child: Text("PROFILE")),
+    AddPharmacyScreen(),
   ];
 
   @override
@@ -79,7 +80,7 @@ PreferredSizeWidget? _buildAppBar(
       return AppBar(title: const Text("Notes"));
 
     case 4:
-      return AppBar(title: const Text("Profile"));
+      return BuildAppbar(title: "Add Pharmacy");
 
     default:
       return null;

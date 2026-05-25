@@ -2,7 +2,7 @@
 import '../../modules/Pharmacists/Pharmacists_Model.dart';
 import '../ApiService.dart';
 
-class PharmacyService {
+class PharmaciesService {
   static Future<List<PharmaciesModel>> getPharmacies(int id) async {
     final response = await ApiService.get(
       "/erp/v1/pharmacies",

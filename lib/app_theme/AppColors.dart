@@ -14,7 +14,7 @@ class AppColors{
 
   ///dark mode
   static const componentDark = Color(0xFF212934);
-  static const textDarkPrimary=Color(0xff0C8A7B);
+  static const textDarkPrimary=Color(0xff0C8A7B);//0xFF26A69A
   static const textDarkSecondary=Color(0xffbbbcc0);
 
 
