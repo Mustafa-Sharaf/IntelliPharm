@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
-
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import 'AddPharmacy_Controller.dart';
+
 class PharmacyNameSection extends StatelessWidget {
-  const PharmacyNameSection({super.key,required this.addPharmacyController});
+  const PharmacyNameSection({super.key, required this.addPharmacyController});
 
   final AddPharmacyController addPharmacyController;
 
@@ -33,8 +33,8 @@ class PharmacyNameSection extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.008),
           TextFormField(
-            controller:
-            addPharmacyController.nameEnController,
+            controller: addPharmacyController.nameEnController,
+            textDirection: TextDirection.ltr,
             decoration: InputDecoration(
               prefixIcon: const Icon(
                 Icons.translate,
@@ -45,34 +45,27 @@ class PharmacyNameSection extends StatelessWidget {
                 Icons.check_circle,
                 color: AppColors.primaryColor,
               ),
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 10,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.012,
+                vertical: size.width * 0.01,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(
-                  color: AppColors.primaryColor,
-                ),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(
-                  color: Color(0xFFCFD8DC),
-                ),
+                borderSide: const BorderSide(color: Color(0xFFCFD8DC)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: AppColors.primaryColor,
-                ),
+                borderSide: BorderSide(color: AppColors.primaryColor),
               ),
             ),
-            validator: (value) => value!.isEmpty
-                ? 'This field is required'
-                : null,
+            validator: (value) =>
+                value!.isEmpty ? 'This field is required' : null,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: size.width * 0.02),
 
           Text(
             'Name (Arabic)',
@@ -83,16 +76,17 @@ class PharmacyNameSection extends StatelessWidget {
               fontFamily: 'Cairo',
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: size.width * 0.01),
           TextFormField(
-            controller:
-            addPharmacyController.nameArController,
+            controller: addPharmacyController.nameArController,
             textDirection: TextDirection.rtl,
+            textAlign: TextAlign.right,
             decoration: InputDecoration(
               hintText: 'ادخل اسم الصيدلية بالعربية',
               hintStyle: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 13,
+                fontFamily: 'Cairo',
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 12,
@@ -105,10 +99,9 @@ class PharmacyNameSection extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             ),
-            validator: (value) =>
-            value!.isEmpty ? 'هذا الحقل مطلوب' : null,
+            validator: (value) => value!.isEmpty ? 'هذا الحقل مطلوب' : null,
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: size.width * 0.01),
           Text(
             'Arabic characters only',
             style: TextStyle(

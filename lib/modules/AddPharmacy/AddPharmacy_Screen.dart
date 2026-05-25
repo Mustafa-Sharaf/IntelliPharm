@@ -45,13 +45,10 @@ class AddPharmacyScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // --- SECTION: REGION ---
-                      // في شاشة إضافة صيدلية:
                       Obx(() => ActiveRegionComponent(
                         text: "REGION",
                         selectedRegionName: addPharmacyController.selectedRegion.value?.name,
                         onRegionSelected: (region) {
-                          // تخزين المنطقة جوات الكنترولر تبع إضافة صيدلية ليعمل الـ API بسلام
                           addPharmacyController.selectedRegion.value = region;
                         },
                       )),
