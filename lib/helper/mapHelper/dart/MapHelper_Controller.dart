@@ -1,115 +1,4 @@
-/*
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 
-class MapHelperController extends GetxController {
-  var latitude = 33.5138.obs;
-  var longitude = 36.2765.obs;
-  var mapController = Rx<GoogleMapController?>(null);
-  var selectedRegion = ''.obs;
-  var selectedType = ''.obs;
-  final TextEditingController detailsController = TextEditingController();
-
-
-
-  Rx<Marker> pharmacyMarker = Marker(
-    markerId: const MarkerId('pharmacy_marker'),
-    position: LatLng(33.5138, 36.2765),
-  ).obs;
-
-
-
-  Future<void> setDarkMapStyle() async {
-    if (mapController.value == null) return;
-
-    final style = await rootBundle.loadString('assets/map_dark.json');
-    mapController.value!.setMapStyle(style);
-  }
-
-  void applyMapStyle() {
-    if (mapController.value == null) return;
-
-    if (Get.isDarkMode) {
-      setDarkMapStyle();
-    } else {
-      mapController.value!.setMapStyle(null);
-    }
-  }
-
-  Future<void> setLocation(
-    double lat,
-    double lng, {
-    bool moveCamera = true,
-  }) async {
-    latitude.value = lat;
-    longitude.value = lng;
-
-    pharmacyMarker.value = Marker(
-      markerId: const MarkerId('pharmacy_marker'),
-      position: LatLng(lat, lng),
-    );
-
-    if (moveCamera && mapController.value != null) {
-      await mapController.value!.animateCamera(
-        CameraUpdate.newLatLng(LatLng(lat, lng)),
-      );
-    }
-
-    print("Selected Location: Lat=$lat, Lng=$lng");
-  }
-
-  Future<void> moveToCurrentLocation() async {
-    LocationPermission permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      print("Permission denied");
-      return;
-    }
-
-    Position position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    await setLocation(position.latitude, position.longitude);
-  }
-
-  var markers = <Marker>{}.obs;
-
-  /// 🛣️ polylines
-  var polylines = <Polyline>{}.obs;
-
-  /// 🔹 ربط الخريطة
-  void setMapController(GoogleMapController controller) {
-    mapController = controller as Rx<GoogleMapController?>;
-  }
-
-  void addPolyline(List<LatLng> points) {
-    final polyline = Polyline(
-      polylineId: PolylineId(DateTime.now().toString()),
-      color: const Color(0xFF2196F3),
-      width: 5,
-      points: points,
-    );
-
-    polylines.add(polyline);
-  }
-  void clearAll() {
-    markers.clear();
-    polylines.clear();
-  }
-
-  @override
-  void onClose() {
-    ever(Get.isDarkMode.obs, (isDark) {
-      applyMapStyle();
-    });
-    super.onClose();
-  }
-}
-*/
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -160,6 +49,9 @@ class MapHelperController extends GetxController {
   void onInit() {
     ever(Get.isDarkMode.obs, (isDark) {
       applyMapStyle();
+    });
+    moveToCurrentLocation().catchError((error) {
+      print("⚠️ تعذر جلب الموقع الحالي عند البداية، تم استخدام الموقع الافتراضي: $error");
     });
     super.onInit();
   }
@@ -273,20 +165,6 @@ class MapHelperController extends GetxController {
     polylines.clear();
   }
 
-/*  void addMarker({
-    required LatLng position,
-    required String title,
-  }) {
-    markers.add(
-      Marker(
-        markerId: MarkerId(title),
-        position: position,
-        infoWindow: InfoWindow(
-          title: title,
-        ),
-      ),
-    );
-  }*/
   void addMarker({
     required LatLng position,
     required String title,

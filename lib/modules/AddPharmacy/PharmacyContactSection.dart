@@ -83,8 +83,8 @@ class PharmacyContactSection extends StatelessWidget {
               if (!GetUtils.isNumericOnly(value)) {
                 return 'Please enter numbers only';
               }
-              if (value.length < 10) {
-                return 'Phone number must be at least 10 digits';
+              if (value.length != 10) {
+                return 'Phone number must be exactly 10 digits';
               }
               return null;
             },
