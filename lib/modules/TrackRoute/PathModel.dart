@@ -1,3 +1,4 @@
+/*
 class PathModel {
   final int from;
   final int to;
@@ -16,4 +17,4 @@ class PathModel {
       geometry: json['geometry'],
     );
   }
-}
+}*/

@@ -127,10 +127,10 @@ class ActiveRegionComponent extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 11,
-              color: colors.textSecondary,
+              fontSize: 12,
               fontFamily: 'Cairo',
               fontWeight: FontWeight.bold,
+              color: colors.textSecondary,
               letterSpacing: 1,
             ),
           ),

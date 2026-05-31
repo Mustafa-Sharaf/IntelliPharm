@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/BuildSelector.dart';
@@ -45,7 +46,8 @@ class TrackRouteScreen extends StatelessWidget {
                       title: "Region".tr,
                       value: controller.selectedRegion.value,
                       icon: Icons.map,
-                      /*onTap: () {
+                      */
+/*onTap: () {
                         showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
@@ -58,7 +60,8 @@ class TrackRouteScreen extends StatelessWidget {
                             return RegionSelector();
                           },
                         );
-                      },*/
+                      },*//*
+
                       onTap: () async {
                         final result = await showModalBottomSheet(
                           context: context,
@@ -184,3 +187,4 @@ class TrackRouteScreen extends StatelessWidget {
     );
   }
 }
+*/

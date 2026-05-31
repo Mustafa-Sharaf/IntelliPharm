@@ -1,3 +1,4 @@
+/*
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,8 @@ class TrackRouteController extends GetxController {
   }
 
 
- /* void drawRoute() {
+ */
+/* void drawRoute() {
     final mapController = Get.find<MapHelperController>(tag: "route");
 
     List<List<LatLng>> allPaths = [];
@@ -85,7 +87,8 @@ class TrackRouteController extends GetxController {
     }
 
     mapController.drawRoutes(allPaths);
-  }*/
+  }*//*
+
   void drawRoute() {
     final mapController = Get.find<MapHelperController>(tag: "route");
 
@@ -151,4 +154,4 @@ class TrackRouteController extends GetxController {
 
     return points;
   }
-}
+}*/

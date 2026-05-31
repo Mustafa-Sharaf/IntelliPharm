@@ -5,28 +5,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapHelperController extends GetxController {
-  /// 📍 الموقع الحالي
   var latitude = 33.5138.obs;
   var longitude = 36.2765.obs;
-
-  /// 🗺️ الكنترولر تبع الخريطة
   final mapController = Rxn<GoogleMapController>();
-
-  /// 📍 markers
   var markers = <Marker>{}.obs;
-
-  /// 🛣️ polylines
   var polylines = <Polyline>{}.obs;
 
-  /// 🔹 ربط الخريطة
   void setMapController(GoogleMapController controller) {
     mapController.value = controller;
     applyMapStyle();
   }
-
-  // =========================
-  // 🌙 Map Style
-  // =========================
 
   Future<void> setDarkMapStyle() async {
     if (mapController.value == null) return;
@@ -104,7 +92,7 @@ class MapHelperController extends GetxController {
       ),
     );
 
-    /// 🎯 تحريك الكاميرا
+
     if (moveCamera && mapController.value != null) {
       await mapController.value!.animateCamera(
         CameraUpdate.newLatLngZoom(LatLng(lat, lng), 14),
@@ -112,9 +100,7 @@ class MapHelperController extends GetxController {
     }
   }
 
-  // =========================
-  // 🛣️ Polylines
-  // =========================
+
 
   void addPolyline(List<LatLng> points) {
     final polyline = Polyline(
@@ -127,7 +113,7 @@ class MapHelperController extends GetxController {
     polylines.add(polyline);
   }
 
-  /// 🔥 رسم كل المسارات دفعة واحدة
+
   void drawRoutes(List<List<LatLng>> allPaths) {
     clearAll();
 
@@ -135,13 +121,9 @@ class MapHelperController extends GetxController {
       addPolyline(path);
     }
 
-    /// 🎯 تحريك الكاميرا لكل المسار
     moveCameraToBounds(allPaths.expand((e) => e).toList());
   }
 
-  // =========================
-  // 📍 Markers
-  // =========================
 
   void addPharmacyMarker({
     required LatLng position,
@@ -156,9 +138,6 @@ class MapHelperController extends GetxController {
     );
   }
 
-  // =========================
-  // 🧹 Clear
-  // =========================
 
   void clearAll() {
     markers.clear();
@@ -185,9 +164,6 @@ class MapHelperController extends GetxController {
     );
   }
 
-  // =========================
-  // 🎯 Camera bounds
-  // =========================
 
   void moveCameraToBounds(List<LatLng> points) {
     if (points.isEmpty || mapController.value == null) return;

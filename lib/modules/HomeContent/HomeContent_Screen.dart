@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
+import '../../Widgets/EmptyCard.dart';
 import '../../Widgets/PharmacyCard.dart';
 import '../../Widgets/PlanRouteCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
+import '../PlanYourRoute/PlanYourRoute_Screen.dart';
+import 'HomeContent_Controller.dart';
 
 //New code
 class HomeContentScreen extends StatelessWidget {
@@ -13,28 +17,40 @@ class HomeContentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).extension<ThemeColors>()!;
+    final homeContentController = Get.put(HomeContentController());
     return SingleChildScrollView(
       child: Column(
         children: [
           PlanRouteCard(),
-          Row(
-            children: [
-              StatCard(
-                icon: Icons.verified_rounded,
-                value: "33",
-                title: "Visits".tr,
-              ),
-              StatCard(
-                icon: Icons.handshake_rounded,
-                value: "20",
-                title: "Deals".tr,
-              ),
-              StatCard(
-                icon: Icons.receipt_long_rounded,
-                value: "15",
-                title: "Order".tr,
-              ),
-            ],
+          Obx(
+            () => Row(
+              children: [
+                StatCard(
+                  icon: Icons.verified_rounded,
+                  value:
+                      homeContentController.statistics.value?.visitsCount
+                          .toString() ??
+                      "0",
+                  title: "Visits".tr,
+                ),
+                StatCard(
+                  icon: Icons.handshake_rounded,
+                  value:
+                      homeContentController.statistics.value?.usefulVisitsCount
+                          .toString() ??
+                      "0",
+                  title: "Deals".tr,
+                ),
+                StatCard(
+                  icon: Icons.receipt_long_rounded,
+                  value:
+                      homeContentController.statistics.value?.ordersCount
+                          .toString() ??
+                      "0",
+                  title: "Order".tr,
+                ),
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(size.width * 0.02),
@@ -61,9 +77,91 @@ class HomeContentScreen extends StatelessWidget {
               ],
             ),
           ),
+          /* SizedBox(
+            height: size.height * 0.49,
+            child: Obx(
+              () => ListView.builder(
+                itemCount: homeContentController.todayVisits.length,
+                itemBuilder: (context, index) {
+                  final visit = homeContentController.todayVisits[index];
+
+                  return PharmacyCard(
+                    name: visit.pharmacyName,
+                    address: visit.planName,
+                    time: visit.createdAt,
+                    status: visit.visited
+                        ? VisitStatus.visited
+                        : VisitStatus.pending,
+                  );
+                },
+              ),
+            ),
+          ),*/
           SizedBox(
             height: size.height * 0.49,
-            child: ListView(
+            child: Obx(() {
+              if (homeContentController.isLoading.value) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                );
+              }
+
+              if (homeContentController.todayVisits.isEmpty) {
+                return  Center(
+                  child: EmptyPlanCard(
+                    title: "No visits planned yet.",
+                    subtitle: "The pharmacies will appear here once you have selected the area you will be visiting.",
+                    buttonText: "Create Plan",
+                    onPressed:(){
+                      Get.to(PlanYourRouteScreen());
+                    },
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                itemCount: homeContentController.todayVisits.length,
+                itemBuilder: (context, index) {
+                  final visit = homeContentController.todayVisits[index];
+
+                  return PharmacyCard(
+                    name: visit.pharmacyName,
+                    address: visit.planName,
+                    time: visit.createdAt,
+                    status: visit.visited
+                        ? VisitStatus.visited
+                        : VisitStatus.pending,
+                  );
+                },
+              );
+            }),
+          ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Active Offers",
+                  style: TextStyle(
+                    fontSize: size.width * 0.05,
+                    fontWeight: FontWeight.bold,
+                    color: colors.textDefault,
+                    fontFamily: 'Cairo',
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*ListView(
               children: [
                 PharmacyCard(
                   name: "Apex Pharmacy",
@@ -103,28 +201,4 @@ class HomeContentScreen extends StatelessWidget {
                   status: VisitStatus.pending,
                 ),
               ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(size.width * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Active Offers",
-                  style: TextStyle(
-                    fontSize: size.width * 0.05,
-                    fontWeight: FontWeight.bold,
-                    color: colors.textDefault,
-                    fontFamily: 'Cairo',
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+            ),*/

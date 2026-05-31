@@ -1,3 +1,4 @@
+/*
 class PharmacyModel {
   final int id;
   final String name;
@@ -26,3 +27,5 @@ class PharmacyModel {
     );
   }
 }
+*/
+

@@ -1,67 +1,138 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../Widgets/BuildSelector.dart';
-import '../../Widgets/CustomAppBar.dart';
-import '../../Widgets/PharmacyCard.dart';
-import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
-import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
-import '../../app_theme/AppColors.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../Widgets/PharmacyInfoCard.dart';
+import '../../Widgets/Tabs.dart';
+import '../../app_theme/theme_extension.dart';
+import '../Searching/Searching_Controller.dart';
+import '../Searching/Searching_Screen.dart';
 import 'Pharmacists_Controller.dart';
 
 class PharmacistsScreen extends StatelessWidget {
-  const PharmacistsScreen({super.key});
+  PharmacistsScreen({super.key});
+  final searchController = SearchControllerX();
+  final pharmacistsController = Get.put(PharmacistsController());
+
+  void _openWhatsApp(String phone) async {
+    if (phone.isEmpty) return;
+
+    final url = Uri.parse("https://wa.me/$phone");
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PharmacistsController());
+    final colors = Theme.of(context).extension<ThemeColors>()!;
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
-      appBar: CustomAppBar(title: "Pharmacists".tr),
+      backgroundColor: colors.backgroundMain,
+      appBar: AppBar(
+        backgroundColor: colors.backgroundMain,
+        foregroundColor: colors.textPrimary,
+        centerTitle: true,
+        title: Text(
+          "Pharmacies",
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: 'Cairo',
+            color: colors.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(size.width * 0.03),
+
         child: Column(
           children: [
+            /// SEARCH
+            CustomSearchField(
+              controller: searchController,
+              hintText: "Search pharmacy or pharmacist...",
+              onChanged: (value) {
+                pharmacistsController.updateSearch(value);
+              },
+              onClear: () {
+                pharmacistsController.updateSearch('');
+              },
+            ),
+            SizedBox(height: size.height * 0.025),
+
+            SizedBox(height: size.height * 0.02),
+
+            /// TABS
             Obx(
-              () => BuildSelector(
-                title: "Region".tr,
-                value: controller.selectedRegion.value?.name ?? "",
-                icon: Icons.map,
-                onTap: () async {
-                  final result = await showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
-                      ),
-                    ),
-                    builder: (_) => RegionSelector(),
-                  );
-                  if (result != null && result is RegionModel) {
-                    controller.selectedRegion.value = result;
-                    controller.fetchPharmacies();
-                  }
-                },
-                iconColor: AppColors.primaryColor,
+              () => Tabs(
+                tabs: pharmacistsController.tabs,
+                selectedIndex: pharmacistsController.selectedTab.value,
+                onTap: pharmacistsController.changeTab,
               ),
             ),
+
+            SizedBox(height: size.height * 0.01),
+
+            /// COUNT
+            Obx(
+              () => Text(
+                "${pharmacistsController.filteredPharmacies.length} pharmacies",
+              ),
+            ),
+
+            SizedBox(height: size.height * 0.01),
+
+            /// LIST
             Expanded(
               child: Obx(() {
-                if (controller.isLoading.value) {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.primaryColor,
-                    ),
-                  );
+                if (pharmacistsController.isLoading.value) {
+                  return const Center(child: CircularProgressIndicator());
                 }
 
-                if (controller.pharmacies.isEmpty) {
-                  return Center(child: Text("No_pharmacies_found".tr));
+                final list = pharmacistsController.filteredPharmacies;
+
+                if (list.isEmpty) {
+                  return const Center(child: Text("No pharmacies found"));
                 }
 
                 return ListView.builder(
-                  itemCount: controller.pharmacies.length,
+                  controller: pharmacistsController.scrollController,
+
+                  itemCount:
+                      list.length +
+                      (pharmacistsController.isMoreLoading.value ? 1 : 0),
+
                   itemBuilder: (context, index) {
-                    //return PharmacyCard(pharmacy: controller.pharmacies[index]);
+                    /// LOADING
+                    if (index == list.length) {
+                      return const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+
+                    final pharmacy = list[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+
+                      child: PharmacyInfoCard(
+                        pharmacyName: pharmacy.name,
+                        regionName: pharmacy.region,
+                        openTime: pharmacy.openTime.substring(0, 5),
+                        closeTime: pharmacy.closeTime.substring(0, 5),
+                        pharmacistName: pharmacy.pharmacistName ?? "N/A",
+                        isOpen: pharmacy.checkIsOpen,
+
+                        onWhatsAppTap: () =>
+                            _openWhatsApp(pharmacy.pharmacistPhone),
+
+                        onDirectionsTap: () {},
+                      ),
+                    );
                   },
                 );
               }),

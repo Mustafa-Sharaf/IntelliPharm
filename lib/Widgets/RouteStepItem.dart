@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
+import '../modules/PharmacyDetails/PharmacyDetails_Screen.dart';
 
 class RouteStepItem extends StatelessWidget {
   const RouteStepItem({
@@ -125,7 +127,15 @@ class RouteStepItem extends StatelessWidget {
                         ],
                       ),
 
-                      Icon(Icons.drag_indicator, color: Colors.grey[400]),
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(PharmacyDetailsScreen());
+                        },
+                        child: Icon(
+                          Icons.drag_indicator,
+                          color: Colors.grey[400],
+                        ),
+                      ),
                     ],
                   ),
 

@@ -1,3 +1,4 @@
+/*
 class VisitModel {
   final int id;
   final int pharmacyId;
@@ -19,4 +20,4 @@ class VisitModel {
       distanceKm: double.parse(json['distance_km'].toString()),
     );
   }
-}
+}*/

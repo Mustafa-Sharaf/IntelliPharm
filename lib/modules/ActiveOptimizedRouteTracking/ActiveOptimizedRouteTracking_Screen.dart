@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/RouteStepItem.dart';
 import '../../app_theme/theme_extension.dart';
-import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
+import '../PlanYourRoute/PlanYourRoute_Controller.dart';
+import 'ActiveOptimizedRouteTracking_Controller.dart';
 import 'CurrentRouteHeader.dart';
-
 
 class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
   const ActiveOptimizedRouteTrackingScreen({super.key});
@@ -15,8 +14,9 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    Get.lazyPut(() => MapHelperController(), tag: "route");
     final size = MediaQuery.of(context).size;
+    final controller = Get.put(ActiveOptimizedRouteTrackingController());
+    final planYourRouteController = Get.find<PlanYourRouteController>();
 
     return Scaffold(
       body: Column(
@@ -27,9 +27,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
               children: [
                 MapHelperScreen(
                   tag: "route",
-                  right: MediaQuery.of(context).size.height * 0.01,
-                  bottom: MediaQuery.of(context).size.height * 0.02,
-                  refreshButtonBottom: MediaQuery.of(context).size.height * 0.1,
+                  refreshButtonBottom:
+                      MediaQuery.of(context).size.height * 0.11,
                   refreshButtonRight: MediaQuery.of(context).size.height * 0.01,
                   showRefreshButton: true,
                 ),
@@ -61,7 +60,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: size.height * 0.02,),
+
+                    SizedBox(height: size.height * 0.02),
 
                     /// Next Destination Section
                     Text(
@@ -75,67 +75,88 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         height: 2,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Central Care Pharma",
-                                style: TextStyle(
+                    Obx(() {
+                      final plan = planYourRouteController.plan.value;
+                      final nextVisit = controller.nextVisit;
+
+                      if (plan == null || nextVisit == null) {
+                        return const SizedBox();
+                      }
+
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  nextVisit.name,
+                                  style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Cairo',
-                                    color: colors.textDefault
+                                    color: colors.textDefault,
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.access_time,
-                                    size: 16,
-                                    color: Colors.grey[600],
-                                  ),
-                                  SizedBox(width: size.width * 0.004),
-                                  Text(
-                                    "10:15 AM",
-                                    style: TextStyle(color: Colors.grey[600],
-                                        fontFamily: 'Cairo'),
-                                  ),
-                                  SizedBox(width: size.width * 0.016),
-                                  Icon(
-                                    Icons.location_on_outlined,
-                                    size: 16,
-                                    color: Colors.grey[600],
-                                  ),
-                                  SizedBox(width: size.width * 0.004),
-                                  Text(
-                                    "2.4 km",
-                                    style: TextStyle(color: Colors.grey[600],
-                                        fontFamily: 'Cairo'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.navigation_outlined, size: 18),
-                          label: Text("Navigate".tr, style: TextStyle(
-                              fontFamily: 'Cairo', fontSize: 15),),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.access_time,
+                                      size: 16,
+                                      color: Colors.grey[600],
+                                    ),
+                                    SizedBox(width: size.width * 0.004),
+                                    Text(
+                                      "${plan.totalDurationHours} h",
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontFamily: 'Cairo',
+                                      ),
+                                    ),
+                                    SizedBox(width: size.width * 0.016),
+                                    Icon(
+                                      Icons.location_on_outlined,
+                                      size: 16,
+                                      color: Colors.grey[600],
+                                    ),
+                                    SizedBox(width: size.width * 0.004),
+                                    Text(
+                                      "${plan.totalDistanceKm} km",
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontFamily: 'Cairo',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                          ElevatedButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.navigation_outlined,
+                              size: 18,
+                            ),
+                            label: Text(
+                              "Navigate".tr,
+                              style: TextStyle(
+                                fontFamily: 'Cairo',
+                                fontSize: 15,
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryColor,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
                     SizedBox(height: size.width * 0.06),
                     Text(
                       "ROUTE_SCHEDULE".tr,
@@ -145,34 +166,37 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         fontSize: 12,
                         fontFamily: 'Cairo',
                         letterSpacing: 2,
-
                       ),
                     ),
                     SizedBox(height: size.width * 0.04),
-                    RouteStepItem(
-                      title: "Pharmacy One",
-                      subtitle: "2.3 km away",
-                      index: "1",
-                      isCurrent: true,
-                      showDetails: true,
-                      onDetailsPressed: () {},
-                    ),
-                    RouteStepItem(
-                      title: "Pharmacy One",
-                      subtitle: "2.3 km away",
-                      index: "2",
-                      isCurrent: false,
-                      showDetails: false,
-                      isDone: true,
-                      onDetailsPressed: () {},
-                    ),
+                    Obx(() {
+                      if (planYourRouteController.isLoading.value) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
 
-                    RouteStepItem(
-                      title: "Last Stop",
-                      subtitle: "Destination",
-                      index: "5",
-                      showLine: false,
-                    ),
+                      final plan = planYourRouteController.plan.value;
+
+                      if (plan == null) {
+                        return const SizedBox();
+                      }
+
+                      return Column(
+                        children: List.generate(plan.visits.length, (index) {
+                          final visit = plan.visits[index];
+
+                          return RouteStepItem(
+                            title: visit.name,
+                            subtitle: visit.info,
+                            index: visit.visitOrder.toString(),
+                            isCurrent: index == 0,
+                            isDone: visit.visited,
+                            showLine: index != plan.visits.length - 1,
+                            showDetails: true,
+                            onDetailsPressed: () {},
+                          );
+                        }),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -183,4 +207,3 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
     );
   }
 }
-

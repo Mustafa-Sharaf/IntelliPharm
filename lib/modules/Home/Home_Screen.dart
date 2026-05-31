@@ -8,6 +8,7 @@ import '../../app_theme/theme_extension.dart';
 import '../AddOrder/AddOrder_Screen.dart';
 import '../AddPharmacy/AddPharmacy_Screen.dart';
 import '../HomeContent/HomeContent_Screen.dart';
+import '../Pharmacists/Pharmacists_Screen.dart';
 import 'FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
 import 'BuildAppBar.dart';
@@ -80,7 +81,15 @@ PreferredSizeWidget? _buildAppBar(
       return AppBar(title: const Text("Notes"));
 
     case 4:
-      return BuildAppbar(title: "Add Pharmacy");
+      return BuildAppbar(
+        title: "Add Pharmacy",
+        trailing: IconButton(
+          icon: const Icon(Icons.format_list_bulleted_outlined),
+          onPressed: () {
+             Get.to(() => PharmacistsScreen());
+          },
+        ),
+      );
 
     default:
       return null;

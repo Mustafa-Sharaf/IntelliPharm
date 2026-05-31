@@ -8,7 +8,8 @@ class LocationCoordinateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
+    //final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
+    final addPharmacyMapController = Get.find<MapHelperController>(tag: "addPharmacy");
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
     return Padding(
@@ -47,7 +48,7 @@ class LocationCoordinateSection extends StatelessWidget {
                     ),
                     child: Obx(
                       () => Text(
-                        "${mapController.latitude.value}",
+                        "${addPharmacyMapController.latitude.value}",
                         style: TextStyle(
                           fontSize: 12,
                           color: colors.textDefault,
@@ -94,7 +95,7 @@ class LocationCoordinateSection extends StatelessWidget {
                     ),
                     child: Obx(
                       () => Text(
-                        "${mapController.longitude.value}",
+                        "${addPharmacyMapController.longitude.value}",
                         style: TextStyle(
                           fontSize: 12,
                           color: colors.textDefault,

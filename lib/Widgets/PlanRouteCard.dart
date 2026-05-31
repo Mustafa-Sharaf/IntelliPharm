@@ -71,7 +71,7 @@ class PlanRouteCard extends StatelessWidget {
                         ),
 
                         Text(
-                          "12 destinations optimized",
+                          "Today's planned visits",
                           style: TextStyle(
                             fontSize: size.width * 0.033,
                             color: Colors.white.withValues(alpha: 0.5),

@@ -16,7 +16,8 @@ class AddPharmacyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MapHelperController(), tag: "addPharmacy");
+    //Get.put(MapHelperController(), tag: "addPharmacy");
+    final addPharmacyMapController = Get.find<MapHelperController>(tag: "addPharmacy");
     final addPharmacyController = Get.put(AddPharmacyController());
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
