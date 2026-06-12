@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../modules/Pharmacists/Pharmacists_Model.dart';
 import '../../services/ServiceApi/PharmaciesService.dart';
 
@@ -8,6 +11,7 @@ class PharmacistsController extends GetxController {
   final tabs = ["All Regions", "Open Now", "Close Now"];
 
   var pharmacies = <PharmaciesModel>[].obs;
+  var selectedRegion = Rxn<RegionModel>();
 
   var isLoading = false.obs;
   var isMoreLoading = false.obs;
@@ -31,15 +35,28 @@ class PharmacistsController extends GetxController {
     scrollController.addListener(_onScroll);
   }
 
+
+  void openWhatsApp(String phone) async {
+    final url = Uri.parse(
+      'https://api.whatsapp.com/send?phone=$phone',
+    );
+
+    await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
   // Scroll Pagination
   void _onScroll() {
     if (scrollController.position.pixels >=
-        scrollController.position.maxScrollExtent - 200) {
+        scrollController.position.maxScrollExtent - 100) {
       if (hasMore.value && !isMoreLoading.value && !isLoading.value) {
         fetchPharmacies(loadMore: true);
       }
     }
   }
+
 
   // Fetch Data
   Future<void> fetchPharmacies({bool loadMore = false}) async {
@@ -53,18 +70,28 @@ class PharmacistsController extends GetxController {
         hasMore.value = true;
       }
 
+      final pageToFetch = currentPage.value;
       final result = await PharmaciesService.getPharmacies(
         regionId,
-        currentPage.value,
+        pageToFetch,
       );
 
-      pharmacies.addAll(result.pharmacies);
+      if (pageToFetch == 1) {
+        pharmacies.assignAll(result.pharmacies);
+      } else {
+        pharmacies.addAll(result.pharmacies);
+      }
 
       lastPage.value = result.lastPage;
 
-      hasMore.value = currentPage.value < lastPage.value;
 
-      currentPage.value++;
+      if (pageToFetch >= lastPage.value) {
+        hasMore.value = false;
+      } else {
+        hasMore.value = true;
+        currentPage.value++;
+      }
+
     } catch (e) {
       Get.snackbar("Error", e.toString());
     } finally {

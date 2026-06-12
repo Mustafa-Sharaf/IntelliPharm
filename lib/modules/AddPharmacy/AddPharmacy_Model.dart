@@ -13,6 +13,7 @@ class CreatePharmacyModel {
   final String pharmacistName;
   final String pharmacistPhone;
   final String? pharmacistAltPhone;
+  final List<String> holidays;
 
   CreatePharmacyModel({
     required this.nameEn,
@@ -26,6 +27,7 @@ class CreatePharmacyModel {
     required this.pharmacistName,
     required this.pharmacistPhone,
     this.pharmacistAltPhone,
+    this.holidays = const [],
   });
 
   Map<String, dynamic> toJson() {
@@ -43,6 +45,7 @@ class CreatePharmacyModel {
       "pharmacist_name": pharmacistName,
       "pharmacist_phone": pharmacistPhone,
       "pharmacist_alt_phone": pharmacistAltPhone,
+      "holidays": holidays,
     };
   }
 }

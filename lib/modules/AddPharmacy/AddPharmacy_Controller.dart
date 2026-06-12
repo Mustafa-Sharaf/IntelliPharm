@@ -23,6 +23,41 @@ class AddPharmacyController extends GetxController {
   var countryCode = "+963".obs;
   var isLoading = false.obs;
 
+
+  final weekdays = [
+    {"key": "sunday", "ar": "الأحد"},
+    {"key": "monday", "ar": "الإثنين"},
+    {"key": "tuesday", "ar": "الثلاثاء"},
+    {"key": "wednesday", "ar": "الأربعاء"},
+    {"key": "thursday", "ar": "الخميس"},
+    {"key": "friday", "ar": "الجمعة"},
+    {"key": "saturday", "ar": "السبت"},
+  ];
+
+  var holidays = <String>[].obs;
+  final maxHolidays = 2.obs;
+  final shake = false.obs;
+  void toggleHoliday(String day) {
+    if (holidays.contains(day)) {
+      holidays.remove(day);
+      return;
+    }
+
+    if (holidays.length >= maxHolidays.value) {
+      triggerShake();
+      return;
+    }
+
+    holidays.add(day);
+  }
+  void triggerShake() {
+    shake.value = true;
+
+    Future.delayed(const Duration(milliseconds: 300), () {
+      shake.value = false;
+    });
+  }
+
   Future<void> createPharmacy() async {
     if (!formKey.currentState!.validate()) return;
     if (selectedRegion.value == null) {
@@ -59,6 +94,7 @@ class AddPharmacyController extends GetxController {
         pharmacistAltPhone: altPhoneController.text.trim().isEmpty
             ? null
             : altPhoneController.text.trim(),
+        holidays: holidays,
       );
 
       final response = await PharmacyService.createPharmacy(requestData);
@@ -116,6 +152,10 @@ class AddPharmacyController extends GetxController {
       mapController.longitude.value = 0.0;
     } catch (_) {}
   }
+
+
+
+
 
   @override
   void onClose() {

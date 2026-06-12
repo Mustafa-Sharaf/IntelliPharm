@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../../modules/Pharmacists/Pharmacists_Controller.dart';
 import 'RegionSelector_Controller.dart';
 
 class RegionSelector extends StatelessWidget {
@@ -66,6 +67,7 @@ class RegionSelector extends StatelessWidget {
                           ),
                         ),
                         onTap: () => controller.selectRegion(region),
+
                       ),
                     );
                   },

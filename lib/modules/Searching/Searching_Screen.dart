@@ -99,6 +99,7 @@ class CustomSearchField extends StatelessWidget {
   final String? hintText;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onClear;
+  final VoidCallback? onFilterTap;
 
   const CustomSearchField({
     super.key,
@@ -106,6 +107,7 @@ class CustomSearchField extends StatelessWidget {
     this.hintText,
     this.onChanged,
     this.onClear,
+    this.onFilterTap,
   });
 
   @override
@@ -181,9 +183,7 @@ class CustomSearchField extends StatelessWidget {
           width: size.width * 0.12,
           height: size.width * 0.12,
           child: ElevatedButton(
-            onPressed: () async {
-              // هنا يمكن فتح BottomSheet للفلترة المتقدمة لاحقاً
-            },
+            onPressed: onFilterTap,
             style: ElevatedButton.styleFrom(
               backgroundColor: colors.textPrimary,
               elevation: 3,

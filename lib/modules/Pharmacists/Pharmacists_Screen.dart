@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../Widgets/PharmacyInfoCard.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../Widgets/Tabs.dart';
 import '../../app_theme/theme_extension.dart';
 import '../Searching/Searching_Controller.dart';
@@ -13,15 +14,7 @@ class PharmacistsScreen extends StatelessWidget {
   final searchController = SearchControllerX();
   final pharmacistsController = Get.put(PharmacistsController());
 
-  void _openWhatsApp(String phone) async {
-    if (phone.isEmpty) return;
 
-    final url = Uri.parse("https://wa.me/$phone");
-
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +54,9 @@ class PharmacistsScreen extends StatelessWidget {
                 pharmacistsController.updateSearch('');
               },
             ),
-            SizedBox(height: size.height * 0.025),
+            SizedBox(height: size.height * 0.04),
 
-            SizedBox(height: size.height * 0.02),
+
 
             /// TABS
             Obx(
@@ -78,8 +71,18 @@ class PharmacistsScreen extends StatelessWidget {
 
             /// COUNT
             Obx(
-              () => Text(
-                "${pharmacistsController.filteredPharmacies.length} pharmacies",
+              () => Row(
+                children: [
+                  Text(
+                    "${pharmacistsController.filteredPharmacies.length} pharmacies found",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Cairo',
+                      color: colors.textSecondary,
+                      //fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -128,7 +131,7 @@ class PharmacistsScreen extends StatelessWidget {
                         isOpen: pharmacy.checkIsOpen,
 
                         onWhatsAppTap: () =>
-                            _openWhatsApp(pharmacy.pharmacistPhone),
+                            pharmacistsController.openWhatsApp(pharmacy.pharmacistPhone),
 
                         onDirectionsTap: () {},
                       ),

@@ -4,9 +4,9 @@ import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/ActiveRegionComponent.dart';
 import '../../Widgets/BuildGestureDetector.dart';
 import '../../app_theme/theme_extension.dart';
-import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import 'AddPharmacy_Controller.dart';
+import 'HolidaySelector.dart';
 import 'LocationCoordinatesSection.dart';
 import 'PharmacyContactSection.dart';
 import 'PharmacyNameSection.dart';
@@ -16,8 +16,6 @@ class AddPharmacyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Get.put(MapHelperController(), tag: "addPharmacy");
-    final addPharmacyMapController = Get.find<MapHelperController>(tag: "addPharmacy");
     final addPharmacyController = Get.put(AddPharmacyController());
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
@@ -146,7 +144,7 @@ class AddPharmacyScreen extends StatelessWidget {
                       SizedBox(height: size.height * 0.02),
 
                       // --- SECTION: ACTIVE STATUS ---
-                      Container(
+                      /*Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: size.width * 0.02,
                           vertical: size.width * 0.01,
@@ -177,6 +175,16 @@ class AddPharmacyScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                      ),*/
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: size.height * 0.02,
+                          bottom: size.height * 0.01,
+                        ),
+                        child: Text('HOLIDAYS', style: sectionTitleStyle),
+                      ),
+                      HolidaySelector(
+                        controller: addPharmacyController,
                       ),
 
                       // --- SECTION: CONTACT INFO ---
