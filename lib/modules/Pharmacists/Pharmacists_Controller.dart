@@ -150,5 +150,3 @@ class PharmacistsController extends GetxController {
   }
 }
 
-
-//Mustafa sharaf
