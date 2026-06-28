@@ -1,6 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intellipharm/app_theme/AppColors.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../Widgets/AppBarHome.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNav.dart';
 import '../../Widgets/CustomBottomNav/CustomBottomNavController.dart';
@@ -15,18 +16,24 @@ import 'FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
 import 'BuildAppBar.dart';
 
-//New code
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final String role = GetStorage().read<String>('role') ?? 'rep';
 
-  final pages = [
+  final repPages = [
     HomeContentScreen(),
     MyOrdersScreen(),
     ChatScreen(),
-    Center(child: Text("NOTES")),
-    //AddPharmacyScreen(),
+    const Center(child: Text("NOTES")),
     PharmacistsScreen(),
+  ];
+
+  final distributorPages = [
+    const Center(child: Text("Distributor Home Screen")),
+    const Center(child: Text("My Deliveries - Task List")),
+    const Center(child: Text("Active Delivery Route")),
+    const Center(child: Text("Deliveries History")),
   ];
 
   @override
@@ -34,28 +41,38 @@ class HomeScreen extends StatelessWidget {
     final controller = Get.put(CustomBottomNavController());
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final currentPages = role == 'distributor' ? distributorPages : repPages;
+
     return Obx(
       () => Scaffold(
         key: scaffoldKey,
         backgroundColor: colors.backgroundMain,
-
-        /// Drawer
-        drawer: const DrawerHome(),
+        //drawer: role == 'rep' ? const DrawerHome() : null,
+        drawer: DrawerHome(),
 
         /// AppBar
-        appBar: _buildAppBar(controller.currentIndex.value, scaffoldKey, colors,size),
+        appBar: _buildAppBar(
+          controller.currentIndex.value,
+          scaffoldKey,
+          colors,
+          size,
+          role,
+        ),
 
-        /// Change pages
-        body: pages[controller.currentIndex.value],
+        /// Body
+        body: currentPages[controller.currentIndex.value],
 
         /// Navbar
         bottomNavigationBar: CustomBottomNav(
           currentIndex: controller.currentIndex.value,
+          role: role,
           onTap: (index) {
             controller.changeIndex(index);
           },
         ),
-        floatingActionButton: controller.currentIndex.value == 1
+
+        floatingActionButton:
+            (role == 'rep' && controller.currentIndex.value == 1)
             ? FloatingAction(
                 onPressed: () {
                   Get.to(() => AddOrderScreen());
@@ -67,38 +84,49 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+
 PreferredSizeWidget? _buildAppBar(
   int index,
   GlobalKey<ScaffoldState> scaffoldKey,
-    ThemeColors? colors,
-    Size? size,
+  ThemeColors? colors,
+  Size? size,
+  String role,
 ) {
-
-  switch (index) {
-    case 0:
-      return AppbarHome(scaffoldKey: scaffoldKey);
-
-    case 1:
-      return BuildAppbar(title: "My Orders");
-
-    case 2:
-      return null;
-
-    case 3:
-      return AppBar(title: const Text("Notes"));
-
-    case 4:
-      return BuildAppbar(
-        title: "Pharmacists Screen",
-        trailing: IconButton(
-          icon: const Icon(Icons.add_business_rounded),
-          onPressed: () {
-            Get.to(() => AddPharmacyScreen());
-          },
-        ),
-      );
-
-    default:
-      return null;
+  if (role == 'distributor') {
+    switch (index) {
+      case 0:
+        return AppbarHome(scaffoldKey: scaffoldKey);
+      case 1:
+        return BuildAppbar(title: "My Deliveries");
+      case 2:
+        return BuildAppbar(title: "Active Route Progress");
+      case 3:
+        return BuildAppbar(title: "Delivery History");
+      default:
+        return null;
+    }
+  } else {
+    switch (index) {
+      case 0:
+        return AppbarHome(scaffoldKey: scaffoldKey);
+      case 1:
+        return BuildAppbar(title: "My Orders");
+      case 2:
+        return null;
+      case 3:
+        return AppBar(title: const Text("Notes"));
+      case 4:
+        return BuildAppbar(
+          title: "Pharmacists Screen",
+          trailing: IconButton(
+            icon: const Icon(Icons.add_business_rounded),
+            onPressed: () {
+              Get.to(() => AddPharmacyScreen());
+            },
+          ),
+        );
+      default:
+        return null;
+    }
   }
 }

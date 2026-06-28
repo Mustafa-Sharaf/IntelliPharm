@@ -36,10 +36,21 @@ class DioClient {
 
         onError: (DioException err, handler) async {
           final statusCode = err.response?.statusCode;
-
           print("Error: $statusCode");
 
-          if (statusCode == 401 || statusCode == 403) {
+          if (statusCode == 403) {
+            print("403 Forbidden: User doesn't have permission for this resource.");
+            return handler.next(err);
+          }
+
+          if (statusCode == 401) {
+
+            if (err.requestOptions.extra["isRetry"] == true) {
+              print("Critical: Retry request failed again with 401. Logging out...");
+              _logout();
+              return handler.next(err);
+            }
+
             try {
               print("Token expired → refreshing...");
 
@@ -49,23 +60,19 @@ class DioClient {
                 print("New token received");
 
                 final requestOptions = err.requestOptions;
+                requestOptions.headers["Authorization"] = "Bearer $newToken";
 
-                requestOptions.headers["Authorization"] =
-                "Bearer $newToken";
+                requestOptions.extra["isRetry"] = true;
 
                 print("Retrying request...");
-
                 final response = await dio.fetch(requestOptions);
-
                 return handler.resolve(response);
               } else {
                 print("Refresh failed → logout");
-
                 _logout();
               }
             } catch (e) {
               print("Refresh exception: $e");
-
               _logout();
             }
           }
@@ -73,19 +80,15 @@ class DioClient {
           handler.next(err);
         },
 
-
       ),
     );
 
-/*    dio.interceptors.add(LogInterceptor(
-      requestBody: true,    // يطبع الـ Body المرسل من التطبيق
-      requestHeader: true,  // يطبع الـ Headers للتأكد من التوكن
-      responseBody: true,   // يطبع تفاصيل الخطأ القادم من السيرفر
-    ));*/
   }
   static void _logout() {
-    final box = GetStorage();
-    box.erase();
-    Get.offAllNamed("/signIn");
-  }
+    print("Refresh failed → logout");
+    if (Get.currentRoute != '/signIn') {
+      GetStorage().remove("token");
+      GetStorage().remove("refresh_token");
+      Get.offAllNamed("/signIn");
+    }}
 }

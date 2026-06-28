@@ -4,8 +4,6 @@ class ChatMessageModel {
   final String role;
   final String message;
   final DateTime? createdAt;
-
-  // حقل إضافي للتحكم بحالة التحميل لكل رسالة بشكل مستقل إذا لزم الأمر
   bool isLoading;
 
   ChatMessageModel({
@@ -17,7 +15,6 @@ class ChatMessageModel {
     this.isLoading = false,
   });
 
-  // التحويل من JSON القادم من الـ API
   factory ChatMessageModel.fromJson(Map<String, dynamic> json) {
     return ChatMessageModel(
       id: json['id'],
@@ -30,7 +27,6 @@ class ChatMessageModel {
     );
   }
 
-  // التحويل إلى JSON لإرساله في الـ Request
   Map<String, dynamic> toJson() {
     return {
       'message': message,

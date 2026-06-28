@@ -40,8 +40,8 @@ class SignInController extends GetxController {
 
         box.write("token", data["data"]["access_token"]);
         box.write("refresh_token", data["data"]["refresh_token"]);
-        //GetStorage().write("refresh_token", data["refresh_token"]);
         box.write("user", data["data"]);
+        box.write("role", user.roles.contains('distributor') ? "distributor" : "rep");
 
         AppSnackBar.success(data["message"]);
         Get.offAllNamed("/homeScreen");

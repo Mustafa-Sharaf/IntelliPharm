@@ -6,17 +6,21 @@ import 'NavItem.dart';
 class CustomBottomNav extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
+  final String role;
 
   const CustomBottomNav({
     super.key,
     required this.currentIndex,
     required this.onTap,
+    required this.role,
   });
 
   @override
   Widget build(BuildContext context) {
-    final height= MediaQuery.of(context).size.height;
+    final height = MediaQuery.of(context).size.height;
     final colors = Theme.of(context).extension<ThemeColors>()!;
+    final currentItems = role == 'distributor' ? distributorItems : repItems;
+
     return Container(
       height: height * 0.08,
       padding: EdgeInsets.symmetric(horizontal: height * 0.008),
@@ -31,8 +35,8 @@ class CustomBottomNav extends StatelessWidget {
         ],
       ),
       child: Row(
-        children: List.generate(items.length, (index) {
-          final item = items[index];
+        children: List.generate(currentItems.length, (index) {
+          final item = currentItems[index];
           final isSelected = currentIndex == index;
           return Expanded(
             child: GestureDetector(
@@ -56,24 +60,18 @@ class CustomBottomNav extends StatelessWidget {
                       duration: const Duration(milliseconds: 200),
                       child: Icon(
                         item.icon,
-                        color: isSelected
-                            ? const Color(0xff0C8A7B)
-                            : Colors.grey,
+                        color: isSelected ? const Color(0xff0C8A7B) : Colors.grey,
                         size: height * 0.03,
                       ),
                     ),
-
-                     SizedBox(height: height * 0.002),
-
+                    SizedBox(height: height * 0.002),
                     AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: TextStyle(
                         fontSize: isSelected ? 11 : 10,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Cairo',
-                        color: isSelected
-                            ? const Color(0xff0C8A7B)
-                            : Colors.grey,
+                        color: isSelected ? const Color(0xff0C8A7B) : Colors.grey,
                       ),
                       child: Text(item.label),
                     ),
@@ -87,4 +85,3 @@ class CustomBottomNav extends StatelessWidget {
     );
   }
 }
-
