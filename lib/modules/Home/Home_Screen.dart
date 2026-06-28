@@ -82,37 +82,7 @@ PreferredSizeWidget? _buildAppBar(
       return BuildAppbar(title: "My Orders");
 
     case 2:
-      return AppBar(
-        backgroundColor: colors?.backgroundMain,
-        elevation: 0,
-        leading:  Icon(Icons.arrow_back, color:colors?.textPrimary),
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.smart_toy_outlined,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
-             SizedBox(width: size!.width * 0.03),
-            Text(
-              'IntelliPharma AI',
-              style: TextStyle(
-                color: colors?.textPrimary,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Cairo'
-              ),
-            ),
-          ],
-        ),
-      );
+      return null;
 
     case 3:
       return AppBar(title: const Text("Notes"));
