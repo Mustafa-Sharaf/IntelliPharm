@@ -27,7 +27,7 @@ class MyOrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    final controller = Get.put(MyOrdersController());
+    final controller = Get.find<MyOrdersController>();
     final size = MediaQuery.of(context).size;
 
     return Padding(

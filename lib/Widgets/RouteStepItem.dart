@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
@@ -7,6 +8,7 @@ import '../modules/PharmacyDetails/PharmacyDetails_Screen.dart';
 class RouteStepItem extends StatelessWidget {
   const RouteStepItem({
     super.key,
+    required this.id,
     required this.title,
     required this.subtitle,
     this.isDone = false,
@@ -17,6 +19,7 @@ class RouteStepItem extends StatelessWidget {
     this.showLine = true,
   });
 
+  final int id;
   final String title;
   final String subtitle;
   final bool isDone;
@@ -129,10 +132,10 @@ class RouteStepItem extends StatelessWidget {
 
                       GestureDetector(
                         onTap: (){
-                          Get.to(PharmacyDetailsScreen());
+                          Get.to(()=>PharmacyDetailsScreen(id:id));
                         },
                         child: Icon(
-                          Icons.drag_indicator,
+                          FontAwesomeIcons.squareArrowUpRight,
                           color: Colors.grey[400],
                         ),
                       ),

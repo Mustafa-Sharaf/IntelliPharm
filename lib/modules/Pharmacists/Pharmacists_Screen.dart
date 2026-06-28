@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../Widgets/PharmacyInfoCard.dart';
-import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../Widgets/Tabs.dart';
 import '../../app_theme/theme_extension.dart';
+import '../../helper/ContactLauncher/ContactLauncher.dart';
+import '../NewOrder/NewOrder_Screen.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
 import 'Pharmacists_Controller.dart';
@@ -14,8 +14,6 @@ class PharmacistsScreen extends StatelessWidget {
   final searchController = SearchControllerX();
   final pharmacistsController = Get.put(PharmacistsController());
 
-
-
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
@@ -23,41 +21,13 @@ class PharmacistsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
-      appBar: AppBar(
-        backgroundColor: colors.backgroundMain,
-        foregroundColor: colors.textPrimary,
-        centerTitle: true,
-        title: Text(
-          "Pharmacies",
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'Cairo',
-            color: colors.textPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-
       body: Padding(
         padding: EdgeInsets.all(size.width * 0.03),
-
         child: Column(
           children: [
             /// SEARCH
-            CustomSearchField(
-              controller: searchController,
-              hintText: "Search pharmacy or pharmacist...",
-              onChanged: (value) {
-                pharmacistsController.updateSearch(value);
-              },
-              onClear: () {
-                pharmacistsController.updateSearch('');
-              },
-            ),
+            CustomSearchField(controller: searchController),
             SizedBox(height: size.height * 0.04),
-
-
-
             /// TABS
             Obx(
               () => Tabs(
@@ -66,9 +36,7 @@ class PharmacistsScreen extends StatelessWidget {
                 onTap: pharmacistsController.changeTab,
               ),
             ),
-
             SizedBox(height: size.height * 0.01),
-
             /// COUNT
             Obx(
               () => Row(
@@ -85,7 +53,6 @@ class PharmacistsScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             SizedBox(height: size.height * 0.01),
 
             /// LIST
@@ -129,10 +96,12 @@ class PharmacistsScreen extends StatelessWidget {
                         closeTime: pharmacy.closeTime.substring(0, 5),
                         pharmacistName: pharmacy.pharmacistName ?? "N/A",
                         isOpen: pharmacy.checkIsOpen,
-
-                        onWhatsAppTap: () =>
-                            pharmacistsController.openWhatsApp(pharmacy.pharmacistPhone),
-
+                        onCartTap: () => Get.to(() => NewOrderScreen()),
+                        onContactTap: () =>
+                            ContactLauncher().showContactOptions(
+                              context,
+                              pharmacy.pharmacistPhone,
+                            ),
                         onDirectionsTap: () {},
                       ),
                     );

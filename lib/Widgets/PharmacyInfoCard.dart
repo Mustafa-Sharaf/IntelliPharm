@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../app_theme/AppColors.dart';
 import '../../../app_theme/theme_extension.dart';
 
@@ -10,7 +9,7 @@ class PharmacyInfoCard extends StatelessWidget {
   final String closeTime;
   final String pharmacistName;
   final bool isOpen;
-  final VoidCallback? onWhatsAppTap;
+  final VoidCallback? onContactTap;
   final VoidCallback? onViewNotesTap;
   final VoidCallback? onDirectionsTap;
   final VoidCallback? onCartTap;
@@ -23,7 +22,7 @@ class PharmacyInfoCard extends StatelessWidget {
     required this.closeTime,
     required this.pharmacistName,
     this.isOpen = true,
-    this.onWhatsAppTap,
+    this.onContactTap,
     this.onViewNotesTap,
     this.onDirectionsTap,
     this.onCartTap,
@@ -110,17 +109,17 @@ class PharmacyInfoCard extends StatelessWidget {
                               right: size.width * 0.009,
                             ),
                             child: GestureDetector(
-                              onTap: onWhatsAppTap,
-                              child: Container(
-                                padding: EdgeInsets.all(8),
+                              onTap: onContactTap,
+                              child:       Container(
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF25D366),
+                                  color: AppColors.primaryColor,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const FaIcon(
-                                  FontAwesomeIcons.whatsapp,
-                                  color: Colors.white,
-                                  size: 22,
+                                child:  Icon(
+                                  Icons.phone,
+                                  color: AppColors.white,
+                                  size: 20,
                                 ),
                               ),
                             ),

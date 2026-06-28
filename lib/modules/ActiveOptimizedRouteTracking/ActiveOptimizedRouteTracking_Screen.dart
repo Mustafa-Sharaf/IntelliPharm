@@ -5,6 +5,7 @@ import '../../Widgets/RouteStepItem.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import '../PlanYourRoute/PlanYourRoute_Controller.dart';
+import '../VisitDetails/VisitDetails_Screen.dart';
 import 'ActiveOptimizedRouteTracking_Controller.dart';
 import 'CurrentRouteHeader.dart';
 
@@ -15,7 +16,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-    final controller = Get.put(ActiveOptimizedRouteTrackingController());
+    final controller  = Get.find<ActiveOptimizedRouteTrackingController>();
     final planYourRouteController = Get.find<PlanYourRouteController>();
 
     return Scaffold(
@@ -108,7 +109,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                                     ),
                                     SizedBox(width: size.width * 0.004),
                                     Text(
-                                      "${plan.totalDurationHours} h",
+                                      "${plan.totalDurationHours.toStringAsFixed(3)} h",
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontFamily: 'Cairo',
@@ -122,7 +123,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                                     ),
                                     SizedBox(width: size.width * 0.004),
                                     Text(
-                                      "${plan.totalDistanceKm} km",
+                                      "${plan.totalDistanceKm.toStringAsFixed(3)} km",
                                       style: TextStyle(
                                         color: Colors.grey[600],
                                         fontFamily: 'Cairo',
@@ -183,8 +184,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       return Column(
                         children: List.generate(plan.visits.length, (index) {
                           final visit = plan.visits[index];
-
                           return RouteStepItem(
+                            id: visit.pharmacyId,
                             title: visit.name,
                             subtitle: visit.info,
                             index: visit.visitOrder.toString(),
@@ -192,7 +193,9 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                             isDone: visit.visited,
                             showLine: index != plan.visits.length - 1,
                             showDetails: true,
-                            onDetailsPressed: () {},
+                            onDetailsPressed: () {
+                              VisitDetailsScreen(id:visit.pharmacyId ,);
+                            },
                           );
                         }),
                       );

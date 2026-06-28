@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../app_theme/AppColors.dart';
 import '../../../app_theme/theme_extension.dart';
-import '../../../modules/ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Controller.dart';
 import '../../../modules/RePlanRoute/RePlanRoute_Screen.dart';
 import 'MapHelper_Controller.dart';
 
@@ -46,8 +45,8 @@ class MapHelperScreen extends StatelessWidget {
               final lng = mapHelperController.longitude.value;
               final isDark = Get.isDarkMode;
               return GoogleMap(
-                key: ValueKey("map_${isDark}_${lat}_$lng"),
-
+                //key: ValueKey("map_${isDark}_${lat}_$lng"),
+                key: const ValueKey("google_map_key"),
                 onMapCreated: (mapCtrl) {
                   mapHelperController.setMapController(mapCtrl);
                 },
@@ -76,6 +75,7 @@ class MapHelperScreen extends StatelessWidget {
             right: right,
             bottom: bottom,
             child: FloatingActionButton(
+            heroTag: "fab_my_location",
               mini: true,
               onPressed: mapHelperController.moveToCurrentLocation,
               backgroundColor: colors.component,
@@ -92,6 +92,7 @@ class MapHelperScreen extends StatelessWidget {
             right: refreshButtonRight,
             bottom: refreshButtonBottom,
             child: FloatingActionButton(
+              heroTag: "fab_refresh_route",
               mini: true,
               onPressed: () {
                 Get.to(() => RePlanRouteScreen());

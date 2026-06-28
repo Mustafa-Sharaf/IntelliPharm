@@ -40,6 +40,7 @@ dependencies:
   url_launcher: ^6.3.2
   speech_to_text: ^7.3.0
   dotted_border: ^3.1.0
+  geocoding: ^4.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

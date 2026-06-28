@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/AppSnackBar.dart';
@@ -91,7 +92,6 @@ class NewOrderController extends GetxController {
         AppSnackBar.success(
           response["message"] ?? "Order created successfully",
         );
-
         cart.clear();
         notesController.clear();
 
@@ -99,6 +99,12 @@ class NewOrderController extends GetxController {
       }
     } catch (e) {
       AppSnackBar.error("Failed to create order");
+      if (e is DioException && e.response != null) {
+        print("Status Code: ${e.response?.statusCode}");
+        print("Server Response Data: ${e.response?.data}"); // يطبع تفاصيل الـ 500 من السيرفر
+      } else {
+        print(e);
+      }
       print(e);
     } finally {
       isSubmitting.value = false;

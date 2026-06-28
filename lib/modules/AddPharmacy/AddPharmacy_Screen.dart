@@ -16,7 +16,7 @@ class AddPharmacyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addPharmacyController = Get.put(AddPharmacyController());
+    final addPharmacyController = Get.find<AddPharmacyController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
 
@@ -30,6 +30,20 @@ class AddPharmacyScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
+      appBar: AppBar(
+        backgroundColor: colors.backgroundMain,
+        foregroundColor: colors.textPrimary,
+        centerTitle: true,
+        title: Text(
+          "Add Pharmacy",
+          style: TextStyle(
+            fontSize: 18,
+            fontFamily: 'Cairo',
+            color: colors.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Form(
           key: addPharmacyController.formKey,

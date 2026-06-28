@@ -72,8 +72,16 @@ class DioClient {
 
           handler.next(err);
         },
+
+
       ),
     );
+
+/*    dio.interceptors.add(LogInterceptor(
+      requestBody: true,    // يطبع الـ Body المرسل من التطبيق
+      requestHeader: true,  // يطبع الـ Headers للتأكد من التوكن
+      responseBody: true,   // يطبع تفاصيل الخطأ القادم من السيرفر
+    ));*/
   }
   static void _logout() {
     final box = GetStorage();

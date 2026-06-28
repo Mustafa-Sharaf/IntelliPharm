@@ -23,7 +23,8 @@ class HomeScreen extends StatelessWidget {
     MyOrdersScreen(),
     Center(child: Text("ROUTE")),
     Center(child: Text("NOTES")),
-    AddPharmacyScreen(),
+    //AddPharmacyScreen(),
+    PharmacistsScreen(),
   ];
 
   @override
@@ -82,11 +83,11 @@ PreferredSizeWidget? _buildAppBar(
 
     case 4:
       return BuildAppbar(
-        title: "Add Pharmacy",
+        title: "Pharmacists Screen",
         trailing: IconButton(
-          icon: const Icon(Icons.format_list_bulleted_outlined),
+          icon: const Icon(Icons.add_business_rounded),
           onPressed: () {
-             Get.to(() => PharmacistsScreen());
+             Get.to(() => AddPharmacyScreen());
           },
         ),
       );

@@ -1,37 +1,6 @@
 
 
-/*
-class PharmaciesModel {
-  final int id;
-  final String name;
-  final String region;
-  final String openTime;
-  final String closeTime;
-  final String? pharmacistName;
-  final String pharmacistPhone;
 
-  PharmaciesModel({
-    required this.id,
-    required this.name,
-    required this.region,
-    required this.openTime,
-    required this.closeTime,
-    this.pharmacistName,
-    required this.pharmacistPhone,
-  });
-
-  factory PharmaciesModel.fromJson(Map<String, dynamic> json) {
-    return PharmaciesModel(
-      id: json['id'],
-      name: json['name'] ?? "",
-      region: json['region'] ?? "",
-      openTime: json['opening_time'] ?? "",
-      closeTime: json['closing_time'] ?? "",
-      pharmacistName: json['pharmacist_name'],
-      pharmacistPhone: json['pharmacist_phone'] ?? "",
-    );
-  }
-}*/
 class PharmaciesModel {
   final int id;
   final String name;

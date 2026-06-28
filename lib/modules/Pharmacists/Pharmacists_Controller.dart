@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../modules/Pharmacists/Pharmacists_Model.dart';
 import '../../services/ServiceApi/PharmaciesService.dart';
@@ -36,16 +34,6 @@ class PharmacistsController extends GetxController {
   }
 
 
-  void openWhatsApp(String phone) async {
-    final url = Uri.parse(
-      'https://api.whatsapp.com/send?phone=$phone',
-    );
-
-    await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    );
-  }
 
   // Scroll Pagination
   void _onScroll() {

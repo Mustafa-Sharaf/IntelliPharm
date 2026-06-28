@@ -1,4 +1,4 @@
-/*
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
@@ -86,7 +86,8 @@ class CustomSearchField extends StatelessWidget {
     );
   }
 }
-*/
+
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
@@ -156,20 +157,22 @@ class CustomSearchField extends StatelessWidget {
                   prefixIcon: Icon(Icons.search, color: colors.textSecondary),
                   suffixIcon: value.isNotEmpty
                       ? IconButton(
-                    icon: Icon(Icons.close, color: colors.textSecondary),
-                    onPressed: () {
-                      controller.clear();
+                          icon: Icon(Icons.close, color: colors.textSecondary),
+                          onPressed: () {
+                            controller.clear();
 
-                      // 💡 عند الضغط على زر الحذف (X)
-                      if (onClear != null) {
-                        onClear!();
-                      } else {
-                        if (Get.isRegistered<AddOrderController>()) {
-                          Get.find<AddOrderController>().onSearchChanged('');
-                        }
-                      }
-                    },
-                  )
+                            // 💡 عند الضغط على زر الحذف (X)
+                            if (onClear != null) {
+                              onClear!();
+                            } else {
+                              if (Get.isRegistered<AddOrderController>()) {
+                                Get.find<AddOrderController>().onSearchChanged(
+                                  '',
+                                );
+                              }
+                            }
+                          },
+                        )
                       : null,
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -185,12 +188,13 @@ class CustomSearchField extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onFilterTap,
             style: ElevatedButton.styleFrom(
-              backgroundColor: colors.textPrimary,
+              backgroundColor: Colors.red,
               elevation: 3,
               padding: EdgeInsets.zero,
               shape: const CircleBorder(),
             ),
-            child: Icon(Icons.tune,
+            child: Icon(
+              Icons.tune,
               color: AppColors.backgroundColorLight,
               size: size.width * 0.06,
             ),
@@ -200,3 +204,4 @@ class CustomSearchField extends StatelessWidget {
     );
   }
 }
+*/

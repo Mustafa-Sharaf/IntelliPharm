@@ -7,6 +7,7 @@ import '../../Widgets/PlanRouteCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../PlanYourRoute/PlanYourRoute_Screen.dart';
+import '../VisitDetails/VisitDetails_Screen.dart';
 import 'HomeContent_Controller.dart';
 
 //New code
@@ -17,7 +18,7 @@ class HomeContentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    final homeContentController = Get.put(HomeContentController());
+    final homeContentController = Get.find<HomeContentController>();
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -155,6 +156,14 @@ class HomeContentScreen extends StatelessWidget {
               ],
             ),
           ),
+
+          GestureDetector(
+            onTap: () => Get.to(() => VisitDetailsScreen(id: 390)),
+            child: const Text(
+              "Test",
+              style: TextStyle(fontSize: 30),
+            ),
+          )
         ],
       ),
     );

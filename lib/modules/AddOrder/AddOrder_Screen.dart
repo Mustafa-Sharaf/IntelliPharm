@@ -19,8 +19,8 @@ class AddOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-    final addOrderController = Get.put(AddOrderController());
-    final newOrderController = Get.put(NewOrderController(), permanent: true);
+    final newOrderController = Get.find<NewOrderController>();
+    final addOrderController = Get.find<AddOrderController>();
     return Scaffold(
       backgroundColor: colors.backgroundMain,
       appBar: AppBar(

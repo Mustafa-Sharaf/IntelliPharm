@@ -14,10 +14,8 @@ class NewOrderScreen extends StatelessWidget {
 
   final controller = Get.find<AddOrderController>();
   final newOrderController = Get.find<NewOrderController>();
-  final pharmacySelectorController = Get.put(
-    PharmacySelectorController(),
-    permanent: true,
-  );
+  //final pharmacySelectorController = Get.put(PharmacySelectorController(), permanent: true,);
+  final pharmacySelectorController = Get.find<PharmacySelectorController>();
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
