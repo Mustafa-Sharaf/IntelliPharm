@@ -14,12 +14,12 @@ class AppColors{
 
   ///dark mode
   static const componentDark = Color(0xFF212934);
-  static const textDarkPrimary=Color(0xff0C8A7B);//0xFF26A69A
+  static const textDarkPrimary=Color(0xff0D9488);//0xFF26A69A //0xff0D9488 //0xff0C8A7B
   static const textDarkSecondary=Color(0xffbbbcc0);
 
 
   ///dark mode and light mode
-  static const primaryColor = Color(0xff0C8A7B);
+  static const primaryColor = Color(0xff0D9488);
   static const white70 = Colors.white70;
   static const white = Colors.white;
   static const black = Colors.black;
