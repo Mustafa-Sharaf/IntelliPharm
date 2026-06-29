@@ -78,26 +78,6 @@ class HomeContentScreen extends StatelessWidget {
               ],
             ),
           ),
-          /* SizedBox(
-            height: size.height * 0.49,
-            child: Obx(
-              () => ListView.builder(
-                itemCount: homeContentController.todayVisits.length,
-                itemBuilder: (context, index) {
-                  final visit = homeContentController.todayVisits[index];
-
-                  return PharmacyCard(
-                    name: visit.pharmacyName,
-                    address: visit.planName,
-                    time: visit.createdAt,
-                    status: visit.visited
-                        ? VisitStatus.visited
-                        : VisitStatus.pending,
-                  );
-                },
-              ),
-            ),
-          ),*/
           SizedBox(
             height: size.height * 0.49,
             child: Obx(() {
@@ -157,13 +137,13 @@ class HomeContentScreen extends StatelessWidget {
             ),
           ),
 
-          GestureDetector(
+      /*    GestureDetector(
             onTap: () => Get.to(() => VisitDetailsScreen(id: 390)),
             child: const Text(
               "Test",
               style: TextStyle(fontSize: 30),
             ),
-          )
+          )*/
         ],
       ),
     );

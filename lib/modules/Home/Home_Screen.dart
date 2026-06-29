@@ -11,6 +11,7 @@ import '../AddOrder/AddOrder_Screen.dart';
 import '../AddPharmacy/AddPharmacy_Screen.dart';
 import '../ChatGemini/ChatGemini_Screen.dart';
 import '../HomeContent/HomeContent_Screen.dart';
+import '../HomeContentDistributor/HomeContentDistributor_Screen.dart';
 import '../Pharmacists/Pharmacists_Screen.dart';
 import 'FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
@@ -30,7 +31,7 @@ class HomeScreen extends StatelessWidget {
   ];
 
   final distributorPages = [
-    const Center(child: Text("Distributor Home Screen")),
+    HomeContentDistributorScreen(),
     const Center(child: Text("My Deliveries - Task List")),
     const Center(child: Text("Active Delivery Route")),
     const Center(child: Text("Deliveries History")),
