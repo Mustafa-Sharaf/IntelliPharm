@@ -8,22 +8,30 @@ class PharmacySummaryCard extends StatelessWidget {
   final dynamic pharmacy;
   final dynamic controller;
   final bool showScheduledVisit;
-  final bool showPharmacistInfo; // التحكم بظهور اسم الصيدلاني وأيقونة الاتصال معاً
-  final bool showContactIcon;    // التحكم بظهور أيقونة الاتصال بشكل منفصل
+  final bool showPharmacistInfo;
+  final bool showContactIcon;
 
   const PharmacySummaryCard({
     super.key,
     required this.pharmacy,
     required this.controller,
     this.showScheduledVisit = false,
-    this.showPharmacistInfo = true, // افتراضياً تظهر دائماً للحفاظ على عمل الكود القديم
-    this.showContactIcon = true,    // افتراضياً تظهر دائماً
+    this.showPharmacistInfo = true,
+    this.showContactIcon = true,
   });
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    String holidayText = "";
+    bool hasHolidays = false;
+
+    if (pharmacy.holidays != null && pharmacy.holidays is List && pharmacy.holidays.isNotEmpty) {
+
+      holidayText = (pharmacy.holidays as List).join(' , ');
+      hasHolidays = true;
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -45,7 +53,6 @@ class PharmacySummaryCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // قسم الاسم وحالة الصيدلية
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,29 +92,56 @@ class PharmacySummaryCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: pharmacy.isOpen ? const Color(0xFFE0F2F1) : Colors.red.shade50,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        CircleAvatar(
-                          radius: 3,
-                          backgroundColor: pharmacy.isOpen ? const Color(0xFF00796B) : Colors.red,
-                        ),
-                        SizedBox(width: size.width * 0.008),
-                        Text(
-                          pharmacy.isOpen ? "OPEN NOW" : "CLOSED",
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: pharmacy.isOpen ? const Color(0xFF00796B) : Colors.red,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Cairo',
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: pharmacy.isOpen ? const Color(0xFFE0F2F1) : Colors.red.shade50,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CircleAvatar(
+                                radius: 3,
+                                backgroundColor: pharmacy.isOpen ? const Color(0xFF00796B) : Colors.red,
+                              ),
+                              SizedBox(width: size.width * 0.008),
+                              Text(
+                                pharmacy.isOpen ? "OPEN NOW" : "CLOSED",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: pharmacy.isOpen ? const Color(0xFF00796B) : Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Cairo',
+                                ),
+                              ),
+                            ],
                           ),
                         ),
+
+                        if (hasHolidays) ...[
+                          SizedBox(height: size.height * 0.005),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                             "Holiday: $holidayText",
+                              style: const TextStyle(
+                                fontSize: 10,
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                          ),
+                        ],
                       ],
                     ),
                   ),
@@ -115,7 +149,6 @@ class PharmacySummaryCard extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.02),
 
-              // قسم العنوان الفعلي
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -139,7 +172,6 @@ class PharmacySummaryCard extends StatelessWidget {
                 ],
               ),
 
-              // 1️⃣ قسم بيانات الصيدلاني (يظهر اختيارياً بناءً على showPharmacistInfo)
               if (showPharmacistInfo) ...[
                 SizedBox(height: size.height * 0.02),
                 Row(
@@ -160,7 +192,6 @@ class PharmacySummaryCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // أيقونة الاتصال تظهر فقط إذا كان الـ showContactIcon مفعلاً أيضاً
                     if (showContactIcon)
                       GestureDetector(
                         onTap: () => ContactLauncher().showContactOptions(
@@ -180,7 +211,6 @@ class PharmacySummaryCard extends StatelessWidget {
                 ),
               ],
 
-              // 2️⃣ الخط الفاصل والزيارة المجدولة (يظهر الخط فقط إذا كانت هناك زيارة مجدولة قادمة)
               if (showScheduledVisit) ...[
                 const SizedBox(height: 10),
                 const Divider(

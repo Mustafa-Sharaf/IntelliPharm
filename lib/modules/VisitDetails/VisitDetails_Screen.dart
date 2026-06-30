@@ -353,7 +353,7 @@ class VisitDetailsScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(24),
                                   ),
                                   child: TextField(
-                                    controller: controller.textController,
+                                    //controller: controller.textController,
                                     style: const TextStyle(
                                       fontFamily: 'Cairo',
                                       fontSize: 14,
@@ -377,9 +377,9 @@ class VisitDetailsScreen extends StatelessWidget {
                               const SizedBox(width: 8),
                               Obx(() {
                                 return GestureDetector(
-                                  onTap: controller.isSendingNote.value
+                                  onTap:() {},/*controller.isSendingNote.value
                                       ? null
-                                      : () => controller.submitNewNote(),
+                                      : () => controller.submitNewNote(),*/
                                   child: Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: const BoxDecoration(
