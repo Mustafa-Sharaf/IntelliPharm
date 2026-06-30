@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'TokenService.dart';
@@ -82,20 +83,35 @@ class DioClient {
 
       ),
     );
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,     // لطباعة البيانات المرسلة بالكامل (Payload)
-      responseBody: true,    // لطباعة رد السيرفر النهائي
-      requestHeader: false,   // اتركها false لتجنب زحمة الـ Logs، أو شغلها لو حبيت تشيك على الـ Headers
+ /*   dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      requestHeader: false,
     ));
-
+*/
   }
 
 
-  static void _logout() {
+/*  static void _logout() {
     print("Refresh failed → logout");
     if (Get.currentRoute != '/signIn') {
       GetStorage().remove("token");
       GetStorage().remove("refresh_token");
       Get.offAllNamed("/signIn");
-    }}
+    }}*/
+
+  static void _logout() {
+    print("Refresh failed → logging out...");
+
+    // مسح التوكنات فوراً من الـ Storage لحماية البيانات
+    GetStorage().remove("token");
+    GetStorage().remove("refresh_token");
+
+    // تأخير عملية الملاحة لضمان أن سياق التطبيق (GetMaterialApp) جاهز تماماً للملاحة Contextless
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Get.currentRoute != '/signIn') {
+        Get.offAllNamed("/signIn");
+      }
+    });
+  }
 }

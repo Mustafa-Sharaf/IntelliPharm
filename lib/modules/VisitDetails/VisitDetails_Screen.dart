@@ -386,8 +386,7 @@ class VisitDetailsScreen extends StatelessWidget {
                                       color: Color(0xFF0F2547),
                                       shape: BoxShape.circle,
                                     ),
-                                    child: controller.isSendingNote.value
-                                        ? const SizedBox(
+                                    child:  const SizedBox(
                                             width: 20,
                                             height: 20,
                                             child: CircularProgressIndicator(
@@ -395,11 +394,7 @@ class VisitDetailsScreen extends StatelessWidget {
                                               strokeWidth: 2,
                                             ),
                                           )
-                                        : const Icon(
-                                            Icons.send_rounded,
-                                            color: Colors.white,
-                                            size: 20,
-                                          ),
+
                                   ),
                                 );
                               }),
@@ -427,21 +422,21 @@ class VisitDetailsScreen extends StatelessWidget {
     Color textColor,
   ) {
     return GestureDetector(
-      onTap: () =>
-          controller.activeNoteType.value = type, // تعيين النوع النشط للإرسال
+      onTap: (){},
+         // controller.activeNoteType.value = type, // تعيين النوع النشط للإرسال
       child: Obx(() {
-        bool isSelected = controller.activeNoteType.value == type;
+        //bool isSelected = controller.activeNoteType.value == type;
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
             color: bgColor,
             borderRadius: BorderRadius.circular(12),
-            border: isSelected
+            /*border: isSelected
                 ? Border.all(
                     color: textColor,
                     width: 2.0,
                   ) // حواف بارزة وعريضة عند الاختيار
-                : Border.all(color: Colors.transparent, width: 2.0),
+                : Border.all(color: Colors.transparent, width: 2.0),*/
           ),
           child: Row(
             children: [
