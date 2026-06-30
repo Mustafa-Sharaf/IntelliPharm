@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Widgets/AppSnackBar.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
@@ -78,7 +79,7 @@ class PlanYourRouteController extends GetxController {
       hasMore.value = currentPage.value < lastPage.value;
       currentPage.value++;
     } catch (e) {
-      _showErrorSnackbar("حدث خطأ أثناء جلب الصيدليات، يرجى المحاولة لاحقاً");
+      AppSnackBar.error("An error occurred while retrieving the pharmacy items,\n please try again later.");
     } finally {
       isLoading.value = false;
       isMoreLoading.value = false;
@@ -134,15 +135,15 @@ class PlanYourRouteController extends GetxController {
   Future<void> initiatePlan() async {
     try {
       if (selectedType.value.isEmpty) {
-        _showErrorSnackbar("يرجى اختيار طريقة التنقل أولاً");
+        AppSnackBar.error("Please select your travel mode first.");
         return;
       }
       if (selectedRegion.value == null) {
-        _showErrorSnackbar("يرجى اختيار المنطقة أولاً");
+        AppSnackBar.error("Please select your region first.");
         return;
       }
       if (selectedPharmacies.isEmpty) {
-        _showErrorSnackbar("يرجى تحديد صيدلية واحدة على الأقل");
+        AppSnackBar.error("Please select at least one pharmacy");
         return;
       }
 
@@ -171,31 +172,21 @@ class PlanYourRouteController extends GetxController {
           routeMapController: routeMapController,
           plan: plan.value,
         );
-
+        AppSnackBar.success("The path was successfully created");
         Get.to(() => ActiveOptimizedRouteTrackingScreen());
       } else {
-        _showErrorSnackbar(response.data['message'] ?? "فشل إنشاء المسار، يرجى المحاولة لاحقاً");
+        AppSnackBar.error("Route creation failed, please try again later.");
+       // print("Error initiating plan: ${response.data['message']}");
       }
     } catch (e) {
-      print("Error initiating plan: $e");
-      _showErrorSnackbar("عذراً، حدث خطأ غير متوقع أثناء إعداد المسار");
+      //print("Error initiating plan: $e");
+      AppSnackBar.error("Sorry, an unexpected error occurred while setting up the track.");
+
     } finally {
       isLoading.value = false;
     }
   }
 
-  void _showErrorSnackbar(String message) {
-    Get.snackbar(
-      "تنبيه",
-      message,
-      backgroundColor: Colors.redAccent.shade400,
-      colorText: Colors.white,
-      margin: const EdgeInsets.all(12),
-      borderRadius: 12,
-      icon: const Icon(Icons.error_outline, color: Colors.white),
-      duration: const Duration(seconds: 3),
-    );
-  }
 
   @override
   void onClose() {

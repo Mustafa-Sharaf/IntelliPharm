@@ -1,4 +1,4 @@
-import '../../modules/PharmacyDetails/AddNotes/AddNotes_Model.dart';
+import '../../modules/AddNotes/AddNotes_Model.dart';
 import '../ApiService.dart';
 
 

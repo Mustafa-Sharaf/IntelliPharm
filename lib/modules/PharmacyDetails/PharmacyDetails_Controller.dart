@@ -65,13 +65,13 @@ import 'package:get/get.dart';
 import '../../helper/mapHelper/dart/LocationHelperService.dart';
 import '../../services/ServiceApi/PharmacyDetailsService.dart';
 import '../../services/ServiceApi/PharmacyNotesService.dart';
-import 'AddNotes/AddNotes_Model.dart';
+import '../AddNotes/AddNotes_Model.dart';
 import 'PharmacyDetails_Model.dart';
 
 
 class PharmacyDetailsController extends GetxController {
-  final int pharmacyId;
-  PharmacyDetailsController({required this.pharmacyId});
+  late final int pharmacyId;
+  //PharmacyDetailsController({required this.pharmacyId});
 
   var isLoading = true.obs;
   var isError = false.obs;
@@ -90,6 +90,7 @@ class PharmacyDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    pharmacyId = Get.arguments;
     fetchPharmacyDetails();
   }
 

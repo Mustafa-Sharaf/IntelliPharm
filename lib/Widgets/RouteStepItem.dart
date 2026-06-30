@@ -132,7 +132,8 @@ class RouteStepItem extends StatelessWidget {
 
                       GestureDetector(
                         onTap: (){
-                          Get.to(()=>PharmacyDetailsScreen(id:id));
+                          //Get.to(()=>PharmacyDetailsScreen(id:id));
+                          Get.to(() => const PharmacyDetailsScreen(), arguments: id);
                         },
                         child: Icon(
                           FontAwesomeIcons.squareArrowUpRight,
@@ -156,7 +157,7 @@ class RouteStepItem extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          "View Details",
+                          "Visit Details",
                           style: TextStyle(
                             color: AppColors.primaryColor,
                             fontFamily: 'Cairo',

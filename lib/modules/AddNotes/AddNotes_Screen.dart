@@ -148,6 +148,7 @@ class AddNotesScreen extends StatelessWidget {
   }
 }
 */
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app_theme/theme_extension.dart';
@@ -158,7 +159,7 @@ class AddNotesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<PharmacyDetailsController>();
+    //final controller = Get.find<PharmacyDetailsController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
 
@@ -315,3 +316,4 @@ class AddNotesScreen extends StatelessWidget {
     );
   }
 }
+*/

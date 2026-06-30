@@ -1,11 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../PlanYourRoute/PlanYourRoute_Controller.dart';
 
-class CurrentRouteHeader extends StatelessWidget {
+/*class CurrentRouteHeader extends StatelessWidget {
   const CurrentRouteHeader({super.key});
 
   @override
@@ -15,7 +14,7 @@ class CurrentRouteHeader extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return  SafeArea(
       child: Padding(
-        padding: EdgeInsets.all(size.height * 0.01),
+        padding: EdgeInsets.only(left: size.height * 0.01,right: size.height * 0.01),
         child: Container(
           padding: EdgeInsets.symmetric(
             horizontal: size.height * 0.015,
@@ -28,11 +27,10 @@ class CurrentRouteHeader extends StatelessWidget {
           child: Row(
             children: [
               InkWell(
-                borderRadius:
-                BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10),
                 onTap: () => Get.back(),
                 child: Padding(
-                  padding: EdgeInsets.only(right: 15),
+                  padding: EdgeInsets.only(right: 20),
                   child: Icon(
                     Icons.arrow_back_ios_new,
                     size: 20,
@@ -76,6 +74,166 @@ class CurrentRouteHeader extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}*/
+
+class CurrentRouteHeader extends StatelessWidget {
+  const CurrentRouteHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<ThemeColors>()!;
+    final size = MediaQuery.of(context).size;
+    final planYourRouteController = Get.find<PlanYourRouteController>();
+
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: size.height * 0.01),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: size.height * 0.015,
+            vertical: size.height * 0.01,
+          ),
+          decoration: BoxDecoration(
+            color: colors.component,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: () => Get.back(),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 20,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "CURRENT_ROUTE".tr,
+                      style: TextStyle(
+                        color: AppColors.primaryColor,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Cairo',
+                        letterSpacing: 2,
+                        height: 2,
+                      ),
+                    ),
+
+                    /* Obx(() {
+                      final plan = planYourRouteController.plan.value;
+                      if (plan == null) {
+                        return const Text("Loading route...");
+                      }
+                      return Text(
+                        "${plan.visits.length} stops  • ${plan.formattedTotalDistance}  • ${plan.formattedTotalDuration} ",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: colors.textDefault,
+                          fontSize: 15,
+                          fontFamily: 'Cairo',
+                        ),
+                      );
+                    }),*/
+                    Obx(() {
+                      final plan = planYourRouteController.plan.value;
+                      if (plan == null) {
+                        return const Text("Loading route...");
+                      }
+
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 16,
+                              color: colors.textDefault.withValues(alpha: 0.6),
+                            ),
+                             SizedBox(width: size.width * 0.01),
+                            Text(
+                              "${plan.visits.length} stops",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: colors.textDefault,
+                                fontSize: 14,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                            _buildDivider(colors.textDefault),
+
+                            Icon(
+                              Icons.route,
+                              size: 16,
+                              color: colors.textDefault.withValues(alpha: 0.6),
+                            ),
+                            SizedBox(width: size.width * 0.01),
+                            Text(
+                              plan.formattedTotalDistance,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: colors.textDefault,
+                                fontSize: 14,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+
+                            _buildDivider(colors.textDefault),
+
+                            Icon(
+                              Icons.access_time_rounded,
+                              size: 16,
+                              color: colors.textDefault.withValues(alpha: 0.6),
+                            ),
+                            SizedBox(width: size.width * 0.01),
+                            Text(
+                              plan.formattedTotalDuration,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: colors.textDefault,
+                                fontSize: 14,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+              CircleAvatar(
+                backgroundColor: AppColors.primaryColor,
+                radius: 25,
+                child: Icon(Icons.person, size: 30, color: AppColors.white),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDivider(Color? color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Text(
+        "•",
+        style: TextStyle(
+          color: color?.withValues(alpha: 0.6),
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

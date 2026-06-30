@@ -38,6 +38,58 @@ class PlanResponse {
           .toList(),
     );
   }
+
+
+  String get formattedTotalDistance {
+    if (totalDistanceKm < 1.0) {
+      int meters = (totalDistanceKm * 1000).round();
+      return "$meters m";
+    }
+    return "${totalDistanceKm.toStringAsFixed(1)} km";
+  }
+
+
+  String get formattedTotalDuration {
+    double totalMinutes = totalDurationHours * 60;
+    int hours = (totalMinutes / 60).floor();
+    int minutes = (totalMinutes % 60).round();
+
+    if (hours > 0) {
+      return "${hours}h ${minutes}m";
+    }
+    return "${minutes}m";
+  }
+
+
+  String getETAForVisit(int index) {
+    if (index < 0 || index >= visits.length) return "--:--";
+
+    DateTime startTime;
+    try {
+      startTime = DateTime.parse(createdAt).toLocal();
+    } catch (_) {
+      startTime = DateTime.now();
+    }
+
+    double accumulatedHours = 0.0;
+    for (int i = 0; i <= index; i++) {
+      if (i < paths.length) {
+        accumulatedHours += paths[i].durationHours;
+      }
+    }
+
+    DateTime etaTime = startTime.add(Duration(
+      seconds: (accumulatedHours * 3600).round(),
+    ));
+
+    int hour = etaTime.hour;
+    int minute = etaTime.minute;
+    String period = hour >= 12 ? "PM" : "AM";
+    hour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
+    String minuteStr = minute < 10 ? "0$minute" : "$minute";
+
+    return "$hour:$minuteStr $period";
+  }
 }
 
 class PlanVisit {

@@ -1,154 +1,24 @@
-/*
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/PharmacySummaryCard.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
-import '../PharmacyDetails/PharmacyDetails_Controller.dart';
-
-class VisitDetailsScreen extends StatelessWidget {
-
-  final int id;
-  const VisitDetailsScreen({super.key,required this.id});
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<ThemeColors>()!;
-    final size = MediaQuery.of(context).size;
-    final controller = Get.put(
-      PharmacyDetailsController(pharmacyId: id),
-      tag: id.toString(),
-    );
-    return Scaffold(
-      backgroundColor: colors.backgroundMain,
-      appBar: AppBar(
-        backgroundColor: colors.backgroundMain,
-        foregroundColor: colors.textPrimary,
-        elevation: 0,
-        centerTitle: false,
-        title: Text(
-          "Visit Details",
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'Cairo',
-            color: colors.textPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.primaryColor),
-          );
-        }
-        final pharmacy = controller.pharmacyData.value;
-        if (pharmacy == null) {
-          return const Center(child: Text("Failed to load pharmacy details"));
-        }
-        return Stack(
-          children: [
-            SingleChildScrollView(
-              padding: EdgeInsets.only(
-                left: size.width * 0.04,
-                right: size.width * 0.04,
-                top: size.height * 0.01,
-                bottom: size.height * 0.20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  PharmacySummaryCard(
-                    pharmacy: controller.pharmacyData.value,
-                    controller: controller,
-                    showScheduledVisit: true,
-                    nextVisitDate: DateTime(2026, 4, 6, 10, 15),
-                  ),
-
-                  SizedBox(height: size.height * 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Recent Notes",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Cairo',
-                          color: colors.textPrimary,
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1A2E5A),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 8,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: const Text(
-                          "2",
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.tune,
-                          size: 16,
-                          color: Colors.grey,
-                        ),
-                        label: const Text(
-                          "View All Notes",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 13,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: size.height * 0.02),
-
-                ],
-              ),
-            ),
-          ],
-        );
-      }),
-    );
-  }
-}
-*/
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../Widgets/PharmacySummaryCard.dart';
-import '../../app_theme/AppColors.dart';
-import '../../app_theme/theme_extension.dart';
-import '../PharmacyDetails/AddNotes/AddNotes_Screen.dart';
 import '../PharmacyDetails/PharmacyDetails_Controller.dart';
 import 'buildActionButtons.dart';
 
 class VisitDetailsScreen extends StatelessWidget {
-  final int id;
-  const VisitDetailsScreen({super.key, required this.id});
+
+  const VisitDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final int pharmacyId = Get.arguments;
     final controller = Get.put(
-      PharmacyDetailsController(pharmacyId: id),
-      tag: id.toString(),
+      PharmacyDetailsController(),
+      tag: pharmacyId.toString(),
     );
 
     return Scaffold(
