@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../Widgets/AppSnackBar.dart';
 import '../../services/ServiceApi/NoteService.dart';
-import '../PharmacyDetails/PharmacyDetails_Controller.dart';
+
 
 
 class AddNotesController extends GetxController {
@@ -32,34 +32,29 @@ class AddNotesController extends GetxController {
   Future<void> submitNote() async {
     final noteText = textController.text.trim();
     if (noteText.isEmpty) {
-      Get.snackbar("تنبيه", "الرجاء كتابة ملاحظة أولاً", snackPosition: SnackPosition.BOTTOM);
+      AppSnackBar.error("Please write a note first.");
       return;
     }
 
     try {
       isSubmitting.value = true;
-
-      // 🚀 استدعاء السيرفس الموحد بـ Dio
       await NoteService.createNote(
         pharmacyId: pharmacyId,
         noteType: selectedType.value,
         noteContent: noteText,
       );
 
-      // تفريغ الحقل بعد النجاح
       textController.clear();
 
-      // 🔄 التحديث التلقائي الفوري: نقوم بالبحث عن كونترولر التفاصيل الفعال لهذا الـ ID وتحديثه
-      if (Get.isRegistered<PharmacyDetailsController>(tag: pharmacyId.toString())) {
+  /*    if (Get.isRegistered<PharmacyDetailsController>(tag: pharmacyId.toString())) {
         final detailsController = Get.find<PharmacyDetailsController>(tag: pharmacyId.toString());
 
-        // استدعاء دالة جلب الملاحظات لتحديث الـ Obx فوراً بالواجهة (تأكد من اسم الدالة لديك بالكونترولر الخاص بك)
         // detailsController.getPharmacyNotes();
-      }
+      }*/
+      AppSnackBar.success("The note was added successfully.");
 
-      Get.snackbar("نجاح", "تمت إضافة الملاحظة بنجاح", snackPosition: SnackPosition.BOTTOM);
     } catch (e) {
-      Get.snackbar("خطأ", "فشل إرسال الملاحظة، يرجى المحاولة لاحقاً", snackPosition: SnackPosition.BOTTOM);
+      AppSnackBar.error("The message failed to send, please try again later.");
     } finally {
       isSubmitting.value = false;
     }

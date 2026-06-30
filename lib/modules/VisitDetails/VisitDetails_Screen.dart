@@ -1,14 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/PharmacySummaryCard.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../AddNotes/AddNotes_Screen.dart';
 import '../PharmacyDetails/PharmacyDetails_Controller.dart';
+import '../PharmacyDetails/PharmacyDetails_Screen.dart';
 import 'buildActionButtons.dart';
 
 class VisitDetailsScreen extends StatelessWidget {
-
   const VisitDetailsScreen({super.key});
 
   @override
@@ -46,7 +46,12 @@ class VisitDetailsScreen extends StatelessWidget {
         }
         final pharmacy = controller.pharmacyData.value;
         if (pharmacy == null) {
-          return const Center(child: Text("Failed to load pharmacy details"));
+          return const Center(
+            child: Text(
+              "Failed to load pharmacy details",
+              style: TextStyle(fontFamily: 'Cairo'),
+            ),
+          );
         }
         return Stack(
           children: [
@@ -66,9 +71,7 @@ class VisitDetailsScreen extends StatelessWidget {
                     showScheduledVisit: true,
                     showPharmacistInfo: false,
                   ),
-
                   SizedBox(height: size.height * 0.01),
-
                   Row(
                     children: [
                       Text(
@@ -78,15 +81,14 @@ class VisitDetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           height: 1.1,
                           fontFamily: 'Cairo',
-                          color: const Color(0xFF0F2547),
+                          color: colors.textPrimary,
                         ),
                       ),
-                      const SizedBox(width: 8),
-
+                       SizedBox(width: size.width * 0.04),
                       Container(
                         padding: const EdgeInsets.all(6),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF1E3A6C),
+                        decoration: BoxDecoration(
+                          color: colors.textPrimary,
                           shape: BoxShape.circle,
                         ),
                         child: const Text(
@@ -101,7 +103,9 @@ class VisitDetailsScreen extends StatelessWidget {
                       const Spacer(),
 
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(()=> PharmacyDetailsScreen());
+                        },
                         style: TextButton.styleFrom(padding: EdgeInsets.zero),
                         child: const Text(
                           "View All Notes",
@@ -116,29 +120,19 @@ class VisitDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   SizedBox(height: size.height * 0.01),
-
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: colors.component.withValues(
-                        alpha: 0.6,
-                      ), // خلفية كارت فاتحة
+                      color: colors.component.withValues(alpha: 0.6),
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    clipBehavior:
-                        Clip.antiAlias, // لقص الحواف ليتماشى مع الخط الجانبي
+                    clipBehavior:Clip.antiAlias,
                     child: IntrinsicHeight(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          Container(
-                            width: 5,
-                            color: const Color(
-                              0xFF00897B,
-                            ), // الخط الجانبي الأخضر/التركوازي
-                          ),
+                          Container(width: 5, color: const Color(0xFF00897B),),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
@@ -169,10 +163,7 @@ class VisitDetailsScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 12),
-
-                  // الكارت الثاني (ملاحظة الوقت)
+                  SizedBox(height: size.height * 0.01),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16.0),
@@ -202,21 +193,17 @@ class VisitDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   SizedBox(height: size.height * 0.02),
-
                   Text(
                     "Visit Actions",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Cairo',
-                      color: const Color(0xFF0F2547),
+                      color: colors.textPrimary,
                     ),
                   ),
-
                   SizedBox(height: size.height * 0.02),
-
                   Row(
                     children: [
                       // زر تم الاتفاق (Closed Deal)
@@ -227,9 +214,7 @@ class VisitDetailsScreen extends StatelessWidget {
                           child: Container(
                             height: size.height * 0.12,
                             decoration: BoxDecoration(
-                              color: const Color(0xFF80DEEA).withValues(
-                                alpha: 0.7,
-                              ), // تركوازي فاتح جداً ومريح للعين
+                              color: const Color(0xFF80DEEA).withValues(alpha: 0.7,),
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Column(
@@ -240,13 +225,13 @@ class VisitDetailsScreen extends StatelessWidget {
                                   size: 24,
                                   color: Color(0xFF006064),
                                 ),
-                                const SizedBox(height: 8),
+                                 SizedBox(height: size.height * 0.013),
                                 Text(
                                   "Closed Deal",
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF006064),
+                                    color: AppColors.primaryColor,
                                     fontFamily: 'Cairo',
                                   ),
                                 ),
@@ -255,7 +240,7 @@ class VisitDetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: size.width * 0.05),
                       // زر لم يتم الاتفاق (No Deal)
                       Expanded(
                         child: InkWell(
@@ -264,9 +249,7 @@ class VisitDetailsScreen extends StatelessWidget {
                           child: Container(
                             height: size.height * 0.12,
                             decoration: BoxDecoration(
-                              color: const Color(
-                                0xFFEF9A9A,
-                              ).withValues(alpha: 0.4), // وردي/أحمر فاتح خفيف
+                              color: const Color(0xFFEF9A9A,).withValues(alpha: 0.4),
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Column(
@@ -277,7 +260,7 @@ class VisitDetailsScreen extends StatelessWidget {
                                   size: 24,
                                   color: Color(0xFFC62828),
                                 ),
-                                const SizedBox(height: 8),
+                                SizedBox(height: size.height * 0.013),
                                 Text(
                                   "No Deal",
                                   style: TextStyle(
@@ -294,118 +277,10 @@ class VisitDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  //const AddNotesScreen(),
                   SizedBox(height: size.height * 0.02),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.04,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colors.component,
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(24),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 10,
-                          offset: const Offset(0, -5),
-                        ),
-                      ],
-                    ),
-                    child: SafeArea(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            children: [
-                              const SizedBox(width: 8),
-                              _buildActiveTypeChip(
-                                controller,
-                                "GENERAL",
-                                Colors.blue.shade50,
-                                Colors.blue.shade700,
-                              ),
-                              const SizedBox(width: 8),
-                              _buildActiveTypeChip(
-                                controller,
-                                "TIP",
-                                const Color(0xFFE0F7F4),
-                                const Color(0xFF00BFA5),
-                              ),
-                              const SizedBox(width: 8),
-                              _buildActiveTypeChip(
-                                controller,
-                                "WARNING",
-                                const Color(0xFFFDF2E9),
-                                const Color(0xFFE67E22),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[100],
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: TextField(
-                                    //controller: controller.textController,
-                                    style: const TextStyle(
-                                      fontFamily: 'Cairo',
-                                      fontSize: 14,
-                                    ),
-                                    decoration: const InputDecoration(
-                                      hintText: "Add a note...",
-                                      hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontFamily: 'Cairo',
-                                      ),
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Obx(() {
-                                return GestureDetector(
-                                  onTap:() {},/*controller.isSendingNote.value
-                                      ? null
-                                      : () => controller.submitNewNote(),*/
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF0F2547),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child:  const SizedBox(
-                                            width: 20,
-                                            height: 20,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 2,
-                                            ),
-                                          )
-
-                                  ),
-                                );
-                              }),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const AddNotesScreen(),
                   SizedBox(height: size.height * 0.02),
-                  BuildActionButtons()
+                  BuildActionButtons(),
                 ],
               ),
             ),
@@ -422,8 +297,8 @@ class VisitDetailsScreen extends StatelessWidget {
     Color textColor,
   ) {
     return GestureDetector(
-      onTap: (){},
-         // controller.activeNoteType.value = type, // تعيين النوع النشط للإرسال
+      onTap: () {},
+      // controller.activeNoteType.value = type, // تعيين النوع النشط للإرسال
       child: Obx(() {
         //bool isSelected = controller.activeNoteType.value == type;
         return Container(
