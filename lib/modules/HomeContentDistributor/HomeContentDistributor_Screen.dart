@@ -4,6 +4,7 @@ import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/PharmacyOrderCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
+import '../PlanYourRoute/PlanYourRoute_Screen.dart';
 
 class HomeContentDistributorScreen extends StatelessWidget {
   const HomeContentDistributorScreen({super.key});
@@ -63,7 +64,8 @@ class HomeContentDistributorScreen extends StatelessWidget {
             /// 2.  (Start Delivery Route)
             InkWell(
               onTap: () {
-
+                print("Get.to(()=> PlanYourRouteScreen())");
+               Get.to(()=> PlanYourRouteScreen());
               },
               splashColor: Colors.white24,
               borderRadius: BorderRadius.circular(20),

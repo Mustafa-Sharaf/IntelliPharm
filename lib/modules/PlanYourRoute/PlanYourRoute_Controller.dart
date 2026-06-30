@@ -1,15 +1,14 @@
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
+import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../modules/Pharmacists/Pharmacists_Model.dart';
 import '../../services/ApiService.dart';
 import '../../services/ServiceApi/PharmaciesService.dart';
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Model.dart';
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
+
 
 class PlanYourRouteController extends GetxController {
   final routeMapController = Get.find<MapHelperController>(tag: "route");
@@ -25,12 +24,15 @@ class PlanYourRouteController extends GetxController {
   var selectedType = ''.obs;
   final ScrollController scrollController = ScrollController();
   final String profile = "vip_first";
-  late final String travelMode = selectedType.value.contains("Walking")
-      ? "walking"
-      : "driving";
 
+  String get travelMode => selectedType.value.contains("Walking")
+      ? "walking"
+      : selectedType.value.contains("Driving")
+      ? "driving"
+      : "";
 
   var plan = Rxn<PlanResponse>();
+
   @override
   void onInit() {
     super.onInit();
@@ -45,6 +47,16 @@ class PlanYourRouteController extends GetxController {
           selectedRegion.value != null) {
         fetchPharmacies(selectedRegion.value!.id, loadMore: true);
       }
+    }
+  }
+
+  void updateRegion(RegionModel? region) {
+    selectedRegion.value = region;
+    selectedPharmacies.clear();
+    if (region != null) {
+      fetchPharmacies(region.id);
+    } else {
+      pharmacies.clear();
     }
   }
 
@@ -66,7 +78,7 @@ class PlanYourRouteController extends GetxController {
       hasMore.value = currentPage.value < lastPage.value;
       currentPage.value++;
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      _showErrorSnackbar("حدث خطأ أثناء جلب الصيدليات، يرجى المحاولة لاحقاً");
     } finally {
       isLoading.value = false;
       isMoreLoading.value = false;
@@ -119,26 +131,24 @@ class PlanYourRouteController extends GetxController {
     return selectedPharmacies.containsAll(allIds) && allIds.isNotEmpty;
   }
 
-
   Future<void> initiatePlan() async {
-
     try {
-      if (travelMode.isEmpty) {
-        Get.snackbar("Error", "Please select Travel Mode");
+      if (selectedType.value.isEmpty) {
+        _showErrorSnackbar("يرجى اختيار طريقة التنقل أولاً");
         return;
       }
       if (selectedRegion.value == null) {
-        Get.snackbar("Error", "Please select region");
+        _showErrorSnackbar("يرجى اختيار المنطقة أولاً");
         return;
       }
-
       if (selectedPharmacies.isEmpty) {
-        Get.snackbar("Error", "Please select pharmacies");
+        _showErrorSnackbar("يرجى تحديد صيدلية واحدة على الأقل");
         return;
-
       }
-      routeMapController.moveToCurrentLocation();
+
       isLoading.value = true;
+      routeMapController.moveToCurrentLocation();
+
       final response = await ApiService.post(
         "/planner/v1/plans/initiate",
         data: {
@@ -156,93 +166,36 @@ class PlanYourRouteController extends GetxController {
 
       if (response.data['isSuccess']) {
         plan.value = PlanResponse.fromJson(response.data['data']);
-        drawRoute();
-        Get.to(() =>  ActiveOptimizedRouteTrackingScreen());
+
+        await MapDrawerHelper.drawFullRoute(
+          routeMapController: routeMapController,
+          plan: plan.value,
+        );
+
+        Get.to(() => ActiveOptimizedRouteTrackingScreen());
       } else {
-        Get.snackbar("Error", response.data['message']);
-        print("response.data['message']=${response.data['message']}");
+        _showErrorSnackbar(response.data['message'] ?? "فشل إنشاء المسار، يرجى المحاولة لاحقاً");
       }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
-      print("Error e.toString(): ${e.toString()}");
-      if (e is DioException) {
-        print("STATUS: ${e.response?.statusCode}");
-        print("DATA: ${e.response?.data}");
-      }
+      print("Error initiating plan: $e");
+      _showErrorSnackbar("عذراً، حدث خطأ غير متوقع أثناء إعداد المسار");
     } finally {
       isLoading.value = false;
     }
   }
 
-
-
-  void drawRoute() {
-    List<List<LatLng>> allPaths = [];
-
-    routeMapController.clearAll();
-
-    for (var path in plan.value!.paths) {
-      final decoded = decodePolyline(path.geometry);
-      allPaths.add(decoded);
-    }
-/*    for (var path in plan.value!.paths) {
-      final decoded = decodePolyline(path.geometry);
-
-      print("decoded points = ${decoded.length}");
-
-      for (var p in decoded) {
-        print("${p.latitude}, ${p.longitude}");
-      }
-
-      allPaths.add(decoded);
-    }*/
-
-    routeMapController.drawRoutes(allPaths);
-
-    for (var path in plan.value!.paths) {
-      final decoded = decodePolyline(path.geometry);
-
-      if (decoded.isNotEmpty) {
-        final lastPoint = decoded.last;
-        routeMapController.addMarker(position: lastPoint, title: "Visit ${path.to}");
-      }
-    }
+  void _showErrorSnackbar(String message) {
+    Get.snackbar(
+      "تنبيه",
+      message,
+      backgroundColor: Colors.redAccent.shade400,
+      colorText: Colors.white,
+      margin: const EdgeInsets.all(12),
+      borderRadius: 12,
+      icon: const Icon(Icons.error_outline, color: Colors.white),
+      duration: const Duration(seconds: 3),
+    );
   }
-
-  List<LatLng> decodePolyline(String encoded) {
-    List<LatLng> points = [];
-    int index = 0, len = encoded.length;
-    int lat = 0, lng = 0;
-
-    while (index < len) {
-      int b, shift = 0, result = 0;
-      do {
-        b = encoded.codeUnitAt(index++) - 63;
-        result |= (b & 0x1f) << shift;
-        shift += 5;
-      } while (b >= 0x20);
-
-      int dlat = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-      lat += dlat;
-
-      shift = 0;
-      result = 0;
-      do {
-        b = encoded.codeUnitAt(index++) - 63;
-        result |= (b & 0x1f) << shift;
-        shift += 5;
-      } while (b >= 0x20);
-
-      int dlng = (result & 1) != 0 ? ~(result >> 1) : (result >> 1);
-      lng += dlng;
-
-      points.add(LatLng(lat / 1E5, lng / 1E5));
-    }
-    return points;
-  }
-
-
-
 
   @override
   void onClose() {

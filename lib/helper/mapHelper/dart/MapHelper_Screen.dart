@@ -45,17 +45,17 @@ class MapHelperScreen extends StatelessWidget {
               final lng = mapHelperController.longitude.value;
               final isDark = Get.isDarkMode;
               return GoogleMap(
-                //key: ValueKey("map_${isDark}_${lat}_$lng"),
-                key: const ValueKey("google_map_key"),
+                key: ValueKey("map_theme_$isDark"),
                 onMapCreated: (mapCtrl) {
                   mapHelperController.setMapController(mapCtrl);
                 },
-                polylines: mapHelperController.polylines,
+                polylines: mapHelperController.polyLines,
                 markers: mapHelperController.markers,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(lat, lng),
                   zoom: 14,
                 ),
+                style: mapHelperController.mapStyleString.value,
                 onTap: (point) {
                   mapHelperController.setLocation(
                     point.latitude,

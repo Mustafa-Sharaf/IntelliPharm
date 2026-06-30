@@ -82,8 +82,15 @@ class DioClient {
 
       ),
     );
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,     // لطباعة البيانات المرسلة بالكامل (Payload)
+      responseBody: true,    // لطباعة رد السيرفر النهائي
+      requestHeader: false,   // اتركها false لتجنب زحمة الـ Logs، أو شغلها لو حبيت تشيك على الـ Headers
+    ));
 
   }
+
+
   static void _logout() {
     print("Refresh failed → logout");
     if (Get.currentRoute != '/signIn') {

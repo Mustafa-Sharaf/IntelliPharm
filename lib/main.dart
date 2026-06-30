@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
     return Obx(
       () => GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: '/signIn',
+        initialRoute: initialRoute,
         locale: myLanguageController.intiLanguage.value,
         translations: MyLanguage(),
         theme: AppThemes.lightTheme,
