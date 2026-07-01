@@ -1,23 +1,4 @@
-/*
-import '../../modules/Pharmacists/Pharmacists_Model.dart';
-import '../ApiService.dart';
 
-class PharmaciesService {
-  static Future<List<PharmaciesModel>> getPharmacies(int id) async {
-    final response = await ApiService.get(
-      "/erp/v1/pharmacies",
-      query: {"region": id},
-    );
-
-    if (response.data["isSuccess"] == true) {
-      List data = response.data["data"]["data"];
-
-      return data.map((e) => PharmaciesModel.fromJson(e)).toList();
-    } else {
-      throw Exception(response.data["message"]);
-    }
-  }
-}*/
 import '../../modules/Pharmacists/Pharmacists_Model.dart';
 import '../ApiService.dart';
 

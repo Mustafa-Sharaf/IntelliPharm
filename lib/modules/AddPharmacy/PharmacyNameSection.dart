@@ -82,7 +82,7 @@ class PharmacyNameSection extends StatelessWidget {
             textDirection: TextDirection.rtl,
             textAlign: TextAlign.right,
             decoration: InputDecoration(
-              hintText: 'ادخل اسم الصيدلية بالعربية',
+              hintText: 'Enter the name of the pharmacy in Arabic',
               hintStyle: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 13,
@@ -99,7 +99,7 @@ class PharmacyNameSection extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             ),
-            validator: (value) => value!.isEmpty ? 'هذا الحقل مطلوب' : null,
+            validator: (value) => value!.isEmpty ? 'This field is required' : null,
           ),
           SizedBox(height: size.width * 0.01),
           Text(

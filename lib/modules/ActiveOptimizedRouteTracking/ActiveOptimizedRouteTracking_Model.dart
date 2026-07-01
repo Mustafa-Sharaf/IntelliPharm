@@ -25,8 +25,8 @@ class PlanResponse {
     return PlanResponse(
       id: json["id"] ?? 0,
       userId: json["user_id"] ?? 0,
-      totalDistanceKm: (json["total_distance_km"] ?? 0).toDouble(),
-      totalDurationHours: (json["total_duration_hours"] ?? 0).toDouble(),
+      totalDistanceKm: _ensureDouble(json["total_distance_km"]),
+      totalDurationHours: _ensureDouble(json["total_duration_hours"]),
       createdAt: json["created_at"] ?? "",
       reason: json["reason"] ?? "",
       reasonDetails: json["reason_details"] ?? "",
@@ -37,58 +37,6 @@ class PlanResponse {
           .map((e) => PlanPath.fromJson(e))
           .toList(),
     );
-  }
-
-
-  String get formattedTotalDistance {
-    if (totalDistanceKm < 1.0) {
-      int meters = (totalDistanceKm * 1000).round();
-      return "$meters m";
-    }
-    return "${totalDistanceKm.toStringAsFixed(1)} km";
-  }
-
-
-  String get formattedTotalDuration {
-    double totalMinutes = totalDurationHours * 60;
-    int hours = (totalMinutes / 60).floor();
-    int minutes = (totalMinutes % 60).round();
-
-    if (hours > 0) {
-      return "${hours}h ${minutes}m";
-    }
-    return "${minutes}m";
-  }
-
-
-  String getETAForVisit(int index) {
-    if (index < 0 || index >= visits.length) return "--:--";
-
-    DateTime startTime;
-    try {
-      startTime = DateTime.parse(createdAt).toLocal();
-    } catch (_) {
-      startTime = DateTime.now();
-    }
-
-    double accumulatedHours = 0.0;
-    for (int i = 0; i <= index; i++) {
-      if (i < paths.length) {
-        accumulatedHours += paths[i].durationHours;
-      }
-    }
-
-    DateTime etaTime = startTime.add(Duration(
-      seconds: (accumulatedHours * 3600).round(),
-    ));
-
-    int hour = etaTime.hour;
-    int minute = etaTime.minute;
-    String period = hour >= 12 ? "PM" : "AM";
-    hour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
-    String minuteStr = minute < 10 ? "0$minute" : "$minute";
-
-    return "$hour:$minuteStr $period";
   }
 }
 
@@ -111,7 +59,6 @@ class PlanVisit {
 
   factory PlanVisit.fromJson(Map<String, dynamic> json) {
     final pharmacy = json["pharmacy"] ?? {};
-
     return PlanVisit(
       id: json["id"] ?? 0,
       pharmacyId: pharmacy["id"] ?? 0,
@@ -145,9 +92,15 @@ class PlanPath {
       id: json["id"] ?? 0,
       from: json["from_sequence"] ?? 0,
       to: json["to_sequence"] ?? 0,
-      distanceKm: (json["distance_km"] ?? 0).toDouble(),
-      durationHours: (json["duration_hours"] ?? 0).toDouble(),
+      distanceKm: _ensureDouble(json["distance_km"]),
+      durationHours: _ensureDouble(json["duration_hours"]),
       geometry: json["geometry"] ?? "",
     );
   }
+}
+
+double _ensureDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is num) return value.toDouble();
+  return double.tryParse(value.toString()) ?? 0.0;
 }

@@ -7,7 +7,6 @@ import '../../Widgets/PlanRouteCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../PlanYourRoute/PlanYourRoute_Screen.dart';
-import '../VisitDetails/VisitDetails_Screen.dart';
 import 'HomeContent_Controller.dart';
 
 //New code
@@ -136,58 +135,8 @@ class HomeContentScreen extends StatelessWidget {
               ],
             ),
           ),
-
-      /*    GestureDetector(
-            onTap: () => Get.to(() => VisitDetailsScreen(id: 390)),
-            child: const Text(
-              "Test",
-              style: TextStyle(fontSize: 30),
-            ),
-          )*/
         ],
       ),
     );
   }
 }
-
-/*ListView(
-              children: [
-                PharmacyCard(
-                  name: "Apex Pharmacy",
-                  address: "123 Health St, Damascus",
-                  time: "10:30 AM",
-                  status: VisitStatus.pending,
-                ),
-
-                PharmacyCard(
-                  name: "MedLife Care",
-                  address: "77 Central Plaza, Damascus",
-                  time: "09:15 AM",
-                  status: VisitStatus.visited,
-                ),
-                PharmacyCard(
-                  name: "Apex Pharmacy",
-                  address: "123 Health St, Damascus",
-                  time: "10:30 AM",
-                  status: VisitStatus.pending,
-                ),
-                PharmacyCard(
-                  name: "Al-Nattour Pharmacy",
-                  address: "al-midan, Damascus",
-                  time: "09:15 AM",
-                  status: VisitStatus.visited,
-                ),
-                PharmacyCard(
-                  name: "Apex Pharmacy",
-                  address: "123 Health St, Damascus",
-                  time: "10:30 AM",
-                  status: VisitStatus.pending,
-                ),
-                PharmacyCard(
-                  name: "Apex Pharmacy",
-                  address: "123 Health St, Damascus",
-                  time: "10:30 AM",
-                  status: VisitStatus.pending,
-                ),
-              ],
-            ),*/

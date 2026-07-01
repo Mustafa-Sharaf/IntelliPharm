@@ -134,6 +134,7 @@ class RouteStepItem extends StatelessWidget {
                         onTap: (){
                           //Get.to(()=>PharmacyDetailsScreen(id:id));
                           Get.to(() => const PharmacyDetailsScreen(), arguments: id);
+
                         },
                         child: Icon(
                           FontAwesomeIcons.squareArrowUpRight,

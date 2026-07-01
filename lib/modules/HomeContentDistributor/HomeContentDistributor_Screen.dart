@@ -64,7 +64,6 @@ class HomeContentDistributorScreen extends StatelessWidget {
             /// 2.  (Start Delivery Route)
             InkWell(
               onTap: () {
-                print("Get.to(()=> PlanYourRouteScreen())");
                Get.to(()=> PlanYourRouteScreen());
               },
               splashColor: Colors.white24,

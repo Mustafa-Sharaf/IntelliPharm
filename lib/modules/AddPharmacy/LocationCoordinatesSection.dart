@@ -8,7 +8,6 @@ class LocationCoordinateSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
     final addPharmacyMapController = Get.find<MapHelperController>(tag: "addPharmacy");
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;

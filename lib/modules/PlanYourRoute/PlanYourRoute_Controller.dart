@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/AppSnackBar.dart';
+import '../../Widgets/PharmacyRouteDialog.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
@@ -9,7 +11,7 @@ import '../../services/ApiService.dart';
 import '../../services/ServiceApi/PharmaciesService.dart';
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Model.dart';
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
-
+import '../PharmacyDetails/PharmacyDetails_Model.dart';
 
 class PlanYourRouteController extends GetxController {
   final routeMapController = Get.find<MapHelperController>(tag: "route");
@@ -25,13 +27,10 @@ class PlanYourRouteController extends GetxController {
   var selectedType = ''.obs;
   final ScrollController scrollController = ScrollController();
   final String profile = "vip_first";
-
-  String get travelMode => selectedType.value.contains("Walking")
-      ? "walking"
+  String get travelMode => selectedType.value.contains("Walking") ? "walking"
       : selectedType.value.contains("Driving")
       ? "driving"
       : "";
-
   var plan = Rxn<PlanResponse>();
 
   @override
@@ -132,7 +131,8 @@ class PlanYourRouteController extends GetxController {
     return selectedPharmacies.containsAll(allIds) && allIds.isNotEmpty;
   }
 
-  Future<void> initiatePlan() async {
+
+  Future<void> initiatePlan({PharmacyDetailsModel? singlePharmacy}) async {
     try {
       if (selectedType.value.isEmpty) {
         AppSnackBar.error("Please select your travel mode first.");
@@ -146,51 +146,88 @@ class PlanYourRouteController extends GetxController {
         AppSnackBar.error("Please select at least one pharmacy");
         return;
       }
-
       isLoading.value = true;
-      routeMapController.moveToCurrentLocation();
+      final isSingle = singlePharmacy != null;
+      final currentMapController = isSingle
+          ? Get.put(MapHelperController(), tag: "mini_route_visit")
+          : routeMapController;
+
+      await currentMapController.moveToCurrentLocation();
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      final List<int> idsToSend = isSingle ? [singlePharmacy.id] : selectedPharmacies.toList();
+      final int regionIdToSend = isSingle ? singlePharmacy.regionId : selectedRegion.value!.id;
 
       final response = await ApiService.post(
         "/planner/v1/plans/initiate",
         data: {
-          "current_longitude": routeMapController.longitude.value,
-          "current_latitude": routeMapController.latitude.value,
+          "current_longitude": currentMapController.longitude.value,
+          "current_latitude": currentMapController.latitude.value,
           "reason": "initiated",
-          "reason_details": "starting today's trip",
+          "reason_details": isSingle ? "preview route for ${singlePharmacy.nameEn}" : "starting today's trip",
           "rep_id": null,
-          "region_id": selectedRegion.value!.id,
-          "pharmacy_ids": selectedPharmacies.toList(),
+          "region_id": regionIdToSend,
+          "pharmacy_ids": idsToSend,
           "profile": profile,
           "travel_mode": travelMode,
         },
       );
 
       if (response.data['isSuccess']) {
-        plan.value = PlanResponse.fromJson(response.data['data']);
+        final planResult = PlanResponse.fromJson(response.data['data']);
+          if (isSingle) {
+            Get.dialog(
+              PharmacyRouteDialog(pharmacy: singlePharmacy, initialPlan: planResult),
+              barrierDismissible: true,
+            );
+          } else {
+            plan.value = planResult;
+            await MapDrawerHelper.drawFullRoute(
+              routeMapController: routeMapController,
+              plan: plan.value,
+            );
+            AppSnackBar.success("The path was successfully created");
+            Get.to(() => ActiveOptimizedRouteTrackingScreen());
+          }
 
-        await MapDrawerHelper.drawFullRoute(
-          routeMapController: routeMapController,
-          plan: plan.value,
-        );
-        AppSnackBar.success("The path was successfully created");
-        Get.to(() => ActiveOptimizedRouteTrackingScreen());
       } else {
         AppSnackBar.error("Route creation failed, please try again later.");
-       // print("Error initiating plan: ${response.data['message']}");
       }
     } catch (e) {
-      //print("Error initiating plan: $e");
+      if (e is DioException && e.response != null) {
+        print("SERVER REJECTION DETAILS: ${e.response?.data}");
+      } else {
+        print("ERROR: $e");
+      }
       AppSnackBar.error("Sorry, an unexpected error occurred while setting up the track.");
-
     } finally {
       isLoading.value = false;
     }
   }
 
 
+  Future<void> fetchCurrentPlan() async {
+    if (plan.value == null) return;
+    try {
+      final response = await ApiService.get("/planner/v1/plans/${plan.value!.id}");
+
+      if (response.data['isSuccess']) {
+
+        plan.value = PlanResponse.fromJson(response.data['data']);
+
+        await MapDrawerHelper.drawFullRoute(
+          routeMapController: routeMapController,
+          plan: plan.value,
+        );
+      }
+    } catch (e) {
+      print("ERROR REFRESHING CURRENT PLAN: $e");
+    }
+  }
   @override
   void onClose() {
     scrollController.dispose();
     super.onClose();
   }
 }
+

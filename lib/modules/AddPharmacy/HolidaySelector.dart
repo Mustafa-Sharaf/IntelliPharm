@@ -38,7 +38,7 @@ class HolidaySelector extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔥 Counter
+            //  Counter
             Text(
               "${controller.holidays.length}/${controller.maxHolidays.value} selected",
               style: const TextStyle(

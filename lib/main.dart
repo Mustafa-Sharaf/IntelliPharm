@@ -9,7 +9,6 @@ import 'helper/mapHelper/dart/MapHelper_Controller.dart';
 import 'language/Language.dart';
 import 'language/Language_Controller.dart';
 import 'modules/ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Controller.dart';
-import 'modules/AddNotes/AddNotes_Controller.dart';
 import 'modules/AddOrder/AddOrder_Controller.dart';
 import 'modules/AddPharmacy/AddPharmacy_Controller.dart';
 import 'modules/Home/Home_Screen.dart';
@@ -36,7 +35,6 @@ void main() async {
   Get.put(MyOrdersController());
   Get.put(ActiveOptimizedRouteTrackingController());
   Get.put(AddPharmacyController());
-  //Get.put(AddNotesController());
   themeController.loadThemeFromStorage();
   final box = GetStorage();
   final token = box.read<String>('token');
@@ -59,10 +57,7 @@ class MyApp extends StatelessWidget {
         translations: MyLanguage(),
         theme: AppThemes.lightTheme,
         darkTheme: AppThemes.darkTheme,
-
-        themeMode: themeController.isDarkMode.value
-            ? ThemeMode.dark
-            : ThemeMode.light,
+        themeMode: themeController.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
         getPages: [
           GetPage(name: '/splash', page: () => SplashScreen()),
           GetPage(name: '/signIn', page: () => SignInScreen()),

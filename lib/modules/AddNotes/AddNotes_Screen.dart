@@ -10,8 +10,6 @@ class AddNotesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-    //final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     final controller = Get.put(AddNotesController());
 
     return Container(
@@ -56,7 +54,6 @@ class AddNotesScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: size.height * 0.01),
-
             Row(
               children: [
                 Expanded(
@@ -72,7 +69,7 @@ class AddNotesScreen extends StatelessWidget {
                         fontFamily: 'Cairo',
                         fontSize: 14,
                       ),
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                         hintText: "Add a note...",
                         hintStyle: TextStyle(
                           color: colors.textDefault,
@@ -80,7 +77,7 @@ class AddNotesScreen extends StatelessWidget {
                           fontFamily: 'Cairo',
                         ),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(
+                        contentPadding: const EdgeInsets.symmetric(
                           horizontal: 16,
                           vertical: 12,
                         ),
@@ -89,7 +86,6 @@ class AddNotesScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: size.width * 0.04),
-
                 Obx(
                   () => GestureDetector(
                     onTap: controller.isSubmitting.value
@@ -136,9 +132,7 @@ class AddNotesScreen extends StatelessWidget {
     return Obx(() {
       final isDarkMode = Get.isDarkMode;
       bool isSelected = controller.selectedType.value == type;
-
       Color computedBg = isDarkMode ? darkBgColor : lightBgColor;
-
       return GestureDetector(
         onTap: () {
           controller.changeSelectedType(type);
@@ -174,4 +168,3 @@ class AddNotesScreen extends StatelessWidget {
     });
   }
 }
-

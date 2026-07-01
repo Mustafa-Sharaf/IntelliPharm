@@ -1,77 +1,74 @@
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
+import '../../app_theme/theme_extension.dart';
+import '../../helper/ContactLauncher/ContactLauncher.dart';
+import '../NewOrder/NewOrder_Screen.dart';
+import '../PlanYourRoute/PlanYourRoute_Controller.dart';
+
+
 class BuildActionButtons extends StatelessWidget {
-  const BuildActionButtons({super.key});
+  final dynamic pharmacy;
+  const BuildActionButtons({super.key, required this.pharmacy});
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final colors = Theme.of(context).extension<ThemeColors>()!;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // 1️⃣ الزر الرئيسي: Create Order
         InkWell(
           onTap: () {
-            // اضغط هنا لإنشاء طلب جديد
+            Get.to(() => NewOrderScreen());
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
             width: double.infinity,
-            height: 56, // ارتفاع ممتاز ومريح للضغط
+            height: size.height * 0.06,
             decoration: BoxDecoration(
-              color: const Color(0xFF00695C), // اللون الأخضر الزيتي الداكن المطابق للصورة
+              color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF00695C).withValues(alpha: 0.2),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
-                ),
-              ],
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.add_shopping_cart, // أيقونة السلة مع إشارة الزائد
-                  color: Colors.white,
-                  size: 22,
-                ),
-                SizedBox(width: 10),
+                Icon(Icons.add_shopping_cart, color: Colors.white, size: 22),
+                SizedBox(width: size.width * 0.02),
                 Text(
                   "Create Order",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Cairo', // للحفاظ على تناسق الخطوط عندك
+                    fontFamily: 'Cairo',
                   ),
                 ),
               ],
             ),
           ),
         ),
-
-        const SizedBox(height: 16), // المسافة الفاصلة بين السطرين بناءً على الصورة
-
-        // 2️⃣ السطر السفلي: Map & Call مرتبين بجانب بعضهما بالتساوي
+        SizedBox(height: size.height * 0.02),
         Row(
           children: [
-            // زر الخريطة (Map)
             Expanded(
               child: InkWell(
                 onTap: () {
-                  // الانتقال إلى الخريطة أو التتبع
+                  final planYourRouteController = Get.find<PlanYourRouteController>();
+                  if (planYourRouteController.selectedType.value.isEmpty) {
+                    planYourRouteController.selectedType.value = "Driving";
+                  }
+                  planYourRouteController.initiatePlan(singlePharmacy: pharmacy);
                 },
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
                   height: 50,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8FAFC), // خلفية بيضاء مائلة للرمادي الخفيف جداً
+                    color: const Color(0xFFF8FAFC),
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: const Color(0xFFD1D5DB), // لون الحدود الرمادي الفاتح والناعم
+                      color: const Color(0xFFD1D5DB),
                       width: 1,
                     ),
                   ),
@@ -79,8 +76,8 @@ class BuildActionButtons extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.map_outlined, // أيقونة الخريطة المفتوحة المطابقة للصورة
-                        color: Color(0xFF0F2547), // اللون الكحلي الداكن للأيقونة والنص
+                        Icons.map_outlined,
+                        color: Color(0xFF0F2547),
                         size: 20,
                       ),
                       SizedBox(width: 8),
@@ -98,14 +95,14 @@ class BuildActionButtons extends StatelessWidget {
                 ),
               ),
             ),
-
-            const SizedBox(width: 16), // المسافة بين الزرين السفليين
-
-            // زر الاتصال (Call)
+            SizedBox(width: size.width * 0.03),
             Expanded(
               child: InkWell(
                 onTap: () {
-                  // فتح خيارات الاتصال بالصيدلاني
+                  ContactLauncher().showContactOptions(
+                    context,
+                    pharmacy.pharmacistPhone,
+                  );
                 },
                 borderRadius: BorderRadius.circular(14),
                 child: Container(
@@ -122,7 +119,7 @@ class BuildActionButtons extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.phone_in_talk_outlined, // أيقونة الهاتف المائل المطابقة للصورة
+                        Icons.phone_in_talk_outlined,
                         color: Color(0xFF0F2547),
                         size: 20,
                       ),
@@ -145,4 +142,5 @@ class BuildActionButtons extends StatelessWidget {
         ),
       ],
     );
-  }}
+  }
+}

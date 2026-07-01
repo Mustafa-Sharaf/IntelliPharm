@@ -157,39 +157,6 @@ class AddPharmacyScreen extends StatelessWidget {
 
                       SizedBox(height: size.height * 0.02),
 
-                      // --- SECTION: ACTIVE STATUS ---
-                      /*Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: size.width * 0.02,
-                          vertical: size.width * 0.01,
-                        ),
-                        decoration: BoxDecoration(
-                          color: colors.component,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Pharmacy is Active',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: colors.textSecondary,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Cairo',
-                              ),
-                            ),
-                            Obx(
-                              () => Switch(
-                                value: addPharmacyController.isActive.value,
-                                activeThumbColor: AppColors.primaryColor,
-                                onChanged: (val) =>
-                                    addPharmacyController.isActive.value = val,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),*/
                       Padding(
                         padding: EdgeInsets.only(
                           top: size.height * 0.02,

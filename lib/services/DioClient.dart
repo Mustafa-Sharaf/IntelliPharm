@@ -103,11 +103,9 @@ class DioClient {
   static void _logout() {
     print("Refresh failed → logging out...");
 
-    // مسح التوكنات فوراً من الـ Storage لحماية البيانات
     GetStorage().remove("token");
     GetStorage().remove("refresh_token");
 
-    // تأخير عملية الملاحة لضمان أن سياق التطبيق (GetMaterialApp) جاهز تماماً للملاحة Contextless
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (Get.currentRoute != '/signIn') {
         Get.offAllNamed("/signIn");

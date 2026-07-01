@@ -19,8 +19,8 @@ class PharmacyDetailsController extends GetxController {
     super.onInit();
     if (Get.arguments is int) {
       pharmacyId = Get.arguments;
-    } else if (Get.arguments is Map && Get.arguments['id'] != null) {
-      pharmacyId = Get.arguments['id'];
+    } else if (Get.arguments is Map) {
+      pharmacyId = Get.arguments['pharmacyId'] ?? Get.arguments['id'] ?? 0;
     } else {
       pharmacyId = int.tryParse(Get.arguments.toString()) ?? 0;
     }

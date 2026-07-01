@@ -166,4 +166,50 @@ class MapDrawerHelper {
       }
     }
   }
+
+
+  // 🟢 دالة جديدة لرسم مسار مباشر من موقع المندوب لصيدلية واحدة فقط
+  static Future<void> drawSingleDirectPath({
+    required MapHelperController mapController,
+    required double destLat,
+    required double destLng,
+    required String destinationName,
+    String? geometry, // في حال كان سيرفرك يرسل جيويمتري للخطوة، وإلا سيرسم خطاً مستقيماً
+  }) async {
+    mapController.clearAll();
+
+    final LatLng startPoint = LatLng(mapController.latitude.value, mapController.longitude.value);
+    final LatLng endPoint = LatLng(destLat, destLng);
+
+    // 1. إضافة ماركر الموقع الحالي
+    mapController.markers.add(
+      Marker(
+        markerId: const MarkerId('current_location'),
+        position: startPoint,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        infoWindow: const InfoWindow(title: "My Current Location"),
+      ),
+    );
+
+    // 2. إضافة ماركر الصيدلية الهدف
+    mapController.markers.add(
+      Marker(
+        markerId: const MarkerId('destination_location'),
+        position: endPoint,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        infoWindow: InfoWindow(title: destinationName),
+      ),
+    );
+
+    // 3. رسم الخط (إذا ممرنا هندسة المسار نفكها، وإلا نرسم خطاً بين النقطتين)
+    List<LatLng> pathPoints = [];
+    if (geometry != null && geometry.isNotEmpty) {
+      pathPoints = decodePolyline(geometry);
+    } else {
+      pathPoints = [startPoint, endPoint];
+    }
+
+    mapController.drawRoutes([pathPoints]);
+  }
+
 }
