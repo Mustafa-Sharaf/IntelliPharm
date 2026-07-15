@@ -61,7 +61,7 @@ class PlanRouteCard extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          "Plan_Today's_Route".tr,
+                          "PlanToday'sRoute".tr,
                           style: TextStyle(
                             fontSize: size.width * 0.055,
                             fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class PlanRouteCard extends StatelessWidget {
                         ),
 
                         Text(
-                          "Today's planned visits",
+                          "Today's_planned_visits".tr,
                           style: TextStyle(
                             fontSize: size.width * 0.033,
                             color: Colors.white.withValues(alpha: 0.5),

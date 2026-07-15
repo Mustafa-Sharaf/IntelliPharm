@@ -9,7 +9,7 @@ import '../../app_theme/theme_extension.dart';
 import '../PlanYourRoute/PlanYourRoute_Screen.dart';
 import 'HomeContent_Controller.dart';
 
-//New code
+
 class HomeContentScreen extends StatelessWidget {
   const HomeContentScreen({super.key});
 
@@ -27,26 +27,17 @@ class HomeContentScreen extends StatelessWidget {
               children: [
                 StatCard(
                   icon: Icons.verified_rounded,
-                  value:
-                      homeContentController.statistics.value?.visitsCount
-                          .toString() ??
-                      "0",
+                  value: homeContentController.statistics.value?.visitsCount.toString() ?? "0",
                   title: "Visits".tr,
                 ),
                 StatCard(
                   icon: Icons.handshake_rounded,
-                  value:
-                      homeContentController.statistics.value?.usefulVisitsCount
-                          .toString() ??
-                      "0",
+                  value: homeContentController.statistics.value?.usefulVisitsCount.toString() ?? "0",
                   title: "Deals".tr,
                 ),
                 StatCard(
                   icon: Icons.receipt_long_rounded,
-                  value:
-                      homeContentController.statistics.value?.ordersCount
-                          .toString() ??
-                      "0",
+                  value: homeContentController.statistics.value?.ordersCount.toString() ?? "0",
                   title: "Order".tr,
                 ),
               ],
@@ -91,9 +82,9 @@ class HomeContentScreen extends StatelessWidget {
               if (homeContentController.todayVisits.isEmpty) {
                 return  Center(
                   child: EmptyPlanCard(
-                    title: "No visits planned yet.",
-                    subtitle: "The pharmacies will appear here once you have selected the area you will be visiting.",
-                    buttonText: "Create Plan",
+                    title: "NoVisitsPlannedYet".tr,
+                    subtitle: "ThePharmaciesWillAppearHereOnceYouHaveSelectedTheAreaYouWillBeVisiting".tr,
+                    buttonText: "CreatePlan".tr,
                     onPressed:(){
                       Get.to(PlanYourRouteScreen());
                     },
@@ -124,7 +115,7 @@ class HomeContentScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Active Offers",
+                  "ActiveOffers",
                   style: TextStyle(
                     fontSize: size.width * 0.05,
                     fontWeight: FontWeight.bold,

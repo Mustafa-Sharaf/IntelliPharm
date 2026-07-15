@@ -14,15 +14,15 @@ class NavItem {
 List<NavItem> repItems = [
   NavItem(Icons.home_rounded, "HOME".tr),
   NavItem(Icons.receipt_long_rounded, "ORDERS".tr),
-  NavItem(Icons.chat, "Ask Gemini".tr),
+  NavItem(Icons.chat, "AskGemini".tr),
   NavItem(Icons.account_balance_wallet, "Debts".tr),
   NavItem(Icons.local_pharmacy, "Pharmacies".tr),
 ];
 
 
 List<NavItem> distributorItems = [
-  const NavItem(Icons.home_rounded, "Home"),
-  const NavItem(Icons.local_shipping_rounded, "Deliveries"),
-  const NavItem(Icons.map_rounded, "Route"),
-  const NavItem(Icons.check_circle_outline_rounded, "Confirm Delivery"),
+   NavItem(Icons.home_rounded, "Home".tr),
+   NavItem(Icons.local_shipping_rounded, "Deliveries".tr),
+   NavItem(Icons.map_rounded, "Route".tr),
+   NavItem(Icons.check_circle_outline_rounded, "ConfirmDelivery".tr),
 ];

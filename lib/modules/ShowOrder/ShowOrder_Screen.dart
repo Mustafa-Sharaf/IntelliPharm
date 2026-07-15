@@ -24,8 +24,8 @@ class OrderDetailsScreen extends StatelessWidget {
         backgroundColor: colors.backgroundMain,
         foregroundColor: colors.textPrimary,
         centerTitle: true,
-        title: const Text(
-          "Show Order",
+        title: Text(
+          "ShowOrder".tr,
           style: TextStyle(
             fontSize: 18,
             fontFamily: 'Cairo',
@@ -43,9 +43,9 @@ class OrderDetailsScreen extends StatelessWidget {
 
         final order = controller.order.value;
         if (order == null) {
-          return const Center(
+          return  Center(
             child: Text(
-              "No data",
+              "No_data".tr,
               style: TextStyle(
                 color: AppColors.primaryColor,
                 fontFamily: 'Cairo',
@@ -64,17 +64,17 @@ class OrderDetailsScreen extends StatelessWidget {
                 StatCard(
                   icon: Icons.monetization_on,
                   value: order.totalPrice.toString(),
-                  title: "Total",
+                  title: "Total".tr,
                 ),
                 StatCard(
                   icon: Icons.percent,
                   value: order.percentage.toString(),
-                  title: "Percentage",
+                  title: "Percentage".tr,
                 ),
                 StatCard(
                   icon: Icons.price_check,
                   value: order.finalPrice.toString(),
-                  title: "Final Price",
+                  title: "FinalPrice".tr,
                 ),
               ],
             ),
@@ -82,7 +82,7 @@ class OrderDetailsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(size.height * 0.01),
               child: Text(
-                "Order Items",
+                "OrderItems".tr,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -102,7 +102,7 @@ class OrderDetailsScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(size.height * 0.01),
               child: Text(
-                "Notes",
+                "Notes".tr,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class OrderDetailsScreen extends StatelessWidget {
                 ),
                 child: Text(
                   (order.notes.toString().trim().isEmpty)
-                      ? "No notes available"
+                      ? "No_notes_available".tr
                       : order.notes.toString(),
                   style: TextStyle(
                     fontSize: 14,

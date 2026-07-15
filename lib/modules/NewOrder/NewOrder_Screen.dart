@@ -28,7 +28,7 @@ class NewOrderScreen extends StatelessWidget {
         foregroundColor: colors.textPrimary,
         centerTitle: true,
         title: Text(
-          "New Order",
+          "NewOrder".tr,
           style: TextStyle(
             fontSize: 18,
             fontFamily: 'Cairo',
@@ -54,7 +54,7 @@ class NewOrderScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "SELECT PHARMACY",
+                    "SELECT_PHARMACY".tr,
                     style: TextStyle(
                       fontSize: 15,
                       fontFamily: 'Cairo',
@@ -80,7 +80,7 @@ class NewOrderScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "ORDER ITEMS",
+                    "ORDER_ITEMS".tr,
                     style: TextStyle(
                       fontSize: 16,
                       fontFamily: 'Cairo',
@@ -90,7 +90,10 @@ class NewOrderScreen extends StatelessWidget {
                   ),
                   Obx(
                     () => Text(
-                      "${newOrderController.cart.length} Items",
+                      //"${newOrderController.cart.length} Items",
+                      "ITEMS_COUNT".trParams({
+                        'count': newOrderController.cart.length.toString(),
+                      }),
                       style: TextStyle(
                         fontSize: 15,
                         fontFamily: 'Cairo',
@@ -121,8 +124,8 @@ class NewOrderScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.01),
                     const AddMedicineButton(),
                     SizedBox(height: size.height * 0.02),
-                    const Text(
-                      "NOTES",
+                     Text(
+                      "NOTES".tr,
                       style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
@@ -148,8 +151,8 @@ class NewOrderScreen extends StatelessWidget {
                           fontFamily: 'Cairo',
                           color: Colors.black,
                         ),
-                        decoration: const InputDecoration(
-                          hintText: "Add optional order notes...",
+                        decoration:  InputDecoration(
+                          hintText: "Add_optional_order_notes...".tr,
                           hintStyle: TextStyle(
                             color: Colors.grey,
                             fontFamily: 'Cairo',
@@ -175,7 +178,7 @@ class NewOrderScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Total Price",
+                      "TotalPrice".tr,
                       style: TextStyle(
                         fontFamily: 'Cairo',
                         fontSize: 16,
@@ -183,7 +186,10 @@ class NewOrderScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${newOrderController.totalPrice.toStringAsFixed(0)} S.P",
+                      //"${newOrderController.totalPrice.toStringAsFixed(0)} S.P",
+                      "PRICE_SP".trParams({
+                        'price': newOrderController.totalPrice.toStringAsFixed(0),
+                      }),
                       style: const TextStyle(
                         fontFamily: 'Cairo',
                         fontSize: 18,
@@ -213,7 +219,7 @@ class NewOrderScreen extends StatelessWidget {
                     () => newOrderController.isSubmitting.value
                         ? const CircularProgressIndicator(color: Colors.white)
                         : Text(
-                            "Submit Order",
+                            "SubmitOrder".tr,
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

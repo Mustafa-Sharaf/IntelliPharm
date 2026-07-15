@@ -35,7 +35,7 @@ class AddPharmacyScreen extends StatelessWidget {
         foregroundColor: colors.textPrimary,
         centerTitle: true,
         title: Text(
-          "Add Pharmacy",
+          "AddPharmacy".tr,
           style: TextStyle(
             fontSize: 18,
             fontFamily: 'Cairo',
@@ -60,7 +60,7 @@ class AddPharmacyScreen extends StatelessWidget {
                     children: [
                       Obx(
                         () => ActiveRegionComponent(
-                          text: "REGION",
+                          text: "REGION".tr,
                           selectedRegionName:
                               addPharmacyController.selectedRegion.value?.name,
                           onRegionSelected: (region) {
@@ -75,7 +75,7 @@ class AddPharmacyScreen extends StatelessWidget {
                           top: size.width * 0.03,
                           bottom: size.width * 0.02,
                         ),
-                        child: Text('PHARMACY NAME', style: sectionTitleStyle),
+                        child: Text('PHARMACY_NAME'.tr, style: sectionTitleStyle),
                       ),
                       PharmacyNameSection(
                         addPharmacyController: addPharmacyController,
@@ -96,7 +96,7 @@ class AddPharmacyScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(width: size.height * 0.008),
-                                Text('LOCATION', style: sectionTitleStyle),
+                                Text('LOCATION'.tr, style: sectionTitleStyle),
                               ],
                             ),
                             SizedBox(height: size.height * 0.008),
@@ -118,7 +118,7 @@ class AddPharmacyScreen extends StatelessWidget {
                           top: size.height * 0.02,
                           bottom: size.height * 0.01,
                         ),
-                        child: Text('WORKING HOURS', style: sectionTitleStyle),
+                        child: Text('WORKING_HOURS'.tr, style: sectionTitleStyle),
                       ),
                       Obx(
                         () => Row(
@@ -162,7 +162,7 @@ class AddPharmacyScreen extends StatelessWidget {
                           top: size.height * 0.02,
                           bottom: size.height * 0.01,
                         ),
-                        child: Text('HOLIDAYS', style: sectionTitleStyle),
+                        child: Text('HOLIDAYS'.tr, style: sectionTitleStyle),
                       ),
                       HolidaySelector(
                         controller: addPharmacyController,
@@ -174,7 +174,7 @@ class AddPharmacyScreen extends StatelessWidget {
                           top: size.height * 0.02,
                           bottom: size.height * 0.01,
                         ),
-                        child: Text('CONTACT INFO', style: sectionTitleStyle),
+                        child: Text('CONTACT_INFO'.tr, style: sectionTitleStyle),
                       ),
                       PharmacyContactSection(
                         addPharmacyController: addPharmacyController,
@@ -212,8 +212,8 @@ class AddPharmacyScreen extends StatelessWidget {
                                 strokeWidth: 2,
                               ),
                             )
-                          : const Text(
-                              'SAVE PHARMACY',
+                          :  Text(
+                              'SAVE_PHARMACY'.tr,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,

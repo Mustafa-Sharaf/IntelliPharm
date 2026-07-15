@@ -35,7 +35,7 @@ class VisitDetailsScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
         title: Text(
-          "Visit Details",
+          "VisitDetails".tr,
           style: TextStyle(
             fontSize: 18,
             fontFamily: 'Cairo',
@@ -52,10 +52,10 @@ class VisitDetailsScreen extends StatelessWidget {
         }
         final pharmacy = controller.pharmacyData.value;
         if (pharmacy == null) {
-          return const Center(
+          return Center(
             child: Text(
-              "Failed to load pharmacy details",
-              style: TextStyle(fontFamily: 'Cairo'),
+              "Failed_to_load_pharmacy_details",
+              style: TextStyle(fontFamily: 'Cairo',color: colors.textPrimary,),
             ),
           );
         }
@@ -82,7 +82,7 @@ class VisitDetailsScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Recent Notes",
+                        "RecentNotes".tr,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class VisitDetailsScreen extends StatelessWidget {
                         },
                         style: TextButton.styleFrom(padding: EdgeInsets.zero),
                         child: Text(
-                          "View All Notes",
+                          "ViewAllNotes".tr,
                           textAlign: TextAlign.end,
                           style: TextStyle(
                             color: AppColors.primaryColor,
@@ -150,7 +150,7 @@ class VisitDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            "No notes available for this pharmacy yet.",
+                            "No_notes_available_for_this_pharmacy_yet.",
                             style: TextStyle(
                               fontFamily: 'Cairo',
                               fontSize: 14,
@@ -169,14 +169,13 @@ class VisitDetailsScreen extends StatelessWidget {
                           backgroundColor: colors.component.withValues(
                             alpha: 0.6,
                           ),
-                          isGeneralNote:
-                              note.noteType.toLowerCase() == "general",
+                          isGeneralNote:note.noteType.toLowerCase() == "general",
                         ),
                       );
                     }),
 
                   Text(
-                    "Visit Actions",
+                    "Visit_Actions".tr,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -197,7 +196,7 @@ class VisitDetailsScreen extends StatelessWidget {
                     return Row(
                       children: [
                         ActionDealButton(
-                          title: "Closed Deal",
+                          title: "ClosedDeal".tr,
                           icon: Icons.check_box_outlined,
                           iconColor: AppColors.primaryColor,
                           textColor: AppColors.primaryColor,
@@ -216,7 +215,7 @@ class VisitDetailsScreen extends StatelessWidget {
                         ),
                         SizedBox(width: size.width * 0.05),
                         ActionDealButton(
-                          title: "No Deal",
+                          title: "NoDeal".tr,
                           icon: Icons.cancel_outlined,
                           iconColor: const Color(0xFFC62828),
                           textColor: const Color(0xFFC62828),

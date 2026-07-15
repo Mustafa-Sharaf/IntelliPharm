@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_theme/theme_extension.dart';
+import 'package:get/get.dart';
 
 class MedicineItemCard extends StatelessWidget {
   final String name;
@@ -60,7 +61,10 @@ class MedicineItemCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(right: size.width * 0.03),
                 child: Text(
-                  "${price.toStringAsFixed(2)} S.P",
+                  // "${price.toStringAsFixed(2)} S.P"
+                  "PRICE_SP".trParams({
+                    'price': price.toStringAsFixed(2),
+                  }),
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -75,7 +79,10 @@ class MedicineItemCard extends StatelessWidget {
           SizedBox(height: size.width * 0.01),
 
           Text(
-            "Unit Price: \$${unitPrice.toStringAsFixed(2)}",
+            // "Unit Price: \$${unitPrice.toStringAsFixed(2)}"
+            "UNIT_PRICE_SP".trParams({
+              'price': unitPrice.toStringAsFixed(2),
+            }),
             style: TextStyle(color: Colors.grey.shade600, fontSize: 13),
           ),
 
@@ -137,8 +144,8 @@ class MedicineItemCard extends StatelessWidget {
               /// remove button
               TextButton(
                 onPressed: onRemove,
-                child: const Text(
-                  "Remove",
+                child:  Text(
+                  "Remove".tr,
                   style: TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,

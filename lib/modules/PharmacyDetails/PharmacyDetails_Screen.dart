@@ -28,7 +28,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
         title: Text(
-          "Pharmacy Details",
+          "PharmacyDetails".tr,
           style: TextStyle(
             fontSize: 18,
             fontFamily: 'Cairo',
@@ -47,7 +47,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
         if (pharmacy == null) {
           return Center(
             child: Text(
-              "Failed to load pharmacy details",
+              "Failed_to_load_pharmacy_details".tr,
               style: TextStyle(
                 color: colors.textSecondary,
                 fontFamily: 'Cairo',
@@ -79,7 +79,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Visit Notes",
+                          "VisitNotes".tr,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                             PopupMenuItem(
                               value: "ALL",
                               child: Text(
-                                "ALL",
+                                "ALL".tr,
                                 style: TextStyle(
                                   fontFamily: 'Cairo',
                                   color: colors.textDefault,
@@ -109,7 +109,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                             PopupMenuItem(
                               value: "GENERAL",
                               child: Text(
-                                "GENERAL",
+                                "GENERAL".tr,
                                 style: TextStyle(
                                   fontFamily: 'Cairo',
                                   color: colors.textDefault,
@@ -119,7 +119,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                             PopupMenuItem(
                               value: "WARNING",
                               child: Text(
-                                "WARNING",
+                                "WARNING".tr,
                                 style: TextStyle(
                                   fontFamily: 'Cairo',
                                   color: colors.textDefault,
@@ -129,7 +129,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                             PopupMenuItem(
                               value: "TIP",
                               child: Text(
-                                "TIP",
+                                "TIP".tr,
                                 style: TextStyle(
                                   fontFamily: 'Cairo',
                                   color: colors.textDefault,
@@ -184,7 +184,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: size.height * 0.02),
                                 Text(
-                                  "No notes available for this filter.",
+                                  "No_notes_available_for_this_filter.".tr,
                                   style: TextStyle(
                                     color: colors.textSecondary,
                                     fontFamily: 'Cairo',

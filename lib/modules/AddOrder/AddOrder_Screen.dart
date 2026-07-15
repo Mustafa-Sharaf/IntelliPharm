@@ -95,15 +95,20 @@ class AddOrderScreen extends StatelessWidget {
                     return MedicineCard(
                       commercialName: med.commercialName,
                       scientificName: med.scientificName,
-                      price: "${med.price.toString()} S.P",
+                      price:"PRICE_SP".trParams({
+                        'price': med.price.toString(),
+                      }), //"${med.price.toString()} S.P",
                       stockQuantity: med.availableQuantity.toString(),
-                      status: med.isImported ? "imported" : "local",
+                      status: med.isImported ? "Imported".tr : "Local".tr,
                       discount:
                           (med.gift != null &&
                               med.gift!.giftQuantity > 0 &&
                               med.gift!.requiredQuantity > 0)
-                          ? "Buy ${med.gift!.requiredQuantity} Get ${med.gift!.giftQuantity} Free"
-                          : "",
+                          ? //"Buy ${med.gift!.requiredQuantity} Get ${med.gift!.giftQuantity} Free"
+                          "GIFT_PROMO".trParams({
+                            'required_qty': med.gift!.requiredQuantity.toString(),
+                            'gift_qty': med.gift!.giftQuantity.toString(),
+                          }) : "",
                       image: med.images.isNotEmpty
                           ? med.images.first
                           : "assets/images/icon.png",

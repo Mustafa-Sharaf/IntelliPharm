@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import 'ChatGemini_Controller.dart';
+import 'package:get/get.dart';
 
 class ChatBottomInput extends StatelessWidget {
   final ChatController controller;
@@ -50,8 +51,8 @@ class ChatBottomInput extends StatelessWidget {
                     controller: controller.textController,
                     style: const TextStyle(color: Colors.white, fontSize: 14),
                     cursorColor: AppColors.primaryColor,
-                    decoration: const InputDecoration(
-                      hintText: 'Write your question here...',
+                    decoration:  InputDecoration(
+                      hintText: 'Write_your_question_here'.tr,
                       hintStyle: TextStyle(
                         color: Color(0xff64748B),
                         fontSize: 14,
@@ -66,8 +67,8 @@ class ChatBottomInput extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Type your question and then press Enter or press Submit.',
+          Text(
+            'Type_your_question_and_then_press_Enter_or_press_Submit'.tr,
             style: TextStyle(
               color: Color(0xff475569),
               fontSize: 11,

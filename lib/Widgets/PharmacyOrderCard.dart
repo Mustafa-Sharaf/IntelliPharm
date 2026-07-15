@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../app_theme/theme_extension.dart';
 
 enum OrderPriority { urgent, normal, low }
@@ -9,11 +10,11 @@ extension OrderPriorityExtension on OrderPriority {
   String get text {
     switch (this) {
       case OrderPriority.urgent:
-        return 'URGENT';
+        return 'URGENT'.tr;
       case OrderPriority.normal:
-        return 'NORMAL';
+        return 'NORMAL'.tr;
       case OrderPriority.low:
-        return 'LOW';
+        return 'LOW'.tr;
     }
   }
 
@@ -40,16 +41,15 @@ extension OrderPriorityExtension on OrderPriority {
   }
 }
 
-// 2. تحسين الـ OrderStatus لإعطاء ألوانه ونصوصه تلقائياً
 extension OrderStatusExtension on OrderStatus {
   String get text {
     switch (this) {
       case OrderStatus.pending:
-        return 'PENDING';
+        return 'PENDING'.tr;
       case OrderStatus.inTransit:
-        return 'IN TRANSIT';
+        return 'IN_TRANSIT'.tr;
       case OrderStatus.delivered:
-        return 'DELIVERED';
+        return 'DELIVERED'.tr;
     }
   }
 
@@ -76,7 +76,6 @@ extension OrderStatusExtension on OrderStatus {
   }
 }
 
-// 3. الـ Widget بعد إزالة زحمة الـ Maps من داخل الـ build
 class PharmacyOrderCard extends StatelessWidget {
   final String orderNumber;
   final String pharmacyName;
@@ -131,7 +130,10 @@ class PharmacyOrderCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "Order #$orderNumber",
+                          // "Order #$orderNumber"
+                          "ORDER_NUMBER".trParams({
+                            'number': orderNumber.toString(),
+                          }),
                           style: TextStyle(
                             fontSize: 14,
                             color: colors.textSecondary.withValues(alpha: 0.8),
@@ -145,15 +147,15 @@ class PharmacyOrderCard extends StatelessWidget {
                             vertical: size.width * 0.006,
                           ),
                           decoration: BoxDecoration(
-                            color: priority.bgColor, // استخدام مباشر
+                            color: priority.bgColor,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            priority.text, // استخدام مباشر
+                            priority.text,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: priority.fontColor, // استخدام مباشر
+                              color: priority.fontColor,
                               fontFamily: 'Cairo',
                             ),
                           ),
@@ -180,7 +182,10 @@ class PharmacyOrderCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          "$itemsCount items",
+                          // "$itemsCount items"
+                          "ITEMS_COUNT".trParams({
+                            'count': itemsCount.toString(),
+                          }),
                           style: TextStyle(
                             fontSize: 13,
                             color: colors.textSecondary,
@@ -196,7 +201,7 @@ class PharmacyOrderCard extends StatelessWidget {
                             vertical: size.width * 0.008,
                           ),
                           decoration: BoxDecoration(
-                            color: status.bgColor, // استخدام مباشر
+                            color: status.bgColor,
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -206,17 +211,17 @@ class PharmacyOrderCard extends StatelessWidget {
                                 width: 6,
                                 height: 6,
                                 decoration: BoxDecoration(
-                                  color: status.fontColor, // استخدام مباشر
+                                  color: status.fontColor,
                                   shape: BoxShape.circle,
                                 ),
                               ),
                               SizedBox(width: size.width * 0.015),
                               Text(
-                                status.text, // استخدام مباشر
+                                status.text,
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: status.fontColor, // استخدام مباشر
+                                  color: status.fontColor,
                                   fontFamily: 'Cairo',
                                 ),
                               ),

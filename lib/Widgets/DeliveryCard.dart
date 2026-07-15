@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
-import '../modules/MyDeliveries/MyDeliveries_Controller.dart';
 import '../modules/MyDeliveries/MyDeliveries_Model.dart';
+import 'package:get/get.dart';
 
 class DeliveryCard extends StatelessWidget {
   final String orderId;
@@ -39,17 +39,17 @@ class DeliveryCard extends StatelessWidget {
 
     final priorityConfig = {
       OrderPriority.urgent: {
-        'text': 'URGENT',
+        'text': 'URGENT'.tr,
         'bg': const Color(0xffFDE8E8),
         'font': const Color(0xffE02424),
       },
       OrderPriority.normal: {
-        'text': 'NORMAL',
+        'text': 'NORMAL'.tr,
         'bg': const Color(0xffE1EFFE),
         'font': const Color(0xff1E429F),
       },
       OrderPriority.low: {
-        'text': 'LOW',
+        'text': 'LOW'.tr,
         'bg': const Color(0xffF3F4F6),
         'font': const Color(0xff4B5563),
       },
@@ -57,17 +57,17 @@ class DeliveryCard extends StatelessWidget {
 
     final statusConfig = {
       OrderStatus.pending: {
-        'btnText': 'Start Delivery',
+        'btnText': 'StartDelivery'.tr,
         'btnColor': AppColors.primaryColor,
         'enabled': true,
       },
       OrderStatus.inTransit: {
-        'btnText': 'In Transit...',
+        'btnText': 'InTransit...'.tr,
         'btnColor': Colors.blue, //const Color(0xff2563EB)
         'enabled': false,
       },
       OrderStatus.delivered: {
-        'btnText': 'Delivered Successfully',
+        'btnText': 'DeliveredSuccessfully'.tr,
         'btnColor': Colors.green, //const Color(0xff137333)
         'enabled': false,
       },
@@ -202,7 +202,7 @@ class DeliveryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "INVENTORY",
+                    "INVENTORY".tr,
                     style: TextStyle(
                       fontSize: 11,
                       color: colors.textDefault,
@@ -226,7 +226,11 @@ class DeliveryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "SCHEDULE",
+                    // "$itemsCount items · \$${price.toStringAsFixed(2)}"
+                    "ITEMS_PRICE_SUMMARY".trParams({
+                      'count': itemsCount.toString(),
+                      'price': price.toStringAsFixed(2),
+                    }),
                     style: TextStyle(
                       fontSize: 11,
                       color: colors.textDefault,
@@ -236,7 +240,10 @@ class DeliveryCard extends StatelessWidget {
                   ),
                   SizedBox(height: size.height * 0.003),
                   Text(
-                    "EST: $estTime",
+                    // "EST: $estTime"
+                    "EST_TIME".trParams({
+                      'time': estTime,
+                    }),
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -257,7 +264,10 @@ class DeliveryCard extends StatelessWidget {
               Icon(Icons.access_time, size: 14, color: colors.textSecondary),
               SizedBox(width: size.width * 0.015),
               Text(
-                "Assigned: $assignedTime",
+                // "Assigned: $assignedTime"
+                "ASSIGNED_TIME".trParams({
+                  'time': assignedTime,
+                }),
                 style: TextStyle(
                   fontSize: 12,
                   color: colors.textSecondary,

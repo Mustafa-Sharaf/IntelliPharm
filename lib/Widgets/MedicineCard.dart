@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../app_theme/theme_extension.dart';
-
+import 'package:get/get.dart';
 class MedicineCard extends StatelessWidget {
   final String commercialName;
   final String scientificName;
@@ -142,7 +142,9 @@ class MedicineCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Qua:$stockQuantity",
+                              "QTY_STOCK".trParams({
+                                'stock': stockQuantity.toString(),
+                              }),
                               style: TextStyle(
                                 color: colors.textSecondary,
                                 fontSize: 11,
@@ -194,7 +196,7 @@ class MedicineCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        "Add to cart",
+                        "Add_to_cart".tr,
                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Cairo',
@@ -214,7 +216,7 @@ class MedicineCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        "Alternatives",
+                        "Alternatives".tr,
                         style: const TextStyle(
                           color: Color(0xff0C8A7B),
                           fontFamily: 'Cairo',

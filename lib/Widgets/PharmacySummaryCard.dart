@@ -111,7 +111,7 @@ class PharmacySummaryCard extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.008),
                               Text(
-                                pharmacy.isOpen ? "OPEN NOW" : "CLOSED",
+                                pharmacy.isOpen ? "OPEN_NOW".tr : "CLOSED",
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: pharmacy.isOpen ? const Color(0xFF00796B) : Colors.red,
@@ -132,7 +132,10 @@ class PharmacySummaryCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                             "Holiday: $holidayText",
+                             //"Holiday: $holidayText",
+                              "HOLIDAY_LABEL".trParams({
+                                'text': holidayText,
+                              }),
                               style: const TextStyle(
                                 fontSize: 10,
                                 color: Colors.red,
@@ -235,7 +238,7 @@ class PharmacySummaryCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "SCHEDULED VISIT",
+                            "SCHEDULED_VISIT".tr,
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w500,

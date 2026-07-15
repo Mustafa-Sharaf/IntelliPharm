@@ -10,6 +10,7 @@ import '../../app_theme/theme_extension.dart';
 import '../AddOrder/AddOrder_Screen.dart';
 import '../AddPharmacy/AddPharmacy_Screen.dart';
 import '../ChatGemini/ChatGemini_Screen.dart';
+import '../ConfirmDelivery/ConfirmDelivery_Screen.dart';
 import '../HomeContent/HomeContent_Screen.dart';
 import '../HomeContentDistributor/HomeContentDistributor_Screen.dart';
 import '../MyDeliveries/MyDeliveries_Screen.dart';
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
     HomeContentDistributorScreen(),
     MyDeliveriesScreen(),
     const Center(child: Text("Active Delivery Route")),
-    const Center(child: Text("Deliveries History")),
+    const ConfirmDeliveryScreen(),
   ];
 
   @override
@@ -99,11 +100,11 @@ PreferredSizeWidget? _buildAppBar(
       case 0:
         return AppbarHome(scaffoldKey: scaffoldKey);
       case 1:
-        return BuildAppbar(title: "My Deliveries");
+        return BuildAppbar(title: "MyDeliveries".tr);
       case 2:
-        return BuildAppbar(title: "Active Route Progress");
+        return BuildAppbar(title: "ActiveRouteProgress".tr);
       case 3:
-        return BuildAppbar(title: "Delivery History");
+        return BuildAppbar(title: "ConfirmDelivery".tr);
       default:
         return null;
     }
@@ -112,14 +113,14 @@ PreferredSizeWidget? _buildAppBar(
       case 0:
         return AppbarHome(scaffoldKey: scaffoldKey);
       case 1:
-        return BuildAppbar(title: "My Orders");
+        return BuildAppbar(title: "MyOrders".tr);
       case 2:
         return null;
       case 3:
-        return AppBar(title: const Text("DEBTS Screen"));
+        return AppBar(title: Text("DEBTSScreen".tr));
       case 4:
         return BuildAppbar(
-          title: "Pharmacists Screen",
+          title: "PharmacistsScreen".tr,
           trailing: IconButton(
             icon: const Icon(Icons.add_business_rounded),
             onPressed: () {

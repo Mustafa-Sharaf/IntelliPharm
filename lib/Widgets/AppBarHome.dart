@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../app_theme/theme_extension.dart';
 import '../helper/DateHelper.dart';
@@ -17,7 +18,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     final user = box.read("user");
-    final name = user?["name"] ?? "User";
+    final name = user?["name"] ?? "User".tr;
     final width = MediaQuery.of(context).size.width;
     final colors = Theme.of(context).extension<ThemeColors>()!;
     return AppBar(
@@ -45,7 +46,9 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hi, $name",
+                  "HI_USER".trParams({
+                    'name': name,
+                  }),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

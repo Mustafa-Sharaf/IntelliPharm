@@ -64,7 +64,9 @@ class OrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "ORDER #$orderId",
+                        "ORDER_ID".trParams({
+                          'id': orderId.toString(),
+                        }),
                         style: TextStyle(
                           color: colors.textSecondary,
                           fontSize: 12,

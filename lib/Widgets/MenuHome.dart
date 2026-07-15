@@ -108,7 +108,7 @@ class DrawerHome extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.gps_fixed_rounded),
               title: Text(
-                'My Targets'.tr,
+                'My_Targets'.tr,
                 style: TextStyle(
                   fontSize: 16,
                   color: colors.textDefault,

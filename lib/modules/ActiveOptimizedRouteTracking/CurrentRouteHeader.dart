@@ -61,7 +61,7 @@ class CurrentRouteHeader extends StatelessWidget {
                       final plan = planYourRouteController.plan.value;
                       if (plan == null) {
                         return Text(
-                          "Loading route...",
+                          "LoadingRoute".tr,
                           style: TextStyle(
                             fontFamily: 'Cairo',
                             color: colors.textSecondary,
@@ -79,7 +79,8 @@ class CurrentRouteHeader extends StatelessWidget {
                             ),
                             SizedBox(width: size.width * 0.01),
                             Text(
-                              "${plan.visits.length} stops",
+                              //"${plan.visits.length} stops",
+                              'STOPS_COUNT'.trParams({'count': plan.visits.length.toString()}),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: colors.textDefault,
@@ -88,7 +89,6 @@ class CurrentRouteHeader extends StatelessWidget {
                               ),
                             ),
                             _buildDivider(colors.textDefault),
-
                             Icon(
                               Icons.route,
                               size: 16,
@@ -104,9 +104,7 @@ class CurrentRouteHeader extends StatelessWidget {
                                 fontFamily: 'Cairo',
                               ),
                             ),
-
                             _buildDivider(colors.textDefault),
-
                             Icon(
                               Icons.access_time_rounded,
                               size: 16,

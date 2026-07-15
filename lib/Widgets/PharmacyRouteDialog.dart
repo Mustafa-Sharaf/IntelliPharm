@@ -89,7 +89,12 @@ class PharmacyRouteDialog extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        "Route to ${pharmacy.nameEn}",
+                        //"Route to ${pharmacy.nameEn}",
+                        "ROUTE_TO_PHARMACY".trParams({
+                          'name': Get.locale?.languageCode == 'ar'
+                              ? (pharmacy.nameAr ?? pharmacy.nameEn)
+                              : pharmacy.nameEn,
+                        }),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(

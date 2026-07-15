@@ -80,9 +80,9 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       final plan = controller.plan;
                       final nextVisit = controller.nextVisit;
                       if (plan == null || nextVisit == null) {
-                        return const Center(
+                        return  Center(
                           child: Text(
-                            "All destinations have been visited or there is no current route",
+                            "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
                           ),
                         );
                       }
@@ -193,8 +193,14 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                           final visit = plan.visits[index];
                           String calculatedETA =PlanRouteCalculator.getETAForVisit(plan, index);
                           String subtitleText = visit.visited
-                              ? "Visited at $calculatedETA"
-                              : "ETA: $calculatedETA";
+                            /*  ? "Visited at $calculatedETA"
+                              : "ETA: $calculatedETA";*/
+                          ?"VISITED_AT".trParams({
+                            'time': calculatedETA,
+                          }):
+                          "ETA_TIME".trParams({
+                          'time': calculatedETA,
+                          });
                           return RouteStepItem(
                             id: visit.pharmacyId,
                             title: visit.name,

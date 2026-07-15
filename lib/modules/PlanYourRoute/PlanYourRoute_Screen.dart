@@ -34,7 +34,7 @@ class PlanYourRouteScreen extends StatelessWidget {
         scrolledUnderElevation: 0,
         centerTitle: true,
         title: Text(
-          "Plan Your Route",
+          "PlanYourRoute".tr,
           style: TextStyle(
             fontSize: 18,
             fontFamily: 'Cairo',
@@ -66,7 +66,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                           DateCard(),
                           SizedBox(height: size.height * 0.022),
                           Text(
-                            "TRAVEL MODE",
+                            "TRAVEL_MODE".tr,
                             style: TextStyle(
                               fontSize: 12,
                               fontFamily: 'Cairo',
@@ -152,13 +152,12 @@ class PlanYourRouteScreen extends StatelessWidget {
                           /// REGION SELECTOR
                           Obx(
                             () => ActiveRegionComponent(
-                              text: "REGION",
+                              text: "REGION".tr,
                               selectedRegionName: planYourRouteController
                                   .selectedRegion
                                   .value
                                   ?.name,
                               onRegionSelected: (region) {
-                                // تعديل التابع ليعمل بالتوافق مع التصفير الجديد
                                 planYourRouteController.updateRegion(region);
                               },
                             ),
@@ -170,7 +169,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Select Pharmacies to Visit",
+                                "Select_Pharmacies_to_Visit".tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontFamily: 'Cairo',
@@ -210,7 +209,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                                 child: TextField(
                                   onChanged: planYourRouteController.setSearch,
                                   decoration: InputDecoration(
-                                    hintText: "Search pharmacy name ...",
+                                    hintText: "Search_pharmacy_name_...".tr,
                                     prefixIcon: const Icon(
                                       Icons.search,
                                       color: Colors.grey,
@@ -283,10 +282,10 @@ class PlanYourRouteScreen extends StatelessWidget {
                           hasScrollBody: false,
                           child: Center(
                             child: EmptyPlanCard(
-                              title: "Nothing pharmacies yet.",
+                              title: "Nothing_pharmacies_yet.".tr,
                               subtitle:
-                                  "The pharmacies will appear here once you have selected the area you will be visiting.",
-                              buttonText: "Select Region",
+                                  "The_pharmacies_will_appear_here_once_you_have_selected_the_area_you_will_be_visiting.".tr,
+                              buttonText: "SelectRegion".tr,
                               onPressed: () async {
                                 final result = await showModalBottomSheet(
                                   context: context,
@@ -402,8 +401,8 @@ class PlanYourRouteScreen extends StatelessWidget {
                                 size: 20,
                               ),
                               SizedBox(width: size.width * 0.05),
-                              const Text(
-                                "Generate Optimal Route",
+                              Text(
+                                "GenerateOptimalRoute".tr,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

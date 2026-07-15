@@ -61,7 +61,7 @@ class PharmacySelectorWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      pharmacy?.name ?? "Select Pharmacy",
+                      pharmacy?.name ?? "SelectPharmacy".tr,
                       style:  TextStyle(
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Cairo',
@@ -70,7 +70,7 @@ class PharmacySelectorWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      pharmacy?.region ?? "Region",
+                      pharmacy?.region ?? "Region".tr,
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontFamily: 'Cairo',

@@ -28,6 +28,7 @@ class PharmacistsScreen extends StatelessWidget {
             /// SEARCH
             CustomSearchField(controller: searchController),
             SizedBox(height: size.height * 0.04),
+
             /// TABS
             Obx(
               () => Tabs(
@@ -37,12 +38,16 @@ class PharmacistsScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.01),
+
             /// COUNT
             Obx(
               () => Row(
                 children: [
                   Text(
-                    "${pharmacistsController.filteredPharmacies.length} pharmacies found",
+                    //"${pharmacistsController.filteredPharmacies.length} pharmacies found",
+                    "PHARMACIES_FOUND".trParams({
+                      'count': pharmacistsController.filteredPharmacies.length.toString(),
+                    }),
                     style: TextStyle(
                       fontSize: 14,
                       fontFamily: 'Cairo',
@@ -65,7 +70,17 @@ class PharmacistsScreen extends StatelessWidget {
                 final list = pharmacistsController.filteredPharmacies;
 
                 if (list.isEmpty) {
-                  return const Center(child: Text("No pharmacies found"));
+                  return Center(
+                    child: Text(
+                      "No_pharmacies_found".tr,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Cairo',
+                        color: colors.textSecondary,
+                        //fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
                 }
 
                 return ListView.builder(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../app_theme/AppColors.dart';
 import '../../../app_theme/theme_extension.dart';
 
@@ -82,7 +83,7 @@ class PharmacyInfoCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                              isOpen ? 'Open' : 'Closed',
+                              isOpen ? 'Open'.tr : 'Closed'.tr,
                               style: TextStyle(
                                 color: isOpen ? Colors.green : Colors.red,
                                 fontSize: 12,
@@ -135,7 +136,10 @@ class PharmacyInfoCard extends StatelessWidget {
                       SizedBox(height: size.width * 0.02),
                       _buildInfoRow(
                         Icons.person_outline_rounded,
-                        'Pharmacist: $pharmacistName',
+                        //'Pharmacist: $pharmacistName',
+                        "PHARMACIST_NAME".trParams({
+                          'name': pharmacistName,
+                        }),
                         colors.textSecondary,
                       ),
                       SizedBox(height: size.width * 0.04),
@@ -158,8 +162,8 @@ class PharmacyInfoCard extends StatelessWidget {
                                   vertical: 10,
                                 ),
                               ),
-                              child: const Text(
-                                'View Notes',
+                              child:  Text(
+                                'ViewNotes'.tr,
                                 style: TextStyle(
                                   color: AppColors.primaryColor,
                                   fontFamily: 'Cairo',
@@ -185,8 +189,8 @@ class PharmacyInfoCard extends StatelessWidget {
                                   vertical: 10,
                                 ),
                               ),
-                              child: const Text(
-                                'Directions',
+                              child: Text(
+                                'Directions'.tr,
                                 style: TextStyle(
                                   color: AppColors.textLightPrimary,
                                   fontFamily: 'Cairo',

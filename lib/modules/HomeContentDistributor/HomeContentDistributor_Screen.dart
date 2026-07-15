@@ -117,7 +117,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                       SizedBox(width: size.width * 0.04),
                       Expanded(
                         child: Text(
-                          "Start Delivery Route".tr,
+                          "StartDeliveryRoute".tr,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -164,7 +164,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Today's Deliveries".tr,
+                    "Today'sDeliveries".tr,
                     style: TextStyle(
                       fontSize: size.width * 0.048,
                       fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     child: Text(
-                      "View Map".tr,
+                      "ViewMap".tr,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -201,7 +201,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                   height: size.height * 0.2,
                   child: Center(
                     child: Text(
-                      "No deliveries today".tr,
+                      "NoDeliveriesToday".tr,
                       style: const TextStyle(fontFamily: 'Cairo'),
                     ),
                   ),
@@ -216,7 +216,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                       priority: delivery.urgency.toOrderPriority(),
                       status: OrderStatus.pending,
                       onTap: () {
-                        print("فتح تفاصيل الطلب ${delivery.orderId}");
+                        //print("فتح تفاصيل الطلب ${delivery.orderId}");
                       },
                     );
                   }).toList(),

@@ -26,7 +26,7 @@ class PharmacyContactSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Pharmacist Name (Optional)',
+            'PharmacistName(Optional)'.tr,
             style: TextStyle(
               fontSize: 12,
               color: colors.textSecondary,
@@ -37,7 +37,7 @@ class PharmacyContactSection extends StatelessWidget {
           TextFormField(
             controller: addPharmacyController.pharmacistNameController,
             decoration: InputDecoration(
-              hintText: 'Enter pharmacist name',
+              hintText: 'EnterPharmacistName'.tr,
               hintStyle: TextStyle(
                 fontSize: 13,
                 color: colors.textSecondary.withValues(alpha: 0.6),
@@ -61,7 +61,7 @@ class PharmacyContactSection extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Phone Number',
+                'PhoneNumber',
                 style: TextStyle(
                   fontSize: 12,
                   color: colors.textSecondary,
@@ -78,18 +78,18 @@ class PharmacyContactSection extends StatelessWidget {
             keyboardType: TextInputType.phone,
             validator: (value) {
               if (value == null || value.trim().isEmpty) {
-                return 'This field is required';
+                return 'This_field_is_required'.tr;
               }
               if (!GetUtils.isNumericOnly(value)) {
-                return 'Please enter numbers only';
+                return 'Please_enter_numbers_only';
               }
               if (value.length != 10) {
-                return 'Phone number must be exactly 10 digits';
+                return 'Phone_number_must_be_exactly_10_digits';
               }
               return null;
             },
             decoration: InputDecoration(
-              hintText: 'Enter phone number',
+              hintText: 'Enter_phone_number',
               hintStyle: TextStyle(
                 color: colors.textSecondary.withValues(alpha: 0.6),
                 fontFamily: 'Cairo',
@@ -177,7 +177,7 @@ class PharmacyContactSection extends StatelessWidget {
           SizedBox(height: size.height * 0.01),
 
           Text(
-            'Alternative Phone (Optional)',
+            'Alternative_Phone_(Optional)'.tr,
             style: TextStyle(
               fontSize: 12,
               color: colors.textSecondary,
@@ -190,7 +190,7 @@ class PharmacyContactSection extends StatelessWidget {
             controller: addPharmacyController.altPhoneController,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(
-              hintText: 'Enter phone number',
+              hintText: 'Enter_phone_number'.tr,
               hintStyle: TextStyle(
                 color: colors.textSecondary.withValues(alpha: 0.6),
                 fontFamily: 'Cairo',

@@ -1,9 +1,9 @@
 import 'ActiveOptimizedRouteTracking_Model.dart';
+import 'package:get/get.dart';
 
 class PlanRouteCalculator {
-
   static String getFormatDistanceForVisit(PlanResponse plan, int index) {
-    if (index < 0 || index >= plan.visits.length) return "0 km";
+    if (index < 0 || index >= plan.visits.length) return "ZERO_KM".tr;
 
     double distanceKm = 0.0;
     if (index < plan.paths.length) {
@@ -23,9 +23,12 @@ class PlanRouteCalculator {
     int minutes = (totalMinutes % 60).round();
 
     if (hours > 0) {
-      return "${hours}h ${minutes}m";
+      return "DURATION_HM".trParams({
+        'hours': hours.toString(),
+        'minutes': minutes.toString(),
+      });
     }
-    return "${minutes}m";
+    return "DURATION_M".trParams({'minutes': minutes.toString()});
   }
 
   static String getETAForVisit(PlanResponse plan, int index) {
@@ -45,13 +48,13 @@ class PlanRouteCalculator {
       }
     }
 
-    DateTime etaTime = startTime.add(Duration(
-      seconds: (accumulatedHours * 3600).round(),
-    ));
+    DateTime etaTime = startTime.add(
+      Duration(seconds: (accumulatedHours * 3600).round()),
+    );
 
     int hour = etaTime.hour;
     int minute = etaTime.minute;
-    String period = hour >= 12 ? "PM" : "AM";
+    String period = hour >= 12 ? "PM".tr : "AM".tr;
     hour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
     String minuteStr = minute < 10 ? "0$minute" : "$minute";
 
@@ -61,8 +64,8 @@ class PlanRouteCalculator {
   static String formatDistance(double distance) {
     if (distance < 1.0) {
       int meters = (distance * 1000).round();
-      return "$meters m";
+      return "DISTANCE_M".trParams({'meters': meters.toString()});
     }
-    return "${distance.toStringAsFixed(1)} km";
+    return "DISTANCE_KM".trParams({'distance': distance.toStringAsFixed(1)});
   }
 }

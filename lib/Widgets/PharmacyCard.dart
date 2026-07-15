@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../app_theme/theme_extension.dart';
 
 class PharmacyCard extends StatelessWidget {
@@ -110,7 +111,7 @@ class PharmacyCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    isVisited ? "VISITED" : "PENDING",
+                    isVisited ? "VISITED".tr : "PENDING".tr,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

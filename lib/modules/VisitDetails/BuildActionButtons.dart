@@ -37,7 +37,7 @@ class BuildActionButtons extends StatelessWidget {
                 Icon(Icons.add_shopping_cart, color: Colors.white, size: 22),
                 SizedBox(width: size.width * 0.02),
                 Text(
-                  "Create Order",
+                  "CreateOrder".tr,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -72,7 +72,7 @@ class BuildActionButtons extends StatelessWidget {
                       width: 1,
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
@@ -82,7 +82,7 @@ class BuildActionButtons extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "Map",
+                        "Map".tr,
                         style: TextStyle(
                           color: Color(0xFF0F2547),
                           fontSize: 15,
@@ -115,7 +115,7 @@ class BuildActionButtons extends StatelessWidget {
                       width: 1,
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
@@ -125,7 +125,7 @@ class BuildActionButtons extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        "Call",
+                        "Call".tr,
                         style: TextStyle(
                           color: Color(0xFF0F2547),
                           fontSize: 15,

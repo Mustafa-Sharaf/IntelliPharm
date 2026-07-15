@@ -30,7 +30,7 @@ class PharmacyBottomSheet extends StatelessWidget {
             controller: controller.searchController,
             onChanged: controller.filter,
             decoration: InputDecoration(
-              hintText: "Search pharmacy...",
+              hintText: "Search_pharmacy...".tr,
               hintStyle: TextStyle(fontFamily: 'Cairo'),
               prefixIcon: Icon(Icons.search, color: AppColors.primaryColor),
               filled: true,

@@ -40,7 +40,7 @@ class ChatScreen extends StatelessWidget {
             ),
             SizedBox(width: size.width * 0.03),
             Text(
-              'IntelliPharma AI',
+              'IntelliPharma_AI'.tr,
               style: TextStyle(
                 color: colors.textPrimary,
                 fontSize: 16,
@@ -67,7 +67,7 @@ class ChatScreen extends StatelessWidget {
                       ),
                       SizedBox(height: size.height * 0.02),
                       Text(
-                        'How can I help you today?',
+                        'How_can_I_help_you_today'.tr,
                         style: TextStyle(
                           color: colors.textSecondary,
                           fontSize: 18,
@@ -76,8 +76,8 @@ class ChatScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.01),
-                      const Text(
-                        'Write your question below to get started',
+                       Text(
+                        'Write_your_question_below_to_get_started'.tr,
                         style: TextStyle(
                           color: Color(0xff94A3B8),
                           fontSize: 14,
@@ -203,7 +203,7 @@ class ChatScreen extends StatelessWidget {
                       Icon(Icons.add, color: AppColors.primaryColor),
                       const SizedBox(width: 8),
                       Text(
-                        'New Chat',
+                        'New_Chat'.tr,
                         style: TextStyle(
                           color: colors.textPrimary,
                           fontWeight: FontWeight.bold,
@@ -221,7 +221,7 @@ class ChatScreen extends StatelessWidget {
                 if (controller.savedConversationIds.isEmpty) {
                   return Center(
                     child: Text(
-                      'No local history found',
+                      'No_local_history_found'.tr,
                       style: TextStyle(color: colors.textSecondary, fontFamily: 'Cairo', fontSize: 13),
                     ),
                   );
@@ -247,7 +247,10 @@ class ChatScreen extends StatelessWidget {
                             size: 16
                         ),
                         title: Text(
-                          'Conversation #$id',
+                          //'Conversation #$id',
+                          "CONVERSATION_ID".trParams({
+                            'id': id.toString(),
+                          }),
                           style: TextStyle(
                               color: isCurrent ? AppColors.primaryColor : colors.textPrimary,
                               fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,

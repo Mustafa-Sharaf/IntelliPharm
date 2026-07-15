@@ -30,7 +30,7 @@ class AddNotesScreen extends StatelessWidget {
                 SizedBox(width: size.width * 0.04),
                 _buildFilterChip(
                   controller,
-                  "GENERAL",
+                  "GENERAL".tr,
                   Colors.blue.shade50,
                   Colors.blue.shade700,
                   const Color(0xFF1A2638),
@@ -38,7 +38,7 @@ class AddNotesScreen extends StatelessWidget {
                 SizedBox(width: size.width * 0.04),
                 _buildFilterChip(
                   controller,
-                  "TIP",
+                  "TIP".tr,
                   const Color(0xFFE0F7F4),
                   const Color(0xFF00BFA5),
                   const Color(0xFF163331),
@@ -46,7 +46,7 @@ class AddNotesScreen extends StatelessWidget {
                 SizedBox(width: size.width * 0.04),
                 _buildFilterChip(
                   controller,
-                  "WARNING",
+                  "WARNING".tr,
                   const Color(0xFFFDF2E9),
                   const Color(0xFFE67E22),
                   const Color(0xFF382920),
@@ -70,7 +70,7 @@ class AddNotesScreen extends StatelessWidget {
                         fontSize: 14,
                       ),
                       decoration: InputDecoration(
-                        hintText: "Add a note...",
+                        hintText: "AddANote".tr,
                         hintStyle: TextStyle(
                           color: colors.textDefault,
                           fontSize: 14,

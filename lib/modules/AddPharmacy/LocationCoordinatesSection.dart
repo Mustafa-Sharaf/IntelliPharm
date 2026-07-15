@@ -23,7 +23,7 @@ class LocationCoordinateSection extends StatelessWidget {
                   children: [
                     SizedBox(width: size.width * 0.01),
                     Text(
-                      'Latitude',
+                      'Latitude'.tr,
                       style: TextStyle(
                         fontSize: 12,
                         color: colors.textSecondary,
@@ -70,7 +70,7 @@ class LocationCoordinateSection extends StatelessWidget {
                   children: [
                     SizedBox(width: size.width * 0.01),
                     Text(
-                      'Longitude',
+                      'Longitude'.tr,
                       style: TextStyle(
                         fontSize: 12,
                         color: colors.textSecondary,

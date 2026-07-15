@@ -24,11 +24,11 @@ class AddMedicineButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(Icons.add_circle_outline, color: Colors.teal),
               SizedBox(width: 8),
               Text(
-                "+ Add Medicine",
+                "+AddMedicine".tr,
                 style: TextStyle(
                   color: Colors.teal,
                   fontWeight: FontWeight.bold,

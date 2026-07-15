@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import 'AddPharmacy_Controller.dart';
@@ -23,7 +24,7 @@ class PharmacyNameSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Name (English)',
+            'Name(English)'.tr,
             style: TextStyle(
               fontSize: 12,
               color: colors.textSecondary,
@@ -63,12 +64,12 @@ class PharmacyNameSection extends StatelessWidget {
               ),
             ),
             validator: (value) =>
-                value!.isEmpty ? 'This field is required' : null,
+                value!.isEmpty ? 'This_field_is_required'.tr.tr : null,
           ),
           SizedBox(height: size.width * 0.02),
 
           Text(
-            'Name (Arabic)',
+            'Name_(Arabic)'.tr,
             style: TextStyle(
               fontSize: 12,
               color: colors.textSecondary,
@@ -82,7 +83,7 @@ class PharmacyNameSection extends StatelessWidget {
             textDirection: TextDirection.rtl,
             textAlign: TextAlign.right,
             decoration: InputDecoration(
-              hintText: 'Enter the name of the pharmacy in Arabic',
+              hintText: 'Enter_the_name_of_the_pharmacy_in_Arabic'.tr,
               hintStyle: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 13,
@@ -99,11 +100,11 @@ class PharmacyNameSection extends StatelessWidget {
                 borderSide: BorderSide.none,
               ),
             ),
-            validator: (value) => value!.isEmpty ? 'This field is required' : null,
+            validator: (value) => value!.isEmpty ? 'This_field_is_required'.tr : null,
           ),
           SizedBox(height: size.width * 0.01),
           Text(
-            'Arabic characters only',
+            'Arabic_characters_only'.tr,
             style: TextStyle(
               fontSize: 12,
               color: colors.textSecondary,

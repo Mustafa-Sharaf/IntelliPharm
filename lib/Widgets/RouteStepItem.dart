@@ -157,8 +157,8 @@ class RouteStepItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text(
-                          "Visit Details",
+                        child:  Text(
+                          "Visit_Details".tr,
                           style: TextStyle(
                             color: AppColors.primaryColor,
                             fontFamily: 'Cairo',
