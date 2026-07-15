@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/MyDeliveries/MyDeliveries_Controller.dart';
+import '../modules/MyDeliveries/MyDeliveries_Model.dart';
 
 class DeliveryCard extends StatelessWidget {
   final String orderId;
@@ -269,7 +270,7 @@ class DeliveryCard extends StatelessWidget {
           SizedBox(height: size.height * 0.02),
 
           /// ACTION BUTTON DYNAMIC BASED ON STATUS
-          SizedBox(
+        /*  SizedBox(
             width: double.infinity,
             height: size.height * 0.06,
             child: ElevatedButton(
@@ -295,7 +296,7 @@ class DeliveryCard extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );

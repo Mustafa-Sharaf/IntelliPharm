@@ -1,10 +1,82 @@
 import 'package:flutter/material.dart';
 import '../app_theme/theme_extension.dart';
 
-
 enum OrderPriority { urgent, normal, low }
 enum OrderStatus { pending, inTransit, delivered }
 
+
+extension OrderPriorityExtension on OrderPriority {
+  String get text {
+    switch (this) {
+      case OrderPriority.urgent:
+        return 'URGENT';
+      case OrderPriority.normal:
+        return 'NORMAL';
+      case OrderPriority.low:
+        return 'LOW';
+    }
+  }
+
+  Color get bgColor {
+    switch (this) {
+      case OrderPriority.urgent:
+        return const Color(0xffFDE8E8);
+      case OrderPriority.normal:
+        return const Color(0xffE1EFFE);
+      case OrderPriority.low:
+        return const Color(0xffF3F4F6);
+    }
+  }
+
+  Color get fontColor {
+    switch (this) {
+      case OrderPriority.urgent:
+        return const Color(0xffE02424);
+      case OrderPriority.normal:
+        return const Color(0xff1E429F);
+      case OrderPriority.low:
+        return const Color(0xff4B5563);
+    }
+  }
+}
+
+// 2. تحسين الـ OrderStatus لإعطاء ألوانه ونصوصه تلقائياً
+extension OrderStatusExtension on OrderStatus {
+  String get text {
+    switch (this) {
+      case OrderStatus.pending:
+        return 'PENDING';
+      case OrderStatus.inTransit:
+        return 'IN TRANSIT';
+      case OrderStatus.delivered:
+        return 'DELIVERED';
+    }
+  }
+
+  Color get bgColor {
+    switch (this) {
+      case OrderStatus.pending:
+        return const Color(0xffFEF6EE);
+      case OrderStatus.inTransit:
+        return const Color(0xffEBF5FF);
+      case OrderStatus.delivered:
+        return const Color(0xffE6F4EA);
+    }
+  }
+
+  Color get fontColor {
+    switch (this) {
+      case OrderStatus.pending:
+        return const Color(0xffD97706);
+      case OrderStatus.inTransit:
+        return const Color(0xff2563EB);
+      case OrderStatus.delivered:
+        return const Color(0xff137333);
+    }
+  }
+}
+
+// 3. الـ Widget بعد إزالة زحمة الـ Maps من داخل الـ build
 class PharmacyOrderCard extends StatelessWidget {
   final String orderNumber;
   final String pharmacyName;
@@ -27,41 +99,6 @@ class PharmacyOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    final Map<String, dynamic> priorityConfig = {
-      OrderPriority.urgent: {
-        'text': 'URGENT',
-        'bg': const Color(0xffFDE8E8),
-        'font': const Color(0xffE02424),
-      },
-      OrderPriority.normal: {
-        'text': 'NORMAL',
-        'bg': const Color(0xffE1EFFE),
-        'font': const Color(0xff1E429F),
-      },
-      OrderPriority.low: {
-        'text': 'LOW',
-        'bg': const Color(0xffF3F4F6),
-        'font': const Color(0xff4B5563),
-      },
-    }[priority]!;
-
-    final Map<String, dynamic> statusConfig ={
-      OrderStatus.pending: {
-        'text': 'PENDING',
-        'bg': const Color(0xffFEF6EE),
-        'font': const Color(0xffD97706),
-      },
-      OrderStatus.inTransit: {
-        'text': 'IN TRANSIT',
-        'bg': const Color(0xffEBF5FF),
-        'font': const Color(0xff2563EB),
-      },
-      OrderStatus.delivered: {
-        'text': 'DELIVERED',
-        'bg': const Color(0xffE6F4EA),
-        'font': const Color(0xff137333),
-      },
-    }[status]!;
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -108,15 +145,15 @@ class PharmacyOrderCard extends StatelessWidget {
                             vertical: size.width * 0.006,
                           ),
                           decoration: BoxDecoration(
-                            color: priorityConfig['bg'],
+                            color: priority.bgColor, // استخدام مباشر
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
-                            priorityConfig['text'] as String,
+                            priority.text, // استخدام مباشر
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: priorityConfig['font'],
+                              color: priority.fontColor, // استخدام مباشر
                               fontFamily: 'Cairo',
                             ),
                           ),
@@ -159,7 +196,7 @@ class PharmacyOrderCard extends StatelessWidget {
                             vertical: size.width * 0.008,
                           ),
                           decoration: BoxDecoration(
-                            color: statusConfig['bg'],
+                            color: status.bgColor, // استخدام مباشر
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
@@ -169,17 +206,17 @@ class PharmacyOrderCard extends StatelessWidget {
                                 width: 6,
                                 height: 6,
                                 decoration: BoxDecoration(
-                                  color: statusConfig['font'],
+                                  color: status.fontColor, // استخدام مباشر
                                   shape: BoxShape.circle,
                                 ),
                               ),
                               SizedBox(width: size.width * 0.015),
                               Text(
-                                statusConfig['text'] as String,
+                                status.text, // استخدام مباشر
                                 style: TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.bold,
-                                  color: statusConfig['font'],
+                                  color: status.fontColor, // استخدام مباشر
                                   fontFamily: 'Cairo',
                                 ),
                               ),

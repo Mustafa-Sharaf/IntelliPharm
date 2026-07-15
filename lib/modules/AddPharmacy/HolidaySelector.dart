@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../app_theme/theme_extension.dart';
+
 
 class HolidaySelector extends StatelessWidget {
   final dynamic controller;
@@ -13,6 +15,7 @@ class HolidaySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<ThemeColors>()!;
     return Obx(() {
       final reachedLimit =
           controller.holidays.length >= controller.maxHolidays.value;
@@ -24,16 +27,10 @@ class HolidaySelector extends StatelessWidget {
             : Matrix4.identity(),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colors.component,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade200),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            )
-          ],
+
+
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

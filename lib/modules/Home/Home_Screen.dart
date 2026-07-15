@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
     HomeContentScreen(),
     MyOrdersScreen(),
     ChatScreen(),
-    const Center(child: Text("NOTES")),
+    const Center(child: Text("DEBTS Screen")),
     PharmacistsScreen(),
   ];
 
@@ -116,7 +116,7 @@ PreferredSizeWidget? _buildAppBar(
       case 2:
         return null;
       case 3:
-        return AppBar(title: const Text("Notes"));
+        return AppBar(title: const Text("DEBTS Screen"));
       case 4:
         return BuildAppbar(
           title: "Pharmacists Screen",
