@@ -8,8 +8,9 @@ import 'Searching_Controller.dart';
 
 class CustomSearchField extends StatelessWidget {
   final SearchControllerX controller;
+  final String text;
 
-  const CustomSearchField({super.key, required this.controller});
+  const CustomSearchField({super.key, required this.controller,required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class CustomSearchField extends StatelessWidget {
                   Get.find<AddOrderController>().onSearchChanged(value);
                 },
                 decoration: InputDecoration(
-                  hintText: "Search_medicines...".tr,
+                  hintText: text,
                   hintStyle: TextStyle(
                     color: colors.textSecondary,
                     fontFamily: 'Cairo',

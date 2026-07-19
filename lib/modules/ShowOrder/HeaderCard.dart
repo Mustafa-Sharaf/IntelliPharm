@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderHeaderCard extends StatelessWidget {
   final dynamic order;
@@ -58,7 +59,9 @@ class OrderHeaderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "ORDER #${order.id}",
+                        "ORDER_ID".trParams({
+                          'id': order.id.toString(),
+                        }),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 16,
@@ -66,7 +69,9 @@ class OrderHeaderCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "${order.totalQuantity} Items",
+                        "ITEMS_COUNT".trParams({
+                          'count': order.totalQuantity.toString(),
+                        }),
                         style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 16,
@@ -127,7 +132,7 @@ class OrderHeaderCard extends StatelessWidget {
         border: Border.all(color: color, width: 1),
       ),
       child: Text(
-        status,
+        status.tr,
         style: TextStyle(
           color: color,
           fontSize: 12,

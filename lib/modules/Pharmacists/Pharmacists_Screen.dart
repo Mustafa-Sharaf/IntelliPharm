@@ -5,6 +5,8 @@ import '../../Widgets/Tabs.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/ContactLauncher/ContactLauncher.dart';
 import '../NewOrder/NewOrder_Screen.dart';
+import '../PharmacyDetails/PharmacyDetails_Screen.dart';
+import '../PlanYourRoute/PlanYourRoute_Controller.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
 import 'Pharmacists_Controller.dart';
@@ -26,7 +28,7 @@ class PharmacistsScreen extends StatelessWidget {
         child: Column(
           children: [
             /// SEARCH
-            CustomSearchField(controller: searchController),
+            CustomSearchField(controller: searchController,text: "Search_Pharmacists...".tr,),
             SizedBox(height: size.height * 0.04),
 
             /// TABS
@@ -117,7 +119,20 @@ class PharmacistsScreen extends StatelessWidget {
                               context,
                               pharmacy.pharmacistPhone,
                             ),
-                        onDirectionsTap: () {},
+                        onDirectionsTap: () {
+                       /*   final planYourRouteController = Get.find<PlanYourRouteController>();
+                          final dynamic pharmacy;
+                          if (planYourRouteController.selectedType.value.isEmpty) {
+                            planYourRouteController.selectedType.value = "Driving";
+                          }
+                          planYourRouteController.initiatePlan(singlePharmacy: pharmacy);*/
+                        },
+                        onViewNotesTap: (){
+                          Get.to(
+                                () => const PharmacyDetailsScreen(),
+                            arguments: pharmacy.id,
+                          );
+                        },
                       ),
                     );
                   },

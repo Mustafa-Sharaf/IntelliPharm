@@ -36,7 +36,10 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                   showRefreshButton: false,
                   showMyLocationButton: false,
                 ),
-                const CurrentRouteHeader(),
+                //const CurrentRouteHeader(),
+                CurrentRouteHeader(
+                  planRx: planYourRouteController.plan,
+                )
               ],
             ),
           ),
@@ -63,7 +66,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: size.height * 0.02),
+                    SizedBox(height: size.height * 0.01),
                     /// Next Destination Section
                     Text(
                       "NEXT_DESTINATION".tr,
@@ -71,9 +74,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         color: AppColors.primaryColor,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Cairo',
-                        letterSpacing: 2,
                         fontSize: 12,
-                        height: 2,
+                        height: 3,
                       ),
                     ),
                     Obx(() {
@@ -99,7 +101,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                                 Text(
                                   nextVisit.name,
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Cairo',
                                     color: colors.textDefault,
@@ -193,8 +195,6 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                           final visit = plan.visits[index];
                           String calculatedETA =PlanRouteCalculator.getETAForVisit(plan, index);
                           String subtitleText = visit.visited
-                            /*  ? "Visited at $calculatedETA"
-                              : "ETA: $calculatedETA";*/
                           ?"VISITED_AT".trParams({
                             'time': calculatedETA,
                           }):

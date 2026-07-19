@@ -45,7 +45,11 @@ class MyOrdersScreen extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (controller.isLoading.value) {
-                return  Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),
+                );
               }
 
               return ListView.builder(
@@ -57,9 +61,11 @@ class MyOrdersScreen extends StatelessWidget {
                     orderId: order.id.toString(),
                     pharmacyName: order.pharmacyName,
                     date: order.date.split(" ").first,
-                    itemsCount: order.itemsCount,
+                    itemsCount: "ITEMS_COUNT".trParams({
+                      'count': order.itemsCount.toString(),
+                    }),
                     price: order.price,
-                    status: order.status,
+                    status: order.status.tr,
                     statusColor: _getStatusColor(order.status),
                   );
                 },

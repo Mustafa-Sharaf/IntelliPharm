@@ -166,7 +166,7 @@ class OrderCard extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Get.to(
-                                () => OrderDetailsScreen(
+                                () => ShowOrderScreen(
                               orderId: int.parse(orderId),
                             ),
                           );

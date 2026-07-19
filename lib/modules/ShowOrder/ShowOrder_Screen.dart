@@ -7,10 +7,10 @@ import 'HeaderCard.dart';
 import 'OrderItemCard.dart';
 import 'ShowOrder_Controller.dart';
 
-class OrderDetailsScreen extends StatelessWidget {
+class ShowOrderScreen extends StatelessWidget {
   final int orderId;
 
-  const OrderDetailsScreen({super.key, required this.orderId});
+  const ShowOrderScreen({super.key, required this.orderId});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,6 @@ class OrderDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: size.height * 0.01),
             ...order.items.map(
               (item) => Padding(
                 padding: EdgeInsets.all(size.height * 0.01),

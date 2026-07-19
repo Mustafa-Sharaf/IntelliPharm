@@ -1,16 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:intellipharm/app_theme/theme_extension.dart';
+import 'package:get/get.dart';
 
 class OrderItemCard extends StatelessWidget {
   final dynamic item;
   final ThemeColors colors;
 
-  const OrderItemCard({
-    super.key,
-    required this.item,
-    required this.colors,
-  });
+  const OrderItemCard({super.key, required this.item, required this.colors});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +14,7 @@ class OrderItemCard extends StatelessWidget {
 
     final bool hasDiscount = item.gift != 0;
     final String discount = hasDiscount
-        ? "Gift Quantity ${item.gift}"
+        ? "GIFT_QUANTITY".trParams({'gift': item.gift.toString()})
         : "";
 
     return Stack(
@@ -62,7 +58,9 @@ class OrderItemCard extends StatelessWidget {
                     ),
                     SizedBox(height: size.height * 0.01),
                     Text(
-                      "${item.quantity} units",
+                      "UNITS_COUNT".trParams({
+                        'count': item.quantity.toString(),
+                      }),
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontFamily: 'Cairo',
@@ -74,7 +72,9 @@ class OrderItemCard extends StatelessWidget {
               ),
 
               Text(
-                "${item.totalPrice} S.P",
+                "PRICE_SP".trParams({
+                  'price': item.totalPrice.toString(),
+                }),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: colors.textPrimary,
@@ -86,9 +86,9 @@ class OrderItemCard extends StatelessWidget {
         ),
 
         if (hasDiscount)
-          Positioned(
+          PositionedDirectional(
             top: 0,
-            right: 0,
+            end: 0,
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: size.height * 0.01,
@@ -96,9 +96,9 @@ class OrderItemCard extends StatelessWidget {
               ),
               decoration: const BoxDecoration(
                 color: Colors.green,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(16),
-                  bottomLeft: Radius.circular(12),
+                borderRadius: BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(16),
+                  bottomStart: Radius.circular(12),
                 ),
               ),
               child: Text(

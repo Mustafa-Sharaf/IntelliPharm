@@ -83,58 +83,38 @@ class PlanYourRouteScreen extends StatelessWidget {
                                 color: colors.component,
                                 borderRadius: BorderRadius.circular(15),
                               ),
-                              child: Row(
+                              child:Row(
                                 children: types.map((type) {
-                                  final isSelected =
-                                      planYourRouteController
-                                          .selectedType
-                                          .value ==
-                                      type;
+                                  final isSelected = planYourRouteController.selectedType.value == type;
                                   return Expanded(
                                     child: GestureDetector(
-                                      onTap: () =>
-                                          planYourRouteController
-                                                  .selectedType
-                                                  .value =
-                                              type,
+                                      onTap: () => planYourRouteController.selectedType.value = type,
                                       child: AnimatedContainer(
-                                        duration: const Duration(
-                                          milliseconds: 200,
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 12,
-                                        ),
+                                        duration: const Duration(milliseconds: 200),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
                                         decoration: BoxDecoration(
-                                          color: isSelected
-                                              ? AppColors.primaryColor
-                                              : Colors.transparent,
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          color: isSelected ? AppColors.primaryColor : Colors.transparent,
+                                          borderRadius: BorderRadius.circular(12),
                                         ),
                                         child: Center(
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            textDirection: Directionality.of(context),
                                             children: [
                                               Icon(
                                                 typeIcons[type],
-                                                color: isSelected
-                                                    ? Colors.white
-                                                    : AppColors.gray,
+                                                color: isSelected ? Colors.white : AppColors.gray,
                                                 size: 20,
                                               ),
                                               SizedBox(
                                                 width: size.width * 0.008,
                                               ),
                                               Text(
-                                                type,
+                                                type.tr,
                                                 style: TextStyle(
                                                   fontFamily: 'Cairo',
                                                   fontSize: 16,
-                                                  color: isSelected
-                                                      ? Colors.white
-                                                      : AppColors.gray,
+                                                  color: isSelected ? Colors.white : AppColors.gray,
                                                 ),
                                               ),
                                             ],
@@ -144,7 +124,7 @@ class PlanYourRouteScreen extends StatelessWidget {
                                     ),
                                   );
                                 }).toList(),
-                              ),
+                              )
                             ),
                           ),
                           SizedBox(height: size.height * 0.022),

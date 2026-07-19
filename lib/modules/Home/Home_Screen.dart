@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
     HomeContentDistributorScreen(),
     MyDeliveriesScreen(),
     const Center(child: Text("Active Delivery Route")),
-    const ConfirmDeliveryScreen(),
+    //const ConfirmDeliveryScreen(),
   ];
 
   @override

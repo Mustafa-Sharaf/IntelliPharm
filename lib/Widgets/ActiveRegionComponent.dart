@@ -25,7 +25,7 @@ class ActiveRegionComponent extends StatelessWidget {
       children: [
         /// Active Region
         Align(
-          alignment: Alignment.centerLeft,
+      alignment: AlignmentDirectional.centerStart,
           child: Text(
             text,
             style: TextStyle(

@@ -37,7 +37,7 @@ class StatCard extends StatelessWidget {
               Icon(
                 icon,
                 color: colors.textPrimary,
-                size: size.height * 0.045,
+                size: size.height * 0.040,
               ),
               SizedBox(height:size.height * 0.007),
               Text(
@@ -54,10 +54,10 @@ class StatCard extends StatelessWidget {
               // SizedBox(height: 5),
               Text(
                 title,
-                maxLines: 1,
+                //maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: colors.textSecondary,
                   fontFamily: 'Cairo',
                 ),

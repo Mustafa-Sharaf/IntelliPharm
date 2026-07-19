@@ -24,6 +24,7 @@ class MyLanguage implements Translations{
       "MyOrders":"My Orders",
       "DEBTSScreen":"DEBTS Screen",
       "PharmacistsScreen":"Pharmacists Screen",
+      "Search_Pharmacists...":"Search Pharmacists...",
       //HomeContent Screen & Home Content Distributor Screen
       "Visits":"Visits",
       "Deals":"Deals",
@@ -87,7 +88,7 @@ class MyLanguage implements Translations{
       "This_field_is_required":"This field is required",
       "Please_enter_numbers_only":"Please enter numbers only",
       "Phone_number_must_be_exactly_10_digits":"Phone number must be exactly 10 digits",
-      "Enter_phone_number":"Enter_phone_number",
+      "Enter_phone_number":"Enter phone number",
       "Alternative_Phone_(Optional)":"Alternative Phone (Optional)",
       "Name(English)":"Name (English)",
       "Name(Arabic)":"Name (Arabic)",
@@ -125,6 +126,11 @@ class MyLanguage implements Translations{
       //Pharmacists Screen
       "No_pharmacies_found":"No pharmacies found",
       "PHARMACIES_FOUND": "@count pharmacies found",
+      "CloseNow":"Close Now",
+      "OpenNow":"Open Now",
+      "AllRegions":"All Regions",
+      "Directions":"Directions",
+      "ViewNotes":"View Notes",
       //Pharmacy Details Screen
       "PharmacyDetails":"PharmacyDetails",
       "Failed_to_load_pharmacy_details":"Failed to load pharmacy details",
@@ -243,6 +249,22 @@ class MyLanguage implements Translations{
       "PlanToday'sRoute":"Plan Today's Route",
       //Route Step Item
       "Visit_Details":"Visit Details",
+
+      "GIFT_QUANTITY": "Gift Qty: @gift",
+      "UNITS_COUNT": "@count units",
+      "Walking": "Walking",
+      "Driving": "Driving",
+      //Active Delivery RouteScreen
+      "NoCurrentDataPath":"No current data path",
+      "DELIVERY_TIMELINE":"DELIVERY TIMELINE",
+      "The_map_is_being_created...":"The map is being created...",
+      "":"",
+
+      "":"",
+      "":"",
+      "":"",
+      "":"",
+
       "":"",
       "":"",
       "":"",
@@ -387,6 +409,13 @@ class MyLanguage implements Translations{
       // Pharmacists Screen
       "No_pharmacies_found": "لم يتم العثور على صيدليات",
       "PHARMACIES_FOUND": "تم العثور على @count صيدلية",
+      "Search_Pharmacists...":"ابحث عن الصيادلة...",
+      "CloseNow":"مغلق الآن",
+      "OpenNow":"مفتوح الآن",
+      "AllRegions":"كل المناطق",
+      "Directions":"الموقع",
+      "ViewNotes":"عرض الملاحظات",
+
 
       // Pharmacy Details Screen
       "PharmacyDetails": "تفاصيل الصيدلية",
@@ -440,7 +469,7 @@ class MyLanguage implements Translations{
       // Nav Item
       "HOME": "الرئيسية",
       "ORDERS": "الطلبات",
-      "AskGemini": "اسأل الذكاء الاصطناعي",
+      "AskGemini": "المساعد الذكي",
       "Debts": "الديون",
       "Pharmacies": "الصيدليات",
       "Deliveries": "الشحنات",
@@ -520,51 +549,22 @@ class MyLanguage implements Translations{
 
       // Route Step Item
       "Visit_Details": "تفاصيل الزيارة",
+      "GIFT_QUANTITY": "كمية الهدية: @gift",
+      "UNITS_COUNT": "@count وحدة",
+
+      "Walking": "مشي",
+      "Driving": "قيادة",
+
+      //Active Delivery RouteScreen
+      "NoCurrentDataPath":"لا توجد بيانات مسار حالية",
+      "DELIVERY_TIMELINE":"الجدول الزمني للتسليم",
+      "The_map_is_being_created...":"يتم إنشاء الخريطة...",
     },
 
 
 
 
-   /* "ar":{
-      "INTELLI_PHARMA":"إنتل \nفارما",
 
-
-
-
-      "VISITED_AT": "تمت الزيارة في @time",
-      "ETA_TIME": "الوقت المتوقع للوصول: @time",
-      "STOPS_COUNT": "@count محطات",
-      "DURATION_HM": "@hours ساعة و @minutes دقيقة",
-      "DURATION_M": "@minutes دقيقة",
-      "DISTANCE_M": "@meters متر",
-      "DISTANCE_KM": "@distance كم",
-      "AM": "ص",
-      "PM": "م",
-      "PRICE_SP": "@price ل.س",
-      "GIFT_PROMO": "اشترِ @required_qty واحصل على @gift_qty مجاناً",
-      "HOLIDAYS_SELECTED": "تم تحديد @selected من أصل @max",
-      "CONVERSATION_ID": "محادثة رقم @id",
-      "DELIVERY_SUMMARY": "@pending قيد الانتظار · @transit جاري التوصيل · @delivered تم تسليمها اليوم",
-      "ITEMS_COUNT": "@count عناصر",
-      "PHARMACIES_FOUND": "تم العثور على @count صيدلية",
-      "HI_USER": "مرحباً، @name",
-      "ITEMS_PRICE_SUMMARY": "@count عناصر · @price ل.س",
-      "EST_TIME": "الوقت المتوقع: @time",
-      "ASSIGNED_TIME": "تم التعيين: @time",
-      "QTY_STOCK": "الكمية: @stock",
-      "UNIT_PRICE_SP": "سعر القطعة: @price ل.س",
-      "ORDER_ID": "طلب رقم @id",
-      "PHARMACIST_NAME": "الصيدلي: @name",
-      "ORDER_NUMBER": "طلب رقم @number",
-      "ROUTE_TO_PHARMACY": "المسار إلى @name",
-      "HOLIDAY_LABEL": "العطلة: @text",
-
-
-
-
-
-
-    },*/
 
 
 

@@ -132,7 +132,6 @@ class RouteStepItem extends StatelessWidget {
 
                       GestureDetector(
                         onTap: (){
-                          //Get.to(()=>PharmacyDetailsScreen(id:id));
                           Get.to(() => const PharmacyDetailsScreen(), arguments: id);
 
                         },

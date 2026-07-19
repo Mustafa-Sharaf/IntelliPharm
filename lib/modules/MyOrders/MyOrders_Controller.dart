@@ -10,7 +10,7 @@ class MyOrdersController extends GetxController {
   var selectedTab = 0.obs;
   var isFetching = false;
 
-  final tabs = ["All".tr, "Pending".tr, "Processing".tr, "Completed".tr,"Cancelled".tr];
+  List<String> get tabs => ["All".tr, "Pending".tr, "Processing".tr, "Completed".tr, "Cancelled".tr];
 
   var allOrders = <OrderModel>[].obs;
   var isLoading = false.obs;

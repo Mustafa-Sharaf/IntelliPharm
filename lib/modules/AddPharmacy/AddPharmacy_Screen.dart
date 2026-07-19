@@ -174,7 +174,7 @@ class AddPharmacyScreen extends StatelessWidget {
                           top: size.height * 0.02,
                           bottom: size.height * 0.01,
                         ),
-                        child: Text('CONTACT_INFO'.tr, style: sectionTitleStyle),
+                        child: Text('CONTACT_INF'.tr, style: sectionTitleStyle),
                       ),
                       PharmacyContactSection(
                         addPharmacyController: addPharmacyController,

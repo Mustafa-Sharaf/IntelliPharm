@@ -21,7 +21,7 @@ class OrderModel {
       id: json['id'],
       pharmacyName: json['pharmacy']?['name'] ?? '',
       date: json['created_at'] ?? '',
-      itemsCount: "${json['total_quantity']} items",
+      itemsCount: "${json['total_quantity']} ",
       price: "\$${json['final_total']}",
       status: (json['status'] ?? '').toString().toUpperCase(),
     );

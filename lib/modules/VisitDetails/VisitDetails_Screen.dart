@@ -33,7 +33,6 @@ class VisitDetailsScreen extends StatelessWidget {
         backgroundColor: colors.backgroundMain,
         foregroundColor: colors.textPrimary,
         elevation: 0,
-        centerTitle: false,
         title: Text(
           "VisitDetails".tr,
           style: TextStyle(
@@ -150,7 +149,7 @@ class VisitDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            "No_notes_available_for_this_pharmacy_yet.",
+                            "No_notes_available_for_this_pharmacy_yet.".tr,
                             style: TextStyle(
                               fontFamily: 'Cairo',
                               fontSize: 14,

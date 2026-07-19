@@ -64,7 +64,10 @@ class AddOrderScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              CustomSearchField(controller: searchController),
+              CustomSearchField(
+                controller: searchController,
+                text: "Search_medicines...".tr,
+              ),
               SizedBox(height: size.height * 0.025),
               Obx(
                 () => Tabs(
@@ -95,20 +98,20 @@ class AddOrderScreen extends StatelessWidget {
                     return MedicineCard(
                       commercialName: med.commercialName,
                       scientificName: med.scientificName,
-                      price:"PRICE_SP".trParams({
+                      price: "PRICE_SP".trParams({
                         'price': med.price.toString(),
-                      }), //"${med.price.toString()} S.P",
+                      }),
                       stockQuantity: med.availableQuantity.toString(),
                       status: med.isImported ? "Imported".tr : "Local".tr,
-                      discount:
-                          (med.gift != null &&
+                      discount: (med.gift != null &&
                               med.gift!.giftQuantity > 0 &&
                               med.gift!.requiredQuantity > 0)
-                          ? //"Buy ${med.gift!.requiredQuantity} Get ${med.gift!.giftQuantity} Free"
-                          "GIFT_PROMO".trParams({
-                            'required_qty': med.gift!.requiredQuantity.toString(),
-                            'gift_qty': med.gift!.giftQuantity.toString(),
-                          }) : "",
+                          ? "GIFT_PROMO".trParams({
+                              'required_qty': med.gift!.requiredQuantity
+                                  .toString(),
+                              'gift_qty': med.gift!.giftQuantity.toString(),
+                            })
+                          : "",
                       image: med.images.isNotEmpty
                           ? med.images.first
                           : "assets/images/icon.png",

@@ -114,7 +114,7 @@ class MapDrawerHelper {
 
   static Future<void> drawFullRoute({
     required MapHelperController routeMapController,
-    required PlanResponse? plan,
+    required dynamic plan,
   }) async {
     if (plan == null) return;
 

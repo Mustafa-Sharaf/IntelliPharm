@@ -69,7 +69,7 @@ class PharmacyNameSection extends StatelessWidget {
           SizedBox(height: size.width * 0.02),
 
           Text(
-            'Name_(Arabic)'.tr,
+            'Name(Arabic)'.tr,
             style: TextStyle(
               fontSize: 12,
               color: colors.textSecondary,

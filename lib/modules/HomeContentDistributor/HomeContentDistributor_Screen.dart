@@ -4,7 +4,8 @@ import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/PharmacyOrderCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
-import '../PlanYourRoute/PlanYourRoute_Screen.dart';
+import '../ActiveDeliveryRoute/ActiveDeliveryRoute_Controller.dart';
+import '../ActiveDeliveryRoute/ActiveDeliveryRoute_Screen.dart';
 import 'HomeContentDistributor_Controller.dart';
 import 'HomeContentDistributor_Model.dart';
 
@@ -12,6 +13,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
   HomeContentDistributorScreen({super.key});
 
   final controller = Get.put(DeliveryHomeController());
+  final deliveryController = Get.put(ActiveDeliveryRouteController());
 
   @override
   Widget build(BuildContext context) {
@@ -77,64 +79,78 @@ class HomeContentDistributorScreen extends StatelessWidget {
               SizedBox(height: size.height * 0.02),
 
               /// 2. Start Delivery Route
-              InkWell(
-                onTap: () {
-                  Get.to(() => PlanYourRouteScreen());
-                },
-                splashColor: Colors.white24,
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: size.width * 0.04,
-                    vertical: size.height * 0.02,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primaryColor.withValues(alpha: 0.25),
-                        blurRadius: 15,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.18),
-                          borderRadius: BorderRadius.circular(12),
+              Obx(() {
+                final isLoading = deliveryController.isLoading.value;
+                return InkWell(
+                  onTap: isLoading
+                      ? null
+                      : () async {
+                          bool isSuccess = await deliveryController
+                              .initiateDeliveryPlan();
+                          if (isSuccess) {
+                            Get.to(() => const ActiveDeliveryRouteScreen());
+                          }
+                        },
+                  splashColor: Colors.white24,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.04,
+                      vertical: size.height * 0.02,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.18),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: isLoading
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.local_shipping_rounded,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
                         ),
-                        child: const Icon(
-                          Icons.local_shipping_rounded,
-                          color: Colors.white,
-                          size: 24,
-                        ),
-                      ),
-                      SizedBox(width: size.width * 0.04),
-                      Expanded(
-                        child: Text(
-                          "StartDeliveryRoute".tr,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            fontFamily: 'Cairo',
+                        SizedBox(width: size.width * 0.04),
+                        Expanded(
+                          child: Text(
+                            isLoading
+                                ? "The_map_is_being_created...".tr
+                                : "StartDeliveryRoute".tr,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              fontFamily: 'Cairo',
+                            ),
                           ),
                         ),
-                      ),
-                      const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                    ],
+                        if (!isLoading)
+                          const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              }),
               SizedBox(height: size.height * 0.02),
 
               /// 3. Stats Section

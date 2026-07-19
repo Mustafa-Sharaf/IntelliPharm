@@ -61,7 +61,7 @@ class PharmacyContactSection extends StatelessWidget {
           Row(
             children: [
               Text(
-                'PhoneNumber',
+                'PhoneNumber'.tr,
                 style: TextStyle(
                   fontSize: 12,
                   color: colors.textSecondary,
@@ -89,7 +89,7 @@ class PharmacyContactSection extends StatelessWidget {
               return null;
             },
             decoration: InputDecoration(
-              hintText: 'Enter_phone_number',
+              hintText: 'Enter_phone_number'.tr,
               hintStyle: TextStyle(
                 color: colors.textSecondary.withValues(alpha: 0.6),
                 fontFamily: 'Cairo',

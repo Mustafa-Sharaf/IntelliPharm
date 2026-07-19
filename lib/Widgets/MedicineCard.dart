@@ -185,7 +185,7 @@ class MedicineCard extends StatelessWidget {
 
                   SizedBox(width: size.width * 0.02),
                   SizedBox(
-                    width: size.width * 0.3,
+                    width: size.width * 0.35,
                     height: size.height * 0.04,
                     child: ElevatedButton(
                       onPressed: onAdd,
@@ -200,12 +200,14 @@ class MedicineCard extends StatelessWidget {
                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Cairo',
+                          fontSize: 14,
+                         
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: size.width * 0.3,
+                    width: size.width * 0.25,
                     height: size.height * 0.04,
                     child: ElevatedButton(
                       onPressed: () {},
@@ -220,6 +222,7 @@ class MedicineCard extends StatelessWidget {
                         style: const TextStyle(
                           color: Color(0xff0C8A7B),
                           fontFamily: 'Cairo',
+
                         ),
                       ),
                     ),
@@ -231,9 +234,9 @@ class MedicineCard extends StatelessWidget {
         ),
 
         if (hasDiscount)
-          Positioned(
+          PositionedDirectional(
             top: size.height * 0.006,
-            right: 0,
+            end: 0,
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: size.height * 0.01,
@@ -241,9 +244,9 @@ class MedicineCard extends StatelessWidget {
               ),
               decoration: const BoxDecoration(
                 color: Colors.green,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(16),
-                  bottomLeft: Radius.circular(12),
+                borderRadius: BorderRadiusDirectional.only(
+                  topEnd: Radius.circular(16),
+                  bottomStart: Radius.circular(12),
                 ),
               ),
               child: Text(
@@ -255,7 +258,7 @@ class MedicineCard extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          )
       ],
     );
   }
