@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/AppSnackBar.dart';
 import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
@@ -35,7 +34,6 @@ class ActiveDeliveryRouteController extends GetxController {
         final planResult = DeliveryPlan.fromJson(response.data['data']);
         plan.value = planResult;
 
-        // رسم الخريطة مباشرة قبل الانتقال
         await MapDrawerHelper.drawFullRoute(
           routeMapController: routeMapController,
           plan: plan.value!.toPlanResponse(),
@@ -86,6 +84,7 @@ class ActiveDeliveryRouteController extends GetxController {
       totalDurationSec: currentPlan.totalDurationSec,
       visits: updatedVisits,
       paths: currentPlan.paths,
+      regionName: currentPlan.regionName
     );
     int nextActiveIndex = updatedVisits.indexWhere((v) => v.status != 'completed' && v.visited != 1);
     if (nextActiveIndex != -1) {

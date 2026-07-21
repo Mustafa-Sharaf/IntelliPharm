@@ -7,6 +7,7 @@ class DeliveryPlan {
   final double totalDurationSec;
   final List<DeliveryVisit> visits;
   final List<DeliveryPath> paths;
+  final String regionName;
 
   DeliveryPlan({
     required this.id,
@@ -14,6 +15,7 @@ class DeliveryPlan {
     required this.totalDurationSec,
     required this.visits,
     required this.paths,
+    required this.regionName
   });
 
   factory DeliveryPlan.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class DeliveryPlan {
       paths: (json['paths'] as List?)
           ?.map((p) => DeliveryPath.fromJson(p))
           .toList() ?? [],
+      regionName: json['region_name'] ?? ''
     );
   }
 

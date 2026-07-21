@@ -145,9 +145,9 @@ class ActiveDeliveryRouteScreen extends StatelessWidget {
                                             visit: visit,
                                             isCompleted: isCompleted,
                                             isActive: isActive,
-                                            isLast:
-                                                index == plan.visits.length - 1,
+                                            isLast: index == plan.visits.length - 1,
                                             subtitleText: subtitleText,
+                                            regionName: plan.regionName,
                                             onMarkDelivered: () {
 
                                             },

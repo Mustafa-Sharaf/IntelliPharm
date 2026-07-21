@@ -79,22 +79,41 @@ class ConfirmDeliveryController extends GetxController {
         "/planner/v1/deliveries/confirm-delivery",
         data: formData,
       );
-
       print("RESPONSE DATA: ${response.data}");
       print("RESPONSE STATUS CODE: ${response.statusCode}");
 
-      // فحص شامل لضمان التقاط النجاح مهما كان سلوك الـ ApiService المكتوب مسبقاً
+// التعديل هنا: فحص شامل ودقيق يتوافق مع الـ Model ومع الـ Status Code
       bool isApiSuccess = false;
-      if (response.data != null && response.data is Map) {
-        isApiSuccess = response.data['isSuccess'] == true || response.data['statusCode'] == 201;
-      } else if (response.statusCode == 201 || response.statusCode == 200) {
-        isApiSuccess = true;
+
+      if (response.data != null) {
+        // نقوم بتحويل البيانات إلى Map صريحة لتجنب مشاكل النوع الدقيق
+        final resData = response.data as Map<String, dynamic>;
+
+        // الفحص المباشر للحقول القادمة في الطباعة لديك
+        isApiSuccess = resData['isSuccess'] == true ||
+            resData['statusCode'] == 201 ||
+            response.statusCode == 201;
       }
 
+ /*     if (isApiSuccess) {
+        AppSnackBar.success("تم تأكيد التوصيل بنجاح");
+
+        // سيقوم بالرجوع الآن حتماً بعد نجاح الشرط
+        Get.back(result: true);
+      } else {
+        String errMsg = "فشل تأكيد التوصيل";
+        if (response.data != null && response.data is Map) {
+          errMsg = response.data['message'] ?? errMsg;
+        }
+        AppSnackBar.error(errMsg);
+      }*/
       if (isApiSuccess) {
         AppSnackBar.success("تم تأكيد التوصيل بنجاح");
 
-        // العودة الحتمية للشاشة السابقة وتمرير true لتحديث الحالة
+        // الحل هنا: نغلق الـ SnackBar فوراً لكي لا يبتلع أمر الـ Get.back
+        Get.closeAllSnackbars();
+
+        // الآن سيعود حتماً إلى الصفحة السابقة
         Get.back(result: true);
       } else {
         String errMsg = "فشل تأكيد التوصيل";

@@ -18,12 +18,17 @@ class CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final currentItems = role == 'distributor' ? distributorItems : repItems;
 
     return Container(
-      height: height * 0.08,
-      padding: EdgeInsets.symmetric(horizontal: height * 0.008),
+      height: (height * 0.08) + bottomPadding,
+      padding: EdgeInsets.only(
+        left: height * 0.008,
+        right: height * 0.008,
+        bottom: bottomPadding, // رفع المحتوى للأعلى بمقدار مساحة أزرار النظام
+      ),
       decoration: BoxDecoration(
         color: colors.backgroundMain,
         boxShadow: [

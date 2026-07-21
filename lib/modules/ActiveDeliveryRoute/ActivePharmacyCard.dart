@@ -60,7 +60,14 @@ class ActivePharmacyCard extends StatelessWidget {
                     ),
                      SizedBox(height: size.height * 0.01),
                     Text(
-                      "ETA ${PlanRouteCalculator.getETAForVisit(plan.toPlanResponse(), controller.activeVisitIndex.value)} • Order #${activeVisit.id}",
+                     // "ETA ${PlanRouteCalculator.getETAForVisit(plan.toPlanResponse(), controller.activeVisitIndex.value)} • Order #${activeVisit.id}",
+                      "ETA_ORDER".trParams({
+                        'eta': PlanRouteCalculator.getETAForVisit(
+                          plan.toPlanResponse(),
+                          controller.activeVisitIndex.value,
+                        ),
+                        'orderId': activeVisit.orderId.toString(),
+                      }),
                       style: TextStyle(
                         fontSize: 12,
                         color: colors.textSecondary,
