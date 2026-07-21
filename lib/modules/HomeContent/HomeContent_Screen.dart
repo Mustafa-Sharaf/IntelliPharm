@@ -80,14 +80,20 @@ class HomeContentScreen extends StatelessWidget {
               }
 
               if (homeContentController.todayVisits.isEmpty) {
-                return  Center(
-                  child: EmptyPlanCard(
-                    title: "NoVisitsPlannedYet".tr,
-                    subtitle: "ThePharmaciesWillAppearHereOnceYouHaveSelectedTheAreaYouWillBeVisiting".tr,
-                    buttonText: "CreatePlan".tr,
-                    onPressed:(){
-                      Get.to(PlanYourRouteScreen());
-                    },
+                return  Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    start: size.width * 0.033,
+                    end: size.width * 0.029,
+                  ),
+                  child: Center(
+                    child: EmptyPlanCard(
+                      title: "NoVisitsPlannedYet".tr,
+                      subtitle: "ThePharmaciesWillAppearHereOnceYouHaveSelectedTheAreaYouWillBeVisiting".tr,
+                      buttonText: "CreatePlan".tr,
+                      onPressed:(){
+                        Get.to(PlanYourRouteScreen());
+                      },
+                    ),
                   ),
                 );
               }

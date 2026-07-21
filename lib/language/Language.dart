@@ -273,7 +273,35 @@ class MyLanguage implements Translations{
       "Recipient's_name":"Recipient's name",
       "Processing...":"Processing...",
       "ETA_ORDER": "ETA @eta • Order #@orderId",
-      "":"",
+
+     // privacy policy  Screen
+      'privacy_policy_title': 'Privacy Policy',
+      'privacy_policy_content': '''
+At IntelliPharma, we attach great importance to the privacy and security of your data. This policy outlines how we collect, use, and protect your information when using our application.
+
+1. Information We Collect:
+• Account Information: Such as name, phone number, and job role (Medical Representative / Distributor).
+• Location Data (GPS): Geographic location is used to pinpoint registered pharmacies and facilitate planning daily visits and delivery routes.
+• Images & Attachments: When uploading photos of pharmacies, documents, or order details.
+
+2. How We Use Information:
+• Organizing and updating daily visit plans and delivery routes.
+• Managing orders and financial records related to pharmacies.
+• Enhancing user experience and overall application performance.
+
+3. Data Sharing:
+• We commit not to sell or share your data with any external commercial third parties.
+• Data is strictly used within the scope of warehouse operations and management.
+
+4. Data Security:
+• We implement appropriate technical security measures to protect your data from unauthorized access.
+
+5. Contact & Support:
+• If you have any questions regarding this Privacy Policy, you can reach out through the Technical Support section in the application.
+''',
+
+
+      "IntelliPharma_Privacy_&_Security":"IntelliPharma Privacy & Security",
       "":"",
       "":"",
 
@@ -570,6 +598,35 @@ class MyLanguage implements Translations{
       "ORDER_REFERENCE_VALUE": "#ORD-@orderId",
       "REGION_NAME": "المنطقة: @region",
       "ETA_ORDER": "وقت الوصول المتوقع @eta • الطلب #@orderId",
+
+
+
+      'privacy_policy_title': 'سياسة الخصوصية',
+      'privacy_policy_content': '''
+نحن في IntelliPharma نولي أهمية كبيرة لخصوصية بياناتك وحمايتها. تهدف هذه السياسة إلى توضيح كيفية جمع واستخدام بياناتك عند استخدام التطبيق.
+
+1. البيانات التي نجمعها:
+• معلومات الحساب: مثل الاسم، رقم الهاتف، والدور الوظيفي (مندوب / موزع).
+• بيانات الموقع الجغرافي (GPS): يُستخدم تحديد الموقع الجغرافي لتحديد مواقع الصيدليات المسجلة وتسهيل تنظيم وخطة الزيارات والتوصيل.
+• الصور والمرفقات: في حال رفع صور الصيدليات أو المستندات والطلبيات.
+
+2. كيفية استخدام البيانات:
+• تنظيم وتحديث مسارات الزيارات والتوصيل اليومية.
+• إدارة الطلبيات والحسابات المالية المتعلقة بالصيدليات.
+• تحسين تجربة المستخدم وأداء التطبيق.
+
+3. مشاركة البيانات:
+• نلتزم بعدم بيع أو مشاركة بياناتك مع أي أطراف تجارية خارجية.
+• تُستخدم البيانات حصراً ضمن نطاق إدارة العمليات والمستودع.
+
+4. أمان البيانات:
+• نطبق إجراءات أمان تقنية مناسبة لحماية بياناتك من الوصول غير المصرح به.
+
+5. التواصل والدعم:
+• في حال كان لديك أي استفسار حول سياسة الخصوصية، يمكنك التواصل معنا عبر قسم الدعم الفني في التطبيق.
+''',
+      "IntelliPharma_Privacy_&_Security":"خصوصية وأمن إنتلي فارما",
+
     },
 
 
