@@ -147,9 +147,9 @@ class NewOrderScreen extends StatelessWidget {
                       child: TextField(
                         controller: newOrderController.notesController,
                         maxLines: 2,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontFamily: 'Cairo',
-                          color: Colors.black,
+                          color: colors.textDefault,
                         ),
                         decoration:  InputDecoration(
                           hintText: "Add_optional_order_notes...".tr,

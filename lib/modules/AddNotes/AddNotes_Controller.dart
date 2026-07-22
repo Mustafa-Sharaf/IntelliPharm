@@ -39,6 +39,7 @@ class AddNotesController extends GetxController {
       AppSnackBar.error("Please write a note first.");
       return;
     }
+    //print("CURRENT PHARMACY ID: $pharmacyId");
 
     try {
       isSubmitting.value = true;

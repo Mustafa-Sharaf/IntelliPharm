@@ -36,19 +36,22 @@ class PrivacyPolicyScreen extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 24.0,
+                horizontal: 16.0,
+              ),
               decoration: BoxDecoration(
-                color:  AppColors.primaryColor.withValues(alpha: 0.08),
+                color: AppColors.primaryColor.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color:  AppColors.primaryColor.withValues(alpha: 0.2),
+                  color: AppColors.primaryColor.withValues(alpha: 0.2),
                 ),
               ),
               child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsets.all(12),
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.primaryColor,
                       shape: BoxShape.circle,
                     ),

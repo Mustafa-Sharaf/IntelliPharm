@@ -2,22 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/DateCard.dart';
-import '../../Widgets/EmptyCard.dart';
-import '../../Widgets/RegionSelector/RegionSelector_Screen.dart';
-import '../../Widgets/SelectablePharmacyCard.dart';
 import '../../Widgets/ActiveRegionComponent.dart';
 import '../../app_theme/theme_extension.dart';
+import 'Components/GenerateRouteButton.dart';
+import 'Components/PharmaciesSliverList.dart';
 import 'PlanYourRoute_Controller.dart';
+import 'Components/ProfileSelector.dart';
+import 'Components/TravelModeSelector.dart';
 
 class PlanYourRouteScreen extends StatelessWidget {
-  PlanYourRouteScreen({super.key});
-
-  final List<String> types = ["Walking", "Driving"];
-
-  final Map<String, IconData> typeIcons = {
-    "Walking": Icons.directions_walk,
-    "Driving": Icons.directions_car,
-  };
+  const PlanYourRouteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +51,7 @@ class PlanYourRouteScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomScrollView(
+                  controller: planYourRouteController.scrollController,
                   slivers: [
                     SliverToBoxAdapter(
                       child: Column(
@@ -65,70 +60,12 @@ class PlanYourRouteScreen extends StatelessWidget {
                           SizedBox(height: size.height * 0.02),
                           DateCard(),
                           SizedBox(height: size.height * 0.022),
-                          Text(
-                            "TRAVEL_MODE".tr,
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: 'Cairo',
-                              fontWeight: FontWeight.bold,
-                              color: colors.textSecondary,
-                              letterSpacing: 1,
-                            ),
-                          ),
-                          SizedBox(height: size.height * 0.01),
-                          Obx(
-                            () => Container(
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: colors.component,
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child:Row(
-                                children: types.map((type) {
-                                  final isSelected = planYourRouteController.selectedType.value == type;
-                                  return Expanded(
-                                    child: GestureDetector(
-                                      onTap: () => planYourRouteController.selectedType.value = type,
-                                      child: AnimatedContainer(
-                                        duration: const Duration(milliseconds: 200),
-                                        padding: const EdgeInsets.symmetric(vertical: 12),
-                                        decoration: BoxDecoration(
-                                          color: isSelected ? AppColors.primaryColor : Colors.transparent,
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Center(
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            textDirection: Directionality.of(context),
-                                            children: [
-                                              Icon(
-                                                typeIcons[type],
-                                                color: isSelected ? Colors.white : AppColors.gray,
-                                                size: 20,
-                                              ),
-                                              SizedBox(
-                                                width: size.width * 0.008,
-                                              ),
-                                              Text(
-                                                type.tr,
-                                                style: TextStyle(
-                                                  fontFamily: 'Cairo',
-                                                  fontSize: 16,
-                                                  color: isSelected ? Colors.white : AppColors.gray,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                              )
-                            ),
-                          ),
+                          /// TRAVEL MODE SELECTOR WIDGET
+                          TravelModeSelector(),
                           SizedBox(height: size.height * 0.022),
-
+                          /// PROFILE SELECTOR WIDGET
+                          const ProfileSelector(),
+                          SizedBox(height: size.height * 0.015),
                           /// REGION SELECTOR
                           Obx(
                             () => ActiveRegionComponent(
@@ -143,7 +80,6 @@ class PlanYourRouteScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: size.height * 0.024),
-
                           /// HEADER
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,7 +104,12 @@ class PlanYourRouteScreen extends StatelessWidget {
                                 ),
                                 child: Obx(
                                   () => Text(
-                                    "${planYourRouteController.selectedPharmacies.length} selected",
+                                    "pharmacies_selected".trParams({
+                                      'count': planYourRouteController
+                                          .selectedPharmacies
+                                          .length
+                                          .toString(),
+                                    }),
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontFamily: 'Cairo',
@@ -190,15 +131,19 @@ class PlanYourRouteScreen extends StatelessWidget {
                                   onChanged: planYourRouteController.setSearch,
                                   decoration: InputDecoration(
                                     hintText: "Search_pharmacy_name_...".tr,
+                                    hintStyle: TextStyle(
+                                      fontSize: 13.5,
+                                      fontFamily: 'Cairo',
+                                      color: colors.textSecondary.withValues(alpha: 0.7),
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                     prefixIcon: const Icon(
                                       Icons.search,
                                       color: Colors.grey,
                                     ),
                                     filled: true,
                                     fillColor: colors.component,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 16,
-                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 16),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(14),
                                       borderSide: BorderSide.none,
@@ -208,11 +153,9 @@ class PlanYourRouteScreen extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.02),
                               Obx(() {
-                                final isAll =
-                                    planYourRouteController.isAllSelected;
+                                final isAll = planYourRouteController.isAllSelected;
                                 return GestureDetector(
-                                  onTap:
-                                      planYourRouteController.toggleSelectAll,
+                                  onTap: planYourRouteController.toggleSelectAll,
                                   child: Container(
                                     width: size.width * 0.06,
                                     height: size.width * 0.06,
@@ -243,158 +186,14 @@ class PlanYourRouteScreen extends StatelessWidget {
                       ),
                     ),
 
-                    /// LIST OR EMPTY STATE
-                    Obx(() {
-                      if (planYourRouteController.isLoading.value &&
-                          planYourRouteController.pharmacies.isEmpty) {
-                        return SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
-                            ),
-                          ),
-                        );
-                      }
-
-                      if (planYourRouteController.pharmacies.isEmpty) {
-                        return SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Center(
-                            child: EmptyPlanCard(
-                              title: "Nothing_pharmacies_yet.".tr,
-                              subtitle:
-                                  "The_pharmacies_will_appear_here_once_you_have_selected_the_area_you_will_be_visiting.".tr,
-                              buttonText: "SelectRegion".tr,
-                              onPressed: () async {
-                                final result = await showModalBottomSheet(
-                                  context: context,
-                                  isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20),
-                                    ),
-                                  ),
-                                  builder: (context) => RegionSelector(),
-                                );
-
-                                if (result != null) {
-                                  planYourRouteController.updateRegion(result);
-                                }
-                              },
-                            ),
-                          ),
-                        );
-                      }
-
-                      return SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            if (index ==
-                                planYourRouteController
-                                    .filteredPharmacies
-                                    .length) {
-                              return const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
-                              );
-                            }
-
-                            final pharmacy = planYourRouteController
-                                .filteredPharmacies[index];
-
-                            return Obx(() {
-                              final isSelected = planYourRouteController
-                                  .selectedPharmacies
-                                  .contains(pharmacy.id);
-
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: GestureDetector(
-                                  onTap: () => planYourRouteController
-                                      .togglePharmacy(pharmacy.id),
-                                  child: SelectablePharmacyCard(
-                                    id: pharmacy.id,
-                                    title: pharmacy.name,
-                                    subtitle: pharmacy.region,
-                                    checked: isSelected,
-                                  ),
-                                ),
-                              );
-                            });
-                          },
-                          childCount:
-                              planYourRouteController
-                                  .filteredPharmacies
-                                  .length +
-                              (planYourRouteController.hasMore.value ? 1 : 0),
-                        ),
-                      );
-                    }),
+                    /// PHARMACIES SLIVER LIST COMPONENT
+                    const PharmaciesSliverList(),
                   ],
                 ),
               ),
 
               /// BUTTON FIXED AT BOTTOM
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Obx(() {
-                  final bool isLoading =
-                      planYourRouteController.isLoading.value;
-
-                  return ElevatedButton(
-                    onPressed: isLoading
-                        ? null
-                        : () => planYourRouteController.initiatePlan(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryColor,
-                      disabledBackgroundColor: AppColors.primaryColor
-                          .withValues(alpha: 0.6),
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                            ),
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.auto_awesome,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                              SizedBox(width: size.width * 0.05),
-                              Text(
-                                "GenerateOptimalRoute".tr,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontFamily: 'Cairo',
-                                ),
-                              ),
-                            ],
-                          ),
-                  );
-                }),
-              ),
+              const GenerateRouteButton(),
             ],
           ),
         ),

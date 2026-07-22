@@ -12,6 +12,7 @@ class NewOrderController extends GetxController {
   RxBool isSubmitting = false.obs;
 
   RxList<CartItem> cart = <CartItem>[].obs;
+  int get cartCount => cart.length;
 
   void addToCart(MedicineModel med, int qty) {
     if (qty <= 0) {
@@ -98,8 +99,8 @@ class NewOrderController extends GetxController {
     } catch (e) {
       AppSnackBar.error("Failed to create order");
       if (e is DioException && e.response != null) {
-       /* print("Status Code: ${e.response?.statusCode}");
-        print("Server Response Data: ${e.response?.data}"); */
+        print("Status Code: ${e.response?.statusCode}");
+        print("Server Response Data: ${e.response?.data}");
       } else {
        // print(e);
       }

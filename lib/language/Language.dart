@@ -139,13 +139,29 @@ class MyLanguage implements Translations{
       "No_notes_available_for_this_filter.":"No notes available for this filter.",
       //PlanYourRoute
       "PlanYourRoute":"PlanYourRoute",
-      "TRAVEL_MODE":"TRAVEL_MODE",
+      "TRAVEL_MODE":"TRAVEL MODE",
       "Select_Pharmacies_to_Visit":"Select Pharmacies to Visit",
       "Search_pharmacy_name_...":"Search pharmacy name ...",
       "Nothing_pharmacies_yet.":"Nothing pharmacies yet.",
       "The_pharmacies_will_appear_here_once_you_have_selected_the_area_you_will_be_visiting.":"The pharmacies will appear here once you have selected the area you will be visiting.",
       "GenerateOptimalRoute":"Generate Optimal Route",
       "SelectRegion":"Select Region",
+      "Fastest": "Fastest",
+      "Cheapest": "Cheapest",
+      "VIP First": "VIP First",
+      "Priority": "Priority",
+      "Balanced": "Balanced",
+      "All Factors": "All Factors",
+      "Fastest available route for now": "Fastest available route for now",
+      "Route that reduces fuel consumption": "Route that reduces fuel consumption",
+      "Serve the most important pharmacies first": "Serve the most important pharmacies first",
+      "Serve the highest priority deliveries first": "Serve the highest priority deliveries first",
+      "Middle ground between options": "Middle ground between options",
+      "Combination of the options above": "Combination of the options above",
+      "Please_select_route_profile":"Please select route profile",
+      "Select_Optimization_Profile":"Select Optimization Profile",
+      "PROFILE": "ROUTE STRATEGY",
+      "pharmacies_selected": "@count selected",
       //RePlan Route Screen
       "Re-planRoute":"Re-planRoute",
       "WHY_ARE_YOU_RE-PLANNING_?":"WHY ARE YOU RE-PLANNING ?",
@@ -277,33 +293,39 @@ class MyLanguage implements Translations{
      // privacy policy  Screen
       'privacy_policy_title': 'Privacy Policy',
       'privacy_policy_content': '''
-At IntelliPharma, we attach great importance to the privacy and security of your data. This policy outlines how we collect, use, and protect your information when using our application.
+      At IntelliPharma, we attach great importance to the privacy and security of your data. This policy outlines how we collect, use, and protect your information when using our application.
 
-1. Information We Collect:
-• Account Information: Such as name, phone number, and job role (Medical Representative / Distributor).
-• Location Data (GPS): Geographic location is used to pinpoint registered pharmacies and facilitate planning daily visits and delivery routes.
-• Images & Attachments: When uploading photos of pharmacies, documents, or order details.
+     1. Information We Collect:
+     • Account Information: Such as name, phone number, and job role (Medical Representative / Distributor).
+     • Location Data (GPS): Geographic location is used to pinpoint registered pharmacies and facilitate planning daily visits and delivery routes.
+     • Images & Attachments: When uploading photos of pharmacies, documents, or order details.
 
-2. How We Use Information:
-• Organizing and updating daily visit plans and delivery routes.
-• Managing orders and financial records related to pharmacies.
-• Enhancing user experience and overall application performance.
+     2. How We Use Information:
+     • Organizing and updating daily visit plans and delivery routes.
+     • Managing orders and financial records related to pharmacies.
+     • Enhancing user experience and overall application performance.
 
-3. Data Sharing:
-• We commit not to sell or share your data with any external commercial third parties.
-• Data is strictly used within the scope of warehouse operations and management.
+      3. Data Sharing:
+      • We commit not to sell or share your data with any external commercial third parties.
+      • Data is strictly used within the scope of warehouse operations and management.
 
-4. Data Security:
-• We implement appropriate technical security measures to protect your data from unauthorized access.
+      4. Data Security:
+      • We implement appropriate technical security measures to protect your data from unauthorized access.
 
-5. Contact & Support:
-• If you have any questions regarding this Privacy Policy, you can reach out through the Technical Support section in the application.
-''',
-
+      5. Contact & Support:
+      • If you have any questions regarding this Privacy Policy, you can reach out through the Technical Support section in the application.
+      ''',
 
       "IntelliPharma_Privacy_&_Security":"IntelliPharma Privacy & Security",
+      "Search...":"Search...",
+      "All_Categories":"All Categories",
       "":"",
       "":"",
+      "":"",
+      "":"",
+      "":"",
+
+
 
 
 
@@ -468,6 +490,22 @@ At IntelliPharma, we attach great importance to the privacy and security of your
       "The_pharmacies_will_appear_here_once_you_have_selected_the_area_you_will_be_visiting.": "ستظهر الصيدليات هنا بمجرد تحديد المنطقة التي ستقوم بزيارتها.",
       "GenerateOptimalRoute": "توليد المسار الأمثل",
       "SelectRegion": "اختر المنطقة",
+      "Fastest": "الأسرع",
+      "Cheapest": "الأوفر استهلاكاً",
+      "VIP First": "الأولوية للـ VIP",
+      "Priority": "الأولوية للشحنات",
+      "Balanced": "متوازن",
+      "All Factors": "جميع العوامل",
+      "Fastest available route for now": "أسرع مسار متاح حالياً للوصول",
+      "Route that reduces fuel consumption": "مسار يقلل استهلاك الوقود والتكلفة",
+      "Serve the most important pharmacies first": "خدمة الصيدليات الأكثر أهمية أولاً",
+      "Serve the highest priority deliveries first": "إنجاز التوصيلات ذات الأولوية العالية أولاً",
+      "Middle ground between options": "حل متوازن يجمع بين السرعة والتكلفة",
+      "Combination of the options above": "دمج متكافئ لجميع المعايير السابقة",
+      "Please_select_route_profile":"يرجى تحديد ملف تعريف المسار",
+      "Select_Optimization_Profile":"حدد ملف تعريف التحسين",
+      "PROFILE": "استراتيجية المسار",
+      "pharmacies_selected": "@count محددة",
 
       // RePlan Route Screen
       "Re-planRoute": "إعادة تخطيط المسار",
@@ -626,6 +664,10 @@ At IntelliPharma, we attach great importance to the privacy and security of your
 • في حال كان لديك أي استفسار حول سياسة الخصوصية، يمكنك التواصل معنا عبر قسم الدعم الفني في التطبيق.
 ''',
       "IntelliPharma_Privacy_&_Security":"خصوصية وأمن إنتلي فارما",
+      "Search...":"ابحث...",
+      "All_Categories":"جميع الفئات",
+
+
 
     },
 

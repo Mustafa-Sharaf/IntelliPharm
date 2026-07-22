@@ -9,6 +9,7 @@ import '../../app_theme/theme_extension.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
 import 'AddOrder_Controller.dart';
+import 'CategoryFilterMenu.dart';
 
 class AddOrderScreen extends StatelessWidget {
   AddOrderScreen({super.key});
@@ -21,6 +22,7 @@ class AddOrderScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final newOrderController = Get.find<NewOrderController>();
     final addOrderController = Get.find<AddOrderController>();
+
     return Scaffold(
       backgroundColor: colors.backgroundMain,
       appBar: AppBar(
@@ -39,13 +41,60 @@ class AddOrderScreen extends StatelessWidget {
               ),
             ),
             SizedBox(width: size.width * 0.25),
-            GestureDetector(
+            Obx(() {
+              final count = newOrderController.cart.length;
+              return GestureDetector(
+                onTap: () {
+                  Get.to(() => NewOrderScreen());
+                },
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    const Icon(Icons.shopping_cart_rounded, size: 28),
+
+                    // يُعرض المؤشر فقط إذا كان هناك عناصر في السلة
+                    if (count > 0)
+                      Positioned(
+                        top: -4,
+                        right: -4,
+                        child: AnimatedScale(
+                          scale: count > 0 ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 200),
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            constraints: const BoxConstraints(
+                              minWidth: 18,
+                              minHeight: 18,
+                            ),
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Text(
+                                count > 99 ? '99+' : '$count',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            })
+         /*   GestureDetector(
               onTap: () {
                 Get.to(() => NewOrderScreen());
               },
               child: Stack(
                 children: [
-                  Icon(Icons.shopping_cart_rounded, size: 30),
+                  const Icon(Icons.shopping_cart_rounded, size: 30),
                   Positioned(
                     right: 2,
                     child: CircleAvatar(
@@ -55,33 +104,48 @@ class AddOrderScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ),*/
           ],
         ),
       ),
       body: Padding(
         padding: EdgeInsets.all(size.width * 0.03),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomSearchField(
-                controller: searchController,
-                text: "Search_medicines...".tr,
-              ),
-              SizedBox(height: size.height * 0.025),
-              Obx(
-                () => Tabs(
-                  tabs: addOrderController.categories
-                      .map((e) => e.name)
-                      .toList(),
-                  selectedIndex: addOrderController.selectedTab.value,
-                  onTap: addOrderController.changeTab,
+        child: Column(
+          children: [
+            /// Row Search & Filter Button
+            Row(
+              children: [
+                CustomSearchField(
+                  controller: searchController,
+                  text: "Search_medicines...".tr,
+                  onChanged: (val) {
+                    addOrderController.onSearchChanged(val);
+                  },
+                  onClear: () {
+                    addOrderController.onSearchChanged('');
+                  },
                 ),
+                SizedBox(width: size.width * 0.01),
+                const CategoryFilterMenu(),
+              ],
+            ),
+            SizedBox(height: size.height * 0.015),
+
+            /// TABS for Types (All / Local / Imported)
+            Obx(
+              () => Tabs(
+                tabs: ["All".tr, "Local".tr, "Imported".tr],
+                selectedIndex: addOrderController.selectedTypeTab.value,
+                onTap: addOrderController.changeTypeTab,
               ),
-              SizedBox(height: size.height * 0.025),
-              Obx(() {
+            ),
+            SizedBox(height: size.height * 0.015),
+
+            /// MEDICINES LIST
+            Expanded(
+              child: Obx(() {
                 if (addOrderController.isLoading.value) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       color: AppColors.primaryColor,
                     ),
@@ -89,10 +153,22 @@ class AddOrderScreen extends StatelessWidget {
                 }
 
                 return ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: addOrderController.medicines.length,
+                  controller: addOrderController.scrollController,
+                  itemCount:
+                      addOrderController.medicines.length +
+                      (addOrderController.isPaginationLoading.value ? 1 : 0),
                   itemBuilder: (context, index) {
+                    if (index == addOrderController.medicines.length) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
+                      );
+                    }
+
                     final med = addOrderController.medicines[index];
 
                     return MedicineCard(
@@ -103,7 +179,8 @@ class AddOrderScreen extends StatelessWidget {
                       }),
                       stockQuantity: med.availableQuantity.toString(),
                       status: med.isImported ? "Imported".tr : "Local".tr,
-                      discount: (med.gift != null &&
+                      discount:
+                          (med.gift != null &&
                               med.gift!.giftQuantity > 0 &&
                               med.gift!.requiredQuantity > 0)
                           ? "GIFT_PROMO".trParams({
@@ -117,20 +194,23 @@ class AddOrderScreen extends StatelessWidget {
                           : "assets/images/icon.png",
                       controller: addOrderController.getController(med.id),
                       onAdd: () {
-                        final qty =
-                            int.tryParse(
-                              addOrderController.getController(med.id).text,
-                            ) ??
-                            0;
+                        final controller = addOrderController.getController(
+                          med.id,
+                        );
+                        final qty = int.tryParse(controller.text) ?? 0;
 
-                        newOrderController.addToCart(med, qty);
+                        if (qty > 0) {
+                          newOrderController.addToCart(med, qty);
+                          controller.clear();
+                        }
                       },
+                      isImported: med.isImported,
                     );
                   },
                 );
               }),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

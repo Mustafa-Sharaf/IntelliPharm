@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import 'package:get/get.dart';
 class MedicineCard extends StatelessWidget {
@@ -12,6 +13,7 @@ class MedicineCard extends StatelessWidget {
   final String image;
   final TextEditingController controller;
   final VoidCallback onAdd;
+  final bool isImported;
 
   const MedicineCard({
     super.key,
@@ -24,10 +26,11 @@ class MedicineCard extends StatelessWidget {
     required this.image,
     required this.controller,
     required this.onAdd,
+    required this.isImported
   });
 
   Color getStatusColor() {
-    if (status.toLowerCase() == "imported") {
+    if (isImported) {
       return Colors.red;
     }
     return Colors.green;
@@ -72,9 +75,8 @@ class MedicineCard extends StatelessWidget {
                       child:Image.network(
                         image,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Image.asset(image, fit: BoxFit.cover),//Icon(Icons.image_not_supported,color: AppColors.primaryColor,),
+                        errorBuilder: (_, __, ___) => Image.asset(image, fit: BoxFit.cover),
                       )
-                      /*Image.asset(image, fit: BoxFit.cover),*/
                     ),
                   ),
                   SizedBox(width: size.width * 0.02),
@@ -165,7 +167,7 @@ class MedicineCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: size.width * 0.2,
+                    width: size.width * 0.15,
                     height: size.height * 0.04,
                     decoration: BoxDecoration(
                       color: colors.backgroundMain,
@@ -183,14 +185,14 @@ class MedicineCard extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(width: size.width * 0.02),
+                  //SizedBox(width: size.width * 0.005),
                   SizedBox(
-                    width: size.width * 0.35,
+                    width: size.width * 0.33,
                     height: size.height * 0.04,
                     child: ElevatedButton(
                       onPressed: onAdd,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff0C8A7B),
+                        backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -200,14 +202,14 @@ class MedicineCard extends StatelessWidget {
                         style: const TextStyle(
                           color: Colors.white,
                           fontFamily: 'Cairo',
-                          fontSize: 14,
+                          fontSize: 13,
                          
                         ),
                       ),
                     ),
                   ),
                   SizedBox(
-                    width: size.width * 0.25,
+                    width: size.width * 0.33,
                     height: size.height * 0.04,
                     child: ElevatedButton(
                       onPressed: () {},
@@ -219,10 +221,10 @@ class MedicineCard extends StatelessWidget {
                       ),
                       child: Text(
                         "Alternatives".tr,
-                        style: const TextStyle(
-                          color: Color(0xff0C8A7B),
+                        style:  TextStyle(
+                          color: AppColors.primaryColor,
                           fontFamily: 'Cairo',
-
+                          fontSize: 13,
                         ),
                       ),
                     ),

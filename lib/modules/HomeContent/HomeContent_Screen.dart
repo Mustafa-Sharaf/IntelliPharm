@@ -6,6 +6,7 @@ import '../../Widgets/PharmacyCard.dart';
 import '../../Widgets/PlanRouteCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
+import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
 import '../PlanYourRoute/PlanYourRoute_Screen.dart';
 import 'HomeContent_Controller.dart';
 
@@ -57,12 +58,17 @@ class HomeContentScreen extends StatelessWidget {
                     fontFamily: 'Cairo',
                   ),
                 ),
-                Text(
-                  "See_All".tr,
-                  style: TextStyle(
-                    fontSize: size.width * 0.04,
-                    color: Color(0xff016E65),
-                    fontFamily: 'Cairo',
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=>ActiveOptimizedRouteTrackingScreen());
+                  },
+                  child: Text(
+                    "See_All".tr,
+                    style: TextStyle(
+                      fontSize: size.width * 0.04,
+                      color: AppColors.primaryColor,
+                      fontFamily: 'Cairo',
+                    ),
                   ),
                 ),
               ],

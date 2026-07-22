@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/PharmacyInfoCard.dart';
 import '../../Widgets/Tabs.dart';
+import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/ContactLauncher/ContactLauncher.dart';
 import '../NewOrder/NewOrder_Screen.dart';
 import '../PharmacyDetails/PharmacyDetails_Screen.dart';
-import '../PlanYourRoute/PlanYourRoute_Controller.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
 import 'Pharmacists_Controller.dart';
@@ -28,12 +28,42 @@ class PharmacistsScreen extends StatelessWidget {
         child: Column(
           children: [
             /// SEARCH
-            CustomSearchField(controller: searchController,text: "Search_Pharmacists...".tr,),
+            Row(
+              children: [
+                CustomSearchField(
+                  controller: searchController,
+                  text: "Search_Pharmacists...".tr,
+                  onChanged: (val) {
+                    pharmacistsController.updateSearch(val);
+                  },
+                ),
+                SizedBox(width: size.width * 0.01),
+                SizedBox(
+                  width: size.width * 0.12,
+                  height: size.width * 0.12,
+                  child: ElevatedButton(
+                    onPressed: () async {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: colors.textPrimary,
+                      elevation: 3,
+                      padding: EdgeInsets.zero,
+                      shape: const CircleBorder(),
+                    ),
+                    child: Icon(
+                      Icons.tune,
+                      color: AppColors.backgroundColorLight,
+                      size: size.width * 0.06,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
             SizedBox(height: size.height * 0.04),
 
-            /// TABS
+            /// TABS (تمت إحاطتها بـ Obx لجلب الترجمة والتبويب النشط)
             Obx(
-              () => Tabs(
+                  () => Tabs(
                 tabs: pharmacistsController.tabs,
                 selectedIndex: pharmacistsController.selectedTab.value,
                 onTap: pharmacistsController.changeTab,
@@ -43,10 +73,9 @@ class PharmacistsScreen extends StatelessWidget {
 
             /// COUNT
             Obx(
-              () => Row(
+                  () => Row(
                 children: [
                   Text(
-                    //"${pharmacistsController.filteredPharmacies.length} pharmacies found",
                     "PHARMACIES_FOUND".trParams({
                       'count': pharmacistsController.filteredPharmacies.length.toString(),
                     }),
@@ -54,7 +83,6 @@ class PharmacistsScreen extends StatelessWidget {
                       fontSize: 14,
                       fontFamily: 'Cairo',
                       color: colors.textSecondary,
-                      //fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
@@ -79,7 +107,6 @@ class PharmacistsScreen extends StatelessWidget {
                         fontSize: 14,
                         fontFamily: 'Cairo',
                         color: colors.textSecondary,
-                        //fontWeight: FontWeight.bold,
                       ),
                     ),
                   );
@@ -87,11 +114,9 @@ class PharmacistsScreen extends StatelessWidget {
 
                 return ListView.builder(
                   controller: pharmacistsController.scrollController,
-
                   itemCount:
-                      list.length +
+                  list.length +
                       (pharmacistsController.isMoreLoading.value ? 1 : 0),
-
                   itemBuilder: (context, index) {
                     /// LOADING
                     if (index == list.length) {
@@ -105,12 +130,15 @@ class PharmacistsScreen extends StatelessWidget {
 
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
-
                       child: PharmacyInfoCard(
                         pharmacyName: pharmacy.name,
                         regionName: pharmacy.region,
-                        openTime: pharmacy.openTime.substring(0, 5),
-                        closeTime: pharmacy.closeTime.substring(0, 5),
+                        openTime: pharmacy.openTime.length >= 5
+                            ? pharmacy.openTime.substring(0, 5)
+                            : pharmacy.openTime,
+                        closeTime: pharmacy.closeTime.length >= 5
+                            ? pharmacy.closeTime.substring(0, 5)
+                            : pharmacy.closeTime,
                         pharmacistName: pharmacy.pharmacistName ?? "N/A",
                         isOpen: pharmacy.checkIsOpen,
                         onCartTap: () => Get.to(() => NewOrderScreen()),
@@ -119,15 +147,8 @@ class PharmacistsScreen extends StatelessWidget {
                               context,
                               pharmacy.pharmacistPhone,
                             ),
-                        onDirectionsTap: () {
-                       /*   final planYourRouteController = Get.find<PlanYourRouteController>();
-                          final dynamic pharmacy;
-                          if (planYourRouteController.selectedType.value.isEmpty) {
-                            planYourRouteController.selectedType.value = "Driving";
-                          }
-                          planYourRouteController.initiatePlan(singlePharmacy: pharmacy);*/
-                        },
-                        onViewNotesTap: (){
+                        onDirectionsTap: () {},
+                        onViewNotesTap: () {
                           Get.to(
                                 () => const PharmacyDetailsScreen(),
                             arguments: pharmacy.id,

@@ -111,7 +111,7 @@ class PharmacySummaryCard extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.008),
                               Text(
-                                pharmacy.isOpen ? "OPEN_NOW".tr : "CLOSED",
+                                pharmacy.isOpen ? "OPEN_NOW".tr : "CLOSED".tr,
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: pharmacy.isOpen ? const Color(0xFF00796B) : Colors.red,

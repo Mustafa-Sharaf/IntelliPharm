@@ -22,8 +22,9 @@ import 'modules/Splash/Splash_Screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  DioClient.init();
   Get.put(MyLanguageController());
+  DioClient.init();
+
   Get.put(MapHelperController(), tag: "route");
   Get.put(MapHelperController(), tag: "addPharmacy");
   final themeController = Get.put(ThemeController());

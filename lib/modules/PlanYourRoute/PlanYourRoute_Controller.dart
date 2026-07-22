@@ -7,8 +7,8 @@ import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../modules/Pharmacists/Pharmacists_Model.dart';
-import '../../services/ApiService.dart';
 import '../../services/ServiceApi/PharmaciesService.dart';
+import '../../services/ServiceApi/PlannerService.dart'; // Import PlannerService
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Model.dart';
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
 import '../PharmacyDetails/PharmacyDetails_Model.dart';
@@ -26,11 +26,36 @@ class PlanYourRouteController extends GetxController {
   var hasMore = true.obs;
   var selectedType = ''.obs;
   final ScrollController scrollController = ScrollController();
-  final String profile = "vip_first";
-  String get travelMode => selectedType.value.contains("Walking") ? "walking"
+  var selectedProfileKey = RxnString();
+
+  final Map<String, String> profileApiValues = {
+    "Fastest": "fastest",
+    "Cheapest": "cheapest",
+    "VIP First": "vip_first",
+    "Priority": "priority_first",
+    "Balanced": "balanced",
+    "All Factors": "all_factors",
+  };
+
+  final Map<String, String> profileSubtitles = {
+    "Fastest": "Fastest available route for now",
+    "Cheapest": "Route that reduces fuel consumption",
+    "VIP First": "Serve the most important pharmacies first",
+    "Priority": "Serve the highest priority deliveries first",
+    "Balanced": "Middle ground between options",
+    "All Factors": "Combination of the options above",
+  };
+
+  String get profile => selectedProfileKey.value != null
+      ? (profileApiValues[selectedProfileKey.value!] ?? "")
+      : "";
+
+  String get travelMode => selectedType.value.contains("Walking")
+      ? "walking"
       : selectedType.value.contains("Driving")
       ? "driving"
       : "";
+
   var plan = Rxn<PlanResponse>();
 
   @override
@@ -131,21 +156,28 @@ class PlanYourRouteController extends GetxController {
     return selectedPharmacies.containsAll(allIds) && allIds.isNotEmpty;
   }
 
-
   Future<void> initiatePlan({PharmacyDetailsModel? singlePharmacy}) async {
     try {
       if (selectedType.value.isEmpty) {
         AppSnackBar.error("Please select your travel mode first.");
         return;
       }
+
+      if (selectedProfileKey.value == null || profile.isEmpty) {
+        AppSnackBar.error("Please_select_route_profile".tr);
+        return;
+      }
+
       if (selectedRegion.value == null) {
         AppSnackBar.error("Please select your region first.");
         return;
       }
+
       if (selectedPharmacies.isEmpty) {
         AppSnackBar.error("Please select at least one pharmacy");
         return;
       }
+
       isLoading.value = true;
       final isSingle = singlePharmacy != null;
       final currentMapController = isSingle
@@ -158,38 +190,34 @@ class PlanYourRouteController extends GetxController {
       final List<int> idsToSend = isSingle ? [singlePharmacy.id] : selectedPharmacies.toList();
       final int regionIdToSend = isSingle ? singlePharmacy.regionId : selectedRegion.value!.id;
 
-      final response = await ApiService.post(
-        "/planner/v1/plans/initiate",
-        data: {
-          "current_longitude": currentMapController.longitude.value,
-          "current_latitude": currentMapController.latitude.value,
-          "reason": "initiated",
-          "reason_details": isSingle ? "preview route for ${singlePharmacy.nameEn}" : "starting today's trip",
-          "rep_id": null,
-          "region_id": regionIdToSend,
-          "pharmacy_ids": idsToSend,
-          "profile": profile,
-          "travel_mode": travelMode,
-        },
+      // استخدام PlannerService هنا بدلاً من ApiService المباشر
+      final responseData = await PlannerService.initiatePlan(
+        longitude: currentMapController.longitude.value,
+        latitude: currentMapController.latitude.value,
+        reason: "initiated",
+        reasonDetails: isSingle ? "preview route for ${singlePharmacy.nameEn}" : "starting today's trip",
+        regionId: regionIdToSend,
+        pharmacyIds: idsToSend,
+        profile: profile,
+        travelMode: travelMode,
       );
 
-      if (response.data['isSuccess']) {
-        final planResult = PlanResponse.fromJson(response.data['data']);
-          if (isSingle) {
-            Get.dialog(
-              PharmacyRouteDialog(pharmacy: singlePharmacy, initialPlan: planResult),
-              barrierDismissible: true,
-            );
-          } else {
-            plan.value = planResult;
-            await MapDrawerHelper.drawFullRoute(
-              routeMapController: routeMapController,
-              plan: plan.value,
-            );
-            AppSnackBar.success("The path was successfully created");
-            Get.to(() => ActiveOptimizedRouteTrackingScreen());
-          }
-
+      if (responseData['isSuccess']) {
+        final planResult = PlanResponse.fromJson(responseData['data']);
+        if (isSingle) {
+          Get.dialog(
+            PharmacyRouteDialog(pharmacy: singlePharmacy, initialPlan: planResult),
+            barrierDismissible: true,
+          );
+        } else {
+          plan.value = planResult;
+          await MapDrawerHelper.drawFullRoute(
+            routeMapController: routeMapController,
+            plan: plan.value,
+          );
+          AppSnackBar.success("The path was successfully created");
+          Get.to(() => ActiveOptimizedRouteTrackingScreen());
+        }
       } else {
         AppSnackBar.error("Route creation failed, please try again later.");
       }
@@ -205,15 +233,14 @@ class PlanYourRouteController extends GetxController {
     }
   }
 
-
   Future<void> fetchCurrentPlan() async {
     if (plan.value == null) return;
     try {
-      final response = await ApiService.get("/planner/v1/plans/${plan.value!.id}");
+      // استخدام PlannerService هنا أيضاً
+      final responseData = await PlannerService.getPlanById(plan.value!.id);
 
-      if (response.data['isSuccess']) {
-
-        plan.value = PlanResponse.fromJson(response.data['data']);
+      if (responseData['isSuccess']) {
+        plan.value = PlanResponse.fromJson(responseData['data']);
 
         await MapDrawerHelper.drawFullRoute(
           routeMapController: routeMapController,
@@ -224,10 +251,10 @@ class PlanYourRouteController extends GetxController {
       print("ERROR REFRESHING CURRENT PLAN: $e");
     }
   }
+
   @override
   void onClose() {
     scrollController.dispose();
     super.onClose();
   }
 }
-

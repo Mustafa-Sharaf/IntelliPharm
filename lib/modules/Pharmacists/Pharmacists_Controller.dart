@@ -6,7 +6,7 @@ import '../../services/ServiceApi/PharmaciesService.dart';
 
 class PharmacistsController extends GetxController {
   var selectedTab = 0.obs;
-  final tabs = ["AllRegions".tr, "OpenNow".tr, "CloseNow".tr];
+  List<String> get tabs => ["AllRegions".tr, "OpenNow".tr, "CloseNow".tr];
 
   var pharmacies = <PharmaciesModel>[].obs;
   var selectedRegion = Rxn<RegionModel>();

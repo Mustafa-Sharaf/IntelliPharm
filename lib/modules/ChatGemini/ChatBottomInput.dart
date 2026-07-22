@@ -15,6 +15,7 @@ class ChatBottomInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       padding: const EdgeInsets.all(16),
       color: Colors.transparent,
@@ -45,13 +46,17 @@ class ChatBottomInput extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: size.width * 0.03),
                 Expanded(
                   child: TextField(
                     controller: controller.textController,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                      fontFamily: "Cairo",
+                    ),
                     cursorColor: AppColors.primaryColor,
-                    decoration:  InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Write_your_question_here'.tr,
                       hintStyle: TextStyle(
                         color: Color(0xff64748B),
@@ -66,7 +71,7 @@ class ChatBottomInput extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: size.height * 0.01),
           Text(
             'Type_your_question_and_then_press_Enter_or_press_Submit'.tr,
             style: TextStyle(

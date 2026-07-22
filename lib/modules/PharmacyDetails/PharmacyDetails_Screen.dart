@@ -26,7 +26,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
         backgroundColor: colors.backgroundMain,
         foregroundColor: colors.textPrimary,
         elevation: 0,
-        centerTitle: false,
+        centerTitle: true,
         title: Text(
           "PharmacyDetails".tr,
           style: TextStyle(
@@ -151,7 +151,7 @@ class PharmacyDetailsScreen extends StatelessWidget {
                                 ),
                                 SizedBox(width: size.width * 0.02),
                                 Text(
-                                  controller.selectedFilter.value,
+                                  controller.selectedFilter.value.tr,
                                   style: TextStyle(
                                     color: colors.textSecondary,
                                     fontSize: 13,
