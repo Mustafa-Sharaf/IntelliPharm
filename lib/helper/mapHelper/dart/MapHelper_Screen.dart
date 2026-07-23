@@ -62,7 +62,7 @@ class MapHelperScreen extends StatelessWidget {
                     point.longitude,
                   );
                 },
-                myLocationEnabled: true,
+                myLocationEnabled: false,
                 myLocationButtonEnabled: false,
               );
             }),

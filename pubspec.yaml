@@ -75,6 +75,8 @@ flutter:
      - assets/images/
      - assets/icons/
      - assets/map_dark.json
+     - assets/images/DeliveryBicycle.png
+     - assets/images/DeliveryCar.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

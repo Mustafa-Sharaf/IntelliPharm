@@ -44,7 +44,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 6,
+            flex: 5,
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -66,7 +66,6 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: size.height * 0.01),
                     /// Next Destination Section
                     Text(
                       "NEXT_DESTINATION".tr,
@@ -75,7 +74,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Cairo',
                         fontSize: 12,
-                        height: 3,
+                        height: 2,
                       ),
                     ),
                     Obx(() {
@@ -167,7 +166,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         ],
                       );
                     }),
-                    SizedBox(height: size.width * 0.06),
+                    SizedBox(height: size.width * 0.03),
                     Text(
                       "ROUTE_SCHEDULE".tr,
                       style: TextStyle(
