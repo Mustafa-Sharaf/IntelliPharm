@@ -91,23 +91,41 @@ class MapHelperController extends GetxController {
   // =========================
 
   Future<Position> getCurrentLocation() async {
+    // 1️⃣ التأكد من تفعيل خدمة الـ GPS في الهاتف
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      throw Exception("Location services are disabled");
+      throw Exception("GPS_DISABLED");
     }
 
+    // 2️⃣ التحقق من الصلاحيات وطلبها
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw Exception("PERMISSION_DENIED");
+      }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      throw Exception("Location permission permanently denied");
+      throw Exception("PERMISSION_DENIED_FOREVER");
     }
 
-    return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
+    // 3️⃣ إعدادات جلب الموقع المباشر (دقة عالية بدون اعتماد على مواقع قديمة)
+    final LocationSettings locationSettings = AndroidSettings(
+      accuracy: LocationAccuracy.high,
+      forceLocationManager: false,
     );
+
+    try {
+      // نطلب الموقع المباشر مع مهلة 12 ثانية لتجنب تعليق الواجهة
+      return await Geolocator.getCurrentPosition(
+        locationSettings: locationSettings,
+      ).timeout(const Duration(seconds: 12));
+    } catch (e) {
+      print("❌ تعذر جلب الموقع المباشر: $e");
+      // نرفع استثناء مخصص ليشير إلى أن الـ GPS لم يستجب
+      throw Exception("LOCATION_TIMEOUT");
+    }
   }
 
   Future<void> moveToCurrentLocation() async {
@@ -116,8 +134,10 @@ class MapHelperController extends GetxController {
       await setLocation(position.latitude, position.longitude);
     } catch (e) {
       print("Error while fetching current location: $e");
+      rethrow; // لكي يمسك الـ Screen / Controller الأعلى بالخطأ ويُظهر Snackbar للزبون
     }
   }
+
 
   Future<void> setLocation(
       double lat,
@@ -232,7 +252,8 @@ class MapHelperController extends GetxController {
         flat: true, // تجعل الصورة تلتصق بسطح الخريطة أثناء التدوير
         rotation: ((heading + 90.0) % 360), // إضافة 90 درجة لتعديل جهة الصورة
         anchor: const Offset(0.5, 0.5),
-        zIndex: 10,
+        //zIndex: 10,
+        zIndexInt: 10,
         icon: customCarIcon ?? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
       ),
     );
@@ -325,3 +346,45 @@ class MapHelperController extends GetxController {
     super.onClose();
   }
 }
+
+
+
+/*  Future<void> moveToCurrentLocation() async {
+    try {
+      final position = await getCurrentLocation();
+      await setLocation(position.latitude, position.longitude);
+    } catch (e) {
+      print("Error while fetching current location: $e");
+      // نرجع نرفع الاستثناء ليرى الـ Screen / Controller الأعلى أن هناك مشكلة ويظهر الرسالة
+      rethrow;
+    }
+  }*/
+
+/* Future<Position> getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw Exception("Location services are disabled");
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception("Location permission permanently denied");
+    }
+
+    return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+  }
+
+  Future<void> moveToCurrentLocation() async {
+    try {
+      final position = await getCurrentLocation();
+      await setLocation(position.latitude, position.longitude);
+    } catch (e) {
+      print("Error while fetching current location: $e");
+    }
+  }*/

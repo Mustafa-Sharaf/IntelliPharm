@@ -83,7 +83,9 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  Get.to(()=>NotificationsScreen());
+                  //Get.to(()=>NotificationsScreen());
+                  Get.toNamed('/notifications');
+
                 },
                 icon: Icon(
                   Icons.notifications_none,

@@ -6,14 +6,16 @@ import '../../app_theme/theme_extension.dart';
 import 'AddPharmacy_Controller.dart';
 
 class PharmacyNameSection extends StatelessWidget {
-  const PharmacyNameSection({super.key, required this.addPharmacyController});
+  const PharmacyNameSection({super.key, //required this.addPharmacyController
+  });
 
-  final AddPharmacyController addPharmacyController;
+  //final AddPharmacyController addPharmacyController;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final addPharmacyController = Get.find<AddPharmacyController>();
     return Container(
       padding: EdgeInsets.all(size.width * 0.03),
       decoration: BoxDecoration(

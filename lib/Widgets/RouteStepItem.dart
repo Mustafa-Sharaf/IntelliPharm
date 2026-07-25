@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
+import '../modules/PharmacyDetails/PharmacyDetailsBinding.dart';
 import '../modules/PharmacyDetails/PharmacyDetails_Screen.dart';
 
 class RouteStepItem extends StatelessWidget {
@@ -132,8 +133,12 @@ class RouteStepItem extends StatelessWidget {
 
                       GestureDetector(
                         onTap: (){
-                          Get.to(() => const PharmacyDetailsScreen(), arguments: id);
-
+                          //Get.to(() => const PharmacyDetailsScreen(), arguments: id);
+                          Get.to(
+                                () => const PharmacyDetailsScreen(),
+                            arguments:id,
+                            binding: PharmacyDetailsBinding(),
+                          );
                         },
                         child: Icon(
                           FontAwesomeIcons.squareArrowUpRight,

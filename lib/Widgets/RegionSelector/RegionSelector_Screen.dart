@@ -5,13 +5,14 @@ import '../../app_theme/theme_extension.dart';
 import 'RegionSelector_Controller.dart';
 
 class RegionSelector extends StatelessWidget {
-  RegionSelector({super.key});
+  const RegionSelector({super.key});
 
-  final controller = Get.put(RegionController());
+  //final controller = Get.put(RegionController());
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
+    final controller = Get.find<RegionController>();
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,

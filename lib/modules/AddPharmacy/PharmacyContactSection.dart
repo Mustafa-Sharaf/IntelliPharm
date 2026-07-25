@@ -6,15 +6,16 @@ import 'AddPharmacy_Controller.dart';
 class PharmacyContactSection extends StatelessWidget {
   const PharmacyContactSection({
     super.key,
-    required this.addPharmacyController,
+   // required this.addPharmacyController,
   });
 
-  final AddPharmacyController addPharmacyController;
+  //final AddPharmacyController addPharmacyController;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final addPharmacyController = Get.find<AddPharmacyController>();
 
     return Container(
       padding: EdgeInsets.all(size.width * 0.03),

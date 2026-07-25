@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../modules/AddOrder/AddOrder_Controller.dart';
 import '../modules/HomeContent/HomeContent_Controller.dart';
+import '../modules/HomeContentDistributor/HomeContentDistributor_Controller.dart';
+import '../modules/MyDeliveries/MyDeliveries_Controller.dart';
 import '../modules/MyOrders/MyOrders_Controller.dart';
 import '../modules/Pharmacists/Pharmacists_Controller.dart';
 
@@ -24,6 +26,7 @@ class MyLanguageController extends GetxController {
     box.write("lang", codeLang);
     intiLanguage.value = locale;
     Get.updateLocale(locale);
+    Get.forceAppUpdate();
 
     if (Get.isRegistered<HomeContentController>()) {
       Get.find<HomeContentController>().getHomePage();
@@ -41,5 +44,12 @@ class MyLanguageController extends GetxController {
     if (Get.isRegistered<PharmacistsController>()) {
       Get.find<PharmacistsController>().fetchPharmacies();
     }
+    if (Get.isRegistered<MyDeliveriesController>()) {
+      Get.find<MyDeliveriesController>().fetchDeliveries();
+    }
+    if (Get.isRegistered<DeliveryHomeController>()) {
+      Get.find<DeliveryHomeController>().fetchDeliveryHome();
+    }
+
   }
 }

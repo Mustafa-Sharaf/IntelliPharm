@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../Widgets/DeliveryTimelineItem.dart';
+import '../../Widgets/EmptyCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
@@ -15,7 +15,7 @@ class ActiveDeliveryRouteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MapHelperController(), tag: "route");
+   // Get.put(MapHelperController(), tag: "route");
     final controller = Get.find<ActiveDeliveryRouteController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
@@ -54,13 +54,17 @@ class ActiveDeliveryRouteScreen extends StatelessWidget {
                     ),
                     child: plan == null
                         ? Center(
-                            child: Text(
-                              "NoCurrentDataPath".tr,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Cairo',
-                                color: colors.textSecondary,
+                            child:
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: EmptyPlanCard(
+                                title: "NoCurrentDataPath".tr,
+                                subtitle:
+                                "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
+                                buttonText: "CreatePlan".tr,
+                                onPressed: () {
+                                  Get.back();
+                                },
                               ),
                             ),
                           )
@@ -152,8 +156,10 @@ class ActiveDeliveryRouteScreen extends StatelessWidget {
 
                                             },
                                           );
+
                                         },
                                       ),
+                                      SizedBox(height: size.height * 0.015),
                                     ],
                                   ),
                                 ),

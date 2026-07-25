@@ -12,7 +12,8 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignInController());
+    //final controller = Get.put(SignInController());
+    final controller = Get.find<SignInController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     return Scaffold(
       backgroundColor: colors.backgroundMain,

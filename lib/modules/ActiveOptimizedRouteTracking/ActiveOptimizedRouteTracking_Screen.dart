@@ -8,6 +8,7 @@ import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import '../PlanYourRoute/PlanYourRoute_Controller.dart';
 import '../PlanYourRoute/PlanYourRoute_Screen.dart';
 import '../RePlanRoute/RePlanRoute_Screen.dart';
+import '../VisitDetails/VisitDetailsBinding.dart';
 import '../VisitDetails/VisitDetails_Screen.dart';
 import 'ActiveOptimizedRouteTracking_Controller.dart';
 import 'CurrentRouteHeader.dart';
@@ -90,7 +91,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                             "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
                             buttonText: "CreatePlan".tr,
                             onPressed: () {
-                              Get.to(() => PlanYourRouteScreen());
+                              //Get.to(() => PlanYourRouteScreen());
+                              Get.toNamed('/planYourRoute');
                             },
                           ),
                         );
@@ -150,7 +152,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             onPressed: () {
-                              Get.to(() => RePlanRouteScreen());
+                              //Get.to(() => RePlanRouteScreen());
+                              Get.toNamed('/rePlanRoute');
                             },
                             icon: const Icon(
                               Icons.refresh, //navigation_outlined
@@ -221,12 +224,20 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                                          visit.pharmacyId ==
                                          controller.nextVisit!.pharmacyId,
                             onDetailsPressed: () async {
-                              final bool? isChecked = await Get.to(
+                              final bool? isChecked = await /*Get.to(
                                 () => const VisitDetailsScreen(),
                                 arguments: {
                                   "pharmacyId": visit.pharmacyId,
                                   "visitId": visit.id,
                                 },
+                              );*/
+                              Get.to(
+                                    () => const VisitDetailsScreen(),
+                                arguments: {
+                                  "pharmacyId": visit.pharmacyId,
+                                  "visitId": visit.id,
+                                },
+                                binding: VisitDetailsBinding(),
                               );
                               if (isChecked == true) {
                                 await controller.refreshTrackingData();

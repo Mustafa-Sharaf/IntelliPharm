@@ -12,17 +12,17 @@ class NavItem {
 
 
 List<NavItem> repItems = [
-  NavItem(Icons.home_rounded, "HOME".tr),
-  NavItem(Icons.receipt_long_rounded, "ORDERS".tr),
-  NavItem(Icons.smart_toy, "AskGemini".tr),
-  NavItem(Icons.account_balance_wallet, "Debts".tr),
-  NavItem(Icons.local_pharmacy, "Pharmacies".tr),
+  NavItem(Icons.home_rounded, "HOME"),
+  NavItem(Icons.receipt_long_rounded, "ORDERS"),
+  NavItem(Icons.smart_toy, "AskGemini"),
+  NavItem(Icons.account_balance_wallet, "Debts"),
+  NavItem(Icons.local_pharmacy, "Pharmacies"),
 ];
 
 
 List<NavItem> distributorItems = [
-   NavItem(Icons.home_rounded, "Home".tr),
-   NavItem(Icons.local_shipping_rounded, "Deliveries".tr),
-   NavItem(Icons.map_rounded, "Route".tr),
-   NavItem(Icons.check_circle_outline_rounded, "ConfirmDelivery".tr),
+   NavItem(Icons.home_rounded, "HOME"),
+   NavItem(Icons.local_shipping_rounded, "DELIVERIES"),
+  /* NavItem(Icons.map_rounded, "Route"),
+   NavItem(Icons.check_circle_outline_rounded, "ConfirmDelivery"),*/
 ];

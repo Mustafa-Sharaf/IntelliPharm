@@ -12,7 +12,9 @@ class PlanRouteCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Get.to(PlanYourRouteScreen());
+        //Get.to(PlanYourRouteScreen());
+        Get.toNamed('/planYourRoute');
+
       },
       child: SizedBox(
         height: size.height * 0.21,

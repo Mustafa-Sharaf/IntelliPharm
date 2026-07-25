@@ -45,7 +45,8 @@ class AddOrderScreen extends StatelessWidget {
               final count = newOrderController.cart.length;
               return GestureDetector(
                 onTap: () {
-                  Get.to(() => NewOrderScreen());
+                  //Get.to(() => NewOrderScreen());
+                  Get.toNamed("/newOrderScreen");
                 },
                 child: Stack(
                   clipBehavior: Clip.none,
@@ -88,23 +89,6 @@ class AddOrderScreen extends StatelessWidget {
                 ),
               );
             })
-         /*   GestureDetector(
-              onTap: () {
-                Get.to(() => NewOrderScreen());
-              },
-              child: Stack(
-                children: [
-                  const Icon(Icons.shopping_cart_rounded, size: 30),
-                  Positioned(
-                    right: 2,
-                    child: CircleAvatar(
-                      radius: size.width * 0.013,
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            ),*/
           ],
         ),
       ),

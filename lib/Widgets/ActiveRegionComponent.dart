@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'RegionSelector/RegionSelectorBinding.dart';
 import 'RegionSelector/RegionSelector_Screen.dart';
 import '../app_theme/theme_extension.dart';
 
@@ -41,7 +42,7 @@ class ActiveRegionComponent extends StatelessWidget {
 
         GestureDetector(
           onTap: () async {
-            final result = await showModalBottomSheet(
+         /*   final result = await showModalBottomSheet(
               context: context,
               isScrollControlled: true,
               shape: const RoundedRectangleBorder(
@@ -53,6 +54,24 @@ class ActiveRegionComponent extends StatelessWidget {
                 return RegionSelector();
               },
             );
+            if (result != null) {
+              onRegionSelected(result);
+            }*/
+            final result = await showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              builder: (context) {
+                // 🟢 تهيئة الـ Binding يدوياً قبل عرض الـ Widget
+                RegionSelectorBinding().dependencies();
+                return const RegionSelector();
+              },
+            );
+
             if (result != null) {
               onRegionSelected(result);
             }

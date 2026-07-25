@@ -161,6 +161,9 @@ class DioClient {
         onError: (DioException err, handler) async {
           final statusCode = err.response?.statusCode;
           print("Error: $statusCode");
+          if (err.response?.data != null) {
+            print("SERVER 403 RESPONSE DETAILS: ${err.response?.data}");
+          }
 
           if (statusCode == 403) {
             return handler.next(err);

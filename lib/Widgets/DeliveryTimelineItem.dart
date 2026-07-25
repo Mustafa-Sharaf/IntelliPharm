@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
@@ -138,11 +139,18 @@ class DeliveryTimelineItem extends StatelessWidget {
                 else if (isActive)
                   OutlinedButton(
                     onPressed: () async {
-                      final isSuccess = await Get.to(
+                      final isSuccess = await /*Get.to(
                         () => ConfirmDeliveryScreen(
                           visit: visit,
                           regionName: regionName,
                         ),
+                      );*/
+                      Get.toNamed(
+                        '/confirmDelivery',
+                        arguments: {
+                          'visit': visit,
+                          'regionName': regionName,
+                        },
                       );
                       if (isSuccess == true) {
                         final mainController =
@@ -158,7 +166,7 @@ class DeliveryTimelineItem extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                     ),
                     child: Text(
-                      "MARK_DELIVERED".tr,
+                      "DeliveryConfirmation".tr,
                       style: TextStyle(
                         color: AppColors.primaryColor,
                         fontSize: 12,
@@ -169,7 +177,7 @@ class DeliveryTimelineItem extends StatelessWidget {
                   )
                 else
                   Icon(
-                    Icons.more_vert,
+                    FontAwesomeIcons.squareArrowUpRight,
                     color: colors.textSecondary.withValues(alpha: 0.6),
                   ),
               ],

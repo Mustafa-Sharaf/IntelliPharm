@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../Widgets/AppSnackBar.dart';
 import '../../Widgets/PharmacyRouteDialog.dart';
 import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
@@ -158,6 +159,150 @@ class PlanYourRouteController extends GetxController {
 
   Future<void> initiatePlan({PharmacyDetailsModel? singlePharmacy}) async {
     try {
+      // التحققات الأساسية
+      if (selectedType.value.isEmpty) {
+        AppSnackBar.error("Please select your travel mode first.");
+        return;
+      }
+
+      if (selectedProfileKey.value == null || profile.isEmpty) {
+        AppSnackBar.error("Please_select_route_profile".tr);
+        return;
+      }
+
+      if (selectedRegion.value == null) {
+        AppSnackBar.error("Please select your region first.");
+        return;
+      }
+
+      if (selectedPharmacies.isEmpty) {
+        AppSnackBar.error("Please select at least one pharmacy");
+        return;
+      }
+
+      isLoading.value = true;
+
+      final isSingle = singlePharmacy != null;
+      final currentMapController = isSingle
+          ? Get.put(MapHelperController(), tag: "mini_route_visit")
+          : routeMapController;
+
+      // 📍 جلب الموقع المباشر الحقيقي — إذا فشل سيتجه فوراً لـ catch
+      await currentMapController.moveToCurrentLocation();
+
+      final List<int> idsToSend = isSingle ? [singlePharmacy.id] : selectedPharmacies.toList();
+      final int regionIdToSend = isSingle ? singlePharmacy.regionId : selectedRegion.value!.id;
+
+      // طلب الـ API بالكرت/المسار
+      final responseData = await PlannerService.initiatePlan(
+        longitude: currentMapController.longitude.value,
+        latitude: currentMapController.latitude.value,
+        reason: "initiated",
+        reasonDetails: isSingle ? "preview route for ${singlePharmacy.nameEn}" : "starting today's trip",
+        regionId: regionIdToSend,
+        pharmacyIds: idsToSend,
+        profile: profile,
+        travelMode: travelMode,
+      );
+
+      if (responseData != null && responseData['isSuccess'] == true) {
+        final planResult = PlanResponse.fromJson(responseData['data']);
+        if (isSingle) {
+          Get.dialog(
+            PharmacyRouteDialog(pharmacy: singlePharmacy, initialPlan: planResult),
+            barrierDismissible: true,
+          );
+        } else {
+          plan.value = planResult;
+          await MapDrawerHelper.drawFullRoute(
+            routeMapController: routeMapController,
+            plan: plan.value,
+          );
+          AppSnackBar.success("The path was successfully created");
+          //Get.to(() => ActiveOptimizedRouteTrackingScreen());
+          Get.toNamed("/activeOptimizedRouteTracking");
+        }
+      } else {
+        final errorMessage = responseData?['message'] ?? "Route creation failed, please try again later.";
+        AppSnackBar.error(errorMessage);
+      }
+
+    } catch (e) {
+      print("❌ Location/Initiate error: $e");
+
+      // 🛑 معالجة تفاعلية وذكية للأخطاء وتوجيه المندوب
+      String errorMsg = e.toString();
+
+      if (errorMsg.contains("GPS_DISABLED")) {
+        AppSnackBar.error("خدمة الموقع (GPS) معطلة. يرجى تفعيلها من إعدادات الهاتف.");
+      } else if (errorMsg.contains("PERMISSION_DENIED")) {
+        AppSnackBar.error("يرجى منح التطبيق صلاحية الوصول للموقع للبدء.");
+      } else {
+        // حوار تفاعلي للذهاب لخرائط جوجل وتنشيط الإشارة
+        Get.defaultDialog(
+          title: "تحديث الموقع مطلوب 📍",
+          titleStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          middleText: "تعذر الحصول على موقعك الفعلي المباشر حالياً.\n\nيرجى فتح خرائط Google والتأكد من تحديد موقعك الحالي ثم العودة للتطبيق لمتابعة بناء المسار.",
+          textConfirm: "فتح Google Maps",
+          textCancel: "إلغاء",
+          confirmTextColor: Colors.white,
+          buttonColor: const Color(0xFF2196F3),
+          onConfirm: () {
+            Get.back();
+            _openGoogleMapsToFixGps(); // فتح الخرائط للمندوب
+          },
+        );
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchCurrentPlan() async {
+    if (plan.value == null) return;
+    try {
+      // استخدام PlannerService هنا أيضاً
+      final responseData = await PlannerService.getPlanById(plan.value!.id);
+
+      if (responseData['isSuccess']) {
+        plan.value = PlanResponse.fromJson(responseData['data']);
+
+        await MapDrawerHelper.drawFullRoute(
+          routeMapController: routeMapController,
+          plan: plan.value,
+        );
+      }
+    } catch (e) {
+      print("ERROR REFRESHING CURRENT PLAN: $e");
+    }
+  }
+
+
+  void _openGoogleMapsToFixGps() async {
+    final Uri googleMapsUri = Uri.parse("https://www.google.com/maps");
+    try {
+      if (await canLaunchUrl(googleMapsUri)) {
+        await launchUrl(googleMapsUri, mode: LaunchMode.externalApplication);
+      } else {
+        AppSnackBar.error("تعذر فتح تطبيق Google Maps تلقائياً.");
+      }
+    } catch (e) {
+      print("Error launching maps: $e");
+    }
+  }
+
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
+}
+
+
+
+/*Future<void> initiatePlan({PharmacyDetailsModel? singlePharmacy}) async {
+    try {
       if (selectedType.value.isEmpty) {
         AppSnackBar.error("Please select your travel mode first.");
         return;
@@ -231,30 +376,4 @@ class PlanYourRouteController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  Future<void> fetchCurrentPlan() async {
-    if (plan.value == null) return;
-    try {
-      // استخدام PlannerService هنا أيضاً
-      final responseData = await PlannerService.getPlanById(plan.value!.id);
-
-      if (responseData['isSuccess']) {
-        plan.value = PlanResponse.fromJson(responseData['data']);
-
-        await MapDrawerHelper.drawFullRoute(
-          routeMapController: routeMapController,
-          plan: plan.value,
-        );
-      }
-    } catch (e) {
-      print("ERROR REFRESHING CURRENT PLAN: $e");
-    }
-  }
-
-  @override
-  void onClose() {
-    scrollController.dispose();
-    super.onClose();
-  }
-}
+  }*/

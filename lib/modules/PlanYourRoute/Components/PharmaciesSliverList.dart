@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../../Widgets/EmptyCard.dart';
+import '../../../Widgets/RegionSelector/RegionSelectorBinding.dart';
 import '../../../Widgets/RegionSelector/RegionSelector_Screen.dart';
 import '../../../Widgets/SelectablePharmacyCard.dart';
 import '../PlanYourRoute_Controller.dart';
@@ -39,7 +40,7 @@ class PharmaciesSliverList extends StatelessWidget {
                   .tr,
               buttonText: "SelectRegion".tr,
               onPressed: () async {
-                final result = await showModalBottomSheet(
+          /*      final result = await showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
                   shape: const RoundedRectangleBorder(
@@ -48,6 +49,20 @@ class PharmaciesSliverList extends StatelessWidget {
                     ),
                   ),
                   builder: (context) => RegionSelector(),
+                );*/
+                final result = await showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  builder: (context) {
+                    // 🟢 تهيئة التبعيات والكنترولر عبر الـ Binding قبل بناء الـ Widget
+                    RegionSelectorBinding().dependencies();
+                    return const RegionSelector();
+                  },
                 );
 
                 if (result != null) {

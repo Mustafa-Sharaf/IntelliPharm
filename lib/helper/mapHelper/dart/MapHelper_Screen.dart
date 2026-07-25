@@ -95,7 +95,8 @@ class MapHelperScreen extends StatelessWidget {
               heroTag: "fab_refresh_route",
               mini: true,
               onPressed: () {
-                Get.to(() => RePlanRouteScreen());
+                //Get.to(() => RePlanRouteScreen());
+                Get.toNamed("/rePlanRoute");
               },
               backgroundColor: colors.component,
               child: const Icon(

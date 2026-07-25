@@ -15,7 +15,9 @@ class ShowOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    final controller = Get.put(OrderDetailsController(orderId));
+    final controller = Get.find<OrderDetailsController>(
+      tag: orderId.toString(),
+    );
     final size = MediaQuery.of(context).size;
 
     return Scaffold(

@@ -77,10 +77,11 @@ class AddPharmacyScreen extends StatelessWidget {
                         ),
                         child: Text('PHARMACY_NAME'.tr, style: sectionTitleStyle),
                       ),
-                      PharmacyNameSection(
+                     /* PharmacyNameSection(
                         addPharmacyController: addPharmacyController,
                       ),
-
+*/
+                      const PharmacyNameSection(),
                       SizedBox(height: size.height * 0.02),
 
                       // --- SECTION: LOCATION ---
@@ -176,9 +177,10 @@ class AddPharmacyScreen extends StatelessWidget {
                         ),
                         child: Text('CONTACT_INF'.tr, style: sectionTitleStyle),
                       ),
-                      PharmacyContactSection(
+                     /* PharmacyContactSection(
                         addPharmacyController: addPharmacyController,
-                      ),
+                      ),*/
+                      const PharmacyContactSection(),
 
                       SizedBox(height: size.height * 0.01),
                     ],

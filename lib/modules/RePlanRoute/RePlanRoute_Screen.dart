@@ -15,7 +15,7 @@ class RePlanRouteScreen extends StatelessWidget {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     // Get.lazyPut(() => MapHelperController(), tag: "route");
     final size = MediaQuery.of(context).size;
-    final RePlanRouteController controller = Get.put(RePlanRouteController());
+    final controller = Get.find<RePlanRouteController>();
     return Scaffold(
       body: Column(
         children: [

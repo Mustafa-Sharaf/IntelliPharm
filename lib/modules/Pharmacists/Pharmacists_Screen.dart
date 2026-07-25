@@ -5,7 +5,6 @@ import '../../Widgets/Tabs.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/ContactLauncher/ContactLauncher.dart';
-import '../NewOrder/NewOrder_Screen.dart';
 import '../PharmacyDetails/PharmacyDetails_Screen.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
@@ -14,12 +13,12 @@ import 'Pharmacists_Controller.dart';
 class PharmacistsScreen extends StatelessWidget {
   PharmacistsScreen({super.key});
   final searchController = SearchControllerX();
-  final pharmacistsController = Get.put(PharmacistsController());
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final pharmacistsController = Get.find<PharmacistsController>();
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
@@ -61,9 +60,8 @@ class PharmacistsScreen extends StatelessWidget {
 
             SizedBox(height: size.height * 0.04),
 
-            /// TABS (تمت إحاطتها بـ Obx لجلب الترجمة والتبويب النشط)
             Obx(
-                  () => Tabs(
+              () => Tabs(
                 tabs: pharmacistsController.tabs,
                 selectedIndex: pharmacistsController.selectedTab.value,
                 onTap: pharmacistsController.changeTab,
@@ -73,11 +71,12 @@ class PharmacistsScreen extends StatelessWidget {
 
             /// COUNT
             Obx(
-                  () => Row(
+              () => Row(
                 children: [
                   Text(
                     "PHARMACIES_FOUND".trParams({
-                      'count': pharmacistsController.filteredPharmacies.length.toString(),
+                      'count': pharmacistsController.filteredPharmacies.length
+                          .toString(),
                     }),
                     style: TextStyle(
                       fontSize: 14,
@@ -94,7 +93,11 @@ class PharmacistsScreen extends StatelessWidget {
             Expanded(
               child: Obx(() {
                 if (pharmacistsController.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  );
                 }
 
                 final list = pharmacistsController.filteredPharmacies;
@@ -115,7 +118,7 @@ class PharmacistsScreen extends StatelessWidget {
                 return ListView.builder(
                   controller: pharmacistsController.scrollController,
                   itemCount:
-                  list.length +
+                      list.length +
                       (pharmacistsController.isMoreLoading.value ? 1 : 0),
                   itemBuilder: (context, index) {
                     /// LOADING
@@ -141,16 +144,18 @@ class PharmacistsScreen extends StatelessWidget {
                             : pharmacy.closeTime,
                         pharmacistName: pharmacy.pharmacistName ?? "N/A",
                         isOpen: pharmacy.checkIsOpen,
-                        onCartTap: () => Get.to(() => NewOrderScreen()),
+                        onCartTap: () => Get.toNamed("/newOrderScreen"),
                         onContactTap: () =>
                             ContactLauncher().showContactOptions(
                               context,
                               pharmacy.pharmacistPhone,
                             ),
-                        onDirectionsTap: () {},
+                        onDirectionsTap: () {
+                          Get.toNamed("/activeOptimizedRouteTracking");
+                        },
                         onViewNotesTap: () {
                           Get.to(
-                                () => const PharmacyDetailsScreen(),
+                            () => const PharmacyDetailsScreen(),
                             arguments: pharmacy.id,
                           );
                         },

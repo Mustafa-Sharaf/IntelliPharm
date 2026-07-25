@@ -79,65 +79,54 @@ class ConfirmDeliveryController extends GetxController {
         "/planner/v1/deliveries/confirm-delivery",
         data: formData,
       );
-      print("RESPONSE DATA: ${response.data}");
-      print("RESPONSE STATUS CODE: ${response.statusCode}");
 
-// التعديل هنا: فحص شامل ودقيق يتوافق مع الـ Model ومع الـ Status Code
       bool isApiSuccess = false;
 
       if (response.data != null) {
-        // نقوم بتحويل البيانات إلى Map صريحة لتجنب مشاكل النوع الدقيق
         final resData = response.data as Map<String, dynamic>;
-
-        // الفحص المباشر للحقول القادمة في الطباعة لديك
         isApiSuccess = resData['isSuccess'] == true ||
             resData['statusCode'] == 201 ||
             response.statusCode == 201;
       }
 
- /*     if (isApiSuccess) {
-        AppSnackBar.success("تم تأكيد التوصيل بنجاح");
-
-        // سيقوم بالرجوع الآن حتماً بعد نجاح الشرط
-        Get.back(result: true);
-      } else {
-        String errMsg = "فشل تأكيد التوصيل";
-        if (response.data != null && response.data is Map) {
-          errMsg = response.data['message'] ?? errMsg;
-        }
-        AppSnackBar.error(errMsg);
-      }*/
       if (isApiSuccess) {
         AppSnackBar.success("تم تأكيد التوصيل بنجاح");
 
-        // الحل هنا: نغلق الـ SnackBar فوراً لكي لا يبتلع أمر الـ Get.back
-        Get.closeAllSnackbars();
+        await Future.delayed(const Duration(milliseconds: 800));
 
-        // الآن سيعود حتماً إلى الصفحة السابقة
-        Get.back(result: true);
+        if (Get.context != null) {
+          Navigator.of(Get.context!).pop(true);
+        } else {
+          Get.back(result: true);
+        }
+        return;
       } else {
         String errMsg = "فشل تأكيد التوصيل";
         if (response.data != null && response.data is Map) {
           errMsg = response.data['message'] ?? errMsg;
         }
         AppSnackBar.error(errMsg);
+        isSubmitting.value = false;
       }
     } catch (e) {
+      isSubmitting.value = false;
       if (e is dio.DioException && e.response != null) {
         print("SERVER VALIDATION ERROR DETAILS: ${e.response?.data}");
         final serverMessage = e.response?.data['message'] ?? "بيانات الإدخال غير صالحة";
         AppSnackBar.error(serverMessage);
 
-        // معالجة ذكية: إذا كان التوصيل مكتملاً بالفعل بالسيرفر، نغلق الشاشة ونحدث محلياً أيضاً!
         if (e.response?.data['message']?.toString().contains("already completed") == true) {
-          Get.back(result: true);
+          await Future.delayed(const Duration(milliseconds: 800));
+          if (Get.context != null) {
+            Navigator.of(Get.context!).pop(true);
+          } else {
+            Get.back(result: true);
+          }
         }
       } else {
         print("Error confirming delivery: $e");
         AppSnackBar.error("حدث خطأ غير متوقع أثناء الاتصال");
       }
-    } finally {
-      isSubmitting.value = false;
     }
   }
 }

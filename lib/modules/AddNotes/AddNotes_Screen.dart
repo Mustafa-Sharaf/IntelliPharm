@@ -10,7 +10,7 @@ class AddNotesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-    final controller = Get.put(AddNotesController());
+    final controller = Get.find<AddNotesController>();
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -28,28 +28,32 @@ class AddNotesScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: size.width * 0.04),
+                // 🟢 نمرر المفتاح "general" والترجمة "GENERAL".tr
                 _buildFilterChip(
                   controller,
-                  "GENERAL".tr,
-                  Colors.blue.shade50,
-                  Colors.blue.shade700,
-                  const Color(0xFF1A2638),
+                  typeKey: "general",
+                  label: "GENERAL".tr,
+                  lightBgColor: Colors.blue.shade50,
+                  textColor: Colors.blue.shade700,
+                  darkBgColor: const Color(0xFF1A2638),
                 ),
                 SizedBox(width: size.width * 0.04),
                 _buildFilterChip(
                   controller,
-                  "TIP".tr,
-                  const Color(0xFFE0F7F4),
-                  const Color(0xFF00BFA5),
-                  const Color(0xFF163331),
+                  typeKey: "tip",
+                  label: "TIP".tr,
+                  lightBgColor: const Color(0xFFE0F7F4),
+                  textColor: const Color(0xFF00BFA5),
+                  darkBgColor: const Color(0xFF163331),
                 ),
                 SizedBox(width: size.width * 0.04),
                 _buildFilterChip(
                   controller,
-                  "WARNING".tr,
-                  const Color(0xFFFDF2E9),
-                  const Color(0xFFE67E22),
-                  const Color(0xFF382920),
+                  typeKey: "warning",
+                  label: "WARNING".tr,
+                  lightBgColor: const Color(0xFFFDF2E9),
+                  textColor: const Color(0xFFE67E22),
+                  darkBgColor: const Color(0xFF382920),
                 ),
               ],
             ),
@@ -87,7 +91,7 @@ class AddNotesScreen extends StatelessWidget {
                 ),
                 SizedBox(width: size.width * 0.04),
                 Obx(
-                  () => GestureDetector(
+                      () => GestureDetector(
                     onTap: controller.isSubmitting.value
                         ? null
                         : () => controller.submitNote(),
@@ -99,18 +103,18 @@ class AddNotesScreen extends StatelessWidget {
                       ),
                       child: controller.isSubmitting.value
                           ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
                           : const Icon(
-                              Icons.send_rounded,
-                              color: Colors.white,
-                              size: 20,
-                            ),
+                        Icons.send_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),
@@ -123,19 +127,22 @@ class AddNotesScreen extends StatelessWidget {
   }
 
   Widget _buildFilterChip(
-    AddNotesController controller,
-    String type,
-    Color lightBgColor,
-    Color textColor,
-    Color darkBgColor,
-  ) {
+      AddNotesController controller, {
+        required String typeKey, // مفتاح القيمة المقبولة بالباك إند (general, tip, warning)
+        required String label,   // النص المترجم المخصص للعرض
+        required Color lightBgColor,
+        required Color textColor,
+        required Color darkBgColor,
+      }) {
     return Obx(() {
       final isDarkMode = Get.isDarkMode;
-      bool isSelected = controller.selectedType.value == type;
+      // 🟢 نقارن الـ typeKey البرمجي بالـ selectedType المخزنة في الكنترولر
+      bool isSelected = controller.selectedType.value == typeKey;
       Color computedBg = isDarkMode ? darkBgColor : lightBgColor;
+
       return GestureDetector(
         onTap: () {
-          controller.changeSelectedType(type);
+          controller.changeSelectedType(typeKey);
         },
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -151,7 +158,7 @@ class AddNotesScreen extends StatelessWidget {
               CircleAvatar(radius: 3, backgroundColor: textColor),
               const SizedBox(width: 6),
               Text(
-                type,
+                label, // نعرض النص المترجم للحيود عن اللغة
                 style: TextStyle(
                   color: isSelected
                       ? textColor

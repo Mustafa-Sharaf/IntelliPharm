@@ -11,7 +11,8 @@ class MyDeliveriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(MyDeliveriesController());
+    //final controller = Get.put(MyDeliveriesController());
+    final controller = Get.find<MyDeliveriesController>();
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).extension<ThemeColors>()!;
 

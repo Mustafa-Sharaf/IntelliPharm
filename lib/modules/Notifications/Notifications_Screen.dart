@@ -6,9 +6,9 @@ import 'NotificationCard.dart';
 import 'notifications_controller.dart';
 
 class NotificationsScreen extends StatelessWidget {
-  NotificationsScreen({super.key});
+  const NotificationsScreen({super.key});
 
-  final controller = Get.put(NotificationsController());
+
 
 
 
@@ -16,6 +16,7 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final controller = Get.find<NotificationsController>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colors.backgroundMain,

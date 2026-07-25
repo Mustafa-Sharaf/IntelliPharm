@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/theme_extension.dart';
+import '../modules/ShowOrder/ShowOrderBinding.dart';
 import '../modules/ShowOrder/ShowOrder_Screen.dart';
 
 //New code
@@ -165,11 +166,18 @@ class OrderCard extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.to(
+                     /*    Get.to(
                                 () => ShowOrderScreen(
                               orderId: int.parse(orderId),
                             ),
+                          );*/
+                          final id = int.parse(orderId);
+
+                          Get.to(
+                                () => ShowOrderScreen(orderId: id),
+                            binding: ShowOrderBinding(id),
                           );
+
                         },
                         child: Icon(
                           Icons.chevron_right,

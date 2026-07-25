@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../app_theme/theme_extension.dart';
 import 'NavItem.dart';
 
@@ -78,7 +79,7 @@ class CustomBottomNav extends StatelessWidget {
                         fontFamily: 'Cairo',
                         color: isSelected ? const Color(0xff0C8A7B) : Colors.grey,
                       ),
-                      child: Text(item.label),
+                      child: Text(item.label.tr),
                     ),
                   ],
                 ),

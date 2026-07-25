@@ -42,7 +42,7 @@ class ActiveDeliveryRouteController extends GetxController {
         routeMapController.update();
         plan.refresh();
 
-        return true; // نجحت العملية
+        return true; 
       } else {
         AppSnackBar.error("فشل في تهيئة مسار التوصيل.");
         return false;

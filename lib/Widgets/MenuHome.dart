@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../app_theme/AppColors.dart';
 import '../app_theme/theme_controller.dart';
 import '../app_theme/theme_extension.dart';
@@ -15,6 +16,7 @@ class DrawerHome extends StatelessWidget {
     final themeController = Get.find<ThemeController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final String role = GetStorage().read<String>('role') ?? 'rep';
 
     return SizedBox(
       width: size.width * 0.68,
@@ -97,18 +99,22 @@ class DrawerHome extends StatelessWidget {
               ),
               onTap: () {},
             ),
-            ListTile(
-              leading: Icon(Icons.gps_fixed_rounded, color: colors.textDefault),
-              title: Text(
-                'My_Targets'.tr,
-                style: TextStyle(
-                  fontSize: 15,
+            if (role == 'rep')
+              ListTile(
+                leading: Icon(
+                  Icons.gps_fixed_rounded,
                   color: colors.textDefault,
-                  fontFamily: 'Cairo',
                 ),
+                title: Text(
+                  'My_Targets'.tr,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: colors.textDefault,
+                    fontFamily: 'Cairo',
+                  ),
+                ),
+                onTap: () {},
               ),
-              onTap: () {},
-            ),
             ListTile(
               leading: Icon(Icons.language, color: colors.textDefault),
               title: Text(
@@ -175,7 +181,7 @@ class DrawerHome extends StatelessWidget {
                   fontFamily: 'Cairo',
                 ),
               ),
-              onTap: () => Get.toNamed("/signIn"),
+              onTap: () => Get.toNamed("/login"),
             ),
             ListTile(
               leading: Icon(Icons.privacy_tip, color: colors.textDefault),

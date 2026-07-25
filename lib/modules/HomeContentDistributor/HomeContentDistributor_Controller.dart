@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../../services/ServiceApi/DeliveryHomeService.dart';
 import 'HomeContentDistributor_Model.dart';
 
@@ -9,13 +8,13 @@ class DeliveryHomeController extends GetxController {
 
   @override
   void onInit() {
-    fetchDeliveryHome();
     super.onInit();
+    fetchDeliveryHome();
   }
 
-  Future<void> fetchDeliveryHome() async {
+  Future<void> fetchDeliveryHome({bool showLoading = true}) async {
     try {
-      isLoading(true);
+      if (showLoading) isLoading(true);
       final responseMap = await DeliveryHomeService.getDeliveryHome();
       if (responseMap['isSuccess'] == true) {
         homeData.value = DeliveryHomeModel.fromJson(responseMap);
@@ -23,7 +22,7 @@ class DeliveryHomeController extends GetxController {
     } catch (e) {
       print("Error fetching delivery home: $e");
     } finally {
-      isLoading(false);
+      if (showLoading) isLoading(false);
     }
   }
 }

@@ -132,7 +132,7 @@ class MyLanguage implements Translations{
       "Directions":"Directions",
       "ViewNotes":"View Notes",
       //Pharmacy Details Screen
-      "PharmacyDetails":"PharmacyDetails",
+      "PharmacyDetails":"Pharmacy Details",
       "Failed_to_load_pharmacy_details":"Failed to load pharmacy details",
       "VisitNotes":"VisitNotes",
       "ALL":"ALL",
@@ -180,7 +180,7 @@ class MyLanguage implements Translations{
       "Notes":"Notes",
       "No_notes_available":"No notes available",
       //Visit Details Screen
-      "VisitDetails":"VisitDetails",
+      "VisitDetails":"Visit Details",
       "RecentNotes":"Recent Notes",
       "ViewAllNotes":"View All Notes",
       "No_notes_available_for_this_pharmacy_yet.":"No notes available for this pharmacy yet.",
@@ -198,6 +198,7 @@ class MyLanguage implements Translations{
       "Pharmacies":"Pharmacies",
       "Deliveries":"Deliveries",
       "Route":"Route",
+      "DELIVERIES":"DELIVERIES",
       //Pharmacy Selector
       "Search_pharmacy...":"Search pharmacy...",
       "Region":"Region",
@@ -321,7 +322,7 @@ class MyLanguage implements Translations{
       "All_Categories":"All Categories",
       "NoNotifications":"NoNotifications",
       "Notifications":"Notifications",
-      "":"",
+      "DeliveryConfirmation":"Delivery Confirmation",
       "":"",
 
 
@@ -546,6 +547,7 @@ class MyLanguage implements Translations{
       "Pharmacies": "الصيدليات",
       "Deliveries": "الشحنات",
       "Route": "المسار",
+      "DELIVERIES":"الشحنات",
 
       // Pharmacy Selector
       "Search_pharmacy...": "ابحث عن صيدلية...",
@@ -667,6 +669,7 @@ class MyLanguage implements Translations{
       "All_Categories":"جميع الفئات",
       "NoNotifications":"لا يوجد إشعارات",
       "Notifications":"الإشعارات",
+      "DeliveryConfirmation":"تأكيد التسليم",
 
 
 

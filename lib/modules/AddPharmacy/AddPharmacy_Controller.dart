@@ -164,6 +164,9 @@ class AddPharmacyController extends GetxController {
     pharmacistNameController.dispose();
     phoneController.dispose();
     altPhoneController.dispose();
+    if (Get.isRegistered<MapHelperController>(tag: "addPharmacy")) {
+      Get.delete<MapHelperController>(tag: "addPharmacy");
+    }
     super.onClose();
   }
 }
