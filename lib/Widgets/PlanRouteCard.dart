@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../modules/PlanYourRoute/PlanYourRoute_Screen.dart';
 
 
-//New code
 class PlanRouteCard extends StatelessWidget {
   const PlanRouteCard({super.key});
 

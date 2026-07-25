@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
+import '../../Widgets/EmptyCard.dart';
 import '../../Widgets/RouteStepItem.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import '../PlanYourRoute/PlanYourRoute_Controller.dart';
+import '../PlanYourRoute/PlanYourRoute_Screen.dart';
 import '../RePlanRoute/RePlanRoute_Screen.dart';
 import '../VisitDetails/VisitDetails_Screen.dart';
 import 'ActiveOptimizedRouteTracking_Controller.dart';
@@ -82,8 +84,14 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       final nextVisit = controller.nextVisit;
                       if (plan == null || nextVisit == null) {
                         return  Center(
-                          child: Text(
+                          child:EmptyPlanCard(
+                            title: "NoVisitsPlannedYet".tr,
+                            subtitle:
                             "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
+                            buttonText: "CreatePlan".tr,
+                            onPressed: () {
+                              Get.to(() => PlanYourRouteScreen());
+                            },
                           ),
                         );
                       }
