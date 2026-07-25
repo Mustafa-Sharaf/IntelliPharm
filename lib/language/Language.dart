@@ -319,8 +319,8 @@ class MyLanguage implements Translations{
       "IntelliPharma_Privacy_&_Security":"IntelliPharma Privacy & Security",
       "Search...":"Search...",
       "All_Categories":"All Categories",
-      "":"",
-      "":"",
+      "NoNotifications":"NoNotifications",
+      "Notifications":"Notifications",
       "":"",
       "":"",
       "":"",
@@ -666,6 +666,8 @@ class MyLanguage implements Translations{
       "IntelliPharma_Privacy_&_Security":"خصوصية وأمن إنتلي فارما",
       "Search...":"ابحث...",
       "All_Categories":"جميع الفئات",
+      "NoNotifications":"لا يوجد إشعارات",
+      "Notifications":"الإشعارات",
 
 
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intellipharm/services/DioClient.dart';
+import 'Notifications.dart';
 import 'Widgets/PharmacySelector/PharmacyList_Controller.dart';
 import 'app_theme/app_theme.dart';
 import 'app_theme/theme_controller.dart';
@@ -18,10 +19,14 @@ import 'modules/NewOrder/NewOrder_Controller.dart';
 import 'modules/PlanYourRoute/PlanYourRoute_Controller.dart';
 import 'modules/SignIn/SignIn_Screen.dart';
 import 'modules/Splash/Splash_Screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  await Firebase.initializeApp();
+  await Notifications().initNotifications();
   Get.put(MyLanguageController());
   DioClient.init();
 
@@ -44,7 +49,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final String initialRoute;
-  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {

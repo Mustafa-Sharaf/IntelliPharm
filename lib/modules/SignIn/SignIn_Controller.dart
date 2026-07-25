@@ -15,6 +15,8 @@ class SignInController extends GetxController {
   final box = GetStorage();
 
   Future<void> login() async {
+    String fcmToken = GetStorage().read('fcm_token')??"";
+    print("fcmToken= $fcmToken");
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
 
@@ -31,13 +33,13 @@ class SignInController extends GetxController {
       var response = await AuthService.login(
         email: email,
         password: password,
+        deviceToken : fcmToken ,
       );
 
       var data = response.data;
 
       if (data["isSuccess"] == true) {
-        UserModel user = UserModel.fromJson(data["data"]);
-
+        UserModel user = UserModel.fromJson(data["data"], fcmToken: fcmToken);
         box.write("token", data["data"]["access_token"]);
         box.write("refresh_token", data["data"]["refresh_token"]);
         box.write("user", data["data"]);

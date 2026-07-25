@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../app_theme/theme_extension.dart';
 import '../helper/DateHelper.dart';
+import '../modules/Notifications/Notifications_Screen.dart';
 
 //New code
 class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
@@ -81,7 +82,9 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
           Stack(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(()=>NotificationsScreen());
+                },
                 icon: Icon(
                   Icons.notifications_none,
                   color: colors.textPrimary,

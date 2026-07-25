@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "961183523349",
+    "project_id": "gradproj2026-14176",
+    "storage_bucket": "gradproj2026-14176.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961183523349:android:a9b344fcdf9dc9bdfc241c",
+        "android_client_info": {
+          "package_name": "com.example.intellipharm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZw-sgihPm0addiSfzzG4ykPWQ_2Fszx4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
