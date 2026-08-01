@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
-import '../app_theme/theme_extension.dart';
-import '../modules/PharmacyDetails/PharmacyDetailsBinding.dart';
-import '../modules/PharmacyDetails/PharmacyDetails_Screen.dart';
+import '../../app_theme/theme_extension.dart';
+import '../../modules/PharmacyDetails/PharmacyDetailsBinding.dart';
+import '../../modules/PharmacyDetails/PharmacyDetails_Screen.dart';
+import 'ChangeStatusDialog.dart';
 
 class RouteStepItem extends StatelessWidget {
   const RouteStepItem({
@@ -18,6 +19,8 @@ class RouteStepItem extends StatelessWidget {
     this.index,
     this.onDetailsPressed,
     this.showLine = true,
+    this.onStartVisit,
+    this.onStatusChange,
   });
 
   final int id;
@@ -29,6 +32,29 @@ class RouteStepItem extends StatelessWidget {
   final String? index;
   final VoidCallback? onDetailsPressed;
   final bool showLine;
+
+  /// Callbacks للـ APIs
+  final Future<void> Function(int visitId)? onStartVisit;
+  final Future<void> Function(
+    int visitId,
+    String status,
+    String cause,
+    String? notes,
+  )?
+  onStatusChange;
+
+  void _showChangeStatusDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => ChangeStatusDialog(
+        onSubmit: (status, cause, notes) {
+          if (onStatusChange != null) {
+            onStatusChange!(id, status, cause, notes);
+          }
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +118,6 @@ class RouteStepItem extends StatelessWidget {
                     ? Border.all(color: Colors.grey.shade300)
                     : null,
               ),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -110,16 +135,13 @@ class RouteStepItem extends StatelessWidget {
                               fontSize: 15,
                               color: isDone ? Colors.grey : colors.textDefault,
                               fontFamily: 'Cairo',
-
                               decoration: isDone
                                   ? TextDecoration.lineThrough
                                   : TextDecoration.none,
-
                               decorationColor: Colors.grey,
                               decorationThickness: 2,
                             ),
                           ),
-
                           Text(
                             subtitle,
                             style: TextStyle(
@@ -130,13 +152,11 @@ class RouteStepItem extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       GestureDetector(
-                        onTap: (){
-                          //Get.to(() => const PharmacyDetailsScreen(), arguments: id);
+                        onTap: () {
                           Get.to(
-                                () => const PharmacyDetailsScreen(),
-                            arguments:id,
+                            () => const PharmacyDetailsScreen(),
+                            arguments: id,
                             binding: PharmacyDetailsBinding(),
                           );
                         },
@@ -148,7 +168,7 @@ class RouteStepItem extends StatelessWidget {
                     ],
                   ),
 
-                  /// BUTTON
+                  /// BUTTON DETAILS
                   if (showDetails) ...[
                     SizedBox(height: size.height * 0.012),
                     SizedBox(
@@ -161,7 +181,7 @@ class RouteStepItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child:  Text(
+                        child: Text(
                           "Visit_Details".tr,
                           style: TextStyle(
                             color: AppColors.primaryColor,
@@ -171,6 +191,76 @@ class RouteStepItem extends StatelessWidget {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(height: size.height * 0.01),
+
+                    /// ACTION BUTTONS (Start Visit & Status Change)
+                    Row(
+                      children: [
+                        /// Button 1: Start Visit
+                        Expanded(
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              if (onStartVisit != null) {
+                                onStartVisit!(id);
+                                //print("onStartVisit=$id");
+                              }
+                            },
+                            icon: const Icon(
+                              FontAwesomeIcons.play,
+                              size: 11,
+                              color: Colors.white,
+                            ),
+                            label: Text(
+                              "Start_of_visit".tr,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryColor,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: size.width * 0.06),
+
+                        /// Button 2: Change Status
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () => _showChangeStatusDialog(context),
+                            icon: Icon(
+                              FontAwesomeIcons.sliders,
+                              size: 11,
+                              color: colors.textDefault,
+                            ),
+                            label: Text(
+                              "Change_status".tr,
+                              style: TextStyle(
+                                color: colors.textDefault,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              side: BorderSide(color: Colors.grey.shade300),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ],

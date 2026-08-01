@@ -323,7 +323,35 @@ class MyLanguage implements Translations{
       "NoNotifications":"NoNotifications",
       "Notifications":"Notifications",
       "DeliveryConfirmation":"Delivery Confirmation",
+      "Start_of_visit":"Start of visit",
+      "Change_status":"Change status",
+      "Change_visit_status":"Change visit status",
+      "Choose_the_reason_for_non-completion...":"Choose the reason for non-completion...",
+      "Enter_additional_notes_(optional)...":"Enter additional notes (optional)...",
+      "Please_select_the_reason_first.":"Please select the reason first.",
+      'pharmacy_closure': 'Pharmacy Closed',
+      'traffic_jam': 'Traffic Jam',
+      'official_holiday': 'Official Holiday',
+      'weather_conditions': 'Weather Conditions',
+      'pharmacist_delay': 'Pharmacist Delay',
+      'status_blocked': 'Blocked',
+      'status_failed': 'Failed',
+      'status_skipped': 'Skipped',
+      "WHY_ARE_YOU_RE-PLANNING":"WHY ARE YOU RE-PLANNING?",
+      "Enter_the_reason_for_re-planning...":"Enter the reason for re-planning...",
+      "Submit":"Submit",
+      "Cancel":"Cancel",
+      'road_closure': 'Road Closure',
+      'accident_ahead': 'Accident Ahead',
+      'pharmacy_closed': 'Pharmacy Closed',
+      'schedule_change': 'Schedule Change',
+      'other': 'Other',
       "":"",
+      "":"",
+      "":"",
+      "":"",
+
+
 
 
 
@@ -644,32 +672,65 @@ class MyLanguage implements Translations{
       'privacy_policy_content': '''
 نحن في IntelliPharma نولي أهمية كبيرة لخصوصية بياناتك وحمايتها. تهدف هذه السياسة إلى توضيح كيفية جمع واستخدام بياناتك عند استخدام التطبيق.
 
-1. البيانات التي نجمعها:
-• معلومات الحساب: مثل الاسم، رقم الهاتف، والدور الوظيفي (مندوب / موزع).
-• بيانات الموقع الجغرافي (GPS): يُستخدم تحديد الموقع الجغرافي لتحديد مواقع الصيدليات المسجلة وتسهيل تنظيم وخطة الزيارات والتوصيل.
-• الصور والمرفقات: في حال رفع صور الصيدليات أو المستندات والطلبيات.
+     1. البيانات التي نجمعها:
+     • معلومات الحساب: مثل الاسم، رقم الهاتف، والدور الوظيفي (مندوب / موزع).
+     • بيانات الموقع الجغرافي (GPS): يُستخدم تحديد الموقع الجغرافي لتحديد مواقع الصيدليات المسجلة وتسهيل تنظيم وخطة الزيارات والتوصيل.
+     • الصور والمرفقات: في حال رفع صور الصيدليات أو المستندات والطلبيات.
 
-2. كيفية استخدام البيانات:
-• تنظيم وتحديث مسارات الزيارات والتوصيل اليومية.
-• إدارة الطلبيات والحسابات المالية المتعلقة بالصيدليات.
-• تحسين تجربة المستخدم وأداء التطبيق.
+     2. كيفية استخدام البيانات:
+     • تنظيم وتحديث مسارات الزيارات والتوصيل اليومية.
+     • إدارة الطلبيات والحسابات المالية المتعلقة بالصيدليات.
+     • تحسين تجربة المستخدم وأداء التطبيق.
 
-3. مشاركة البيانات:
-• نلتزم بعدم بيع أو مشاركة بياناتك مع أي أطراف تجارية خارجية.
-• تُستخدم البيانات حصراً ضمن نطاق إدارة العمليات والمستودع.
+     3. مشاركة البيانات:
+     • نلتزم بعدم بيع أو مشاركة بياناتك مع أي أطراف تجارية خارجية.
+     • تُستخدم البيانات حصراً ضمن نطاق إدارة العمليات والمستودع.
 
-4. أمان البيانات:
-• نطبق إجراءات أمان تقنية مناسبة لحماية بياناتك من الوصول غير المصرح به.
+     4. أمان البيانات:
+     • نطبق إجراءات أمان تقنية مناسبة لحماية بياناتك من الوصول غير المصرح به.
 
-5. التواصل والدعم:
-• في حال كان لديك أي استفسار حول سياسة الخصوصية، يمكنك التواصل معنا عبر قسم الدعم الفني في التطبيق.
-''',
+     5. التواصل والدعم:
+     • في حال كان لديك أي استفسار حول سياسة الخصوصية، يمكنك التواصل معنا عبر قسم الدعم الفني في التطبيق.
+     ''',
       "IntelliPharma_Privacy_&_Security":"خصوصية وأمن إنتلي فارما",
       "Search...":"ابحث...",
       "All_Categories":"جميع الفئات",
       "NoNotifications":"لا يوجد إشعارات",
       "Notifications":"الإشعارات",
       "DeliveryConfirmation":"تأكيد التسليم",
+      "Start_of_visit":"بداية الزيارة",
+      "Change_status":"تغيير الحالة",
+      "Change_visit_status":"تغيير حالة الزيارة",
+      "Choose_the_reason_for_non-completion...":"اختر سبب عدم الاتمام...",
+      "Enter_additional_notes_(optional)...":"أدخل ملاحظات إضافية (اختياري)...",
+      "Please_select_the_reason_first.":"يرجى اختيار السبب أولا",
+      'pharmacy_closure': 'الصيدلية مغلقة',
+      'traffic_jam': 'ازدحام مروري',
+      'official_holiday': 'عطلة رسمية',
+      'weather_conditions': 'ظروف جوية',
+      'pharmacist_delay': 'تأخير من الصيدلي',
+      'status_blocked': 'محظور',
+      'status_failed': 'فشل',
+      'status_skipped': 'تخطي',
+      "WHY_ARE_YOU_RE-PLANNING":"لماذا تُعيد التخطيط؟",
+      "Enter_the_reason_for_re-planning...":"أدخل سبب إعادة التخطيط...",
+      "Submit":"إرسال",
+      "Cancel":"إلغاء",
+      'road_closure': 'الطرق مغلق',
+      'accident_ahead': 'حادث أمامي',
+      'pharmacy_closed': 'الصيدلية مغلقة',
+      'schedule_change': 'تغيير في الجدول',
+      'other': 'سبب آخر',
+      "PROOF_OF_DELIVERY": "إثبات التسليم",
+      "Take_Photo": "التقاط صورة",
+      "Tap_to_capture_parcel": "اضغط لالتقاط صورة للطرد",
+      "RECEIVER_NAME": "اسم المستلم",
+      "PAYMENT_AMOUNT_(OPTIONAL)": "مبلغ الدفع (اختياري)",
+      "CHECK_NOTES_(OPTIONAL)": "ملاحظات الفحص (اختياري)",
+      "Add_any_delivery_satisfaction_notes": "أضف أي ملاحظات حول رضا المستلم عن عملية التسليم",
+      "Recipient's_name": "اسم المستلم",
+      "Processing...": "جارٍ المعالجة...",
+
 
 
 

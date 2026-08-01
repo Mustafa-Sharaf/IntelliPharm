@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import '../../services/ServiceApi/TrackingService.dart';
+import '../ActiveDeliveryRoute/ActiveDeliveryRoute_Controller.dart';
 import '../PlanYourRoute/PlanYourRoute_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import 'TrackingPingRequest.dart';
@@ -86,11 +88,26 @@ class LiveLocationTracker extends GetxService {
     }
   }
 
-  /// إرسال الطلب للباك إند فقط
+
+  /// إرسال الطلب للباك إند بناءً على نوع المستخدم
   Future<void> _sendLocationToBackendOnly(Position position) async {
-    final planController = Get.find<PlanYourRouteController>();
-    final int regionId = planController.selectedRegion.value?.id ?? 0;
-    final int taskId = planController.plan.value?.id ?? 0;
+    final String role = GetStorage().read<String>('role') ?? 'rep';
+    int? regionId;
+    int? taskId;
+
+    if (role == 'rep' && Get.isRegistered<PlanYourRouteController>()) {
+      final planController = Get.find<PlanYourRouteController>();
+      regionId = planController.selectedRegion.value?.id;
+      taskId = planController.plan.value?.id;
+    }
+    else if (Get.isRegistered<ActiveDeliveryRouteController>()) {
+      final deliveryController = Get.find<ActiveDeliveryRouteController>();
+      final plan = deliveryController.plan.value;
+
+      if (plan != null && plan.visits.isNotEmpty) {
+        taskId = plan.visits.first.deliveryId;
+      }
+    }
 
     final request = TrackingPingRequest(
       lat: position.latitude,
@@ -100,6 +117,8 @@ class LiveLocationTracker extends GetxService {
       regionId: regionId,
       taskId: taskId,
     );
+
+    print("regionId=$regionId,taskId=$taskId");
 
     TrackingService.sendPing(request);
   }

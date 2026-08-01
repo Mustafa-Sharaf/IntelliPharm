@@ -4,10 +4,13 @@ import '../../Widgets/AppSnackBar.dart';
 import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
 import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../services/ApiService.dart';
+import '../Tracking/LiveLocationTracker.dart';
 import 'ActiveDeliveryRoute_Model.dart';
 
 class ActiveDeliveryRouteController extends GetxController {
   final routeMapController = Get.find<MapHelperController>(tag: "route");
+  // 🟢 استدعاء الـ Location Tracker
+  LiveLocationTracker get locationTracker => Get.find<LiveLocationTracker>();
 
   var isLoading = false.obs;
   var plan = Rxn<DeliveryPlan>();
@@ -41,6 +44,7 @@ class ActiveDeliveryRouteController extends GetxController {
 
         routeMapController.update();
         plan.refresh();
+        locationTracker.startTracking();
 
         return true; 
       } else {
@@ -93,5 +97,12 @@ class ActiveDeliveryRouteController extends GetxController {
       activeVisitIndex.value = updatedVisits.length;
     }
     plan.refresh();
+  }
+
+  @override
+  void onClose() {
+    // 🛑 إيقاف التتبع عند إغلاق صفحة الموزع
+    locationTracker.stopTracking();
+    super.onClose();
   }
 }

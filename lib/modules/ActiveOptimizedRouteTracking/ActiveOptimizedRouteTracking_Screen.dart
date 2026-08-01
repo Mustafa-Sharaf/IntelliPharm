@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/EmptyCard.dart';
-import '../../Widgets/RouteStepItem.dart';
+import '../../Widgets/RouteStepItem/RouteStepController.dart';
+import '../../Widgets/RouteStepItem/RouteStepItem.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import '../PlanYourRoute/PlanYourRoute_Controller.dart';
-import '../PlanYourRoute/PlanYourRoute_Screen.dart';
-import '../RePlanRoute/RePlanRoute_Screen.dart';
 import '../VisitDetails/VisitDetailsBinding.dart';
 import '../VisitDetails/VisitDetails_Screen.dart';
 import 'ActiveOptimizedRouteTracking_Controller.dart';
@@ -23,6 +22,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final controller = Get.find<ActiveOptimizedRouteTrackingController>();
     final planYourRouteController = Get.find<PlanYourRouteController>();
+    final routeStepController = Get.find<RouteStepController>();
 
     return Scaffold(
       body: Column(
@@ -152,11 +152,10 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                           ),
                           ElevatedButton.icon(
                             onPressed: () {
-                              //Get.to(() => RePlanRouteScreen());
-                              Get.toNamed('/rePlanRoute');
+                              controller.handleRePlan();
                             },
                             icon: const Icon(
-                              Icons.refresh, //navigation_outlined
+                              Icons.refresh,
                               size: 18,
                             ),
                             label: Text(
@@ -190,7 +189,80 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                     ),
                     SizedBox(height: size.width * 0.04),
                     /// Route Schedule Dynamic List
+
                     Obx(() {
+                      if (planYourRouteController.isLoading.value) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ),
+                        );
+                      }
+                      final plan = planYourRouteController.plan.value;
+                      if (plan == null) return const SizedBox();
+                      return Column(
+                        children: List.generate(plan.visits.length, (index) {
+                          final visit = plan.visits[index];
+                          String calculatedETA = PlanRouteCalculator.getETAForVisit(plan, index);
+                          String subtitleText = visit.visited
+                              ? "VISITED_AT".trParams({'time': calculatedETA})
+                              : "ETA_TIME".trParams({'time': calculatedETA});
+
+                          return RouteStepItem(
+                            id: visit.id, // 👈 انتبه! تمرير visit.id للـ API مباشرة
+                            title: visit.name,
+                            subtitle: subtitleText,
+                            index: visit.visitOrder.toString(),
+                            isCurrent: controller.nextVisit != null &&
+                                visit.pharmacyId == controller.nextVisit!.pharmacyId,
+                            isDone: visit.visited,
+                            showLine: index != plan.visits.length - 1,
+                            showDetails: controller.nextVisit != null &&
+                                visit.pharmacyId == controller.nextVisit!.pharmacyId,
+                            onDetailsPressed: () async {
+                              final bool? isChecked = await Get.to(
+                                    () => const VisitDetailsScreen(),
+                                arguments: {
+                                  "pharmacyId": visit.pharmacyId,
+                                  "visitId": visit.id,
+                                },
+                                binding: VisitDetailsBinding(),
+                              );
+                              if (isChecked == true) {
+                                await controller.refreshTrackingData();
+                              }
+                            },
+
+                            onStartVisit: (visitId) async {
+                              print("Start Visit Pressed for Visit ID: $visitId");
+                              await routeStepController.startVisit(visitId);
+                            },
+                            onStatusChange: (visitId, status, cause, notes) async {
+                              print("Change Status Pressed: ID: $visitId -> Status: $status, Cause: $cause, Notes: $notes");
+                              await routeStepController.updateVisitStatus(
+                                visitId,
+                                status,
+                                cause,
+                                notes: notes,
+                              );
+                            },
+                          );
+                        }),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
+/*Obx(() {
                       if (planYourRouteController.isLoading.value) {
                         return Center(
                           child: CircularProgressIndicator(
@@ -224,13 +296,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                                          visit.pharmacyId ==
                                          controller.nextVisit!.pharmacyId,
                             onDetailsPressed: () async {
-                              final bool? isChecked = await /*Get.to(
-                                () => const VisitDetailsScreen(),
-                                arguments: {
-                                  "pharmacyId": visit.pharmacyId,
-                                  "visitId": visit.id,
-                                },
-                              );*/
+                              final bool? isChecked = await
                               Get.to(
                                     () => const VisitDetailsScreen(),
                                 arguments: {
@@ -246,14 +312,4 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                           );
                         }),
                       );
-                    }),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+                    }),*/

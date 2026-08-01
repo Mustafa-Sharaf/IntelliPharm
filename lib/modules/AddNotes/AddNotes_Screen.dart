@@ -28,7 +28,6 @@ class AddNotesScreen extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: size.width * 0.04),
-                // 🟢 نمرر المفتاح "general" والترجمة "GENERAL".tr
                 _buildFilterChip(
                   controller,
                   typeKey: "general",
@@ -128,15 +127,15 @@ class AddNotesScreen extends StatelessWidget {
 
   Widget _buildFilterChip(
       AddNotesController controller, {
-        required String typeKey, // مفتاح القيمة المقبولة بالباك إند (general, tip, warning)
-        required String label,   // النص المترجم المخصص للعرض
+        required String typeKey,
+        required String label,
         required Color lightBgColor,
         required Color textColor,
         required Color darkBgColor,
       }) {
     return Obx(() {
       final isDarkMode = Get.isDarkMode;
-      // 🟢 نقارن الـ typeKey البرمجي بالـ selectedType المخزنة في الكنترولر
+
       bool isSelected = controller.selectedType.value == typeKey;
       Color computedBg = isDarkMode ? darkBgColor : lightBgColor;
 
@@ -158,7 +157,7 @@ class AddNotesScreen extends StatelessWidget {
               CircleAvatar(radius: 3, backgroundColor: textColor),
               const SizedBox(width: 6),
               Text(
-                label, // نعرض النص المترجم للحيود عن اللغة
+                label,
                 style: TextStyle(
                   color: isSelected
                       ? textColor

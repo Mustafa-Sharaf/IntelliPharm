@@ -3,8 +3,8 @@ class TrackingPingRequest {
   final double lon;
   final double heading;
   final double speed;
-  final int regionId;
-  final int taskId;
+  final int? regionId;
+  final int? taskId;
 
   TrackingPingRequest({
     required this.lat,
