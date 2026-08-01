@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
+import '../EditOrder/EditOrderBinding.dart';
+import '../EditOrder/EditOrderScreen.dart';
 import 'HeaderCard.dart';
 import 'OrderItemCard.dart';
 import 'ShowOrder_Controller.dart';
@@ -141,6 +143,43 @@ class ShowOrderScreen extends StatelessWidget {
           ],
         );
       }),
+  /*    floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.primaryColor,
+        child: const Icon(Icons.edit, color: Colors.white),
+        onPressed: () {
+          final order = controller.order.value;
+          if (order != null) {
+            Get.to(
+                  () => EditOrderScreen(orderId: order.id),
+              binding: EditOrderBinding(orderId: order.id, order: order),
+            );
+          }
+        },
+      ),*/
+      floatingActionButton: Obx(() {
+        final order = controller.order.value;
+
+        // التأكد من وجود الطلب وأن حالته pending أو processing فقط
+        if (order == null) return const SizedBox.shrink();
+
+        final status = order.status.toLowerCase();
+        final canEdit = status == 'pending' || status == 'processing';
+
+        if (!canEdit) return const SizedBox.shrink();
+
+        return FloatingActionButton(
+          backgroundColor: AppColors.primaryColor,
+          child: const Icon(Icons.edit, color: Colors.white),
+          onPressed: () {
+            Get.to(
+                  () => EditOrderScreen(orderId: order.id),
+              binding: EditOrderBinding(orderId: order.id, order: order),
+            );
+          },
+        );
+      }),
     );
+
   }
+
 }

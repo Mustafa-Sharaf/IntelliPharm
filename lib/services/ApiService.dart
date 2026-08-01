@@ -17,4 +17,7 @@ class ApiService {
   static Future<Response> patch(String url, {dynamic data}) async {
     return await DioClient.dio.patch(url, data: data);
   }
+  static Future<Response> put(String url, {dynamic data}) async {
+    return await DioClient.dio.put(url, data: data);
+  }
 }

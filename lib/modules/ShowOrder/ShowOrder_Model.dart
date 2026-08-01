@@ -45,6 +45,7 @@ class OrderDetailsModel {
 }
 
 class OrderItemModel {
+  final int medicineId;
   final String medicineName;
   final int quantity;
   final String unitPrice;
@@ -52,6 +53,7 @@ class OrderItemModel {
   final int gift;
 
   OrderItemModel({
+    required this.medicineId,
     required this.medicineName,
     required this.quantity,
     required this.unitPrice,
@@ -61,6 +63,7 @@ class OrderItemModel {
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
     return OrderItemModel(
+      medicineId: json['medicine_id'] ?? 0,
       medicineName: json['medicine']['commercial_name'] ?? '',
       quantity: json['quantity'],
       unitPrice: json['unit_price'],
@@ -69,3 +72,4 @@ class OrderItemModel {
     );
   }
 }
+

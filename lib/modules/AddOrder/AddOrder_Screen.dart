@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/Tabs.dart';
 import '../NewOrder/NewOrder_Controller.dart';
-import '../NewOrder/NewOrder_Screen.dart';
 import '../../Widgets/MedicineCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../Searching/Searching_Controller.dart';
@@ -52,8 +51,6 @@ class AddOrderScreen extends StatelessWidget {
                   clipBehavior: Clip.none,
                   children: [
                     const Icon(Icons.shopping_cart_rounded, size: 28),
-
-                    // يُعرض المؤشر فقط إذا كان هناك عناصر في السلة
                     if (count > 0)
                       Positioned(
                         top: -4,
@@ -154,7 +151,6 @@ class AddOrderScreen extends StatelessWidget {
                     }
 
                     final med = addOrderController.medicines[index];
-
                     return MedicineCard(
                       commercialName: med.commercialName,
                       scientificName: med.scientificName,

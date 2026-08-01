@@ -346,10 +346,19 @@ class MyLanguage implements Translations{
       'pharmacy_closed': 'Pharmacy Closed',
       'schedule_change': 'Schedule Change',
       'other': 'Other',
+      //Edit Order
+      "EditOrder":"Edit Order",
+      "No_items_in_order":"No items in order",
+      "AddNewMedicine":"Add New Medicine",
+      "SaveChanges":"Save Changes",
+      "AddMedicineToOrder":"Add Medicine To Order",
+      "OnTheWay":"On The Way",
       "":"",
       "":"",
       "":"",
       "":"",
+      "":"",
+
 
 
 
@@ -730,6 +739,12 @@ class MyLanguage implements Translations{
       "Add_any_delivery_satisfaction_notes": "أضف أي ملاحظات حول رضا المستلم عن عملية التسليم",
       "Recipient's_name": "اسم المستلم",
       "Processing...": "جارٍ المعالجة...",
+      "EditOrder":"تعديل الطلب",
+      "No_items_in_order":"لا توجد عناصر بالترتيب",
+      "AddNewMedicine":"إضافة دواء جديد",
+      "SaveChanges":"حفظ التغييرات",
+      "AddMedicineToOrder":"أضف الدواء إلى طلبك",
+      "OnTheWay":"في الطريق",
 
 
 

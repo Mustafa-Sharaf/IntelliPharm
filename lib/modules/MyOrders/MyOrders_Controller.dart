@@ -2,15 +2,24 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Widgets/AppSnackBar.dart';
+import '../../services/ServiceApi/OrderCancelService.dart';
 import '../../services/ServiceApi/OrderFetchService.dart';
 import 'MyOrders_Model.dart';
-
 class MyOrdersController extends GetxController {
   var selectedTab = 0.obs;
   var isFetching = false;
 
-  List<String> get tabs => ["All".tr, "Pending".tr, "Processing".tr, "Completed".tr, "Cancelled".tr];
+  List<String> get tabs => [
+    "All".tr,
+    "Pending".tr,
+    "Processing".tr,
+    "OnTheWay".tr,
+    "Completed".tr,
+    "Cancelled".tr,
+  ];
 
   var allOrders = <OrderModel>[].obs;
   var isLoading = false.obs;
@@ -65,23 +74,55 @@ class MyOrdersController extends GetxController {
     selectedTab.value = index;
   }
 
+
   List<OrderModel> get filteredOrders {
     switch (selectedTab.value) {
       case 1:
-        return allOrders.where((o) => o.status == "PENDING").toList();
+        return allOrders.where((o) => o.status.toUpperCase() == "PENDING").toList();
 
       case 2:
-        return allOrders.where((o) => o.status == "PROCESSING").toList();
+        return allOrders.where((o) => o.status.toUpperCase() == "PROCESSING").toList();
 
       case 3:
-        return allOrders.where((o) => o.status == "COMPLETED").toList();
+        return allOrders
+            .where((o) =>
+        o.status.toUpperCase() == "ON THE WAY" ||
+            o.status.toUpperCase() == "ON_THE_WAY")
+            .toList();
+
       case 4:
-        return allOrders.where((o) => o.status == "CANCELLED").toList();
+        return allOrders.where((o) => o.status.toUpperCase() == "COMPLETED").toList();
+
+      case 5:
+        return allOrders.where((o) => o.status.toUpperCase() == "CANCELLED").toList();
 
       default:
         return allOrders;
     }
   }
+
+  void cancelOrder(int orderId) async {
+    try {
+      Get.dialog(
+        const Center(child: CircularProgressIndicator()),
+        barrierDismissible: false,
+      );
+
+      final isSuccess = await OrderCancelService.cancelOrder(orderId);
+
+      Get.back();
+
+      if (isSuccess) {
+        AppSnackBar.success("Order_cancelled_successfully".tr);
+        fetchOrders();
+      }
+    } catch (e) {
+
+      Get.back();
+      AppSnackBar.error("Failed_to_cancel_order".tr);
+    }
+  }
+
 
   @override
   void onClose() {

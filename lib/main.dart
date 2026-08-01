@@ -163,6 +163,16 @@ class MyApp extends StatelessWidget {
             page: () => const HomeContentScreen(),
             binding: HomeBinding(),
           ),
+   /*       GetPage(
+            name: '/addOrderScreen',
+            page: () =>  AddOrderScreen(),
+            binding: AddOrderBinding(),
+            bindings: [
+              ActiveOptimizedRouteTrackingBinding(),
+              RouteStepBinding(),
+            ],
+          ),
+          */
 
         ],
       ),

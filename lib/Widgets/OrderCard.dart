@@ -1,10 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/ShowOrder/ShowOrderBinding.dart';
 import '../modules/ShowOrder/ShowOrder_Screen.dart';
 
-//New code
 class OrderCard extends StatelessWidget {
   final String orderId;
   final String pharmacyName;
@@ -13,6 +13,7 @@ class OrderCard extends StatelessWidget {
   final String price;
   final String status;
   final Color statusColor;
+  final VoidCallback? onCancel;
 
   const OrderCard({
     super.key,
@@ -23,12 +24,17 @@ class OrderCard extends StatelessWidget {
     required this.price,
     required this.status,
     required this.statusColor,
+    this.onCancel,
   });
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
+    final normalizedStatus = status.toLowerCase().replaceAll("_", " ");
+    final canCancel = normalizedStatus == 'pending' ||
+        normalizedStatus == 'processing' ||
+        normalizedStatus == 'on the way';
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
@@ -53,7 +59,6 @@ class OrderCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(size.width * 0.03),
@@ -75,7 +80,6 @@ class OrderCard extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: size.width * 0.02,
@@ -100,16 +104,32 @@ class OrderCard extends StatelessWidget {
 
                   SizedBox(height: size.height * 0.004),
 
-                  Text(
-                    pharmacyName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: colors.textPrimary,
-                      fontFamily: 'Cairo',
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          pharmacyName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: colors.textPrimary,
+                            fontFamily: 'Cairo',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      if (canCancel)
+                        IconButton(
+                          onPressed: onCancel,
+                          icon: const Icon(
+                            Icons.block,
+                            color: Colors.red,
+                          ),
+                        ),
+                    ],
                   ),
                   SizedBox(height: size.height * 0.004),
                   Row(
@@ -166,18 +186,11 @@ class OrderCard extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                     /*    Get.to(
-                                () => ShowOrderScreen(
-                              orderId: int.parse(orderId),
-                            ),
-                          );*/
                           final id = int.parse(orderId);
-
                           Get.to(
                                 () => ShowOrderScreen(orderId: id),
                             binding: ShowOrderBinding(id),
                           );
-
                         },
                         child: Icon(
                           Icons.chevron_right,
