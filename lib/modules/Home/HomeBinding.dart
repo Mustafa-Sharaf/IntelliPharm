@@ -7,6 +7,7 @@ import '../HomeContentDistributor/HomeContentDistributor_Controller.dart';
 import '../MyDeliveries/MyDeliveries_Controller.dart';
 import '../MyOrders/MyOrders_Controller.dart';
 import '../Pharmacists/Pharmacists_Controller.dart';
+import '../PharmacyDebts/PharmacyDebt_Controller.dart';
 import '../Searching/Searching_Controller.dart';
 
 class HomeBinding extends Bindings {
@@ -45,6 +46,10 @@ class HomeBinding extends Bindings {
     );
     Get.lazyPut<MyDeliveriesController>(
           () => MyDeliveriesController(),
+      fenix: true,
+    );
+    Get.lazyPut<PharmacyDebtController>(
+          () => PharmacyDebtController(),
       fenix: true,
     );
   }

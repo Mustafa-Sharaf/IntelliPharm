@@ -95,8 +95,8 @@ class DioClient {
     GetStorage().remove("refresh_token");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (Get.currentRoute != '/signIn') {
-        Get.offAllNamed("/signIn");
+      if (Get.currentRoute != '/login') {
+        Get.offAllNamed("/login");
       }
     });
   }

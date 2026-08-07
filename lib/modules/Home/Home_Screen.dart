@@ -105,7 +105,7 @@ PreferredSizeWidget? _buildAppBar(
 /* case 2:
         return BuildAppbar(title: "ActiveRouteProgress".tr);
       case 3:
-        return BuildAppbar(title: "ConfirmDelivery".tr);*//*
+        return BuildAppbar(title: "ConfirmDelivery".tr);*/ /*
 
       default:
         return null;
@@ -149,6 +149,7 @@ import '../HomeContent/HomeContent_Screen.dart';
 import '../HomeContentDistributor/HomeContentDistributor_Screen.dart';
 import '../MyDeliveries/MyDeliveries_Screen.dart';
 import '../Pharmacists/Pharmacists_Screen.dart';
+import '../PharmacyDebts/PharmacyDebts_Screen.dart';
 import 'FloatingAction.dart';
 import '../MyOrders/MyOrders_Screen.dart';
 import 'BuildAppBar.dart';
@@ -159,29 +160,28 @@ class HomeScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final String role = GetStorage().read<String>('role') ?? 'rep';
 
-  final repPages =  [
+  final repPages = [
     HomeContentScreen(),
     MyOrdersScreen(),
     ChatScreen(),
-    Center(child: Text("DEBTS Screen")),
+    PharmacyDebtsScreen(),
     PharmacistsScreen(),
   ];
 
-  final distributorPages =  [
+  final distributorPages = [
     HomeContentDistributorScreen(),
     MyDeliveriesScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // 🟢 جلب الكنترولر المحقون عبر HomeBinding
     final controller = Get.find<CustomBottomNavController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
     final currentPages = role == 'distributor' ? distributorPages : repPages;
 
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         key: scaffoldKey,
         backgroundColor: colors.backgroundMain,
         drawer: const DrawerHome(),
@@ -208,13 +208,13 @@ class HomeScreen extends StatelessWidget {
         ),
 
         floatingActionButton:
-        (role == 'rep' && controller.currentIndex.value == 1)
+            (role == 'rep' && controller.currentIndex.value == 1)
             ? FloatingAction(
-          onPressed: () {
-            // 🟢 الانتقال بـ Named Route لتشغيل الـ Binding الخاص بشاشة إضافة الطلب
-            Get.toNamed('/addOrder');
-          },
-        )
+                onPressed: () {
+                  // 🟢 الانتقال بـ Named Route لتشغيل الـ Binding الخاص بشاشة إضافة الطلب
+                  Get.toNamed('/addOrder');
+                },
+              )
             : null,
       ),
     );
@@ -222,12 +222,12 @@ class HomeScreen extends StatelessWidget {
 }
 
 PreferredSizeWidget? _buildAppBar(
-    int index,
-    GlobalKey<ScaffoldState> scaffoldKey,
-    ThemeColors? colors,
-    Size? size,
-    String role,
-    ) {
+  int index,
+  GlobalKey<ScaffoldState> scaffoldKey,
+  ThemeColors? colors,
+  Size? size,
+  String role,
+) {
   if (role == 'distributor') {
     switch (index) {
       case 0:
@@ -246,14 +246,13 @@ PreferredSizeWidget? _buildAppBar(
       case 2:
         return null;
       case 3:
-        return AppBar(title: Text("DEBTSScreen".tr));
+        return BuildAppbar(title: "DEBTSScreen".tr);
       case 4:
         return BuildAppbar(
           title: "PharmacistsScreen".tr,
           trailing: IconButton(
             icon: const Icon(Icons.add_business_rounded),
             onPressed: () {
-              // 🟢 الانتقال بـ Named Route لتشغيل AddPharmacyBinding تلقائياً
               Get.toNamed('/addPharmacy');
             },
           ),
