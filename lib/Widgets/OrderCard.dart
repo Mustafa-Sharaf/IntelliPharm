@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_theme/theme_extension.dart';
@@ -11,7 +10,7 @@ class OrderCard extends StatelessWidget {
   final String date;
   final String itemsCount;
   final String price;
-  final String status;
+  final String status; // 🔹 القيمة الخام القادمة من الـ API (مثل "PENDING" أو "ON_THE_WAY")
   final Color statusColor;
   final VoidCallback? onCancel;
 
@@ -31,10 +30,14 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-    final normalizedStatus = status.toLowerCase().replaceAll("_", " ");
-    final canCancel = normalizedStatus == 'pending' ||
-        normalizedStatus == 'processing' ||
-        normalizedStatus == 'on the way';
+
+    // 🔹 تحويل الحالة الخام إلى حروف صغيرة واستبدال المسافات والشرطات السفلية
+    final rawStatus = status.toLowerCase().replaceAll("_", " ").trim();
+
+    // 🔹 المقارنة تتم الآن على الحالة الإنجليزية الأصلية بغض النظر عن لغة التطبيق
+    final canCancel = rawStatus == 'pending' ||
+        rawStatus == 'processing' ||
+        rawStatus == 'on the way';
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: size.height * 0.01),
@@ -90,7 +93,7 @@ class OrderCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          status,
+                          status.tr, // 👈 نقوم بالترجمة هنا فقط للشاشات والواجهة!
                           style: TextStyle(
                             color: statusColor,
                             fontFamily: 'Cairo',

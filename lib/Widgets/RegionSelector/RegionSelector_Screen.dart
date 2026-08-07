@@ -22,7 +22,6 @@ class RegionSelector extends StatelessWidget {
       ),
 
       child: SizedBox(
-
         height: MediaQuery.of(context).size.height * 0.5,
         child: Column(
           children: [
@@ -32,7 +31,7 @@ class RegionSelector extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: "Search_for_an_area...".tr,
                 hintStyle: TextStyle(fontFamily: 'Cairo'),
-                prefixIcon: Icon(Icons.search,color: AppColors.primaryColor),
+                prefixIcon: Icon(Icons.search, color: AppColors.primaryColor),
                 filled: true,
                 fillColor: colors.component,
                 contentPadding: EdgeInsets.symmetric(horizontal: 15),
@@ -44,8 +43,16 @@ class RegionSelector extends StatelessWidget {
             ),
 
             Expanded(
-              child: Obx(
-                () => ListView.builder(
+              child: Obx(() {
+                if (controller.isLoading.value) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    ),
+                  );
+                }
+
+                return ListView.builder(
                   itemCount: controller.filteredRegions.length,
                   itemBuilder: (context, index) {
                     final region = controller.filteredRegions[index];
@@ -67,12 +74,11 @@ class RegionSelector extends StatelessWidget {
                           ),
                         ),
                         onTap: () => controller.selectRegion(region),
-
                       ),
                     );
                   },
-                ),
-              ),
+                );
+              }),
             ),
           ],
         ),

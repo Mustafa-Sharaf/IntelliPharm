@@ -59,7 +59,7 @@ class MyOrdersScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final order = controller.filteredOrders[index];
 
-                  return /*OrderCard(
+                  return OrderCard(
                     orderId: order.id.toString(),
                     pharmacyName: order.pharmacyName,
                     date: order.date.split(" ").first,
@@ -67,18 +67,7 @@ class MyOrdersScreen extends StatelessWidget {
                       'count': order.itemsCount.toString(),
                     }),
                     price: order.price,
-                    status: order.status.tr,
-                    statusColor: _getStatusColor(order.status),
-                  );*/
-                   OrderCard(
-                    orderId: order.id.toString(),
-                    pharmacyName: order.pharmacyName,
-                    date: order.date.split(" ").first,
-                    itemsCount: "ITEMS_COUNT".trParams({
-                      'count': order.itemsCount.toString(),
-                    }),
-                    price: order.price,
-                    status: order.status.tr,
+                    status: order.status,
                     statusColor: _getStatusColor(order.status),
                     onCancel: () {
                       Get.defaultDialog(

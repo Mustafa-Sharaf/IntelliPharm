@@ -6,6 +6,7 @@ import '../../app_theme/theme_extension.dart';
 import '../../modules/PharmacyDetails/PharmacyDetailsBinding.dart';
 import '../../modules/PharmacyDetails/PharmacyDetails_Screen.dart';
 import 'ChangeStatusDialog.dart';
+import 'RouteStepController.dart';
 
 class RouteStepItem extends StatelessWidget {
   const RouteStepItem({
@@ -60,7 +61,7 @@ class RouteStepItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
-
+    final routeStepController = Get.find<RouteStepController>();
     return IntrinsicHeight(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,33 +200,46 @@ class RouteStepItem extends StatelessWidget {
                       children: [
                         /// Button 1: Start Visit
                         Expanded(
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              if (onStartVisit != null) {
-                                onStartVisit!(id);
-                                //print("onStartVisit=$id");
-                              }
-                            },
-                            icon: const Icon(
-                              FontAwesomeIcons.play,
-                              size: 11,
-                              color: Colors.white,
-                            ),
-                            label: Text(
-                              "Start_of_visit".tr,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Cairo',
+                          child: Obx(
+                            () => ElevatedButton.icon(
+                              onPressed:
+                                  routeStepController.isStartingVisit.value
+                                  ? null
+                                  : () => routeStepController.startVisit(id),
+                              icon: routeStepController.isStartingVisit.value
+                                  ? const SizedBox(
+                                      width: 12,
+                                      height: 12,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : const Icon(
+                                      FontAwesomeIcons.play,
+                                      size: 11,
+                                      color: Colors.white,
+                                    ),
+                              label: Text(
+                                "Start_of_visit".tr,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Cairo',
+                                ),
                               ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor,
-                              elevation: 0,
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                disabledBackgroundColor: AppColors.primaryColor
+                                    .withValues(alpha: 0.6),
+                                elevation: 0,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ),

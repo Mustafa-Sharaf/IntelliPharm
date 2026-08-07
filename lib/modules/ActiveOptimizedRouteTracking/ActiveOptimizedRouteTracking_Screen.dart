@@ -209,7 +209,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                               : "ETA_TIME".trParams({'time': calculatedETA});
 
                           return RouteStepItem(
-                            id: visit.id, // 👈 انتبه! تمرير visit.id للـ API مباشرة
+                            id: visit.id,
                             title: visit.name,
                             subtitle: subtitleText,
                             index: visit.visitOrder.toString(),
@@ -234,11 +234,11 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                             },
 
                             onStartVisit: (visitId) async {
-                              print("Start Visit Pressed for Visit ID: $visitId");
+                              //print("Start Visit Pressed for Visit ID: $visitId");
                               await routeStepController.startVisit(visitId);
                             },
                             onStatusChange: (visitId, status, cause, notes) async {
-                              print("Change Status Pressed: ID: $visitId -> Status: $status, Cause: $cause, Notes: $notes");
+                             // print("Change Status Pressed: ID: $visitId -> Status: $status, Cause: $cause, Notes: $notes");
                               await routeStepController.updateVisitStatus(
                                 visitId,
                                 status,
@@ -260,56 +260,3 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
     );
   }
 }
-
-
-/*Obx(() {
-                      if (planYourRouteController.isLoading.value) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primaryColor,
-                          ),
-                        );
-                      }
-                      final plan = planYourRouteController.plan.value;
-                      if (plan == null) return const SizedBox();
-                      return Column(
-                        children: List.generate(plan.visits.length, (index) {
-                          final visit = plan.visits[index];
-                          String calculatedETA =PlanRouteCalculator.getETAForVisit(plan, index);
-                          String subtitleText = visit.visited
-                          ?"VISITED_AT".trParams({
-                            'time': calculatedETA,
-                          }):
-                          "ETA_TIME".trParams({
-                          'time': calculatedETA,
-                          });
-                          return RouteStepItem(
-                            id: visit.pharmacyId,
-                            title: visit.name,
-                            subtitle: subtitleText,
-                            index: visit.visitOrder.toString(),
-                            isCurrent: controller.nextVisit != null && visit.pharmacyId ==
-                                       controller.nextVisit!.pharmacyId,
-                            isDone: visit.visited,
-                            showLine: index != plan.visits.length - 1,
-                            showDetails: controller.nextVisit != null &&
-                                         visit.pharmacyId ==
-                                         controller.nextVisit!.pharmacyId,
-                            onDetailsPressed: () async {
-                              final bool? isChecked = await
-                              Get.to(
-                                    () => const VisitDetailsScreen(),
-                                arguments: {
-                                  "pharmacyId": visit.pharmacyId,
-                                  "visitId": visit.id,
-                                },
-                                binding: VisitDetailsBinding(),
-                              );
-                              if (isChecked == true) {
-                                await controller.refreshTrackingData();
-                              }
-                            },
-                          );
-                        }),
-                      );
-                    }),*/
