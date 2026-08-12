@@ -1,29 +1,38 @@
-
-
 import 'package:flutter/foundation.dart';
-import 'PharmacyDebt_Model.dart';
 import 'package:get/get.dart';
+import '../../services/ServiceApi/DebtsResponseService.dart';
+import 'PharmacyDebt_Model.dart';
 
-
-class PharmacyDebtController {
-
-
+class PharmacyDebtController extends GetxController {
   List<PharmacyDebtModel> _allDebts = [];
 
-  final ValueNotifier<List<PharmacyDebtModel>> filteredDebtsNotifier = ValueNotifier([]);
+  final ValueNotifier<List<PharmacyDebtModel>> filteredDebtsNotifier =
+      ValueNotifier([]);
   final ValueNotifier<String> selectedFilterNotifier = ValueNotifier('All');
 
-
   var searchQuery = "".obs;
+  double _totalBilled = 0.0;
+  double _totalCollected = 0.0;
+  double _totalOutstanding = 0.0;
 
-  double get totalBilled => _allDebts.fold(0, (sum, item) => sum + item.totalAmount);
-  double get totalCollected => _allDebts.fold(0, (sum, item) => sum + item.paidAmount);
-  double get totalOutstanding => totalBilled - totalCollected;
-  double get collectedPercentage => totalBilled == 0 ? 0 : (totalCollected / totalBilled);
+  double get totalBilled => _totalBilled;
+  double get totalCollected => _totalCollected;
+  double get totalOutstanding => _totalOutstanding;
+  double get collectedPercentage =>
+      _totalBilled == 0 ? 0 : (_totalCollected / _totalBilled);
 
   Future<void> loadDebts() async {
-    _allDebts = await fetchPharmacyDebts();
-    _applyFilter();
+    try {
+      final response = await DebtsService.getDebts();
+      _allDebts = response.debts;
+      _totalBilled = response.totalDebtAmount;
+      _totalCollected = response.totalPaid;
+      _totalOutstanding = response.totalRemaining;
+
+      _applyFilter();
+    } catch (e) {
+      print("Error loading debts: $e");
+    }
   }
 
   void filterByStatus(String filter) {
@@ -36,49 +45,11 @@ class PharmacyDebtController {
     _applyFilter();
   }
 
-
-
-  Future<List<PharmacyDebtModel>> fetchPharmacyDebts() async {
-    // محاكاة تأخير الشبكة
-    await Future.delayed(const Duration(milliseconds: 300));
-
-    // البيانات التجريبية المطابقة للصورة
-    return [
-      PharmacyDebtModel(
-        id: '1',
-        name: 'CityHealth Pharmacy',
-        location: 'Downtown District',
-        totalAmount: 10000,
-        paidAmount: 1500,
-        lastPaymentDate: 'Mar 15, 2026',
-        status: PaymentStatus.overdue,
-      ),
-      PharmacyDebtModel(
-        id: '2',
-        name: 'MediCare Plus',
-        location: 'Northside Area',
-        totalAmount: 12000,
-        paidAmount: 8500,
-        lastPaymentDate: 'Apr 1, 2026',
-        status: PaymentStatus.partial,
-      ),
-      PharmacyDebtModel(
-        id: '3',
-        name: 'Wellness Rx',
-        location: 'West End Village',
-        totalAmount: 32000,
-        paidAmount: 32000,
-        lastPaymentDate: 'Apr 3, 2026',
-        status: PaymentStatus.paid,
-      ),
-    ];
-  }
-
-
   void _applyFilter() {
     filteredDebtsNotifier.value = _allDebts.where((item) {
-      final matchesSearch = item.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
-          item.location.toLowerCase().contains(searchQuery.toLowerCase());
+      final matchesSearch =
+          item.name.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
+          item.location.toLowerCase().contains(searchQuery.value.toLowerCase());
 
       bool matchesStatus = true;
       if (selectedFilterNotifier.value == 'Fully Paid') {
@@ -87,6 +58,8 @@ class PharmacyDebtController {
         matchesStatus = item.status == PaymentStatus.partial;
       } else if (selectedFilterNotifier.value == 'Overdue') {
         matchesStatus = item.status == PaymentStatus.overdue;
+      } else if (selectedFilterNotifier.value == 'Pending') {
+        matchesStatus = item.status == PaymentStatus.pending;
       }
 
       return matchesSearch && matchesStatus;

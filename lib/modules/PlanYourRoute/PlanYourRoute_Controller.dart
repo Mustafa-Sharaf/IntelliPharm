@@ -13,6 +13,7 @@ import '../../services/ServiceApi/PlannerService.dart'; // Import PlannerService
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Model.dart';
 import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
 import '../PharmacyDetails/PharmacyDetails_Model.dart';
+import 'PlanYourRoute_Model.dart';
 
 class PlanYourRouteController extends GetxController {
   final routeMapController = Get.find<MapHelperController>(tag: "route");
@@ -203,6 +204,7 @@ class PlanYourRouteController extends GetxController {
         pharmacyIds: idsToSend,
         profile: profile,
         travelMode: travelMode,
+
       );
 
       if (responseData != null && responseData['isSuccess'] == true) {

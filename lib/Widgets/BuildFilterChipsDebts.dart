@@ -11,7 +11,7 @@ class BuildFilterChipsDebts extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<PharmacyDebtController>();
     final size = MediaQuery.of(context).size;
-    final filters = ['All', 'Fully Paid', 'Partially Paid', 'Overdue'];
+    final filters = ['All', 'Fully Paid', 'Partially Paid','Pending', 'Overdue',];
     final colors = Theme.of(context).extension<ThemeColors>()!;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -27,17 +27,17 @@ class BuildFilterChipsDebts extends StatelessWidget {
               Border? border;
               if (isSelected) {
                 if (isOverdueBtn) {
-                  bgColor = const Color(0xFFFDE8E8);
-                  textColor = const Color(0xFFE53935);
-                  border = Border.all(color: const Color(0xFFE53935));
+                  bgColor = Colors.red;
+                  textColor = Colors.white;
+                  border = Border.all(color: Colors.red);
                 } else {
                   bgColor = AppColors.primaryColor;
                   textColor = Colors.white;
                 }
               } else if (isOverdueBtn) {
-                textColor = const Color(0xFFE53935);
-                border = Border.all(color: const Color(0xFFF8BBD0));
-                bgColor = Colors.white;
+                textColor = Colors.red;
+                border = Border.all(color: Colors.red);
+                bgColor = Colors.red.withValues(alpha: 0.02);
               }
               return Padding(
                 padding: const EdgeInsets.only(right: 8),

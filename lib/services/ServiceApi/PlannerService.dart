@@ -11,6 +11,7 @@ class PlannerService {
     required List<int> pharmacyIds,
     required String profile,
     required String travelMode,
+    //String? planDate,
   }) async {
     final response = await ApiService.post(
       "/planner/v1/plans/initiate",
@@ -24,6 +25,7 @@ class PlannerService {
         "pharmacy_ids": pharmacyIds,
         "profile": profile,
         "travel_mode": travelMode,
+        //"plan_date": planDate ?? DateTime.now().toIso8601String().split('T').first,
       },
     );
 
@@ -42,6 +44,7 @@ class PlannerService {
     required double longitude,
     required String reason,
     required String reasonDetails,
+    //String? planDate,
   }) async {
     final response = await ApiService.post(
       "/planner/v1/plans/$planId/optimize-next-leg",
@@ -50,6 +53,7 @@ class PlannerService {
         "current_longitude": longitude,
         "reason": reason,
         "reason_details": reasonDetails,
+        //"plan_date": planDate ?? DateTime.now().toIso8601String().split('T').first,
       },
     );
     return response.data;

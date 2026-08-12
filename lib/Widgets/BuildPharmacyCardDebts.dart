@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/PharmacyDebts/PharmacyDebt_Model.dart';
+import '../modules/PharmacyPaymentHistory/PharmacyPaymentHistory_Screen.dart';
 
 class BuildPharmacyCardDebts extends StatelessWidget {
   final PharmacyDebtModel item;
 
   const BuildPharmacyCardDebts({super.key, required this.item});
+
+  String _formatAmount(double amount) {
+    final formatter = NumberFormat('#,##0.##', 'en_US');
+    return '${formatter.format(amount)} S.p';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +31,10 @@ class BuildPharmacyCardDebts extends StatelessWidget {
       case PaymentStatus.partial:
         accentColor = const Color(0xFFE65100);
         statusText = 'PARTIAL';
+        break;
+      case PaymentStatus.pending:
+        accentColor = const Color(0xFFF57C00);
+        statusText = 'PENDING';
         break;
       case PaymentStatus.paid:
         accentColor = const Color(0xFF2E7D32);
@@ -62,38 +74,43 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.name,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: colors.textPrimary,
-                            fontFamily: 'Cairo',
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.name,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: colors.textPrimary,
+                              fontFamily: 'Cairo',
+                            ),
                           ),
-                        ),
-                        SizedBox(height: size.height * 0.01),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              size: 14,
-                              color: colors.textSecondary,
-                            ),
-                            SizedBox(width: size.width * 0.01),
-                            Text(
-                              item.location,
-                              style: TextStyle(
+                          SizedBox(height: size.height * 0.005),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on_outlined,
+                                size: 14,
                                 color: colors.textSecondary,
-                                fontSize: 12,
-                                fontFamily: 'Cairo',
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              SizedBox(width: size.width * 0.01),
+                              Expanded(
+                                child: Text(
+                                  item.location,
+                                  style: TextStyle(
+                                    color: colors.textSecondary,
+                                    fontSize: 12,
+                                    fontFamily: 'Cairo',
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(
@@ -116,53 +133,58 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: size.height * 0.01),
+                SizedBox(height: size.height * 0.015),
                 Container(
                   padding: EdgeInsets.symmetric(
-                    vertical: size.height * 0.01,
-                    horizontal: size.width * 0.02,
+                    vertical: size.height * 0.012,
+                    horizontal: size.width * 0.015,
                   ),
                   decoration: BoxDecoration(
                     color: colors.backgroundMain,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildAmountColumn(
-                        'Total',
-                        '${item.totalAmount} S.p',
-                        colors.textDefault,
-                        context,
+                      Expanded(
+                        child: _buildAmountColumn(
+                          'Total',
+                          _formatAmount(item.totalAmount),
+                          colors.textDefault,
+                          context,
+                        ),
                       ),
                       Container(
                         height: size.height * 0.035,
-                        width: size.width * 0.002,
-                        color: colors.textSecondary,
+                        width: 1,
+                        color: colors.textSecondary.withValues(alpha: 0.3),
                       ),
-                      _buildAmountColumn(
-                        'Paid',
-                        '${item.paidAmount} S.p',
-                        AppColors.primaryColor,
-                        context,
+                      Expanded(
+                        child: _buildAmountColumn(
+                          'Paid',
+                          _formatAmount(item.paidAmount),
+                          AppColors.primaryColor,
+                          context,
+                        ),
                       ),
                       Container(
                         height: size.height * 0.035,
-                        width: size.width * 0.002,
-                        color: colors.textSecondary,
+                        width: 1,
+                        color: colors.textSecondary.withValues(alpha: 0.3),
                       ),
-                      _buildAmountColumn(
-                        'Remaining',
-                        '${item.remainingAmount} S.p',
-                        item.remainingAmount > 0
-                            ? accentColor
-                            : AppColors.primaryColor,
-                        context,
+                      Expanded(
+                        child: _buildAmountColumn(
+                          'Remaining',
+                          _formatAmount(item.remainingAmount),
+                          item.remainingAmount > 0
+                              ? accentColor
+                              : AppColors.primaryColor,
+                          context,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: size.height * 0.01),
+                SizedBox(height: size.height * 0.015),
                 Row(
                   children: [
                     Expanded(
@@ -178,9 +200,9 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: size.width * 0.01),
+                    SizedBox(width: size.width * 0.02),
                     Text(
-                      '${(item.paidPercentage * 100).toInt()}% paid',
+                      '${(item.paidPercentage * 100).toStringAsFixed(item.paidPercentage > 0 && item.paidPercentage < 0.01 ? 2 : 0)}% paid',
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontSize: 11,
@@ -201,10 +223,16 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                         fontFamily: 'Cairo',
                       ),
                     ),
-                     Icon(
-                      Icons.chevron_right,
-                       color: colors.textSecondary,
-                      size: size.height * 0.03,
+                    InkWell(
+                      onTap: () => Get.to(() => PharmacyPaymentHistoryScreen(pharmacy: item)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: colors.textSecondary,
+                          size: size.height * 0.028,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -217,37 +245,43 @@ class BuildPharmacyCardDebts extends StatelessWidget {
   }
 
   Widget _buildAmountColumn(
-    String label,
-    String value,
-    Color valueColor,
-    BuildContext context,
-  ) {
+      String label,
+      String value,
+      Color valueColor,
+      BuildContext context,
+      ) {
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: colors.textSecondary,
-            fontSize: 11,
-            fontFamily: 'Cairo',
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: colors.textSecondary,
+              fontSize: 11,
+              fontFamily: 'Cairo',
+            ),
           ),
-        ),
-        SizedBox(height: size.height * 0.01),
-        Text(
-          value,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: valueColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            fontFamily: 'Cairo',
+          SizedBox(height: size.height * 0.005),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: valueColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                fontFamily: 'Cairo',
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

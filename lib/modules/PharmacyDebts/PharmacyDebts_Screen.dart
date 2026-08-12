@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/BuildFilterChipsDebts.dart';
 import '../../Widgets/BuildPharmacyCardDebts.dart';
-import '../../Widgets/BuildSummaryCardDebts.dart';
+import '../../Widgets/BuildSummaryHeaderCardDebt.dart';
 import '../../app_theme/theme_extension.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
@@ -27,6 +27,7 @@ class PharmacyDebtsScreen extends StatelessWidget {
             child: CircularProgressIndicator(color: AppColors.primaryColor),
           );
         }
+
         return ValueListenableBuilder<List<PharmacyDebtModel>>(
           valueListenable: controller.filteredDebtsNotifier,
           builder: (context, filteredDebts, _) {
@@ -35,7 +36,12 @@ class PharmacyDebtsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  BuildSummaryCardDebts(),
+                  PharmacySummaryHeaderCard(
+                    title: 'TOTAL OUTSTANDING BALANCE',
+                    remainingAmount: controller.totalOutstanding,
+                    totalBilled: controller.totalBilled,
+                    totalPaid: controller.totalCollected,
+                  ),
                   SizedBox(height: size.height * 0.02),
                   CustomSearchField(
                     controller: searchController,
