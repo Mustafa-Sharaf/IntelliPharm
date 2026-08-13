@@ -422,9 +422,9 @@ class MyLanguage implements Translations {
       "confirm_payment_btn": "Confirm Payment",
       "invalid_amount_err": "Please enter a valid amount",
       "payment_success_msg": "Payment created successfully",
-      "":"",
-      "":"",
-      "":"",
+      "Are_you_sure_you_want_to_logout?":"Are you sure you want to logout?",
+      "No":"No",
+      "Yes":"Yes",
       "":"",
       "":"",
       "":"",
@@ -882,6 +882,9 @@ class MyLanguage implements Translations {
       "confirm_payment_btn": "تأكيد الدفع",
       "invalid_amount_err": "الرجاء إدخال مبلغ صحيح",
       "payment_success_msg": "تم تسجيل الدفعة بنجاح",
+      "Are_you_sure_you_want_to_logout?":"هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+      "No":"لا",
+      "Yes":"نعم",
     },
   };
 }

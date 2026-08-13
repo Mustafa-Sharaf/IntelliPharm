@@ -61,14 +61,13 @@ class RecordPaymentController extends GetxController {
 
     isLoading.value = true;
 
-    // إرسال pharmacyId الصحيح (مثلاً 400)
     final request = RecordPaymentModel(
       pharmacyId: pharmacy.pharmacyId,
       amount: enteredAmount.value,
       paymentDate: DateFormat('yyyy-MM-dd').format(selectedDate.value),
+      note: notesController.text,
     );
 
-    // طباعة الـ payload الحقيقي للتأكد
     print("Sending Payment Payload: ${request.toJson()}");
 
     try {
@@ -105,60 +104,5 @@ class RecordPaymentController extends GetxController {
       isLoading.value = false;
     }
   }
-/*  Future<void> submitPayment() async {
-    if (enteredAmount.value <= 0) {
-      Get.snackbar(
-        'Error'.tr,
-        'invalid_amount_err'.tr,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade400,
-        colorText: Colors.white,
-      );
-      return;
-    }
 
-    isLoading.value = true;
-
-    final request = RecordPaymentModel(
-      pharmacyId: int.tryParse(pharmacy.pharmacyId.toString()) ?? 0,
-      amount: enteredAmount.value,
-      paymentDate: DateFormat('yyyy-MM-dd').format(selectedDate.value),
-    );
-    print("pharmacyId= ${int.tryParse(pharmacy.pharmacyId.toString())}");
-
-    try {
-      final responseData = await RecordPaymentService.createPayment(request);
-
-      // الفحص بناءً على رد الـ API الخاص بك
-      if (responseData != null && responseData['isSuccess'] == true) {
-        Get.back(result: true); // العودة للشاشة السابقة وإعلامها بنجاح العملية
-        Get.snackbar(
-          'Success'.tr,
-          'payment_success_msg'.tr,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
-      } else {
-        String msg = responseData?['message'] ?? 'Failed to process payment';
-        Get.snackbar(
-          'Error'.tr,
-          msg,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-      }
-    } catch (e) {
-      Get.snackbar(
-        'Error'.tr,
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    } finally {
-      isLoading.value = false;
-    }
-  }*/
 }

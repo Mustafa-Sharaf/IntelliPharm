@@ -6,6 +6,7 @@ import '../app_theme/AppColors.dart';
 import '../app_theme/theme_controller.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/PrivacyPolicyScreen/PrivacyPolicyScreen_Screen.dart';
+import '../services/AuthService.dart';
 import 'LanguageBottomSheet.dart';
 
 class DrawerHome extends StatelessWidget {
@@ -171,7 +172,7 @@ class DrawerHome extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
+      /*      ListTile(
               leading: Icon(Icons.logout, color: colors.textDefault),
               title: Text(
                 'Logout'.tr,
@@ -182,6 +183,31 @@ class DrawerHome extends StatelessWidget {
                 ),
               ),
               onTap: () => Get.toNamed("/login"),
+            ),*/
+            ListTile(
+              leading: Icon(Icons.logout, color: colors.textDefault),
+              title: Text(
+                'Logout'.tr,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: colors.textDefault,
+                  fontFamily: 'Cairo',
+                ),
+              ),
+              onTap: () {
+                Get.defaultDialog(
+                  title: 'Logout'.tr,
+                  middleText: 'Are_you_sure_you_want_to_logout?'.tr,
+                  textConfirm: 'Yes'.tr,
+                  textCancel: 'No'.tr,
+                  confirmTextColor: Colors.white,
+                  buttonColor: Colors.red,
+                  onConfirm: () {
+                    Get.back(); // إغلاق الدايالوج
+                    handleLogout(); // استدعاء دالة تسجيل الخروج
+                  },
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.privacy_tip, color: colors.textDefault),
@@ -202,5 +228,18 @@ class DrawerHome extends StatelessWidget {
         ),
       ),
     );
+  }
+  Future<void> handleLogout() async {
+    try {
+      await AuthService.logout();
+    } catch (e) {
+      print("Logout API Error: $e");
+    } finally {
+      final box = GetStorage();
+      await box.remove('token');
+      await box.remove('refresh_token');
+      await box.remove('role');
+      Get.offAllNamed('/login');
+    }
   }
 }

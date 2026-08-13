@@ -1,3 +1,6 @@
+import 'package:get_storage/get_storage.dart';
+
+import 'ApiService.dart';
 import 'DioClient.dart';
 
 class AuthService {
@@ -12,6 +15,18 @@ class AuthService {
         "email": email,
         "password": password,
         "FCMToken": deviceToken,
+      },
+    );
+  }
+
+  static Future logout() async {
+    final box = GetStorage();
+    final refreshToken = box.read<String>('refresh_token');
+
+    return await ApiService.post(
+      "/auth/v1/logout",
+      data: {
+        "refresh_token": refreshToken ?? "",
       },
     );
   }
