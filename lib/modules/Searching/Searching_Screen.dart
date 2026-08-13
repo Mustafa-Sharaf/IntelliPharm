@@ -22,7 +22,7 @@ class CustomSearchField extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      width: size.width * 0.8,
+      width: double.infinity,
       decoration: BoxDecoration(
         color: colors.component,
         borderRadius: BorderRadius.circular(30),

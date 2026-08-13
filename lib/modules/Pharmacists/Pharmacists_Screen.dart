@@ -29,12 +29,14 @@ class PharmacistsScreen extends StatelessWidget {
             /// SEARCH
             Row(
               children: [
-                CustomSearchField(
-                  controller: searchController,
-                  text: "Search_Pharmacists...".tr,
-                  onChanged: (val) {
-                    pharmacistsController.updateSearch(val);
-                  },
+                Expanded( // تغليف حقل البحث بـ Expanded ليملأ باقي المساحة المتاحة
+                  child: CustomSearchField(
+                    controller: searchController,
+                    text: "Search_Pharmacists...".tr,
+                    onChanged: (val) {
+                      pharmacistsController.updateSearch(val);
+                    },
+                  ),
                 ),
                 SizedBox(width: size.width * 0.01),
                 SizedBox(

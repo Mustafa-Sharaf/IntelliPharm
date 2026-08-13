@@ -9,6 +9,7 @@ import '../modules/HomeContentDistributor/HomeContentDistributor_Controller.dart
 import '../modules/MyDeliveries/MyDeliveries_Controller.dart';
 import '../modules/MyOrders/MyOrders_Controller.dart';
 import '../modules/Pharmacists/Pharmacists_Controller.dart';
+import '../modules/PharmacyDebts/PharmacyDebt_Controller.dart';
 
 class MyLanguageController extends GetxController {
   final GetStorage box = GetStorage();
@@ -49,6 +50,9 @@ class MyLanguageController extends GetxController {
     }
     if (Get.isRegistered<DeliveryHomeController>()) {
       Get.find<DeliveryHomeController>().fetchDeliveryHome();
+    }
+    if (Get.isRegistered<PharmacyDebtController>()) {
+      Get.find<PharmacyDebtController>().loadDebts();
     }
 
   }

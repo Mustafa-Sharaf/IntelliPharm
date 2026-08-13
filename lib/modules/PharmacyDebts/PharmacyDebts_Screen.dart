@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
+import 'package:intl/intl.dart';
 import '../../Widgets/BuildFilterChipsDebts.dart';
 import '../../Widgets/BuildPharmacyCardDebts.dart';
 import '../../Widgets/BuildSummaryHeaderCardDebt.dart';
@@ -37,7 +38,7 @@ class PharmacyDebtsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PharmacySummaryHeaderCard(
-                    title: 'TOTAL OUTSTANDING BALANCE',
+                    title: 'TOTAL_OUTSTANDING_BALANCE'.tr,
                     remainingAmount: controller.totalOutstanding,
                     totalBilled: controller.totalBilled,
                     totalPaid: controller.totalCollected,
@@ -61,7 +62,10 @@ class PharmacyDebtsScreen extends StatelessWidget {
                         (sum, item) => sum + item.remainingAmount,
                       );
                       return Text(
-                        '${debts.length} Pharmacies - ${totalAmount.toStringAsFixed(0)} S.p Outstanding',
+                        'pharmacies_outstanding_summary'.trParams({
+                          'count': debts.length.toString(),
+                          'amount': NumberFormat('#,##0.##', 'en_US').format(totalAmount),
+                        }),
                         style: TextStyle(
                           color: colors.textDefault,
                           fontSize: 13,
@@ -72,6 +76,32 @@ class PharmacyDebtsScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: size.height * 0.02),
+                  if (filteredDebts.isEmpty)
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: size.height * 0.08),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.receipt_long_outlined,
+                            size: size.width * 0.18,
+                            color: colors.textSecondary.withValues(alpha: 0.4),
+                          ),
+                          SizedBox(height: size.height * 0.02),
+                          Text(
+                            'No_debts_or_records_found'.tr,
+                            style: TextStyle(
+                              color: colors.textSecondary,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Cairo',
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  else
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: filteredDebts.length,

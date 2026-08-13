@@ -11,8 +11,18 @@ class BuildFilterChipsDebts extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<PharmacyDebtController>();
     final size = MediaQuery.of(context).size;
-    final filters = ['All', 'Fully Paid', 'Partially Paid','Pending', 'Overdue',];
+
+    final filters = ['All', 'Fully Paid', 'Partially Paid', 'Pending', 'Overdue'];
+    final Map<String, String> filterTranslations = {
+      'All': 'filter_all'.tr,
+      'Fully Paid': 'filter_fully_paid'.tr,
+      'Partially Paid': 'filter_partially_paid'.tr,
+      'Pending': 'filter_pending'.tr,
+      'Overdue': 'filter_overdue'.tr,
+    };
+
     final colors = Theme.of(context).extension<ThemeColors>()!;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: ValueListenableBuilder<String>(
@@ -25,6 +35,7 @@ class BuildFilterChipsDebts extends StatelessWidget {
               Color bgColor = colors.textSecondary.withValues(alpha: 0.2);
               Color textColor = colors.textDefault;
               Border? border;
+
               if (isSelected) {
                 if (isOverdueBtn) {
                   bgColor = Colors.red;
@@ -39,6 +50,7 @@ class BuildFilterChipsDebts extends StatelessWidget {
                 border = Border.all(color: Colors.red);
                 bgColor = Colors.red.withValues(alpha: 0.02);
               }
+
               return Padding(
                 padding: const EdgeInsets.only(right: 8),
                 child: InkWell(
@@ -55,7 +67,7 @@ class BuildFilterChipsDebts extends StatelessWidget {
                       border: border,
                     ),
                     child: Text(
-                      filter.tr,
+                      filterTranslations[filter] ?? filter,
                       style: TextStyle(
                         color: textColor,
                         fontWeight: FontWeight.w600,

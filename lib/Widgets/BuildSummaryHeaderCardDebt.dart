@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../modules/PharmacyDebts/PharmacyDebt_Model.dart';
 
@@ -20,17 +21,20 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
     this.status,
   });
 
-  // دالة لتنسيق المبالغ وإضافة فواصل للآلاف مع الحفاظ على الكسور إن وجدت
   String _formatAmount(double amount) {
     final formatter = NumberFormat('#,##0.##', 'en_US');
-    return '${formatter.format(amount)} S.p';
+    return
+    /*'${formatter.format(amount)} S.p'*/
+    'amount_sp'.trParams({'amount': formatter.format(amount)});
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    final double paidPercentage = totalBilled == 0 ? 0 : (totalPaid / totalBilled);
+    final double paidPercentage = totalBilled == 0
+        ? 0
+        : (totalPaid / totalBilled);
     final int collectedPercentInt = (paidPercentage * 100).toInt();
     final int remainingPercentInt = 100 - collectedPercentInt;
 
@@ -97,6 +101,7 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: size.height * 0.015),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -104,9 +109,9 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Total Billed',
-                      style: TextStyle(
+                    Text(
+                      'Total_Paid'.tr,
+                      style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 12,
                         fontFamily: 'Cairo',
@@ -115,11 +120,11 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
                     SizedBox(height: size.height * 0.003),
                     FittedBox(
                       fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.centerRight,
                       child: Text(
-                        _formatAmount(totalBilled),
+                        _formatAmount(totalPaid),
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFF4EE1C2),
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Cairo',
@@ -134,9 +139,9 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
-                      'Total Paid',
-                      style: TextStyle(
+                    Text(
+                      'Total_Billed'.tr,
+                      style: const TextStyle(
                         color: Colors.white70,
                         fontSize: 12,
                         fontFamily: 'Cairo',
@@ -145,11 +150,11 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
                     SizedBox(height: size.height * 0.003),
                     FittedBox(
                       fit: BoxFit.scaleDown,
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        _formatAmount(totalPaid),
+                        _formatAmount(totalBilled),
                         style: const TextStyle(
-                          color: Color(0xFF4EE1C2),
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Cairo',
@@ -176,12 +181,26 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '$collectedPercentInt% Collected',
-                style: const TextStyle(color: Colors.white70, fontSize: 11, fontFamily: 'Cairo'),
+                //'$collectedPercentInt% Collected',
+                'percent_collected'.trParams({
+                  'percent': collectedPercentInt.toString(),
+                }),
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 11,
+                  fontFamily: 'Cairo',
+                ),
               ),
               Text(
-                '$remainingPercentInt% Remaining',
-                style: const TextStyle(color: Colors.white70, fontSize: 11, fontFamily: 'Cairo'),
+                //'$remainingPercentInt% Remaining',
+                'percent_remaining'.trParams({
+                  'percent': remainingPercentInt.toString(),
+                }),
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 11,
+                  fontFamily: 'Cairo',
+                ),
               ),
             ],
           ),
@@ -225,7 +244,7 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
-        label,
+        label.tr,
         style: TextStyle(
           color: text,
           fontSize: 10,

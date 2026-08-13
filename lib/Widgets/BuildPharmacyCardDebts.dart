@@ -122,7 +122,7 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        statusText,
+                        statusText.tr,
                         style: TextStyle(
                           color: accentColor,
                           fontSize: 11,
@@ -147,7 +147,7 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _buildAmountColumn(
-                          'Total',
+                          'Total'.tr,
                           _formatAmount(item.totalAmount),
                           colors.textDefault,
                           context,
@@ -160,7 +160,7 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                       ),
                       Expanded(
                         child: _buildAmountColumn(
-                          'Paid',
+                          'Paid'.tr,
                           _formatAmount(item.paidAmount),
                           AppColors.primaryColor,
                           context,
@@ -173,7 +173,7 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                       ),
                       Expanded(
                         child: _buildAmountColumn(
-                          'Remaining',
+                          'Remaining'.tr,
                           _formatAmount(item.remainingAmount),
                           item.remainingAmount > 0
                               ? accentColor
@@ -202,7 +202,14 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                     ),
                     SizedBox(width: size.width * 0.02),
                     Text(
-                      '${(item.paidPercentage * 100).toStringAsFixed(item.paidPercentage > 0 && item.paidPercentage < 0.01 ? 2 : 0)}% paid',
+                      //'${(item.paidPercentage * 100).toStringAsFixed(item.paidPercentage > 0 && item.paidPercentage < 0.01 ? 2 : 0)}% paid',
+                      'percent_paid'.trParams({
+                        'percent': (item.paidPercentage * 100).toStringAsFixed(
+                          item.paidPercentage > 0 && item.paidPercentage < 0.01
+                              ? 2
+                              : 0,
+                        ),
+                      }),
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontSize: 11,
@@ -216,7 +223,10 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Last payment: ${item.lastPaymentDate}',
+                      //'Last payment: ${item.lastPaymentDate}',
+                      'last_payment_date'.trParams({
+                        'date': item.lastPaymentDate,
+                      }),
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontSize: 11,
@@ -224,7 +234,9 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () => Get.to(() => PharmacyPaymentHistoryScreen(pharmacy: item)),
+                      onTap: () => Get.to(
+                        () => PharmacyPaymentHistoryScreen(pharmacy: item),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Icon(
@@ -245,11 +257,11 @@ class BuildPharmacyCardDebts extends StatelessWidget {
   }
 
   Widget _buildAmountColumn(
-      String label,
-      String value,
-      Color valueColor,
-      BuildContext context,
-      ) {
+    String label,
+    String value,
+    Color valueColor,
+    BuildContext context,
+  ) {
     final size = MediaQuery.of(context).size;
     final colors = Theme.of(context).extension<ThemeColors>()!;
     return Padding(
@@ -258,7 +270,7 @@ class BuildPharmacyCardDebts extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            label,
+            label.tr,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: colors.textSecondary,
@@ -270,7 +282,7 @@ class BuildPharmacyCardDebts extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(
-              value,
+              value.tr,
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: valueColor,

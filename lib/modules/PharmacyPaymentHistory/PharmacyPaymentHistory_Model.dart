@@ -24,7 +24,7 @@ class PaymentItemModel {
       id: json['id']?.toString() ?? '',
       amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
       date: json['payment_date'] ?? json['created_at'] ?? '',
-      paymentMethod: 'CASH', // القيمة الافتراضية للدفعة
+      paymentMethod: 'CASH',
       ref: 'PAY-${json['id']}',
       collectedBy: json['collected_by_name'] ?? '',
       balanceAfter: (json['remaining_debt_snapshot'] as num?)?.toDouble() ?? 0.0,

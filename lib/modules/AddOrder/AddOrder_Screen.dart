@@ -96,16 +96,20 @@ class AddOrderScreen extends StatelessWidget {
             /// Row Search & Filter Button
             Row(
               children: [
-                CustomSearchField(
-                  controller: searchController,
-                  text: "Search_medicines...".tr,
-                  onChanged: (val) {
-                    addOrderController.onSearchChanged(val);
-                  },
-                  onClear: () {
-                    addOrderController.onSearchChanged('');
-                  },
+
+                Expanded( // تغليف حقل البحث بـ Expanded ليملأ باقي المساحة المتاحة
+                  child:     CustomSearchField(
+                    controller: searchController,
+                    text: "Search_medicines...".tr,
+                    onChanged: (val) {
+                      addOrderController.onSearchChanged(val);
+                    },
+                    onClear: () {
+                      addOrderController.onSearchChanged('');
+                    },
+                  ),
                 ),
+
                 SizedBox(width: size.width * 0.01),
                 const CategoryFilterMenu(),
               ],
