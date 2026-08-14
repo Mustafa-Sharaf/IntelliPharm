@@ -75,7 +75,7 @@ class MedicineCard extends StatelessWidget {
                       child:Image.network(
                         image,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Image.asset(image, fit: BoxFit.cover),
+                        errorBuilder: (_, __, ___) => Image.asset(image, fit: BoxFit.fill),
                       )
                     ),
                   ),

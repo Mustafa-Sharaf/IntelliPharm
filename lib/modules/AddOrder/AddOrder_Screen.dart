@@ -182,7 +182,7 @@ class AddOrderScreen extends StatelessWidget {
                             : "",
                         image: med.images.isNotEmpty
                             ? med.images.first
-                            : "assets/images/icon.png",
+                            : "assets/images/medicine_Image.png",
                         controller: addOrderController.getController(med.id),
                         onAdd: () {
                           final controller = addOrderController.getController(

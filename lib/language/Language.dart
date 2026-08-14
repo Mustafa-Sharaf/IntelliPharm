@@ -448,8 +448,10 @@ class MyLanguage implements Translations {
       'MANUFACTURER': 'MANUFACTURER',
       'BARCODE': 'BARCODE',
       'Failed_to_load_details': 'Failed to load details',
-      "":"",
-      "":"",
+      "units":"units",
+      "SP":"S.P",
+      'No_Offers_Available': 'No offers or gifts available for this medicine',
+      'No_Alternatives_Available': 'No alternatives available for this medicine currently',
       "":"",
       "":"",
       "":"",
@@ -931,6 +933,10 @@ class MyLanguage implements Translations {
       'MANUFACTURER': 'المصنّع',
       'BARCODE': 'الباركود',
       'Failed_to_load_details': 'فشل تحميل تفاصيل الدواء',
+      "units":"وحدات",
+      "SP":"ل.س",
+      'No_Offers_Available': 'لا توجد عروض أو هدايا متاحة على هذا الدواء',
+      'No_Alternatives_Available': 'لا توجد بدائل متاحة لهذا الدواء حالياً',
     },
   };
 }
