@@ -6,6 +6,7 @@ import '../app_theme/AppColors.dart';
 import '../app_theme/theme_controller.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/PrivacyPolicyScreen/PrivacyPolicyScreen_Screen.dart';
+import '../modules/Profile/Profile_Screen.dart';
 import '../services/AuthService.dart';
 import 'LanguageBottomSheet.dart';
 
@@ -27,7 +28,7 @@ class DrawerHome extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              color: const Color(0xff016E65),
+              color: AppColors.primaryColor,
               child: Stack(
                 children: [
                   Positioned.fill(
@@ -98,7 +99,9 @@ class DrawerHome extends StatelessWidget {
                   fontFamily: 'Cairo',
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Get.to(()=>ProfileScreen());
+              },
             ),
             if (role == 'rep')
               ListTile(
@@ -172,18 +175,6 @@ class DrawerHome extends StatelessWidget {
                 ),
               ),
             ),
-      /*      ListTile(
-              leading: Icon(Icons.logout, color: colors.textDefault),
-              title: Text(
-                'Logout'.tr,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: colors.textDefault,
-                  fontFamily: 'Cairo',
-                ),
-              ),
-              onTap: () => Get.toNamed("/login"),
-            ),*/
             ListTile(
               leading: Icon(Icons.logout, color: colors.textDefault),
               title: Text(
@@ -203,8 +194,8 @@ class DrawerHome extends StatelessWidget {
                   confirmTextColor: Colors.white,
                   buttonColor: Colors.red,
                   onConfirm: () {
-                    Get.back(); // إغلاق الدايالوج
-                    handleLogout(); // استدعاء دالة تسجيل الخروج
+                    Get.back();
+                    handleLogout();
                   },
                 );
               },

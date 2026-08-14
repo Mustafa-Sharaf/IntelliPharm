@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/ShowOrder/ShowOrderBinding.dart';
 import '../modules/ShowOrder/ShowOrder_Screen.dart';
@@ -10,7 +11,7 @@ class OrderCard extends StatelessWidget {
   final String date;
   final String itemsCount;
   final String price;
-  final String status; // 🔹 القيمة الخام القادمة من الـ API (مثل "PENDING" أو "ON_THE_WAY")
+  final String status;
   final Color statusColor;
   final VoidCallback? onCancel;
 
@@ -31,11 +32,10 @@ class OrderCard extends StatelessWidget {
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
 
-    // 🔹 تحويل الحالة الخام إلى حروف صغيرة واستبدال المسافات والشرطات السفلية
     final rawStatus = status.toLowerCase().replaceAll("_", " ").trim();
 
-    // 🔹 المقارنة تتم الآن على الحالة الإنجليزية الأصلية بغض النظر عن لغة التطبيق
-    final canCancel = rawStatus == 'pending' ||
+    final canCancel =
+        rawStatus == 'pending' ||
         rawStatus == 'processing' ||
         rawStatus == 'on the way';
 
@@ -56,7 +56,7 @@ class OrderCard extends StatelessWidget {
         children: [
           Container(
             width: size.width * 0.008,
-            height: size.height * 0.14,
+            height: size.height * 0.2,
             decoration: BoxDecoration(
               color: statusColor,
               borderRadius: BorderRadius.circular(10),
@@ -73,9 +73,7 @@ class OrderCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "ORDER_ID".trParams({
-                          'id': orderId.toString(),
-                        }),
+                        "ORDER_ID".trParams({'id': orderId.toString()}),
                         style: TextStyle(
                           color: colors.textSecondary,
                           fontSize: 12,
@@ -93,7 +91,7 @@ class OrderCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Text(
-                          status.tr, // 👈 نقوم بالترجمة هنا فقط للشاشات والواجهة!
+                          status.tr,
                           style: TextStyle(
                             color: statusColor,
                             fontFamily: 'Cairo',
@@ -123,15 +121,6 @@ class OrderCard extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                      if (canCancel)
-                        IconButton(
-                          onPressed: onCancel,
-                          icon: const Icon(
-                            Icons.block,
-                            color: Colors.red,
-                          ),
-                        ),
                     ],
                   ),
                   SizedBox(height: size.height * 0.004),
@@ -187,19 +176,70 @@ class OrderCard extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          final id = int.parse(orderId);
-                          Get.to(
-                                () => ShowOrderScreen(orderId: id),
-                            binding: ShowOrderBinding(id),
-                          );
-                        },
-                        child: Icon(
-                          Icons.chevron_right,
-                          color: colors.textSecondary,
+                    ],
+                  ),
+                  SizedBox(height: size.width * 0.02),
+                  Divider(color: Colors.grey.shade200, height: 1),
+                  SizedBox(height: size.width * 0.02),
+                  Row(
+                    children: [
+                      if (canCancel)
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: onCancel,
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                color: Colors.red,
+                                width: 1.2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                            ),
+                            child: Text(
+                              'Cancel Order'.tr,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
                         ),
-                      )
+                      SizedBox(width: size.width * 0.02),
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () {
+                            final id = int.parse(orderId);
+                            Get.to(
+                              () => ShowOrderScreen(orderId: id),
+                              binding: ShowOrderBinding(id),
+                            );
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(
+                              color: colors
+                                  .textPrimary, //AppColors.textLightPrimary
+                              width: 1.2,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                          ),
+                          child: Text(
+                            'Order details'.tr,
+                            style: TextStyle(
+                              color: colors.textPrimary,
+                              fontFamily: 'Cairo',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],

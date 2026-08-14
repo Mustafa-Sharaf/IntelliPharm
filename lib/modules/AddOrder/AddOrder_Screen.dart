@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/Tabs.dart';
+import '../MedicineDetails/MedicineDetails_Screen.dart';
 import '../NewOrder/NewOrder_Controller.dart';
 import '../../Widgets/MedicineCard.dart';
 import '../../app_theme/theme_extension.dart';
@@ -85,7 +86,7 @@ class AddOrderScreen extends StatelessWidget {
                   ],
                 ),
               );
-            })
+            }),
           ],
         ),
       ),
@@ -96,9 +97,8 @@ class AddOrderScreen extends StatelessWidget {
             /// Row Search & Filter Button
             Row(
               children: [
-
-                Expanded( // تغليف حقل البحث بـ Expanded ليملأ باقي المساحة المتاحة
-                  child:     CustomSearchField(
+                Expanded(
+                  child: CustomSearchField(
                     controller: searchController,
                     text: "Search_medicines...".tr,
                     onChanged: (val) {
@@ -155,40 +155,48 @@ class AddOrderScreen extends StatelessWidget {
                     }
 
                     final med = addOrderController.medicines[index];
-                    return MedicineCard(
-                      commercialName: med.commercialName,
-                      scientificName: med.scientificName,
-                      price: "PRICE_SP".trParams({
-                        'price': med.price.toString(),
-                      }),
-                      stockQuantity: med.availableQuantity.toString(),
-                      status: med.isImported ? "Imported".tr : "Local".tr,
-                      discount:
-                          (med.gift != null &&
-                              med.gift!.giftQuantity > 0 &&
-                              med.gift!.requiredQuantity > 0)
-                          ? "GIFT_PROMO".trParams({
-                              'required_qty': med.gift!.requiredQuantity
-                                  .toString(),
-                              'gift_qty': med.gift!.giftQuantity.toString(),
-                            })
-                          : "",
-                      image: med.images.isNotEmpty
-                          ? med.images.first
-                          : "assets/images/icon.png",
-                      controller: addOrderController.getController(med.id),
-                      onAdd: () {
-                        final controller = addOrderController.getController(
-                          med.id,
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(
+                          () => const MedicineDetailsScreen(),
+                          arguments: med.id,
                         );
-                        final qty = int.tryParse(controller.text) ?? 0;
-
-                        if (qty > 0) {
-                          newOrderController.addToCart(med, qty);
-                          controller.clear();
-                        }
                       },
-                      isImported: med.isImported,
+                      child: MedicineCard(
+                        commercialName: med.commercialName,
+                        scientificName: med.scientificName,
+                        price: "PRICE_SP".trParams({
+                          'price': med.price.toString(),
+                        }),
+                        stockQuantity: med.availableQuantity.toString(),
+                        status: med.isImported ? "Imported".tr : "Local".tr,
+                        discount:
+                            (med.gift != null &&
+                                med.gift!.giftQuantity > 0 &&
+                                med.gift!.requiredQuantity > 0)
+                            ? "GIFT_PROMO".trParams({
+                                'required_qty': med.gift!.requiredQuantity
+                                    .toString(),
+                                'gift_qty': med.gift!.giftQuantity.toString(),
+                              })
+                            : "",
+                        image: med.images.isNotEmpty
+                            ? med.images.first
+                            : "assets/images/icon.png",
+                        controller: addOrderController.getController(med.id),
+                        onAdd: () {
+                          final controller = addOrderController.getController(
+                            med.id,
+                          );
+                          final qty = int.tryParse(controller.text) ?? 0;
+
+                          if (qty > 0) {
+                            newOrderController.addToCart(med, qty);
+                            controller.clear();
+                          }
+                        },
+                        isImported: med.isImported,
+                      ),
                     );
                   },
                 );

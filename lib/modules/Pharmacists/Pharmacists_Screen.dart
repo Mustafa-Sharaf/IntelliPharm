@@ -5,6 +5,7 @@ import '../../Widgets/Tabs.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/ContactLauncher/ContactLauncher.dart';
+import '../PharmacyDetails/PharmacyDetailsBinding.dart';
 import '../PharmacyDetails/PharmacyDetails_Screen.dart';
 import '../Searching/Searching_Controller.dart';
 import '../Searching/Searching_Screen.dart';
@@ -29,7 +30,7 @@ class PharmacistsScreen extends StatelessWidget {
             /// SEARCH
             Row(
               children: [
-                Expanded( // تغليف حقل البحث بـ Expanded ليملأ باقي المساحة المتاحة
+                Expanded(
                   child: CustomSearchField(
                     controller: searchController,
                     text: "Search_Pharmacists...".tr,
@@ -159,6 +160,7 @@ class PharmacistsScreen extends StatelessWidget {
                           Get.to(
                             () => const PharmacyDetailsScreen(),
                             arguments: pharmacy.id,
+                            binding: PharmacyDetailsBinding()
                           );
                         },
                       ),
