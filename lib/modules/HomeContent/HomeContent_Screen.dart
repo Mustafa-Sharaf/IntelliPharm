@@ -6,9 +6,8 @@ import '../../Widgets/PharmacyCard.dart';
 import '../../Widgets/PlanRouteCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
-import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Screen.dart';
-import '../PlanYourRoute/PlanYourRoute_Screen.dart';
 import 'HomeContent_Controller.dart';
+import 'OfferCard.dart';
 
 class HomeContentScreen extends StatelessWidget {
   const HomeContentScreen({super.key});
@@ -127,7 +126,6 @@ class HomeContentScreen extends StatelessWidget {
                                   .tr,
                           buttonText: "CreatePlan".tr,
                           onPressed: () {
-                            //Get.to(() => PlanYourRouteScreen());
                             Get.toNamed('/planYourRoute');
 
                           },
@@ -158,7 +156,7 @@ class HomeContentScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "ActiveOffers",
+                          "ActiveOffers".tr,
                           style: TextStyle(
                             fontSize: size.width * 0.05,
                             fontWeight: FontWeight.bold,
@@ -169,6 +167,29 @@ class HomeContentScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Obx(() {
+                    if (homeContentController.activeOffers.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+
+                    return GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                        childAspectRatio: 0.97,
+                      ),
+                      itemCount: homeContentController.activeOffers.length,
+                      itemBuilder: (context, index) {
+                        final offer = homeContentController.activeOffers[index];
+                        return OfferCard(offer: offer);
+                      },
+                    );
+                  }),
+                  SizedBox(height: size.height*0.02),
                 ],
               ),
             ),

@@ -19,22 +19,22 @@ class AlternativeTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
+    final size=MediaQuery.of(context).size;
     final String currentLang = Get.locale?.languageCode ?? 'ar';
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(12),
+      margin: EdgeInsets.only(bottom: size.height*0.01),
+      padding:  EdgeInsets.all(size.height*0.02),
       decoration: BoxDecoration(
         color: colors.component,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: colors.textSecondary.withOpacity(0.1)),
+        border: Border.all(color: colors.textSecondary.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
-          // 1. صورة البديل
           Container(
-            width: 46,
-            height: 46,
+            width: size.height*0.05,
+            height: size.height*0.05,
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(10),
@@ -52,9 +52,7 @@ class AlternativeTileWidget extends StatelessWidget {
             )
                 : null,
           ),
-          const SizedBox(width: 12),
-
-          // 2. الاسم التجاري والملاحظة
+          SizedBox(width: size.width*0.025),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +79,6 @@ class AlternativeTileWidget extends StatelessWidget {
             ),
           ),
 
-          // 3. السعر وحالة الدواء (مستورد / محلي)
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -94,13 +91,13 @@ class AlternativeTileWidget extends StatelessWidget {
                   fontFamily: 'Cairo',
                 ),
               ),
-              const SizedBox(height: 2),
+               SizedBox(height: size.height*0.01),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
                   color: alt.isImported
-                      ? Colors.orange.withOpacity(0.1)
-                      : Colors.green.withOpacity(0.1),
+                      ? Colors.orange.withValues(alpha: 0.1)
+                      : Colors.green.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
@@ -108,7 +105,7 @@ class AlternativeTileWidget extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 10,
                     color: alt.isImported
-                        ? Colors.orange.shade800
+                        ? Colors.red.shade800
                         : Colors.green.shade800,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Cairo',

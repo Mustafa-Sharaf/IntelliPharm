@@ -10,7 +10,6 @@ class MedicineDetailsResponse {
   });
 
   factory MedicineDetailsResponse.fromJson(dynamic json) {
-    // التعامل مع الحالات التي يكون فيها الـ json نص أو Map
     if (json is! Map<String, dynamic>) {
       return MedicineDetailsResponse(isSuccess: false, message: 'Invalid Format');
     }
@@ -79,7 +78,7 @@ class MedicineDetailsData {
           ? LaboratoryInfo.fromJson(json['laboratory'])
           : null,
       alternatives: (json['alternatives'] as List? ?? [])
-          .whereType<Map<String, dynamic>>() // 👈 يضمن عدم حصول كراش إذا كان العنصر ليس Map
+          .whereType<Map<String, dynamic>>()
           .map((e) => AlternativeMedicine.fromJson(e))
           .toList(),
     );
@@ -99,7 +98,6 @@ class LocalizedName {
         en: json['en']?.toString() ?? '',
       );
     } else if (json is String) {
-      // احتياطاً لو أرجع السيرفر الاسم كنص عادي بدلاً من Object
       return LocalizedName(ar: json, en: json);
     }
     return LocalizedName(ar: '', en: '');

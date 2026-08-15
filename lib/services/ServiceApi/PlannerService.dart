@@ -59,5 +59,21 @@ class PlannerService {
     return response.data;
   }
 
+  static Future<Map<String, dynamic>?> getMyTodayPlan() async {
+    try {
+      final response = await ApiService.get('/planner/v1/plans/my-today');
+
+      // التأكد من تحويل response.data إلى Map بشكل آمن
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        return response.data as Map<String, dynamic>;
+      }
+
+      return null;
+    } catch (e) {
+      print("❌ Error fetching today's plan: $e");
+      return null;
+    }
+  }
+
 
 }

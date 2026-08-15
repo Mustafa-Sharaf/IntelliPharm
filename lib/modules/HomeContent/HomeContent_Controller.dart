@@ -9,6 +9,7 @@ class HomeContentController extends GetxController {
   final isLoading = false.obs;
   final statistics = Rxn<StatisticsModel>();
   final todayVisits = <TodayVisitModel>[].obs;
+  final activeOffers = <ActiveOfferModel>[].obs;
 
   @override
   void onInit() {
@@ -26,10 +27,11 @@ class HomeContentController extends GetxController {
         final model = HomePageModel.fromJson(response);
         statistics.value = model.statistics;
         todayVisits.assignAll(model.todayVisits);
+        activeOffers.assignAll(model.activeOffers);
       }
     } catch (e) {
       if (e is DioException) {
-        // يمكنك طباعة الأخطاء للتأكد إذا كان التوكين UnAuthorized (401)
+
         print("Dio Error: ${e.response?.statusCode}");
       } else {
         print("Error: $e");

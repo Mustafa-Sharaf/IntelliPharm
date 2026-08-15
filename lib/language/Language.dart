@@ -452,7 +452,12 @@ class MyLanguage implements Translations {
       "SP":"S.P",
       'No_Offers_Available': 'No offers or gifts available for this medicine',
       'No_Alternatives_Available': 'No alternatives available for this medicine currently',
-      "":"",
+
+      'OFF': 'OFF',
+      'GIFT': 'GIFT',
+      'DiscountOffer': 'Discount Offer',
+      'FreeGift': 'Free Gift',
+      'MinOrder': 'Min. Order',
       "":"",
       "":"",
       "":"",
@@ -937,6 +942,11 @@ class MyLanguage implements Translations {
       "SP":"ل.س",
       'No_Offers_Available': 'لا توجد عروض أو هدايا متاحة على هذا الدواء',
       'No_Alternatives_Available': 'لا توجد بدائل متاحة لهذا الدواء حالياً',
+      'OFF': 'خصم',
+      'GIFT': 'هدية',
+      'DiscountOffer': 'عرض خصم',
+      'FreeGift': 'هدية مجانية',
+      'MinOrder': 'الحد الأدنى للطلب',
     },
   };
 }

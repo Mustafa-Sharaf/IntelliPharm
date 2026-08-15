@@ -89,6 +89,7 @@ class DrawerHome extends StatelessWidget {
                 ],
               ),
             ),
+            if (role == 'rep')
             ListTile(
               leading: Icon(Icons.person, color: colors.textDefault),
               title: Text(
@@ -103,7 +104,7 @@ class DrawerHome extends StatelessWidget {
                 Get.to(()=>ProfileScreen());
               },
             ),
-            if (role == 'rep')
+   /*         if (role == 'rep')
               ListTile(
                 leading: Icon(
                   Icons.gps_fixed_rounded,
@@ -118,7 +119,7 @@ class DrawerHome extends StatelessWidget {
                   ),
                 ),
                 onTap: () {},
-              ),
+              ),*/
             ListTile(
               leading: Icon(Icons.language, color: colors.textDefault),
               title: Text(

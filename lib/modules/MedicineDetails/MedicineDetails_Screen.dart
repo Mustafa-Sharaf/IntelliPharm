@@ -55,30 +55,32 @@ class MedicineDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. صورة الدواء
               Container(
                 width: double.infinity,
                 height: size.height * 0.2,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(16),
-                  image: med.images.isNotEmpty
-                      ? DecorationImage(
-                    image: NetworkImage(med.images.first),
-                    fit: BoxFit.cover,
-                  )
-                      : null,
                 ),
-                child: med.images.isEmpty
-                    ? Image.asset(
-                  "assets/images/medicine_Image.png",
-                  fit: BoxFit.fill,
-                )
-                    : null,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: med.images.isNotEmpty
+                      ? Image.network(
+                          med.images.first,
+                          fit: BoxFit.fill,
+                          errorBuilder: (_, __, ___) => Image.asset(
+                            "assets/images/medicine_Image.png",
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                      : Image.asset(
+                          "assets/images/medicine_Image.png",
+                          fit: BoxFit.fill,
+                        ),
+                ),
               ),
               SizedBox(height: size.height * 0.02),
 
-              // 2. الاسم والتصنيف
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -131,7 +133,6 @@ class MedicineDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.02),
 
-              // 3. مربعات التفاصيل
               GridView.count(
                 crossAxisCount: 2,
                 shrinkWrap: true,
@@ -160,7 +161,6 @@ class MedicineDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.015),
 
-              // 4. قسم العروض والهدايا (في حال أترفرت أم لا)
               if (med.gift != null && med.gift!.giftQuantity > 0)
                 Container(
                   width: double.infinity,
@@ -176,11 +176,12 @@ class MedicineDetailsScreen extends StatelessWidget {
                         color: Colors.white,
                         size: 22,
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: size.width * 0.02),
                       Expanded(
                         child: Text(
                           "GIFT_PROMO".trParams({
-                            'required_qty': med.gift!.requiredQuantity.toString(),
+                            'required_qty': med.gift!.requiredQuantity
+                                .toString(),
                             'gift_qty': med.gift!.giftQuantity.toString(),
                           }),
                           style: const TextStyle(
@@ -212,7 +213,7 @@ class MedicineDetailsScreen extends StatelessWidget {
                         color: colors.textSecondary,
                         size: 22,
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: size.width * 0.02),
                       Text(
                         "No_Offers_Available".tr,
                         style: TextStyle(
@@ -226,8 +227,6 @@ class MedicineDetailsScreen extends StatelessWidget {
                 ),
 
               SizedBox(height: size.height * 0.02),
-
-              // 5. عنوان قسم البدائل
               Text(
                 "Alternatives".tr,
                 style: TextStyle(
@@ -238,8 +237,6 @@ class MedicineDetailsScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: size.height * 0.01),
-
-              // 6. عرض قائمة البدائل أو رسالة "لا يوجد بدائل"
               if (med.alternatives.isNotEmpty)
                 ListView.builder(
                   shrinkWrap: true,
@@ -255,7 +252,10 @@ class MedicineDetailsScreen extends StatelessWidget {
               else
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 16,
+                  ),
                   decoration: BoxDecoration(
                     color: colors.component,
                     borderRadius: BorderRadius.circular(14),
@@ -270,7 +270,7 @@ class MedicineDetailsScreen extends StatelessWidget {
                         color: colors.textSecondary.withValues(alpha: 0.5),
                         size: 36,
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: size.height * 0.01),
                       Text(
                         "No_Alternatives_Available".tr,
                         style: TextStyle(

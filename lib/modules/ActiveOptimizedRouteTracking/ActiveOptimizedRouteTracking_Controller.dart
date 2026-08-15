@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import '../../Widgets/AppSnackBar.dart';
 import '../../helper/mapHelper/dart/MapDrawerHelper.dart';
@@ -61,12 +63,15 @@ class ActiveOptimizedRouteTrackingController extends GetxController {
 
             // 2. إرسال الطلب مع تمرير plan.id
             final responseData = await PlannerService.rePlanRoute(
-              planId: plan!.id, // 👈 تمرير رقم الخطّة الحالية هنا
+              planId: plan!.id, //  تمرير رقم الخطّة الحالية هنا
               latitude: mapController.latitude.value,
               longitude: mapController.longitude.value,
               reason: reason,
               reasonDetails: reasonDetails,
             );
+            print("=================== 📥 REPLAN RESPONSE 📥 ===================");
+            print(const JsonEncoder.withIndent('  ').convert(responseData));
+            print("=============================================================");
 
             if (responseData != null && responseData['isSuccess'] == true) {
               // 3. تحديث خطة المسار في الـ PlanYourRouteController بالبيانات الجديدة
@@ -95,6 +100,65 @@ class ActiveOptimizedRouteTrackingController extends GetxController {
     );
   }
 
+
+  /*Future<void> fetchMyTodayPlan() async {
+    try {
+      isLoading.value = true;
+      final responseData = await PlannerService.getMyTodayPlan();
+
+      if (responseData != null && responseData['isSuccess'] == true) {
+        // 1. تحويل الـ JSON لكائن PlanResponse
+        final updatedPlan = PlanResponse.fromJson(responseData['data']);
+
+        // 2. تحديث الخطة في الـ Controller الأساسي ليتم إعادة بناء الواجهة تفاعلياً عبر Obx
+        planYourRouteController.plan.value = updatedPlan;
+
+        // 3. إعادة رسم المسار على الخريطة ببيانات اليوم الجديدة
+        final mapController = Get.find<MapHelperController>(tag: "route");
+        await MapDrawerHelper.drawFullRoute(
+          routeMapController: mapController,
+          plan: updatedPlan,
+        );
+      }
+    } catch (e) {
+      print("❌ Error updating today's plan: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }*/
+
+  Future<void> fetchMyTodayPlan() async {
+    try {
+      isLoading.value = true;
+      final responseData = await PlannerService.getMyTodayPlan();
+
+      if (responseData != null && responseData['isSuccess'] == true) {
+        // 1. تحويل البيانات وتحديث الـ Controller
+        final updatedPlan = PlanResponse.fromJson(responseData['data']);
+        planYourRouteController.plan.value = updatedPlan;
+
+        // 2. الحصول على كائن الخريطة
+        final mapController = Get.find<MapHelperController>(tag: "route");
+
+        // 🧹 3. مسح المسارات والعلامات (Markers) القديمة من الخريطة أولاً
+        mapController.markers.clear();
+        mapController.polyLines.clear();// أو الدالة المخصصة لتنظيف الخريطة لديك مثل mapController.markers.clear()
+
+        // 🎨 4. إعادة رسم المسار والنقاط المتبقية
+        await MapDrawerHelper.drawFullRoute(
+          routeMapController: mapController,
+          plan: updatedPlan,
+        );
+
+        // 🔍 5. نقل الكاميرا لتركّز على المسار الجديد / الموقع الحالي
+        await mapController.moveToCurrentLocation();
+      }
+    } catch (e) {
+      print("❌ Error updating today's plan & map: $e");
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   @override
   void onClose() {

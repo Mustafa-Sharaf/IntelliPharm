@@ -210,6 +210,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
 
                           return RouteStepItem(
                             id: visit.id,
+                            pharmacyId: visit.pharmacyId,
                             title: visit.name,
                             subtitle: subtitleText,
                             index: visit.visitOrder.toString(),
@@ -237,7 +238,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                               //print("Start Visit Pressed for Visit ID: $visitId");
                               await routeStepController.startVisit(visitId);
                             },
-                            onStatusChange: (visitId, status, cause, notes) async {
+                   /*         onStatusChange: (visitId, status, cause, notes) async {
                              // print("Change Status Pressed: ID: $visitId -> Status: $status, Cause: $cause, Notes: $notes");
                               await routeStepController.updateVisitStatus(
                                 visitId,
@@ -245,6 +246,18 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                                 cause,
                                 notes: notes,
                               );
+                              await controller.fetchMyTodayPlan();
+                            },*/
+                            onStatusChange: (visitId, status, cause, notes) async {
+                              // 1. إرسال تغيير الحالة للسيرفر والانتظار حتى يكتمل
+                              await routeStepController.updateVisitStatus(
+                                visitId,
+                                status,
+                                cause,
+                                notes: notes,
+                              );
+                              // 2. تجديد خطة اليوم ورسم المسار مجدداً
+                              await controller.fetchMyTodayPlan();
                             },
                           );
                         }),

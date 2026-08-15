@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import 'package:get/get.dart';
+
 class MedicineCard extends StatelessWidget {
   final String commercialName;
   final String scientificName;
@@ -26,7 +27,7 @@ class MedicineCard extends StatelessWidget {
     required this.image,
     required this.controller,
     required this.onAdd,
-    required this.isImported
+    required this.isImported,
   });
 
   Color getStatusColor() {
@@ -72,11 +73,21 @@ class MedicineCard extends StatelessWidget {
                     height: size.width * 0.15,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
-                      child:Image.network(
-                        image,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Image.asset(image, fit: BoxFit.fill),
-                      )
+                      child: image.startsWith('http')
+                          ? Image.network(
+                              image,
+                              fit: BoxFit.fill,
+                              errorBuilder: (_, __, ___) => Image.asset(
+                                "assets/images/medicine_Image.png",
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          : Image.asset(
+                              image,
+                              fit: BoxFit.fill,
+                              errorBuilder: (_, __, ___) =>
+                                  const Icon(Icons.medication, size: 30),
+                            ),
                     ),
                   ),
                   SizedBox(width: size.width * 0.02),
@@ -203,7 +214,6 @@ class MedicineCard extends StatelessWidget {
                           color: Colors.white,
                           fontFamily: 'Cairo',
                           fontSize: 13,
-                         
                         ),
                       ),
                     ),
@@ -221,7 +231,7 @@ class MedicineCard extends StatelessWidget {
                       ),
                       child: Text(
                         "Alternatives".tr,
-                        style:  TextStyle(
+                        style: TextStyle(
                           color: AppColors.primaryColor,
                           fontFamily: 'Cairo',
                           fontSize: 13,
@@ -260,7 +270,7 @@ class MedicineCard extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
       ],
     );
   }

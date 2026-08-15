@@ -41,7 +41,7 @@ class MapHelperController extends GetxController {
   /// تحميل أيقونة المركبة المخصصة (DeliveryBicycle) بحجم مثالي وواضح (80 px)
   Future<void> loadCustomMarkerIcon() async {
     try {
-      customCarIcon = await getBitmapDescriptorFromAsset('assets/images/DeliveryBicycle.png', 80);
+      customCarIcon = await getBitmapDescriptorFromAsset('assets/images/DeliveryBicycle.png', 40);
     } catch (e) {
       print("Error loading custom marker icon: $e");
     }

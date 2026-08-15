@@ -1,10 +1,12 @@
 class HomePageModel {
   final StatisticsModel statistics;
   final List<TodayVisitModel> todayVisits;
+  final List<ActiveOfferModel> activeOffers;
 
   HomePageModel({
     required this.statistics,
     required this.todayVisits,
+    required this.activeOffers,
   });
 
   factory HomePageModel.fromJson(Map<String, dynamic> json) {
@@ -14,6 +16,9 @@ class HomePageModel {
       statistics: StatisticsModel.fromJson(data['statistics']),
       todayVisits: (data['today_visits'] as List)
           .map((e) => TodayVisitModel.fromJson(e))
+          .toList(),
+      activeOffers: (data['active_offers'] as List? ?? [])
+          .map((e) => ActiveOfferModel.fromJson(e))
           .toList(),
     );
   }
@@ -76,6 +81,61 @@ class TodayVisitModel {
       planId: json['plan_id'] ?? 0,
       planName: json['plan_name'] ?? '',
       regionId: json['region_id'] ?? 0,
+    );
+  }
+}
+
+
+class ActiveOfferModel {
+  final int id;
+  final String type; // 'percentage' or 'gifts'
+  final String requiredAmount;
+  final bool isActive;
+  final String? percentage;
+  final int? quantity;
+  final String? image;
+  final OfferMedicineModel? medicine;
+
+  ActiveOfferModel({
+    required this.id,
+    required this.type,
+    required this.requiredAmount,
+    required this.isActive,
+    this.percentage,
+    this.quantity,
+    this.image,
+    this.medicine,
+  });
+
+  factory ActiveOfferModel.fromJson(Map<String, dynamic> json) {
+    return ActiveOfferModel(
+      id: json['id'],
+      type: json['type'] ?? '',
+      requiredAmount: json['required_amount'] ?? '0',
+      isActive: json['is_active'] ?? false,
+      percentage: json['percentage'],
+      quantity: json['quantity'],
+      image: json['image'],
+      medicine: json['medicine'] != null
+          ? OfferMedicineModel.fromJson(json['medicine'])
+          : null,
+    );
+  }
+}
+
+class OfferMedicineModel {
+  final int id;
+  final String commercialName;
+
+  OfferMedicineModel({
+    required this.id,
+    required this.commercialName,
+  });
+
+  factory OfferMedicineModel.fromJson(Map<String, dynamic> json) {
+    return OfferMedicineModel(
+      id: json['id'],
+      commercialName: json['commercial_name'] ?? '',
     );
   }
 }

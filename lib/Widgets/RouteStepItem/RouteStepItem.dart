@@ -12,6 +12,7 @@ class RouteStepItem extends StatelessWidget {
   const RouteStepItem({
     super.key,
     required this.id,
+    required this.pharmacyId,
     required this.title,
     required this.subtitle,
     this.isDone = false,
@@ -25,6 +26,7 @@ class RouteStepItem extends StatelessWidget {
   });
 
   final int id;
+  final int pharmacyId;
   final String title;
   final String subtitle;
   final bool isDone;
@@ -48,9 +50,9 @@ class RouteStepItem extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => ChangeStatusDialog(
-        onSubmit: (status, cause, notes) {
+        onSubmit: (status, cause, notes) async {
           if (onStatusChange != null) {
-            onStatusChange!(id, status, cause, notes);
+            await onStatusChange!(id, status, cause, notes);
           }
         },
       ),
@@ -157,9 +159,10 @@ class RouteStepItem extends StatelessWidget {
                         onTap: () {
                           Get.to(
                             () => const PharmacyDetailsScreen(),
-                            arguments: id,
+                            arguments: pharmacyId,
                             binding: PharmacyDetailsBinding(),
                           );
+
                         },
                         child: Icon(
                           FontAwesomeIcons.squareArrowUpRight,

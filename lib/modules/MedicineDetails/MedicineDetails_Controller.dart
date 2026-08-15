@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../../services/ServiceApi/MedicineDetailsService.dart';
 import 'MedicineDetails_Model.dart';
 
-
 class MedicineDetailsController extends GetxController {
   var isLoading = true.obs;
   var medicineData = Rxn<MedicineDetailsData>();
@@ -17,7 +16,9 @@ class MedicineDetailsController extends GetxController {
   Future<void> getMedicineDetails(int medicineId) async {
     try {
       isLoading.value = true;
-      final response = await MedicineDetailsService.fetchMedicineDetails(medicineId);
+      final response = await MedicineDetailsService.fetchMedicineDetails(
+        medicineId,
+      );
       if (response != null && response.isSuccess && response.data != null) {
         medicineData.value = response.data;
       }
