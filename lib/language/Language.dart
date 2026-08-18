@@ -458,8 +458,9 @@ class MyLanguage implements Translations {
       'DiscountOffer': 'Discount Offer',
       'FreeGift': 'Free Gift',
       'MinOrder': 'Min. Order',
-      "":"",
-      "":"",
+      "Items": "@items items",
+      "Cancel_Order":"Cancel Order",
+      "Are_you_sure_cancel_order":"Are you sure cancel order",
       "":"",
       "":"",
       "":"",
@@ -947,6 +948,9 @@ class MyLanguage implements Translations {
       'DiscountOffer': 'عرض خصم',
       'FreeGift': 'هدية مجانية',
       'MinOrder': 'الحد الأدنى للطلب',
+      "Items": "@items عناصر",
+      "Cancel_Order":"إلغاء الطلب",
+      "Are_you_sure_cancel_order":"هل أنت متأكد من إلغاء الطلب؟",
     },
   };
 }

@@ -44,7 +44,7 @@ class ActivePharmacyCard extends StatelessWidget {
                   color: AppColors.primaryColor,
                 ),
               ),
-               SizedBox(width: size.width * 0.02),
+              SizedBox(width: size.width * 0.02),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,9 +58,8 @@ class ActivePharmacyCard extends StatelessWidget {
                         fontFamily: 'Cairo',
                       ),
                     ),
-                     SizedBox(height: size.height * 0.01),
+                    SizedBox(height: size.height * 0.01),
                     Text(
-                     // "ETA ${PlanRouteCalculator.getETAForVisit(plan.toPlanResponse(), controller.activeVisitIndex.value)} • Order #${activeVisit.id}",
                       "ETA_ORDER".trParams({
                         'eta': PlanRouteCalculator.getETAForVisit(
                           plan.toPlanResponse(),
@@ -79,7 +78,7 @@ class ActivePharmacyCard extends StatelessWidget {
               ),
             ],
           ),
-           SizedBox(height: size.height * 0.02),
+          SizedBox(height: size.height * 0.02),
           Row(
             children: [
               Container(
@@ -98,9 +97,10 @@ class ActivePharmacyCard extends StatelessWidget {
                       size: 16,
                       color: colors.textSecondary,
                     ),
-                     SizedBox(width: size.width * 0.01),
+                    SizedBox(width: size.width * 0.01),
                     Text(
-                      "5 items",
+                      //"${activeVisit.orderItemCount} items",
+                      "Items".trParams({'items': "${activeVisit.orderItemCount}" }),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -111,17 +111,13 @@ class ActivePharmacyCard extends StatelessWidget {
                   ],
                 ),
               ),
-               SizedBox(width: size.width * 0.03),
+              SizedBox(width: size.width * 0.03),
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
-
+                    controller.handleRePlan();
                   },
-                  icon: const Icon(
-                    //Icons.navigation_outlined,
-                    Icons.refresh,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.refresh, color: Colors.white),
                   label: Text(
                     //"NAVIGATE".tr,
                     "RePlan".tr,

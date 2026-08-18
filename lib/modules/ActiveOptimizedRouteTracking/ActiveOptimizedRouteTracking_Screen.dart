@@ -40,9 +40,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                   showMyLocationButton: false,
                 ),
                 //const CurrentRouteHeader(),
-                CurrentRouteHeader(
-                  planRx: planYourRouteController.plan,
-                )
+                CurrentRouteHeader(planRx: planYourRouteController.plan),
               ],
             ),
           ),
@@ -69,6 +67,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     /// Next Destination Section
                     Text(
                       "NEXT_DESTINATION".tr,
@@ -84,22 +83,30 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       final plan = controller.plan;
                       final nextVisit = controller.nextVisit;
                       if (plan == null || nextVisit == null) {
-                        return  Center(
-                          child:EmptyPlanCard(
+                        return Center(
+                          child: EmptyPlanCard(
                             title: "NoVisitsPlannedYet".tr,
                             subtitle:
-                            "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
+                                "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute"
+                                    .tr,
                             buttonText: "CreatePlan".tr,
                             onPressed: () {
-                              //Get.to(() => PlanYourRouteScreen());
+
                               Get.toNamed('/planYourRoute');
                             },
                           ),
                         );
                       }
                       int nextVisitIndex = plan.visits.indexOf(nextVisit);
-                      String nextVisitETA = PlanRouteCalculator.getETAForVisit(plan, nextVisitIndex);
-                      String nextVisitDistance = PlanRouteCalculator.getFormatDistanceForVisit(plan, nextVisitIndex);
+                      String nextVisitETA = PlanRouteCalculator.getETAForVisit(
+                        plan,
+                        nextVisitIndex,
+                      );
+                      String nextVisitDistance =
+                          PlanRouteCalculator.getFormatDistanceForVisit(
+                            plan,
+                            nextVisitIndex,
+                          );
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -154,10 +161,7 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                             onPressed: () {
                               controller.handleRePlan();
                             },
-                            icon: const Icon(
-                              Icons.refresh,
-                              size: 18,
-                            ),
+                            icon: const Icon(Icons.refresh, size: 18),
                             label: Text(
                               "RePlan".tr,
                               style: const TextStyle(
@@ -188,8 +192,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: size.width * 0.04),
-                    /// Route Schedule Dynamic List
 
+                    /// Route Schedule Dynamic List
                     Obx(() {
                       if (planYourRouteController.isLoading.value) {
                         return Center(
@@ -203,7 +207,8 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                       return Column(
                         children: List.generate(plan.visits.length, (index) {
                           final visit = plan.visits[index];
-                          String calculatedETA = PlanRouteCalculator.getETAForVisit(plan, index);
+                          String calculatedETA =
+                              PlanRouteCalculator.getETAForVisit(plan, index);
                           String subtitleText = visit.visited
                               ? "VISITED_AT".trParams({'time': calculatedETA})
                               : "ETA_TIME".trParams({'time': calculatedETA});
@@ -214,15 +219,19 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                             title: visit.name,
                             subtitle: subtitleText,
                             index: visit.visitOrder.toString(),
-                            isCurrent: controller.nextVisit != null &&
-                                visit.pharmacyId == controller.nextVisit!.pharmacyId,
+                            isCurrent:
+                                controller.nextVisit != null &&
+                                visit.pharmacyId ==
+                                    controller.nextVisit!.pharmacyId,
                             isDone: visit.visited,
                             showLine: index != plan.visits.length - 1,
-                            showDetails: controller.nextVisit != null &&
-                                visit.pharmacyId == controller.nextVisit!.pharmacyId,
+                            showDetails:
+                                controller.nextVisit != null &&
+                                visit.pharmacyId ==
+                                    controller.nextVisit!.pharmacyId,
                             onDetailsPressed: () async {
                               final bool? isChecked = await Get.to(
-                                    () => const VisitDetailsScreen(),
+                                () => const VisitDetailsScreen(),
                                 arguments: {
                                   "pharmacyId": visit.pharmacyId,
                                   "visitId": visit.id,
@@ -235,30 +244,18 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
                             },
 
                             onStartVisit: (visitId) async {
-                              //print("Start Visit Pressed for Visit ID: $visitId");
                               await routeStepController.startVisit(visitId);
                             },
-                   /*         onStatusChange: (visitId, status, cause, notes) async {
-                             // print("Change Status Pressed: ID: $visitId -> Status: $status, Cause: $cause, Notes: $notes");
-                              await routeStepController.updateVisitStatus(
-                                visitId,
-                                status,
-                                cause,
-                                notes: notes,
-                              );
-                              await controller.fetchMyTodayPlan();
-                            },*/
-                            onStatusChange: (visitId, status, cause, notes) async {
-                              // 1. إرسال تغيير الحالة للسيرفر والانتظار حتى يكتمل
-                              await routeStepController.updateVisitStatus(
-                                visitId,
-                                status,
-                                cause,
-                                notes: notes,
-                              );
-                              // 2. تجديد خطة اليوم ورسم المسار مجدداً
-                              await controller.fetchMyTodayPlan();
-                            },
+                            onStatusChange:
+                                (visitId, status, cause, notes) async {
+                                  await routeStepController.updateVisitStatus(
+                                    visitId,
+                                    status,
+                                    cause,
+                                    notes: notes,
+                                  );
+                                  await controller.fetchMyTodayPlan();
+                                },
                           );
                         }),
                       );

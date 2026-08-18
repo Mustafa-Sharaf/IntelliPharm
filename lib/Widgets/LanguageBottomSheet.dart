@@ -55,7 +55,7 @@ class LanguageBottomSheet extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
+        /*  ListTile(
             leading: Image.asset("assets/images/Franca.png", width: 50),
             title: Text("Français",  style: TextStyle(
               fontSize: 18,
@@ -79,7 +79,7 @@ class LanguageBottomSheet extends StatelessWidget {
               langController.changeLanguage("tr");
               Get.back();
             },
-          ),
+          ),*/
         ],
       ),
     );

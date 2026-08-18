@@ -58,15 +58,15 @@ class OfferCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 8,
-                left: 8,
+                top: size.height*0.001,
+                left: size.height*0.001,
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
+                    color: Colors.green,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
@@ -117,13 +117,23 @@ class OfferCard extends StatelessWidget {
   }
 
   Widget _buildPlaceholderIcon() {
+    final isPercentage = offer.type == 'percentage';
+
     return Center(
-      child: Icon(
-        offer.type == 'percentage'
-            ? Icons.local_offer_rounded
-            : Icons.card_giftcard_rounded,
-        size: 38,
-        color: AppColors.primaryColor.withValues(alpha: 0.4),
+      child: Image.asset(
+        isPercentage
+            ? 'assets/images/offer.png'
+            : 'assets/images/Gift.png',
+        width: 120,
+        height: 120,
+        fit: BoxFit.fill,
+        errorBuilder: (context, error, stackTrace) {
+          return Icon(
+            isPercentage ? Icons.local_offer_rounded : Icons.card_giftcard_rounded,
+            size: 38,
+            color: AppColors.primaryColor.withValues(alpha: 0.4),
+          );
+        },
       ),
     );
   }

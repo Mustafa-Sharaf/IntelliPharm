@@ -50,6 +50,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   geolocator: ^14.0.2
   intl: ^0.20.3
+  pusher_channels_flutter: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -79,9 +80,11 @@ flutter:
      - assets/icons/
      - assets/map_dark.json
      - assets/images/DeliveryBicycle.png
-     - assets/images/DeliveryCar.png
      - assets/images/Med_Image.png
      - assets/images/medicine_Image.png
+     - assets/images/offer.png
+     - assets/images/Gift.png
+     - assets/images/login_img_dark.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

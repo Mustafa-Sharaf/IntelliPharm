@@ -48,4 +48,9 @@ class MedicineService {
 
     return response.data;
   }
+
+  static Future<Map<String, dynamic>> getMedicineDetails(int id) async {
+    final response = await ApiService.get('/erp/v1/medicines/$id');
+    return response.data;
+  }
 }

@@ -5,7 +5,7 @@ import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import '../modules/ActiveDeliveryRoute/ActiveDeliveryRoute_Controller.dart';
 import '../modules/ActiveDeliveryRoute/ActiveDeliveryRoute_Model.dart';
-import '../modules/ConfirmDelivery/ConfirmDelivery_Screen.dart';
+import 'RouteStepItem/ChangeStatusDialog.dart';
 
 class DeliveryTimelineItem extends StatelessWidget {
   final DeliveryVisit visit;
@@ -27,14 +27,17 @@ class DeliveryTimelineItem extends StatelessWidget {
     required this.regionName,
   });
 
+
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    final size=MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // 1. الدائرة المؤشرة والخط الرأسي الجانبي
         Column(
           children: [
             if (isCompleted)
@@ -72,119 +75,194 @@ class DeliveryTimelineItem extends StatelessWidget {
             if (!isLast)
               Container(
                 width: size.width * 0.004,
-                height: size.height * .06,
+                // تعديل ارتفاع الخط التكيفي حسب وجود الكارت النشط
+                height: isActive ? size.height * 0.15 : size.height * 0.06,
                 color: isCompleted
                     ? const Color(0xFF76F2D6)
                     : colors.textSecondary.withValues(alpha: 0.2),
               ),
           ],
         ),
-         SizedBox(width: size.width * 0.02),
+        SizedBox(width: size.width * 0.03),
+
+        // 2. المحتوى الرئيسي (مغلف بـ Container لون component إذا كان active)
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Container(
+            padding: isActive
+                ? EdgeInsets.all(size.height * 0.02)
+                : EdgeInsets.zero,
+            decoration: isActive
+                ? BoxDecoration(
+                    color: colors.component,
+                    borderRadius: BorderRadius.circular(16),
+                  )
+                : null,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
                         visit.pharmacyName,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          decoration: isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+                          decoration: isCompleted
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
                           color: isActive
                               ? AppColors.primaryColor
                               : (isCompleted
-                              ? colors.textSecondary
-                              : colors.textDefault),
+                                    ? colors.textSecondary
+                                    : colors.textDefault),
                           fontFamily: 'Cairo',
                         ),
                       ),
-                       SizedBox(height: size.height * 0.02),
+                    ),
+                    if (isCompleted)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE8F6F4),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Text(
+                          "COMPLETED".tr,
+                          style: TextStyle(
+                            color: AppColors.primaryColor,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Cairo',
+                          ),
+                        ),
+                      )
+                    else if (!isActive)
                       Text(
-                        subtitleText,
+                        "${visit.orderId}",
                         style: TextStyle(
-                          fontSize: 12,
-                          color: colors.textSecondary,
+                          color: colors.textSecondary.withValues(alpha: 0.6),
+                          fontSize: 14,
                           fontFamily: 'Cairo',
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                  ],
+                ),
+                SizedBox(height: size.height * 0.005),
+
+                Text(
+                  subtitleText,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: colors.textSecondary,
+                    fontFamily: 'Cairo',
+                  ),
+                ),
+
+                if (isActive) ...[
+                  SizedBox(height: size.height * 0.005),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () async {
+                            final isSuccess = await Get.toNamed(
+                              '/confirmDelivery',
+                              arguments: {
+                                'visit': visit,
+                                'regionName': regionName,
+                              },
+                            );
+                            if (isSuccess == true) {
+                              final mainController =
+                                  Get.find<ActiveDeliveryRouteController>();
+                              mainController.markVisitAsCompleted(visit.id);
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: AppColors.primaryColor),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                          ),
+                          child: Text(
+                            "DeliveryConfirmation".tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Cairo',
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: size.width * 0.02),
+
+                      // زر تغيير الحالة
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _showChangeStatusDialog(context),
+                          icon: Icon(
+                            FontAwesomeIcons.sliders,
+                            size: 11,
+                            color: colors.textDefault,
+                          ),
+                          label: Text(
+                            "Change_status".tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: colors.textDefault,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Cairo',
+                            ),
+                          ),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: colors.textDefault),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-                if (isCompleted)
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE8F6F4),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Text(
-                      "COMPLETED".tr,
-                      style: const TextStyle(
-                        color: Color(0xFF107064),
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Cairo',
-                      ),
-                    ),
-                  )
-                else if (isActive)
-                  OutlinedButton(
-                    onPressed: () async {
-                      final isSuccess = await /*Get.to(
-                        () => ConfirmDeliveryScreen(
-                          visit: visit,
-                          regionName: regionName,
-                        ),
-                      );*/
-                      Get.toNamed(
-                        '/confirmDelivery',
-                        arguments: {
-                          'visit': visit,
-                          'regionName': regionName,
-                        },
-                      );
-                      if (isSuccess == true) {
-                        final mainController =
-                            Get.find<ActiveDeliveryRouteController>();
-                        mainController.markVisitAsCompleted(visit.id);
-                      }
-                    },
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: AppColors.primaryColor),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                    child: Text(
-                      "DeliveryConfirmation".tr,
-                      style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Cairo',
-                      ),
-                    ),
-                  )
-                else
-                  Icon(
-                    FontAwesomeIcons.squareArrowUpRight,
-                    color: colors.textSecondary.withValues(alpha: 0.6),
-                  ),
+                ],
               ],
             ),
           ),
         ),
       ],
+    );
+  }
+
+// 2. إضافة التابع _showChangeStatusDialog أسفل الويدجت
+  void _showChangeStatusDialog(BuildContext context) {
+    final mainController = Get.find<ActiveDeliveryRouteController>();
+
+    showDialog(
+      context: context,
+      builder: (ctx) => Obx(() => ChangeStatusDialog(
+        isLoading: mainController.isLoading.value,
+        onSubmit: (status, cause, notes) async {
+          await mainController.updateVisitStatus(
+            visitId: visit.id,
+            status: status,
+            cause: cause,
+            notes: notes,
+          );
+        },
+      )),
     );
   }
 }

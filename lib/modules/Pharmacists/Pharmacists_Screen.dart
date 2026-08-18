@@ -40,7 +40,7 @@ class PharmacistsScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: size.width * 0.01),
-                SizedBox(
+           /*     SizedBox(
                   width: size.width * 0.12,
                   height: size.width * 0.12,
                   child: ElevatedButton(
@@ -57,7 +57,7 @@ class PharmacistsScreen extends StatelessWidget {
                       size: size.width * 0.06,
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
 
@@ -128,7 +128,7 @@ class PharmacistsScreen extends StatelessWidget {
                     if (index == list.length) {
                       return const Padding(
                         padding: EdgeInsets.all(20),
-                        child: Center(child: CircularProgressIndicator()),
+                        child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor,)),
                       );
                     }
 

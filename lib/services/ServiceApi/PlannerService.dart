@@ -1,7 +1,6 @@
 import '../ApiService.dart';
 
 class PlannerService {
-  /// بدء/إنشاء المسار المثالي
   static Future<dynamic> initiatePlan({
     required double longitude,
     required double latitude,
@@ -11,7 +10,6 @@ class PlannerService {
     required List<int> pharmacyIds,
     required String profile,
     required String travelMode,
-    //String? planDate,
   }) async {
     final response = await ApiService.post(
       "/planner/v1/plans/initiate",
@@ -25,26 +23,33 @@ class PlannerService {
         "pharmacy_ids": pharmacyIds,
         "profile": profile,
         "travel_mode": travelMode,
-        //"plan_date": planDate ?? DateTime.now().toIso8601String().split('T').first,
       },
     );
 
     return response.data;
   }
 
-  /// جلب تفاصيل مسار معين بواسطة الـ ID
+  static Future<dynamic> getGenerationStatus(String requestId) async {
+    final response = await ApiService.get(
+      "/planner/v1/plans/generation-requests/$requestId",
+    );
+    return response.data;
+  }
+
+
+
+
   static Future<dynamic> getPlanById(int planId) async {
     final response = await ApiService.get("/planner/v1/plans/$planId");
     return response.data;
   }
 
-  static Future<Map<String, dynamic>?> rePlanRoute({
+/*  static Future<Map<String, dynamic>?> rePlanRoute({
     required int planId,
     required double latitude,
     required double longitude,
     required String reason,
     required String reasonDetails,
-    //String? planDate,
   }) async {
     final response = await ApiService.post(
       "/planner/v1/plans/$planId/optimize-next-leg",
@@ -53,10 +58,33 @@ class PlannerService {
         "current_longitude": longitude,
         "reason": reason,
         "reason_details": reasonDetails,
-        //"plan_date": planDate ?? DateTime.now().toIso8601String().split('T').first,
       },
     );
     return response.data;
+  }*/
+
+  static Future<Map<String, dynamic>?> rePlanRoute({
+    required int planId,
+    required double latitude,
+    required double longitude,
+    required String reason,
+    required String reasonDetails,
+  }) async {
+    try {
+      final response = await ApiService.post(
+        "/planner/v1/plans/$planId/optimize-next-leg",
+        data: {
+          "current_latitude": latitude,
+          "current_longitude": longitude,
+          "reason": reason,
+          "reason_details": reasonDetails,
+        },
+      );
+      return response.data;
+    } catch (e) {
+      print("❌ ApiService RePlan Error: $e");
+      rethrow;
+    }
   }
 
   static Future<Map<String, dynamic>?> getMyTodayPlan() async {
@@ -73,6 +101,11 @@ class PlannerService {
       print("❌ Error fetching today's plan: $e");
       return null;
     }
+  }
+
+  static Future<dynamic> getMyDeliveryToday() async {
+    final response = await ApiService.get("/planner/v1/plans/my-delivery-today");
+    return response.data;
   }
 
 

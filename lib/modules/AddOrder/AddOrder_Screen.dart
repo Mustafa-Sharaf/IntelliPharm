@@ -45,7 +45,6 @@ class AddOrderScreen extends StatelessWidget {
               final count = newOrderController.cart.length;
               return GestureDetector(
                 onTap: () {
-                  //Get.to(() => NewOrderScreen());
                   Get.toNamed("/newOrderScreen");
                 },
                 child: Stack(
@@ -163,6 +162,7 @@ class AddOrderScreen extends StatelessWidget {
                         );
                       },
                       child: MedicineCard(
+                        medicineId:med.id,
                         commercialName: med.commercialName,
                         scientificName: med.scientificName,
                         price: "PRICE_SP".trParams({
@@ -185,14 +185,18 @@ class AddOrderScreen extends StatelessWidget {
                             : "assets/images/medicine_Image.png",
                         controller: addOrderController.getController(med.id),
                         onAdd: () {
-                          final controller = addOrderController.getController(
-                            med.id,
-                          );
+                          final controller = addOrderController.getController(med.id);
                           final qty = int.tryParse(controller.text) ?? 0;
 
-                          if (qty > 0) {
+                          if (qty > 0 && qty <= med.availableQuantity) {
                             newOrderController.addToCart(med, qty);
+                            addOrderController.decreaseStock(med.id, qty);
                             controller.clear();
+                          } else if (qty > med.availableQuantity) {
+                            Get.snackbar(
+                              "خطأ",
+                              "الكمية المطلوبة أكبر من المتوفر في المخزون",
+                            );
                           }
                         },
                         isImported: med.isImported,

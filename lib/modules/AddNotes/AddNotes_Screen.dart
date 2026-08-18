@@ -67,10 +67,13 @@ class AddNotesScreen extends StatelessWidget {
                     ),
                     child: TextField(
                       controller: controller.textController,
+                      enableSuggestions: false,
+                      autocorrect: false,
                       style: TextStyle(
-                        color: colors.textPrimary,
+                        color: colors.textDefault,
                         fontFamily: 'Cairo',
                         fontSize: 14,
+                        decoration: TextDecoration.none,
                       ),
                       decoration: InputDecoration(
                         hintText: "AddANote".tr,
@@ -90,7 +93,7 @@ class AddNotesScreen extends StatelessWidget {
                 ),
                 SizedBox(width: size.width * 0.04),
                 Obx(
-                      () => GestureDetector(
+                  () => GestureDetector(
                     onTap: controller.isSubmitting.value
                         ? null
                         : () => controller.submitNote(),
@@ -102,18 +105,18 @@ class AddNotesScreen extends StatelessWidget {
                       ),
                       child: controller.isSubmitting.value
                           ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ),
-                      )
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
                           : const Icon(
-                        Icons.send_rounded,
-                        color: Colors.white,
-                        size: 20,
-                      ),
+                              Icons.send_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
                     ),
                   ),
                 ),
@@ -126,13 +129,13 @@ class AddNotesScreen extends StatelessWidget {
   }
 
   Widget _buildFilterChip(
-      AddNotesController controller, {
-        required String typeKey,
-        required String label,
-        required Color lightBgColor,
-        required Color textColor,
-        required Color darkBgColor,
-      }) {
+    AddNotesController controller, {
+    required String typeKey,
+    required String label,
+    required Color lightBgColor,
+    required Color textColor,
+    required Color darkBgColor,
+  }) {
     return Obx(() {
       final isDarkMode = Get.isDarkMode;
 

@@ -4,7 +4,10 @@ import 'package:intellipharm/app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import 'package:get/get.dart';
 
+import '../modules/Alternatives/Alternatives_Screen.dart';
+
 class MedicineCard extends StatelessWidget {
+  final int  medicineId;
   final String commercialName;
   final String scientificName;
   final String price;
@@ -15,9 +18,11 @@ class MedicineCard extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onAdd;
   final bool isImported;
+  final bool showAlternativesButton;
 
   const MedicineCard({
     super.key,
+    required this.medicineId,
     required this.commercialName,
     required this.scientificName,
     required this.price,
@@ -28,6 +33,7 @@ class MedicineCard extends StatelessWidget {
     required this.controller,
     required this.onAdd,
     required this.isImported,
+    this.showAlternativesButton = true,
   });
 
   Color getStatusColor() {
@@ -218,11 +224,16 @@ class MedicineCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (showAlternativesButton)
                   SizedBox(
                     width: size.width * 0.33,
                     height: size.height * 0.04,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(
+                          () => AlternativesScreen(medicineId: medicineId),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(

@@ -90,7 +90,7 @@ class MapHelperController extends GetxController {
   // Location & Camera Control
   // =========================
 
-  Future<Position> getCurrentLocation() async {
+  /*Future<Position> getCurrentLocation() async {
     // 1️⃣ التأكد من تفعيل خدمة الـ GPS في الهاتف
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -125,6 +125,55 @@ class MapHelperController extends GetxController {
       print("❌ تعذر جلب الموقع المباشر: $e");
       // نرفع استثناء مخصص ليشير إلى أن الـ GPS لم يستجب
       throw Exception("LOCATION_TIMEOUT");
+    }
+  }*/
+
+  Future<Position> getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      throw Exception("GPS_DISABLED");
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw Exception("PERMISSION_DENIED");
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception("PERMISSION_DENIED_FOREVER");
+    }
+
+    try {
+      // 1️⃣ محاولة جلب آخر موقع معروف فوراً دون انتظار GPS
+      Position? lastPosition = await Geolocator.getLastKnownPosition();
+      if (lastPosition != null) {
+        return lastPosition;
+      }
+
+      // 2️⃣ في حال عدم وجود موقع سابق، نطلب الموقع الحالي بمهلة قصيرة جداً (3 ثوانٍ)
+      return await Geolocator.getCurrentPosition(
+        locationSettings: const LocationSettings(
+          accuracy: LocationAccuracy.medium, // تقليل الدقة لتسريع الاستجابة
+        ),
+      ).timeout(const Duration(seconds: 3));
+    } catch (e) {
+      print("❌ تعذر جلب الموقع الفعلي، استخدام الموقع الافتراضي: $e");
+      // 3️⃣ إرجاع موقع افتراضي لمنع تعليق التطبيق نهائياً
+      return Position(
+        latitude: latitude.value,
+        longitude: longitude.value,
+        timestamp: DateTime.now(),
+        accuracy: 0,
+        altitude: 0,
+        heading: 0,
+        speed: 0,
+        speedAccuracy: 0,
+        altitudeAccuracy: 0,
+        headingAccuracy: 0,
+      );
     }
   }
 

@@ -35,6 +35,7 @@ import 'modules/Notifications/Notifications_Screen.dart';
 import 'modules/PlanYourRoute/PlanYourRouteBinding.dart';
 import 'modules/PlanYourRoute/PlanYourRoute_Controller.dart';
 import 'modules/PlanYourRoute/PlanYourRoute_Screen.dart';
+import 'modules/PlanYourRoute/ReverbService.dart';
 import 'modules/RePlanRoute/RePlanRoute_Screen.dart';
 import 'modules/SignIn/SignInBinding.dart';
 import 'modules/SignIn/SignIn_Screen.dart';
@@ -43,10 +44,11 @@ import 'modules/Tracking/LiveLocationTracker.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Get.putAsync(() => ReverbService().init());
   await GetStorage.init();
   await Firebase.initializeApp();
   await Notifications().initNotifications();
-
+  Get.put(MapHelperController(), tag: "routeDelivery");
   Get.put(MapHelperController(), tag: "route");
   Get.put(MapHelperController(), tag: "addPharmacy");
   Get.put(MyLanguageController());
@@ -60,7 +62,7 @@ void main() async {
   final box = GetStorage();
   final token = box.read<String>('token');
 
-  runApp(MyApp(initialRoute: token == null ? '/splash' : '/homeScreen'));
+  runApp(MyApp(initialRoute: token == null ? '/login' : '/homeScreen'));
 }
 
 class MyApp extends StatelessWidget {
@@ -163,16 +165,7 @@ class MyApp extends StatelessWidget {
             page: () => const HomeContentScreen(),
             binding: HomeBinding(),
           ),
-   /*       GetPage(
-            name: '/addOrderScreen',
-            page: () =>  AddOrderScreen(),
-            binding: AddOrderBinding(),
-            bindings: [
-              ActiveOptimizedRouteTrackingBinding(),
-              RouteStepBinding(),
-            ],
-          ),
-          */
+
 
         ],
       ),

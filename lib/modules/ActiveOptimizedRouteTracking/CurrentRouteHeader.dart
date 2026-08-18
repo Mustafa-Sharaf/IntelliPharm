@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
@@ -56,7 +55,7 @@ class CurrentRouteHeader extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Cairo',
-                        height: 2,
+                        height: 1.5,
                       ),
                     ),
 
@@ -72,73 +71,79 @@ class CurrentRouteHeader extends StatelessWidget {
                         );
                       }
 
-
                       final plan = (rawPlan is DeliveryPlan)
                           ? rawPlan.toPlanResponse()
                           : rawPlan;
 
+                      // 🟢 تم إغلاق الـ Row بداخل SingleChildScrollView أفقية لحل مشكلة Overflow
                       return Padding(
-                        padding: const EdgeInsets.only(top: 4.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              size: 16,
-                              color: colors.textDefault.withValues(alpha: 0.6),
-                            ),
-                            SizedBox(width: size.width * 0.01),
-                            Text(
-                              'STOPS_COUNT'.trParams({'count': plan.visits.length.toString()}),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: colors.textDefault,
-                                fontSize: 14,
-                                fontFamily: 'Cairo',
+                        padding: const EdgeInsets.only(top: 2.0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                size: 16,
+                                color: colors.textDefault.withValues(alpha: 0.6),
                               ),
-                            ),
-                            _buildDivider(colors.textDefault),
-                            Icon(
-                              Icons.route,
-                              size: 16,
-                              color: colors.textDefault.withValues(alpha: 0.6),
-                            ),
-                            SizedBox(width: size.width * 0.01),
-                            Text(
-                              PlanRouteCalculator.formattedTotalDistance(plan),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: colors.textDefault,
-                                fontSize: 14,
-                                fontFamily: 'Cairo',
+                              SizedBox(width: size.width * 0.01),
+                              Text(
+                                'STOPS_COUNT'.trParams({'count': plan.visits.length.toString()}),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: colors.textDefault,
+                                  fontSize: 13,
+                                  fontFamily: 'Cairo',
+                                ),
                               ),
-                            ),
-                            _buildDivider(colors.textDefault),
-                            Icon(
-                              Icons.access_time_rounded,
-                              size: 16,
-                              color: colors.textDefault.withValues(alpha: 0.6),
-                            ),
-                            SizedBox(width: size.width * 0.01),
-                            Text(
-                              PlanRouteCalculator.formattedTotalDuration(plan),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: colors.textDefault,
-                                fontSize: 14,
-                                fontFamily: 'Cairo',
+                              _buildDivider(colors.textDefault),
+                              Icon(
+                                Icons.route,
+                                size: 16,
+                                color: colors.textDefault.withValues(alpha: 0.6),
                               ),
-                            ),
-                          ],
+                              SizedBox(width: size.width * 0.01),
+                              Text(
+                                PlanRouteCalculator.formattedTotalDistance(plan),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: colors.textDefault,
+                                  fontSize: 13,
+                                  fontFamily: 'Cairo',
+                                ),
+                              ),
+                              _buildDivider(colors.textDefault),
+                              Icon(
+                                Icons.access_time_rounded,
+                                size: 16,
+                                color: colors.textDefault.withValues(alpha: 0.6),
+                              ),
+                              SizedBox(width: size.width * 0.01),
+                              Text(
+                                PlanRouteCalculator.formattedTotalDuration(plan),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: colors.textDefault,
+                                  fontSize: 13,
+                                  fontFamily: 'Cairo',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }),
                   ],
                 ),
               ),
+              const SizedBox(width: 8),
               CircleAvatar(
                 backgroundColor: AppColors.primaryColor,
-                radius: 25,
-                child: Icon(Icons.person, size: 30, color: AppColors.white),
+                radius: 22,
+                child: Icon(Icons.person, size: 26, color: AppColors.white),
               ),
             ],
           ),
@@ -149,7 +154,7 @@ class CurrentRouteHeader extends StatelessWidget {
 
   Widget _buildDivider(Color? color) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6.0),
       child: Text(
         "•",
         style: TextStyle(

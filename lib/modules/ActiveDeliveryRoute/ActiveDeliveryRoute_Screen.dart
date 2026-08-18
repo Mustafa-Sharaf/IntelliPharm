@@ -4,7 +4,6 @@ import '../../Widgets/DeliveryTimelineItem.dart';
 import '../../Widgets/EmptyCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
-import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../ActiveOptimizedRouteTracking/CurrentRouteHeader.dart';
 import '../ActiveOptimizedRouteTracking/PlanRouteCalculator.dart';
 import 'ActiveDeliveryRoute_Controller.dart';
@@ -32,7 +31,7 @@ class ActiveDeliveryRouteScreen extends StatelessWidget {
                   child: Stack(
                     children: [
                       MapHelperScreen(
-                        tag: "route",
+                        tag: "routeDelivery",
                         refreshButtonBottom: size.height * 0.11,
                         refreshButtonRight: size.height * 0.01,
                         showRefreshButton: false,

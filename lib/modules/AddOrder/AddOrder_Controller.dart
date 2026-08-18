@@ -185,6 +185,32 @@ class AddOrderController extends GetxController {
     );
   }
 
+
+  void decreaseStock(int medicineId, int quantity) {
+    final index = medicines.indexWhere((m) => m.id == medicineId);
+    if (index != -1) {
+      final currentMed = medicines[index];
+      final newQuantity = currentMed.availableQuantity - quantity;
+
+      // نقوم بتحديث عنصر الدواء بالكمية المتبقية الجديدة
+      medicines[index] = MedicineModel(
+        id: currentMed.id,
+        categoryId: currentMed.categoryId,
+        commercialName: currentMed.commercialName,
+        scientificName: currentMed.scientificName,
+        price: currentMed.price,
+        isImported: currentMed.isImported,
+        availableQuantity: newQuantity < 0 ? 0 : newQuantity, // تجنب القيم السالبة
+        barcode: currentMed.barcode,
+        images: currentMed.images,
+        gift: currentMed.gift,
+      );
+
+      // تحديث القائمة ليراقبها Obx
+      medicines.refresh();
+    }
+  }
+
   @override
   void onClose() {
     _debounce?.cancel();

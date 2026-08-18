@@ -26,7 +26,7 @@ class SplashController extends GetxController {
     ///Go to the login Screen
     Future.delayed(const Duration(seconds: 4), () {
       _timer?.cancel();
-       Get.offNamed('/signIn');
+       Get.offNamed('/login');
     });
   }
 

@@ -91,6 +91,7 @@ class AddMedicineBottomSheet extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final med = controller.searchResults[index];
                   return MedicineCard(
+                    medicineId: med.id,
                     commercialName: med.commercialName,
                     scientificName: med.scientificName,
                     price: "PRICE_SP".trParams({'price': med.price.toString()}),

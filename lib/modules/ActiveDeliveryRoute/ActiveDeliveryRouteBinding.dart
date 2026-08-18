@@ -7,13 +7,10 @@ import 'ActiveDeliveryRoute_Controller.dart';
 class ActiveDeliveryRouteBinding extends Bindings {
   @override
   void dependencies() {
-    // 1. حقن ActiveDeliveryRouteController
     Get.lazyPut<ActiveDeliveryRouteController>(
           () => ActiveDeliveryRouteController(),
       fenix: true,
     );
-
-    // 2. حقن MapHelperController مع الـ tag الخاص به
     Get.lazyPut<MapHelperController>(
           () => MapHelperController(),
       tag: "route",

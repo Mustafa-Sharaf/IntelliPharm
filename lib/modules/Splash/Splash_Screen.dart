@@ -21,7 +21,7 @@ class SplashScreen extends GetView<SplashController> {
               duration: const Duration(milliseconds: 800),
               curve: Curves.easeOutBack,
               child: Image.asset(
-                'assets/images/Logo without a name.png',
+                'assets/images/LogoSmall.png',
                 width: 160,
               ),
             )),

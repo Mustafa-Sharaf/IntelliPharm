@@ -13,24 +13,30 @@ class PharmaciesResponse {
   });
 }
 
+
 class PharmaciesService {
   static Future<PharmaciesResponse> getPharmacies(
-    int regionId,
-    int page,
-  ) async {
+      int regionId,
+      int page,
+      ) async {
     final response = await ApiService.get(
       "/erp/v1/pharmacies",
-      query: {"region": regionId, "page_number": page},
+      query: {
+        "region_id": regionId,
+        "page_number": page,
+      },
     );
+
     if (response.data["isSuccess"] == true) {
       List data = response.data["data"]["data"];
+
       return PharmaciesResponse(
         pharmacies: data.map((e) => PharmaciesModel.fromJson(e)).toList(),
         currentPage: response.data["data"]["meta"]["current_page"],
         lastPage: response.data["data"]["meta"]["last_page"],
       );
     } else {
-      throw Exception(response.data["message"]);
+      throw Exception(response.data["message"] ?? "Failed to load data");
     }
   }
 }
