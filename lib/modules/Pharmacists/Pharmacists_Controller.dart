@@ -6,34 +6,35 @@ import '../../services/ServiceApi/PharmaciesService.dart';
 
 class PharmacistsController extends GetxController {
   var selectedTab = 0.obs;
-  List<String> get tabs => ["AllRegions".tr, "OpenNow".tr, "CloseNow".tr];
-
   var pharmacies = <PharmaciesModel>[].obs;
   var selectedRegion = Rxn<RegionModel>();
-
   var isLoading = false.obs;
   var isMoreLoading = false.obs;
-
   var searchQuery = "".obs;
 
   var currentPage = 1.obs;
   var lastPage = 1.obs;
   var hasMore = true.obs;
 
-  final int regionId = 40;
+  var selectedRegionId = RxnInt();
+  var selectedRegionName = "".obs;
 
   final ScrollController scrollController = ScrollController();
+
+  List<String> get tabs {
+    final firstTabName = selectedRegionName.value.isNotEmpty
+        ? selectedRegionName.value
+        : "AllRegions".tr;
+
+    return [firstTabName, "OpenNow".tr, "CloseNow".tr];
+  }
 
   @override
   void onInit() {
     super.onInit();
-
     fetchPharmacies();
-
     scrollController.addListener(_onScroll);
   }
-
-
 
   // Scroll Pagination
   void _onScroll() {
@@ -45,8 +46,6 @@ class PharmacistsController extends GetxController {
     }
   }
 
-
-  // Fetch Data
   Future<void> fetchPharmacies({bool loadMore = false}) async {
     try {
       if (loadMore) {
@@ -59,8 +58,9 @@ class PharmacistsController extends GetxController {
       }
 
       final pageToFetch = currentPage.value;
+
       final result = await PharmaciesService.getPharmacies(
-        regionId,
+        selectedRegionId.value,
         pageToFetch,
       );
 
@@ -72,20 +72,36 @@ class PharmacistsController extends GetxController {
 
       lastPage.value = result.lastPage;
 
-
       if (pageToFetch >= lastPage.value) {
         hasMore.value = false;
       } else {
         hasMore.value = true;
         currentPage.value++;
       }
-
     } catch (e) {
       Get.snackbar("Error", e.toString());
     } finally {
       isLoading.value = false;
       isMoreLoading.value = false;
     }
+  }
+
+  /// 🟢 دالة اختيار المنطقة وإعادة جلب البيانات
+  void setRegion(RegionModel? region) {
+    if (region == null) {
+      selectedRegionId.value = null;
+      selectedRegionName.value = "";
+    } else {
+      selectedRegionId.value = region.id;
+      selectedRegionName.value = region.name;
+    }
+
+    // 🟢 تصفير الفلترة الميدانية والبحث لضمان رؤية جميع صيدليات المنطقة الجديدة
+    selectedTab.value = 0;
+    searchQuery.value = "";
+
+    // إعادة جلب الصيدليات للمنطقة المختارة
+    fetchPharmacies();
   }
 
   // Refresh
@@ -107,7 +123,7 @@ class PharmacistsController extends GetxController {
   List<PharmaciesModel> get filteredPharmacies {
     final q = searchQuery.value.toLowerCase();
 
-    // 1. Tabs filter
+    // 1. Tabs filter (التبويب 0 يعرض جميع صيدليات المنطقة المحددة)
     List<PharmaciesModel> results = pharmacies;
 
     if (selectedTab.value == 1) {
@@ -120,7 +136,6 @@ class PharmacistsController extends GetxController {
     if (q.isNotEmpty) {
       results = results.where((p) {
         final nameMatch = p.name.toLowerCase().contains(q);
-
         final pharmacistMatch =
             p.pharmacistName?.toLowerCase().contains(q) ?? false;
 
@@ -137,4 +152,3 @@ class PharmacistsController extends GetxController {
     super.onClose();
   }
 }
-

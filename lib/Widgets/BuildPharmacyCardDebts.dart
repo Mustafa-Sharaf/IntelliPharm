@@ -13,7 +13,8 @@ class BuildPharmacyCardDebts extends StatelessWidget {
 
   String _formatAmount(double amount) {
     final formatter = NumberFormat('#,##0.##', 'en_US');
-    return '${formatter.format(amount)} S.p';
+    /*'${formatter.format(amount)} S.p'*/
+    return 'amount_sp'.trParams({'amount': formatter.format(amount)});
   }
 
   @override
@@ -202,7 +203,6 @@ class BuildPharmacyCardDebts extends StatelessWidget {
                     ),
                     SizedBox(width: size.width * 0.02),
                     Text(
-                      //'${(item.paidPercentage * 100).toStringAsFixed(item.paidPercentage > 0 && item.paidPercentage < 0.01 ? 2 : 0)}% paid',
                       'percent_paid'.trParams({
                         'percent': (item.paidPercentage * 100).toStringAsFixed(
                           item.paidPercentage > 0 && item.paidPercentage < 0.01

@@ -66,7 +66,7 @@ class PharmacySelectorWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Cairo',
                         color: colors.textPrimary,
-                        fontSize: size.width * 0.04,//16
+                        fontSize: size.width * 0.04,
                       ),
                     ),
                     Text(
@@ -74,7 +74,7 @@ class PharmacySelectorWidget extends StatelessWidget {
                       style: TextStyle(
                         color: colors.textSecondary,
                         fontFamily: 'Cairo',
-                        fontSize: size.width * 0.03,//12
+                        fontSize: size.width * 0.03,
                       ),
                     ),
                   ],

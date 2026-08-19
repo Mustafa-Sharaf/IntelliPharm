@@ -31,13 +31,13 @@ class Notifications {
       );
 
       final token = await firebaseMessaging.getToken();
-      print("Notification Token: $token");
+      //print("Notification Token: $token");
       if (token != null) {
         GetStorage().write('fcm_token', token);
       }
 
       firebaseMessaging.onTokenRefresh.listen((newToken) {
-        print("Notification Token Refreshed: $newToken");
+        //print("Notification Token Refreshed: $newToken");
         GetStorage().write('fcm_token', newToken);
       });
 
@@ -49,7 +49,7 @@ class Notifications {
 
       await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
-      // ✅ التعديل هنا: جلب تطبيق الأندرويد وإنشاء القناة
+      // التعديل هنا: جلب تطبيق الأندرويد وإنشاء القناة
       final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
       flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>();
@@ -68,14 +68,14 @@ class Notifications {
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        print("🖱️ Notification clicked from background!");
+        print("Notification clicked from background!");
         print("Title: ${message.notification?.title}");
         print("Body: ${message.notification?.body}");
       });
 
       RemoteMessage? initialMessage = await firebaseMessaging.getInitialMessage();
       if (initialMessage != null) {
-        print("🚀 App opened from terminated state via notification!");
+        print("App opened from terminated state via notification!");
         print("Title: ${initialMessage.notification?.title}");
         print("Body: ${initialMessage.notification?.body}");
       }

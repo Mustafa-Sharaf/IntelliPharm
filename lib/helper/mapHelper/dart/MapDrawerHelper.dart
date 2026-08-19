@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../../modules/ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Model.dart';
 import 'MapHelper_Controller.dart';
 
 class MapDrawerHelper {
@@ -120,6 +119,62 @@ class MapDrawerHelper {
 
     List<List<LatLng>> allPaths = [];
 
+    routeMapController.clearAll();
+
+    routeMapController.markers.add(
+      Marker(
+        markerId: const MarkerId('current_location'),
+        position: LatLng(routeMapController.latitude.value, routeMapController.longitude.value),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+        infoWindow: const InfoWindow(title: "موقعي الحالي (نقطة الانطلاق)"),
+      ),
+    );
+
+    for (var path in plan.paths) {
+      final decoded = decodePolyline(path.geometry);
+      if (decoded.isNotEmpty) {
+        allPaths.add(decoded);
+      }
+    }
+
+    routeMapController.drawRoutes(allPaths);
+
+    for (int i = 0; i < plan.paths.length; i++) {
+      final path = plan.paths[i];
+      final decoded = decodePolyline(path.geometry);
+
+      if (decoded.isNotEmpty) {
+        final lastPoint = decoded.last;
+
+        String markerTitle = "Pharmacy";
+        int orderNumber = i + 1; // قيمة افتراضية احتياطية
+
+        // 🟢 التعديل هنا: جلب الاسم ورقم الترتيب الحقيقي من الباك إند
+        if (i < plan.visits.length) {
+          markerTitle = plan.visits[i].name;
+          orderNumber = plan.visits[i].visitOrder; // أخذ الرقم الفعلي (مثلاً 2، 3، 5...)
+        }
+
+        // 🟢 تمرير رقم الترتيب الحقيقي لرسمه على الدبوس
+        BitmapDescriptor pinIcon = await createMarkerWithNumber(orderNumber);
+
+        routeMapController.addMarker(
+          position: lastPoint,
+          title: markerTitle,
+          icon: pinIcon,
+        );
+      }
+    }
+  }
+
+/*  static Future<void> drawFullRoute({
+    required MapHelperController routeMapController,
+    required dynamic plan,
+  }) async {
+    if (plan == null) return;
+
+    List<List<LatLng>> allPaths = [];
+
 
     routeMapController.clearAll();
 
@@ -165,23 +220,20 @@ class MapDrawerHelper {
         );
       }
     }
-  }
+  }*/
 
-
-  // 🟢 دالة جديدة لرسم مسار مباشر من موقع المندوب لصيدلية واحدة فقط
   static Future<void> drawSingleDirectPath({
     required MapHelperController mapController,
     required double destLat,
     required double destLng,
     required String destinationName,
-    String? geometry, // في حال كان سيرفرك يرسل جيويمتري للخطوة، وإلا سيرسم خطاً مستقيماً
+    String? geometry,
   }) async {
     mapController.clearAll();
 
     final LatLng startPoint = LatLng(mapController.latitude.value, mapController.longitude.value);
     final LatLng endPoint = LatLng(destLat, destLng);
 
-    // 1. إضافة ماركر الموقع الحالي
     mapController.markers.add(
       Marker(
         markerId: const MarkerId('current_location'),
@@ -201,7 +253,6 @@ class MapDrawerHelper {
       ),
     );
 
-    // 3. رسم الخط (إذا ممرنا هندسة المسار نفكها، وإلا نرسم خطاً بين النقطتين)
     List<LatLng> pathPoints = [];
     if (geometry != null && geometry.isNotEmpty) {
       pathPoints = decodePolyline(geometry);

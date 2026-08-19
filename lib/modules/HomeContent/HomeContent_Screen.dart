@@ -6,6 +6,7 @@ import '../../Widgets/PharmacyCard.dart';
 import '../../Widgets/PlanRouteCard.dart';
 import '../../Widgets/StatCard.dart';
 import '../../app_theme/theme_extension.dart';
+import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Controller.dart';
 import 'HomeContent_Controller.dart';
 import 'OfferCard.dart';
 
@@ -84,9 +85,23 @@ class HomeContentScreen extends StatelessWidget {
                             fontFamily: 'Cairo',
                           ),
                         ),
-                        GestureDetector(
+                   /*     GestureDetector(
                           onTap: () {
-
+                            Get.toNamed("/activeOptimizedRouteTracking");
+                          },
+                          child: Text(
+                            "See_All".tr,
+                            style: TextStyle(
+                              fontSize: size.width * 0.04,
+                              color: AppColors.primaryColor,
+                              fontFamily: 'Cairo',
+                            ),
+                          ),
+                        ),*/
+                        GestureDetector(
+                          onTap: ()  {
+                            //final trackingController = Get.find<ActiveOptimizedRouteTrackingController>();
+                            //await trackingController.fetchMyTodayPlan();
                             Get.toNamed("/activeOptimizedRouteTracking");
                           },
                           child: Text(

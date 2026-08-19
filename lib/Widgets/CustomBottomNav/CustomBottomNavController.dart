@@ -1,5 +1,7 @@
 
 import 'package:get/get.dart';
+
+import '../../modules/HomeContent/HomeContent_Controller.dart';
 class CustomBottomNavController extends GetxController {
   var currentIndex = 0.obs;
   @override
@@ -10,5 +12,12 @@ class CustomBottomNavController extends GetxController {
 
   void changeIndex(int index) {
     currentIndex.value = index;
+    if (index == 0) {
+      if (Get.isRegistered<HomeContentController>()) {
+        Get.find<HomeContentController>().getHomePage(silent: true);
+      }
+    }
   }
+
+
 }

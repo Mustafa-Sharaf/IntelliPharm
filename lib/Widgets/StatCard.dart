@@ -1,6 +1,5 @@
 
 
-//New code
 import 'package:flutter/material.dart';
 
 import '../app_theme/theme_extension.dart';

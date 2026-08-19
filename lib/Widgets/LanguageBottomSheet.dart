@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../language/Language_Controller.dart';
 
-//New code
 class LanguageBottomSheet extends StatelessWidget {
   final MyLanguageController langController = Get.find<MyLanguageController>();
 
@@ -55,31 +54,6 @@ class LanguageBottomSheet extends StatelessWidget {
             },
           ),
           Divider(),
-        /*  ListTile(
-            leading: Image.asset("assets/images/Franca.png", width: 50),
-            title: Text("Français",  style: TextStyle(
-              fontSize: 18,
-              fontFamily: 'Cairo',
-            ),),
-            trailing: Icon(Icons.arrow_forward_ios_rounded),
-            onTap: () {
-              langController.changeLanguage("fr");
-              Get.back();
-            },
-          ),
-          Divider(),
-          ListTile(
-            leading: Image.asset("assets/images/Turkce.png", width: 50),
-            title: Text("Türkçe",  style: TextStyle(
-              fontSize: 18,
-              fontFamily: 'Cairo',
-            ),),
-            trailing: Icon(Icons.arrow_forward_ios_rounded),
-            onTap: () {
-              langController.changeLanguage("tr");
-              Get.back();
-            },
-          ),*/
         ],
       ),
     );

@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 import '../../app_theme/theme_extension.dart';
 import '../modules/Profile/Profile_Model.dart';
 
-
 class TargetProgressCard extends StatelessWidget {
   final TargetStat target;
   final NumberFormat formatter;
@@ -19,7 +18,7 @@ class TargetProgressCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    final size=MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
     final percentage = (target.progressPercentage * 100).toInt();
 
     return Container(
@@ -42,7 +41,7 @@ class TargetProgressCard extends StatelessWidget {
               letterSpacing: 0.5,
             ),
           ),
-          SizedBox(height:size.height*0.005 ),
+          SizedBox(height: size.height * 0.005),
 
           Text(
             target.targetName.tr,
@@ -53,7 +52,7 @@ class TargetProgressCard extends StatelessWidget {
               fontFamily: 'Cairo',
             ),
           ),
-          SizedBox(height:size.height*0.01 ),
+          SizedBox(height: size.height * 0.01),
           Row(
             children: [
               Text(
@@ -76,7 +75,7 @@ class TargetProgressCard extends StatelessWidget {
               ),
             ],
           ),
-           SizedBox(height: size.height*0.01),
+          SizedBox(height: size.height * 0.01),
 
           ClipRRect(
             borderRadius: BorderRadius.circular(10),

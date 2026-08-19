@@ -461,6 +461,23 @@ class MyLanguage implements Translations {
       "Items": "@items items",
       "Cancel_Order":"Cancel Order",
       "Are_you_sure_cancel_order":"Are you sure cancel order",
+      "DELETE_CART_QUESTION":"Do you want to delete it?",
+      "CONFIRM_EXIT":"CONFIRM EXIT",
+
+      //AppSnackBar
+      "Visit_started_successfully":"Visit started successfully.",
+      "Failed_to_start_visit":"Failed to start visit.",
+      "Failed_to_start_visit_please_try_again":"Failed to start visit, please try again.",
+      "Logging_out...":"Logging out...",
+      //ContactLauncher
+      "Choose_a_method_of_communication":"Choose a method of communication",
+      "Start_a_live_chat":"Start a live chat",
+      "WhatsApp":"WhatsApp",
+      "Telephone_call":"Telephone call",
+      "Making_a_voice_call":"Making a voice call",
+      "Send_SMS":"Send SMS",
+      "Text_message":"Text message",
+      "No_Active_Plan":"No Active Plan",
       "":"",
       "":"",
       "":"",
@@ -469,6 +486,9 @@ class MyLanguage implements Translations {
       "":"",
       "":"",
       "":"",
+      "":"",
+      "":"",
+
 
 
 
@@ -951,6 +971,8 @@ class MyLanguage implements Translations {
       "Items": "@items عناصر",
       "Cancel_Order":"إلغاء الطلب",
       "Are_you_sure_cancel_order":"هل أنت متأكد من إلغاء الطلب؟",
+      "DELETE_CART_QUESTION":"هل تريد حذف السلة؟",
+      "CONFIRM_EXIT":"تأكيد الخروج",
     },
   };
 }

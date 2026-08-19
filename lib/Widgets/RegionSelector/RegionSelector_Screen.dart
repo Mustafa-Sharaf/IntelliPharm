@@ -7,7 +7,6 @@ import 'RegionSelector_Controller.dart';
 class RegionSelector extends StatelessWidget {
   const RegionSelector({super.key});
 
-  //final controller = Get.put(RegionController());
 
   @override
   Widget build(BuildContext context) {

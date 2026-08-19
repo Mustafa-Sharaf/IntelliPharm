@@ -80,7 +80,6 @@ class LocationHelperService {
 
       return currentLanguage == 'ar' ? "لم يتم تحديد الموقع" : "Location not determined";
     } catch (e) {
-      //print("⚠️ خطأ في جلب العنوان التفصيلي: $e");
       final String currentLanguage = Get.locale?.languageCode ?? 'ar';
       return currentLanguage == 'ar' ? "لم يتم تحديد الموقع" : "Location not determined";
     }

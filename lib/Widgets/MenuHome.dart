@@ -104,22 +104,6 @@ class DrawerHome extends StatelessWidget {
                 Get.to(()=>ProfileScreen());
               },
             ),
-   /*         if (role == 'rep')
-              ListTile(
-                leading: Icon(
-                  Icons.gps_fixed_rounded,
-                  color: colors.textDefault,
-                ),
-                title: Text(
-                  'My_Targets'.tr,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: colors.textDefault,
-                    fontFamily: 'Cairo',
-                  ),
-                ),
-                onTap: () {},
-              ),*/
             ListTile(
               leading: Icon(Icons.language, color: colors.textDefault),
               title: Text(
@@ -176,7 +160,7 @@ class DrawerHome extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
+            /*ListTile(
               leading: Icon(Icons.logout, color: colors.textDefault),
               title: Text(
                 'Logout'.tr,
@@ -197,6 +181,56 @@ class DrawerHome extends StatelessWidget {
                   onConfirm: () {
                     Get.back();
                     handleLogout();
+                  },
+                );
+              },
+            ),*/
+            ListTile(
+              leading: Icon(Icons.logout, color: colors.textDefault),
+              title: Text(
+                'Logout'.tr,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: colors.textDefault,
+                  fontFamily: 'Cairo',
+                ),
+              ),
+              onTap: () {
+                Get.defaultDialog(
+                  title: 'Logout'.tr,
+                  middleText: 'Are_you_sure_you_want_to_logout?'.tr,
+                  textConfirm: 'Yes'.tr,
+                  textCancel: 'No'.tr,
+                  confirmTextColor: Colors.white,
+                  buttonColor: Colors.red,
+                  onConfirm: () async {
+                   // Get.back();
+                    Get.dialog(
+                      PopScope(
+                        canPop: false,
+                        child: Center(
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircularProgressIndicator(color: AppColors.primaryColor,),
+                                  const SizedBox(width: 20),
+                                  Text('Logging_out...'.tr),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      barrierDismissible: false,
+                    );
+                    await handleLogout();
+
+                    if (Get.isDialogOpen ?? false) {
+                      Get.back();
+                    }
                   },
                 );
               },

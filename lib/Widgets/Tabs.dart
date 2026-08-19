@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../app_theme/theme_extension.dart';
 
-//New code
 class Tabs extends StatelessWidget {
   final List<String> tabs;
   final int selectedIndex;

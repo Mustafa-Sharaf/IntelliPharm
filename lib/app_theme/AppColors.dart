@@ -14,7 +14,7 @@ class AppColors{
 
   ///dark mode
   static const componentDark = Color(0xFF212934);
-  static const textDarkPrimary=Color(0xff0D9488);//0xFF26A69A //0xff0D9488 //0xff0C8A7B
+  static const textDarkPrimary=Color(0xff0D9488);
   static const textDarkSecondary=Color(0xffbbbcc0);
 
 
@@ -27,4 +27,3 @@ class AppColors{
   static const green = Colors.green;
   static const red = Colors.red;
 }
-//static const backgroundColorLight = Color(0xfff2f2f2);

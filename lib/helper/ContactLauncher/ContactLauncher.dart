@@ -1,4 +1,5 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import '../../app_theme/theme_extension.dart';
@@ -42,7 +43,7 @@ class ContactLauncher {
                   SizedBox(height: size.height * 0.03),
 
                   Text(
-                    "Choose a method of communication",
+                    "Choose_a_method_of_communication".tr,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -56,8 +57,8 @@ class ContactLauncher {
                   _contactItem(
                     icon: FontAwesomeIcons.whatsapp,
                     iconColor: const Color(0xFF25D366),
-                    title: "WhatsApp",
-                    subtitle: "Start a live chat",
+                    title: "WhatsApp".tr,
+                    subtitle: "Start_a_live_chat".tr,
                     onTap: () async {
                       Navigator.pop(context);
                       await launchUrl(
@@ -73,8 +74,8 @@ class ContactLauncher {
                   _contactItem(
                     icon: Icons.call,
                     iconColor: const Color(0xFF2196F3),
-                    title: "Telephone call",
-                    subtitle: "Making a voice call",
+                    title: "Telephone_call".tr,
+                    subtitle: "Making_a_voice_call".tr,
                     onTap: () async {
                       Navigator.pop(context);
                       await launchUrl(
@@ -90,8 +91,8 @@ class ContactLauncher {
                   _contactItem(
                     icon: Icons.sms,
                     iconColor: const Color(0xFFFF9800),
-                    title: "Text message",
-                    subtitle: "Send SMS",
+                    title: "Text_message".tr,
+                    subtitle: "Send_SMS".tr,
                     onTap: () async {
                       Navigator.pop(context);
                       await launchUrl(

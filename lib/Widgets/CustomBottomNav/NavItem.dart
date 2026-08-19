@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 /// Model
 class NavItem {
@@ -23,6 +22,4 @@ List<NavItem> repItems = [
 List<NavItem> distributorItems = [
    NavItem(Icons.home_rounded, "HOME"),
    NavItem(Icons.local_shipping_rounded, "DELIVERIES"),
-  /* NavItem(Icons.map_rounded, "Route"),
-   NavItem(Icons.check_circle_outline_rounded, "ConfirmDelivery"),*/
 ];

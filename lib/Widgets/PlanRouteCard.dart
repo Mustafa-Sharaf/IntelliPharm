@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../modules/PlanYourRoute/PlanYourRoute_Screen.dart';
 
 
@@ -12,7 +13,6 @@ class PlanRouteCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        //Get.to(PlanYourRouteScreen());
         Get.toNamed('/planYourRoute');
 
       },
@@ -24,7 +24,7 @@ class PlanRouteCard extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
-              decoration: BoxDecoration(color: const Color(0xff016E65)),
+              decoration: BoxDecoration(color: AppColors.primaryColor),
               child: Stack(
                 children: [
                   Positioned.fill(

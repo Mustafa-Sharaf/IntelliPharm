@@ -43,10 +43,10 @@ class PharmaciesModel {
       pharmacistPhone: json['pharmacist_phone'] ?? "",
       pharmacistAltPhone: json['pharmacist_alt_phone'],
       isActive: json['is_active'] ?? 0,
-      isOpen: json['is_open'] ?? false, // استخدام القيمة القادمة من الـ API
+      isOpen: json['is_open'] ?? false,
     );
   }
 
-  // استخدام قيمة is_open المباشرة القادمة من الـ API بدلاً من الحساب المحلي
+
   bool get checkIsOpen => isOpen;
 }

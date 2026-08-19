@@ -441,7 +441,7 @@ class PlanYourRouteController extends GetxController {
     searchQuery.value = value;
   }
 
-  List<PharmaciesModel> get filteredPharmacies {
+/*  List<PharmaciesModel> get filteredPharmacies {
     if (searchQuery.value.isEmpty) {
       return pharmacies;
     }
@@ -449,6 +449,31 @@ class PlanYourRouteController extends GetxController {
       final name = pharmacy.name.toLowerCase();
       final region = pharmacy.region.toLowerCase();
       final query = searchQuery.value.toLowerCase();
+      return name.contains(query) || region.contains(query);
+    }).toList();
+  }*/
+  List<PharmaciesModel> get filteredPharmacies {
+    // 1. التصفية حسب المنطقة المختارة أولاً
+    List<PharmaciesModel> regionList = pharmacies;
+
+    if (selectedRegion.value != null) {
+      regionList = pharmacies.where((pharmacy) {
+        // 🟢 مطابقة ID المنطقة (أو اسمها إذا كان النموذج ينقل اسمها فقط)
+        return pharmacy.regionId == selectedRegion.value!.id ||
+            pharmacy.region.toLowerCase() == selectedRegion.value!.name.toLowerCase();
+      }).toList();
+    }
+
+    // 2. إذا لم يكن هناك نص بحث، نرجع القائمة المفلترة حسب المنطقة
+    if (searchQuery.value.isEmpty) {
+      return regionList;
+    }
+
+    // 3. التصفية حسب نص البحث من ضمن صيدليات المنطقة المختارة فقط
+    final query = searchQuery.value.toLowerCase();
+    return regionList.where((pharmacy) {
+      final name = pharmacy.name.toLowerCase();
+      final region = pharmacy.region.toLowerCase();
       return name.contains(query) || region.contains(query);
     }).toList();
   }

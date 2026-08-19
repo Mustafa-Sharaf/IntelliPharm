@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../app_theme/theme_extension.dart';
 import '../helper/DateHelper.dart';
-import '../modules/Notifications/Notifications_Screen.dart';
+
 
 //New code
 class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
@@ -35,7 +35,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
             },
             icon: Icon(
               Icons.menu,
-              color:colors.textPrimary ,//Color(0xff002653)
+              color:colors.textPrimary ,
               size: width * 0.06,
             ),
           ),
@@ -68,7 +68,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
                   style: TextStyle(
                     fontSize: 10,
                     fontFamily: 'Cairo',
-                    color: colors.textSecondary,//Color(0xff43474F),
+                    color: colors.textSecondary,
                     height: 1,
                   ),
                 ),
@@ -83,9 +83,7 @@ class AppbarHome extends StatelessWidget implements PreferredSizeWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  //Get.to(()=>NotificationsScreen());
                   Get.toNamed('/notifications');
-
                 },
                 icon: Icon(
                   Icons.notifications_none,

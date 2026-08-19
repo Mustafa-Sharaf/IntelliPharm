@@ -6,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapHelperController extends GetxController {
-  // المتغيرات التفاعلية للإحداثيات والكاميرا
   var latitude = 33.5138.obs;
   var longitude = 36.2765.obs;
   final mapController = Rxn<GoogleMapController>();
@@ -16,12 +15,9 @@ class MapHelperController extends GetxController {
 
   BitmapDescriptor? customCarIcon;
   Timer? _animTimer;
-
-  // حفظ الموقع الحالي الفعلي للأنيميشن والزاوية
   LatLng? _currentAnimatedPosition;
   double _currentHeading = 0.0;
 
-  /// تحويل الصورة من الـ Asset وإعادة ضبط حجمها لتناسب دقة الشاشة بدون تشويه
   Future<BitmapDescriptor> getBitmapDescriptorFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
     ui.Codec codec = await ui.instantiateImageCodec(
@@ -38,7 +34,6 @@ class MapHelperController extends GetxController {
     applyMapStyle();
   }
 
-  /// تحميل أيقونة المركبة المخصصة (DeliveryBicycle) بحجم مثالي وواضح (80 px)
   Future<void> loadCustomMarkerIcon() async {
     try {
       customCarIcon = await getBitmapDescriptorFromAsset('assets/images/DeliveryBicycle.png', 40);
@@ -68,10 +63,8 @@ class MapHelperController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // 1. تهيئة الخريطة: تحميل الأيقونة أولاً ثم تحديد الموقع الابتدائي
     _initializeMap();
 
-    // 2. الاستماع لتغيرات الثيم المباشرة
     ever(Get.isDarkMode.obs, (isDark) {
       applyMapStyle();
     });
@@ -86,47 +79,6 @@ class MapHelperController extends GetxController {
     }
   }
 
-  // =========================
-  // Location & Camera Control
-  // =========================
-
-  /*Future<Position> getCurrentLocation() async {
-    // 1️⃣ التأكد من تفعيل خدمة الـ GPS في الهاتف
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      throw Exception("GPS_DISABLED");
-    }
-
-    // 2️⃣ التحقق من الصلاحيات وطلبها
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        throw Exception("PERMISSION_DENIED");
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      throw Exception("PERMISSION_DENIED_FOREVER");
-    }
-
-    // 3️⃣ إعدادات جلب الموقع المباشر (دقة عالية بدون اعتماد على مواقع قديمة)
-    final LocationSettings locationSettings = AndroidSettings(
-      accuracy: LocationAccuracy.high,
-      forceLocationManager: false,
-    );
-
-    try {
-      // نطلب الموقع المباشر مع مهلة 12 ثانية لتجنب تعليق الواجهة
-      return await Geolocator.getCurrentPosition(
-        locationSettings: locationSettings,
-      ).timeout(const Duration(seconds: 12));
-    } catch (e) {
-      print("❌ تعذر جلب الموقع المباشر: $e");
-      // نرفع استثناء مخصص ليشير إلى أن الـ GPS لم يستجب
-      throw Exception("LOCATION_TIMEOUT");
-    }
-  }*/
 
   Future<Position> getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -147,21 +99,21 @@ class MapHelperController extends GetxController {
     }
 
     try {
-      // 1️⃣ محاولة جلب آخر موقع معروف فوراً دون انتظار GPS
+      // محاولة جلب آخر موقع معروف فوراً دون انتظار GPS
       Position? lastPosition = await Geolocator.getLastKnownPosition();
       if (lastPosition != null) {
         return lastPosition;
       }
 
-      // 2️⃣ في حال عدم وجود موقع سابق، نطلب الموقع الحالي بمهلة قصيرة جداً (3 ثوانٍ)
+      // في حال عدم وجود موقع سابق، نطلب الموقع الحالي بمهلة قصيرة جداً (3 ثوانٍ)
       return await Geolocator.getCurrentPosition(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.medium, // تقليل الدقة لتسريع الاستجابة
         ),
       ).timeout(const Duration(seconds: 3));
     } catch (e) {
-      print("❌ تعذر جلب الموقع الفعلي، استخدام الموقع الافتراضي: $e");
-      // 3️⃣ إرجاع موقع افتراضي لمنع تعليق التطبيق نهائياً
+      //print("❌ تعذر جلب الموقع الفعلي، استخدام الموقع الافتراضي: $e");
+      //  إرجاع موقع افتراضي لمنع تعليق التطبيق نهائياً
       return Position(
         latitude: latitude.value,
         longitude: longitude.value,
@@ -183,7 +135,7 @@ class MapHelperController extends GetxController {
       await setLocation(position.latitude, position.longitude);
     } catch (e) {
       print("Error while fetching current location: $e");
-      rethrow; // لكي يمسك الـ Screen / Controller الأعلى بالخطأ ويُظهر Snackbar للزبون
+      rethrow;
     }
   }
 
@@ -395,45 +347,3 @@ class MapHelperController extends GetxController {
     super.onClose();
   }
 }
-
-
-
-/*  Future<void> moveToCurrentLocation() async {
-    try {
-      final position = await getCurrentLocation();
-      await setLocation(position.latitude, position.longitude);
-    } catch (e) {
-      print("Error while fetching current location: $e");
-      // نرجع نرفع الاستثناء ليرى الـ Screen / Controller الأعلى أن هناك مشكلة ويظهر الرسالة
-      rethrow;
-    }
-  }*/
-
-/* Future<Position> getCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      throw Exception("Location services are disabled");
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      throw Exception("Location permission permanently denied");
-    }
-
-    return await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-  }
-
-  Future<void> moveToCurrentLocation() async {
-    try {
-      final position = await getCurrentLocation();
-      await setLocation(position.latitude, position.longitude);
-    } catch (e) {
-      print("Error while fetching current location: $e");
-    }
-  }*/

@@ -93,7 +93,7 @@ class PharmacyRouteDialog extends StatelessWidget {
                         //"Route to ${pharmacy.nameEn}",
                         "ROUTE_TO_PHARMACY".trParams({
                           'name': Get.locale?.languageCode == 'ar'
-                              ? (pharmacy.nameAr ?? pharmacy.nameEn)
+                              ? pharmacy.nameAr
                               : pharmacy.nameEn,
                         }),
                         maxLines: 1,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../app_theme/AppColors.dart';
 import '../app_theme/theme_extension.dart';
 import '../modules/ShowOrder/ShowOrderBinding.dart';
 import '../modules/ShowOrder/ShowOrder_Screen.dart';

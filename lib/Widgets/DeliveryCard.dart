@@ -54,25 +54,6 @@ class DeliveryCard extends StatelessWidget {
         'font': const Color(0xff4B5563),
       },
     }[priority]!;
-
-    final statusConfig = {
-      OrderStatus.pending: {
-        'btnText': 'StartDelivery'.tr,
-        'btnColor': AppColors.primaryColor,
-        'enabled': true,
-      },
-      OrderStatus.inTransit: {
-        'btnText': 'InTransit...'.tr,
-        'btnColor': Colors.blue, //const Color(0xff2563EB)
-        'enabled': false,
-      },
-      OrderStatus.delivered: {
-        'btnText': 'DeliveredSuccessfully'.tr,
-        'btnColor': Colors.green, //const Color(0xff137333)
-        'enabled': false,
-      },
-    }[status]!;
-
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: size.width * 0.04,
@@ -226,7 +207,7 @@ class DeliveryCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    // "$itemsCount items · \$${price.toStringAsFixed(2)}"
+
                     "ITEMS_PRICE_SUMMARY".trParams({
                       'count': itemsCount.toString(),
                       'price': price.toStringAsFixed(2),
@@ -276,37 +257,8 @@ class DeliveryCard extends StatelessWidget {
               ),
             ],
           ),
-
           SizedBox(height: size.height * 0.02),
 
-          /// ACTION BUTTON DYNAMIC BASED ON STATUS
-        /*  SizedBox(
-            width: double.infinity,
-            height: size.height * 0.06,
-            child: ElevatedButton(
-              onPressed: (statusConfig['enabled'] as bool)
-                  ? onStartDelivery
-                  : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: statusConfig['btnColor'] as Color,
-                disabledBackgroundColor: (statusConfig['btnColor'] as Color)
-                    .withValues(alpha: 0.6),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                elevation: 0,
-              ),
-              child: Text(
-                statusConfig['btnText'] as String,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontFamily: 'Cairo',
-                ),
-              ),
-            ),
-          ),*/
         ],
       ),
     );

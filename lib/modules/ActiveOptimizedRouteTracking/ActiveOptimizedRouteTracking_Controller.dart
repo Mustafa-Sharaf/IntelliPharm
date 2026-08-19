@@ -34,8 +34,8 @@ class ActiveOptimizedRouteTrackingController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // 🟢 بدء التتبع فور تحضير الـ Binding
     locationTracker.startTracking();
+    fetchMyTodayPlan();
   }
 
   Future<void> refreshTrackingData() async {

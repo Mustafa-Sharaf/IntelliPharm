@@ -45,7 +45,6 @@ class RegionController extends GetxController {
   }
 
   void selectRegion(RegionModel region) {
-    //print("Selected: ${region.name}");
     Get.back(result: region);
   }
 }

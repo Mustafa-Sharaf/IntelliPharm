@@ -44,24 +44,6 @@ class PlannerService {
     return response.data;
   }
 
-/*  static Future<Map<String, dynamic>?> rePlanRoute({
-    required int planId,
-    required double latitude,
-    required double longitude,
-    required String reason,
-    required String reasonDetails,
-  }) async {
-    final response = await ApiService.post(
-      "/planner/v1/plans/$planId/optimize-next-leg",
-      data: {
-        "current_latitude": latitude,
-        "current_longitude": longitude,
-        "reason": reason,
-        "reason_details": reasonDetails,
-      },
-    );
-    return response.data;
-  }*/
 
   static Future<Map<String, dynamic>?> rePlanRoute({
     required int planId,
@@ -82,7 +64,7 @@ class PlannerService {
       );
       return response.data;
     } catch (e) {
-      print("❌ ApiService RePlan Error: $e");
+      print("ApiService RePlan Error: $e");
       rethrow;
     }
   }
@@ -98,7 +80,7 @@ class PlannerService {
 
       return null;
     } catch (e) {
-      print("❌ Error fetching today's plan: $e");
+      print("Error fetching today's plan: $e");
       return null;
     }
   }

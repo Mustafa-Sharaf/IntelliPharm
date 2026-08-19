@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Widgets/PharmacyInfoCard.dart';
-import '../../Widgets/Tabs.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
+import '../../Widgets/RegionSelectorDialog.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import '../../helper/ContactLauncher/ContactLauncher.dart';
@@ -40,11 +41,18 @@ class PharmacistsScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: size.width * 0.01),
-           /*     SizedBox(
+                SizedBox(
                   width: size.width * 0.12,
                   height: size.width * 0.12,
                   child: ElevatedButton(
-                    onPressed: () async {},
+                    onPressed: () async {
+                      final RegionModel? selectedRegion =
+                          await Get.dialog<RegionModel>(
+                            const RegionSelectorDialog(),
+                          );
+
+                      pharmacistsController.setRegion(selectedRegion);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colors.textPrimary,
                       elevation: 3,
@@ -57,18 +65,53 @@ class PharmacistsScreen extends StatelessWidget {
                       size: size.width * 0.06,
                     ),
                   ),
-                ),*/
+                ),
               ],
             ),
 
             SizedBox(height: size.height * 0.04),
+            Row(
+              children: [
+                Obx(
+                  () => SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(pharmacistsController.tabs.length, (
+                        index,
+                      ) {
+                        final isSelected =
+                            pharmacistsController.selectedTab.value == index;
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: ChoiceChip(
+                            label: Text(
+                              pharmacistsController.tabs[index],
+                              style: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : colors.textPrimary,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Cairo',
+                              ),
+                            ),
+                            selected: isSelected,
+                            onSelected: (selected) =>
+                                pharmacistsController.changeTab(index),
 
-            Obx(
-              () => Tabs(
-                tabs: pharmacistsController.tabs,
-                selectedIndex: pharmacistsController.selectedTab.value,
-                onTap: pharmacistsController.changeTab,
-              ),
+                            selectedColor: colors.textPrimary,
+                            backgroundColor: Colors.transparent,
+                            side: BorderSide(color: colors.textPrimary, width: 1),
+                            showCheckmark: false,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: size.height * 0.01),
 
@@ -128,7 +171,11 @@ class PharmacistsScreen extends StatelessWidget {
                     if (index == list.length) {
                       return const Padding(
                         padding: EdgeInsets.all(20),
-                        child: Center(child: CircularProgressIndicator(color: AppColors.primaryColor,)),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primaryColor,
+                          ),
+                        ),
                       );
                     }
 
@@ -160,7 +207,7 @@ class PharmacistsScreen extends StatelessWidget {
                           Get.to(
                             () => const PharmacyDetailsScreen(),
                             arguments: pharmacy.id,
-                            binding: PharmacyDetailsBinding()
+                            binding: PharmacyDetailsBinding(),
                           );
                         },
                       ),

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import 'NavItem.dart';
 
@@ -28,7 +29,7 @@ class CustomBottomNav extends StatelessWidget {
       padding: EdgeInsets.only(
         left: height * 0.008,
         right: height * 0.008,
-        bottom: bottomPadding, // رفع المحتوى للأعلى بمقدار مساحة أزرار النظام
+        bottom: bottomPadding,
       ),
       decoration: BoxDecoration(
         color: colors.backgroundMain,
@@ -49,12 +50,12 @@ class CustomBottomNav extends StatelessWidget {
               onTap: () => onTap(index),
               behavior: HitTestBehavior.opaque,
               child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
+                duration: Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
                 margin: EdgeInsets.symmetric(vertical: height * 0.008, horizontal: height * 0.004),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? const Color(0xff0C8A7B).withValues(alpha: 0.12)
+                      ? AppColors.primaryColor.withValues(alpha: 0.12)
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(14),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/MedicineCard.dart';
 import '../../app_theme/theme_extension.dart';
 import '../NewOrder/NewOrder_Controller.dart';
@@ -19,18 +20,7 @@ class AlternativesScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.backgroundMain,
-      appBar: /*AppBar(
-        backgroundColor: colors.backgroundMain,
-        title: Text(
-          "Alternatives".tr,
-          style: TextStyle(
-            color: colors.textPrimary,
-            fontFamily: 'Cairo',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-      ),*/AppBar(
+      appBar:AppBar(
         backgroundColor: colors.backgroundMain,
         foregroundColor: colors.textPrimary,
         title: Row(
@@ -96,13 +86,13 @@ class AlternativesScreen extends StatelessWidget {
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return  Center(child: CircularProgressIndicator(color: AppColors.primaryColor,));
         }
 
         if (controller.alternatives.isEmpty) {
           return Center(
             child: Text(
-              "No_alternatives_available".tr,
+              "No_Alternatives_Available".tr,
               style: TextStyle(
                 color: colors.textPrimary,
                 fontSize: 16,

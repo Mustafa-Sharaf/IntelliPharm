@@ -24,7 +24,7 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
   String _formatAmount(double amount) {
     final formatter = NumberFormat('#,##0.##', 'en_US');
     return
-    /*'${formatter.format(amount)} S.p'*/
+
     'amount_sp'.trParams({'amount': formatter.format(amount)});
   }
 
@@ -192,7 +192,6 @@ class PharmacySummaryHeaderCard extends StatelessWidget {
                 ),
               ),
               Text(
-                //'$remainingPercentInt% Remaining',
                 'percent_remaining'.trParams({
                   'percent': remainingPercentInt.toString(),
                 }),

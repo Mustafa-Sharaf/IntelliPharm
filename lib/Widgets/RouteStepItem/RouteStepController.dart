@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import '../../services/ServiceApi/RouteStepService.dart';
 import '../../widgets/AppSnackBar.dart';
-
 class RouteStepController extends GetxController {
   var isStartingVisit = false.obs;
   var isUpdatingStatus = false.obs;
@@ -14,12 +13,13 @@ class RouteStepController extends GetxController {
       final res = await RouteStepService.startVisit(visitId);
 
       if (res['isSuccess'] == true || res['statusCode'] == 200) {
-        AppSnackBar.success("Visit started successfully.");
+        AppSnackBar.success("Visit_started_successfully".tr);
       } else {
-        AppSnackBar.error(res['message'] ?? "Failed to start visit.");
+        AppSnackBar.error("Failed_to_start_visit".tr);
+        //print("Failed to start visit= ${res['message']}");
       }
     } catch (e) {
-      AppSnackBar.error("Failed to start visit, please try again.");
+      AppSnackBar.error("Failed_to_start_visit_please_try_again".tr);
     } finally {
       isStartingVisit.value = false;
     }

@@ -42,21 +42,6 @@ class ActiveRegionComponent extends StatelessWidget {
 
         GestureDetector(
           onTap: () async {
-         /*   final result = await showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
-                ),
-              ),
-              builder: (context) {
-                return RegionSelector();
-              },
-            );
-            if (result != null) {
-              onRegionSelected(result);
-            }*/
             final result = await showModalBottomSheet(
               context: context,
               isScrollControlled: true,
@@ -66,7 +51,6 @@ class ActiveRegionComponent extends StatelessWidget {
                 ),
               ),
               builder: (context) {
-                // 🟢 تهيئة الـ Binding يدوياً قبل عرض الـ Widget
                 RegionSelectorBinding().dependencies();
                 return const RegionSelector();
               },

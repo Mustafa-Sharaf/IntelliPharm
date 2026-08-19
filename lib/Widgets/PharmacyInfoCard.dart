@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app_theme/AppColors.dart';
 import '../../../app_theme/theme_extension.dart';
+import '../modules/ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Controller.dart';
 
 class PharmacyInfoCard extends StatelessWidget {
   final String pharmacyName;
@@ -136,7 +137,6 @@ class PharmacyInfoCard extends StatelessWidget {
                       SizedBox(height: size.width * 0.02),
                       _buildInfoRow(
                         Icons.person_outline_rounded,
-                        //'Pharmacist: $pharmacistName',
                         "PHARMACIST_NAME".trParams({
                           'name': pharmacistName,
                         }),
@@ -179,7 +179,7 @@ class PharmacyInfoCard extends StatelessWidget {
                               onPressed: onDirectionsTap,
                               style: OutlinedButton.styleFrom(
                                 side: BorderSide(
-                                  color: AppColors.textLightPrimary,
+                                  color:Colors.green,
                                   width: 1.2,
                                 ),
                                 shape: RoundedRectangleBorder(
@@ -192,7 +192,7 @@ class PharmacyInfoCard extends StatelessWidget {
                               child: Text(
                                 'Directions'.tr,
                                 style: TextStyle(
-                                  color: AppColors.textLightPrimary,
+                                  color: Colors.green,
                                   fontFamily: 'Cairo',
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13,

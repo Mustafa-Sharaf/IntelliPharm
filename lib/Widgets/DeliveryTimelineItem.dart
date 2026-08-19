@@ -37,7 +37,7 @@ class DeliveryTimelineItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 1. الدائرة المؤشرة والخط الرأسي الجانبي
+
         Column(
           children: [
             if (isCompleted)
@@ -75,7 +75,6 @@ class DeliveryTimelineItem extends StatelessWidget {
             if (!isLast)
               Container(
                 width: size.width * 0.004,
-                // تعديل ارتفاع الخط التكيفي حسب وجود الكارت النشط
                 height: isActive ? size.height * 0.15 : size.height * 0.06,
                 color: isCompleted
                     ? const Color(0xFF76F2D6)
@@ -84,8 +83,6 @@ class DeliveryTimelineItem extends StatelessWidget {
           ],
         ),
         SizedBox(width: size.width * 0.03),
-
-        // 2. المحتوى الرئيسي (مغلف بـ Container لون component إذا كان active)
         Expanded(
           child: Container(
             padding: isActive
@@ -245,8 +242,6 @@ class DeliveryTimelineItem extends StatelessWidget {
       ],
     );
   }
-
-// 2. إضافة التابع _showChangeStatusDialog أسفل الويدجت
   void _showChangeStatusDialog(BuildContext context) {
     final mainController = Get.find<ActiveDeliveryRouteController>();
 

@@ -18,16 +18,6 @@ class AppThemes {
       selectionHandleColor: AppColors.primaryColor,
     ),
 
- /*   extensions: const [
-
-      ThemeColors(
-        backgroundMain: AppColors.backgroundColorLight,
-        backgroundSecondary: AppColors.white,
-        component: Colors.white,
-        text: Colors.black,
-      ),
-
-    ],*/
     extensions: const [
       ThemeColors(
         backgroundMain: AppColors.backgroundColorLight,
@@ -52,16 +42,6 @@ class AppThemes {
       selectionHandleColor: AppColors.primaryColor,
     ),
 
-/*    extensions: const [
-
-      ThemeColors(
-        backgroundMain: AppColors.backgroundDark,
-        backgroundSecondary: Color(0xFF1B1B1B),
-        component: AppColors.componentDark,
-        text: Colors.white,
-      ),
-
-    ],*/
     extensions: const [
       ThemeColors(
         backgroundMain: AppColors.backgroundDark,

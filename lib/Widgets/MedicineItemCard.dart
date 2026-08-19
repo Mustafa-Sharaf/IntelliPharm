@@ -79,7 +79,6 @@ class MedicineItemCard extends StatelessWidget {
           SizedBox(height: size.width * 0.01),
 
           Text(
-            // "Unit Price: \$${unitPrice.toStringAsFixed(2)}"
             "UNIT_PRICE_SP".trParams({
               'price': unitPrice.toStringAsFixed(2),
             }),
