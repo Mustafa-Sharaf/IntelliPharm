@@ -68,14 +68,14 @@ class CustomBottomNav extends StatelessWidget {
                       child: Icon(
                         item.icon,
                         color: isSelected ? const Color(0xff0C8A7B) : Colors.grey,
-                        size: height * 0.03,
+                        size: height * 0.025,
                       ),
                     ),
                     SizedBox(height: height * 0.002),
                     AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: TextStyle(
-                        fontSize: isSelected ? 11 : 10,
+                        fontSize: isSelected ? 10 : 9,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Cairo',
                         color: isSelected ? const Color(0xff0C8A7B) : Colors.grey,

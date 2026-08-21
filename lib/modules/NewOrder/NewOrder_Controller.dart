@@ -36,7 +36,6 @@ class NewOrderController extends GetxController {
       cart.refresh();
     }
 
-    AppSnackBar.success("Added to cart successfully".tr);
   }
 
   void increase(CartItem item) {

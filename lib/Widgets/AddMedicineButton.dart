@@ -12,7 +12,7 @@ class AddMedicineButton extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
       onTap: () {
-        Get.back();
+        Get.toNamed('/addOrder');
       },
       child: DottedBorder(
         options: RoundedRectDottedBorderOptions(

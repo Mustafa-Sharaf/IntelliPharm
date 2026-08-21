@@ -542,7 +542,7 @@ class MyLanguage implements Translations {
       "Visit status updated successfully.":"Visit status updated successfully.",
       "Order_cancelled_successfully":"Order cancelled successfully",
       "Failed_to_cancel_order":"Failed to cancel order",
-      "":"",
+      "No_orders_currently":"No orders currently",
       "":"",
       "":"",
       "":"",
@@ -1139,7 +1139,8 @@ class MyLanguage implements Translations {
       "Making_a_voice_call": "إجراء مكالمة صوتية",
       "Send_SMS": "إرسال رسالة نصية",
       "Text_message": "رسالة نصية",
-      "No_Active_Plan": "لا توجد خطة نشطة"
+      "No_Active_Plan": "لا توجد خطة نشطة",
+      "No_orders_currently":"لا توجد طلبات حاليًا",
 
     },
   };

@@ -53,12 +53,35 @@ class MyOrdersScreen extends StatelessWidget {
                 );
               }
 
+              if (controller.filteredOrders.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.inbox_outlined,
+                        size: 80,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        "No_orders_currently".tr,
+                        style: TextStyle(
+                          fontFamily: 'Cairo',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
               return ListView.builder(
                 padding: const EdgeInsets.only(bottom: 80),
                 itemCount: controller.filteredOrders.length,
                 itemBuilder: (context, index) {
                   final order = controller.filteredOrders[index];
-
                   return OrderCard(
                     orderId: order.id.toString(),
                     pharmacyName: order.pharmacyName,

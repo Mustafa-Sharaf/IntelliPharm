@@ -263,7 +263,6 @@ class DeliveryTimelineItem extends StatelessWidget {
     showDialog(
       context: context,
       builder: (ctx) => ChangeStatusDialog(
-        //isLoading: mainController.isLoading.value,
         onSubmit: (status, cause, notes) async {
           await mainController.updateVisitStatus(
             visitId: visit.id,

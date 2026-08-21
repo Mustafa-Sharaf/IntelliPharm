@@ -33,14 +33,16 @@ class ActiveOptimizedRouteTrackingScreen extends StatelessWidget {
         }
         if (controller.plan == null) {
           return Center(
-            child: EmptyPlanCard(
-              title: "No_Active_Plan".tr,
-              subtitle:
-              "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
-              buttonText: "CreatePlan".tr,
-              onPressed: () {
-                Get.toNamed('/planYourRoute');
-              },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: EmptyPlanCard(
+                title: "No_Active_Plan".tr,
+                subtitle: "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
+                buttonText: "CreatePlan".tr,
+                onPressed: () {
+                  Get.toNamed('/planYourRoute');
+                },
+              ),
             ),
           );
         }

@@ -268,13 +268,10 @@ import '../../app_theme/theme_extension.dart';
 import '../AppSnackBar.dart';
 
 class ChangeStatusDialog extends StatefulWidget {
-  // جعلنا الـ onSubmit ترجع Future لتنتظر عملية الـ API
-  final Future<void> Function(String status, String cause, String notes) onSubmit;
+  final Future<void> Function(String status, String cause, String notes)
+  onSubmit;
 
-  const ChangeStatusDialog({
-    super.key,
-    required this.onSubmit,
-  });
+  const ChangeStatusDialog({super.key, required this.onSubmit});
 
   @override
   State<ChangeStatusDialog> createState() => _ChangeStatusDialogState();
@@ -477,39 +474,39 @@ class _ChangeStatusDialogState extends State<ChangeStatusDialog> {
                   onTap: isSubmitting
                       ? null
                       : () async {
-                    if (selectedCause == null) {
-                      AppSnackBar.error(
-                        "Please_select_the_reason_first.".tr,
-                      );
-                      return;
-                    }
+                          if (selectedCause == null) {
+                            AppSnackBar.error(
+                              "Please_select_the_reason_first.".tr,
+                            );
+                            return;
+                          }
 
-                    // 1. بدء التحميل في الواجهة
-                    setState(() {
-                      isSubmitting = true;
-                    });
+                          // 1. بدء التحميل في الواجهة
+                          setState(() {
+                            isSubmitting = true;
+                          });
 
-                    try {
-                      // 2. تنفيذ الـ API والانتظار
-                      await widget.onSubmit(
-                        selectedStatus,
-                        selectedCause!,
-                        notesController.text.trim(),
-                      );
+                          try {
+                            // 2. تنفيذ الـ API والانتظار
+                            await widget.onSubmit(
+                              selectedStatus,
+                              selectedCause!,
+                              notesController.text.trim(),
+                            );
 
-                      // 3. إغلاق الـ Dialog تلقائياً عند النجاح
-                      if (context.mounted) {
-                        Get.back();
-                      }
-                    } catch (e) {
-                      // إيقاف التحميل في حال حدث خطأ
-                      if (context.mounted) {
-                        setState(() {
-                          isSubmitting = false;
-                        });
-                      }
-                    }
-                  },
+                            // 3. إغلاق الـ Dialog تلقائياً عند النجاح
+                            if (context.mounted) {
+                              Get.back();
+                            }
+                          } catch (e) {
+                            // إيقاف التحميل في حال حدث خطأ
+                            if (context.mounted) {
+                              setState(() {
+                                isSubmitting = false;
+                              });
+                            }
+                          }
+                        },
                   child: Container(
                     height: size.height * 0.055,
                     width: size.height * 0.055,
@@ -520,18 +517,18 @@ class _ChangeStatusDialogState extends State<ChangeStatusDialog> {
                     child: Center(
                       child: isSubmitting
                           ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
                           : const Icon(
-                        FontAwesomeIcons.paperPlane,
-                        color: Colors.white,
-                        size: 16,
-                      ),
+                              FontAwesomeIcons.paperPlane,
+                              color: Colors.white,
+                              size: 16,
+                            ),
                     ),
                   ),
                 ),

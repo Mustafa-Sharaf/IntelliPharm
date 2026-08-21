@@ -20,7 +20,7 @@ class BuildActionButtons extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Get.toNamed("/newOrderScreen");
+            Get.toNamed("/addOrder");
           },
           borderRadius: BorderRadius.circular(16),
           child: Container(
