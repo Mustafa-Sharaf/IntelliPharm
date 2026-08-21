@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../Widgets/AppSnackBar.dart';
 import '../../services/ServiceApi/OrderCancelService.dart';
 import '../../services/ServiceApi/OrderFetchService.dart';
@@ -54,9 +55,9 @@ class MyOrdersController extends GetxController {
       }
     } catch (e) {
       if (e is DioException) {
-        print("Status Code: ${e.response?.statusCode}");
-        print("Response Data: ${e.response?.data}");
-        print("Request Path: ${e.requestOptions.path}");
+        //print("Status Code: ${e.response?.statusCode}");
+       // print("Response Data: ${e.response?.data}");
+        //print("Request Path: ${e.requestOptions.path}");
 
         if (e.response?.statusCode == 500) {
           print("Server Error 500");
@@ -104,7 +105,7 @@ class MyOrdersController extends GetxController {
   void cancelOrder(int orderId) async {
     try {
       Get.dialog(
-        const Center(child: CircularProgressIndicator()),
+        Center(child: CircularProgressIndicator(color: AppColors.primaryColor,)),
         barrierDismissible: false,
       );
 

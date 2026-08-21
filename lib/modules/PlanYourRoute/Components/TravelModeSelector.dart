@@ -38,7 +38,7 @@ class TravelModeSelector extends StatelessWidget {
 
         /// Selector Options
         Obx(
-              () => Container(
+          () => Container(
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: colors.component,
@@ -52,7 +52,7 @@ class TravelModeSelector extends StatelessWidget {
                 return Expanded(
                   child: GestureDetector(
                     onTap: () =>
-                    planYourRouteController.selectedType.value = type,
+                        planYourRouteController.selectedType.value = type,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
                       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -69,8 +69,7 @@ class TravelModeSelector extends StatelessWidget {
                           children: [
                             Icon(
                               typeIcons[type],
-                              color:
-                              isSelected ? Colors.white : AppColors.gray,
+                              color: isSelected ? Colors.white : AppColors.gray,
                               size: 20,
                             ),
                             SizedBox(width: size.width * 0.008),

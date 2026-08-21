@@ -28,6 +28,8 @@ class ConfirmationData {
   final String deliveryStatus;
   final String paymentStatus;
   final String createdAt;
+  final double latitude;
+  final double longitude;
 
   ConfirmationData({
     required this.id,
@@ -39,6 +41,8 @@ class ConfirmationData {
     required this.deliveryStatus,
     required this.paymentStatus,
     required this.createdAt,
+    required this.latitude,
+    required this.longitude,
   });
 
   factory ConfirmationData.fromJson(Map<String, dynamic> json) {
@@ -52,6 +56,8 @@ class ConfirmationData {
       deliveryStatus: json['delivery_status'] ?? '',
       paymentStatus: json['payment_status'] ?? '',
       createdAt: json['created_at'] ?? '',
+      latitude: json['current_latitude'],
+      longitude: json['current_longitude']
     );
   }
 }

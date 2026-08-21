@@ -19,7 +19,6 @@ class RecordPaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final controller = Get.put(RecordPaymentController());
     final controller = Get.find<RecordPaymentController>();
     controller.initData(pharmacy);
     final colors = Theme.of(context).extension<ThemeColors>()!;

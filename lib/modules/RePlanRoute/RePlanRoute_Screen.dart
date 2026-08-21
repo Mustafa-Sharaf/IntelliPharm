@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../Widgets/SelectablePharmacyCard.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
-import '../../helper/mapHelper/dart/MapHelper_Controller.dart';
 import '../../helper/mapHelper/dart/MapHelper_Screen.dart';
 import 'RePlanRoute_Controller.dart';
 
@@ -13,7 +12,6 @@ class RePlanRouteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<ThemeColors>()!;
-    // Get.lazyPut(() => MapHelperController(), tag: "route");
     final size = MediaQuery.of(context).size;
     final controller = Get.find<RePlanRouteController>();
     return Scaffold(

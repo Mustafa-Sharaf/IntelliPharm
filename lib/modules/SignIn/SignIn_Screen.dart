@@ -124,8 +124,8 @@ class SignInScreen extends StatelessWidget {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        AppColors.primaryColor.withOpacity(0.4),
-                        AppColors.primaryColor.withOpacity(0.05),
+                        AppColors.primaryColor.withValues(alpha: 0.4),
+                        AppColors.primaryColor.withValues(alpha: 0.05),
                       ],
                     ),
                   ),

@@ -1,6 +1,3 @@
-
-
-
 class CreatePharmacyModel {
   final String nameEn;
   final String nameAr;

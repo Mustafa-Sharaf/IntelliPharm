@@ -47,6 +47,7 @@ class PlanVisit {
   final String info;
   final int visitOrder;
   final bool visited;
+  final int deliveryId;
 
   PlanVisit({
     required this.id,
@@ -55,6 +56,7 @@ class PlanVisit {
     required this.info,
     required this.visitOrder,
     required this.visited,
+    required this.deliveryId,
   });
 
   factory PlanVisit.fromJson(Map<String, dynamic> json) {
@@ -66,6 +68,7 @@ class PlanVisit {
       info: pharmacy["info"] ?? "",
       visitOrder: json["visit_order"] ?? 0,
       visited: (json["visited"] ?? 0) == 1,
+      deliveryId: json['delivery_id']??0
     );
   }
 }

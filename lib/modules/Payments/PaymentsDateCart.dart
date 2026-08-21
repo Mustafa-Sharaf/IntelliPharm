@@ -40,7 +40,7 @@ class PaymentsDateCart extends StatelessWidget {
                   Obx(
                         () => Text(
                       DateFormat(
-                        'dd MMMM yyyy',
+                        'dd MMMM yyyy'.tr,
                       ).format(controller.selectedDate.value),
                       style: TextStyle(
                         color: colors.textPrimary,

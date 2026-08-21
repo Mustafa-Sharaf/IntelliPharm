@@ -45,10 +45,10 @@ class SignInController extends GetxController {
         box.write("user", data["data"]);
         box.write("role", user.roles.contains('distributor') ? "distributor" : "rep");
 
-        AppSnackBar.success(data["message"]);
+        AppSnackBar.success("Logged in successfully, welcome!".tr);
         Get.offAllNamed("/homeScreen");
       } else {
-        AppSnackBar.error(data["message"]);
+        AppSnackBar.error("The email address or password is incorrect.".tr);
       }
     } catch (e) {
       String message = ApiErrorHandler.handle(e);

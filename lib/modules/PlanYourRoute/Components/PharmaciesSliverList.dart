@@ -40,16 +40,7 @@ class PharmaciesSliverList extends StatelessWidget {
                   .tr,
               buttonText: "SelectRegion".tr,
               onPressed: () async {
-          /*      final result = await showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                  ),
-                  builder: (context) => RegionSelector(),
-                );*/
+
                 final result = await showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
@@ -59,7 +50,7 @@ class PharmaciesSliverList extends StatelessWidget {
                     ),
                   ),
                   builder: (context) {
-                    // 🟢 تهيئة التبعيات والكنترولر عبر الـ Binding قبل بناء الـ Widget
+                    //  تهيئة التبعيات والكنترولر عبر الـ Binding قبل بناء الـ Widget
                     RegionSelectorBinding().dependencies();
                     return const RegionSelector();
                   },

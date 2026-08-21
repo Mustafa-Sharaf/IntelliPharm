@@ -47,7 +47,7 @@ class ShowOrderScreen extends StatelessWidget {
 
         final order = controller.order.value;
         if (order == null) {
-          return  Center(
+          return Center(
             child: Text(
               "No_data".tr,
               style: TextStyle(
@@ -138,24 +138,10 @@ class ShowOrderScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20,),
-
+            SizedBox(height: 20),
           ],
         );
       }),
-  /*    floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primaryColor,
-        child: const Icon(Icons.edit, color: Colors.white),
-        onPressed: () {
-          final order = controller.order.value;
-          if (order != null) {
-            Get.to(
-                  () => EditOrderScreen(orderId: order.id),
-              binding: EditOrderBinding(orderId: order.id, order: order),
-            );
-          }
-        },
-      ),*/
       floatingActionButton: Obx(() {
         final order = controller.order.value;
 
@@ -172,14 +158,12 @@ class ShowOrderScreen extends StatelessWidget {
           child: const Icon(Icons.edit, color: Colors.white),
           onPressed: () {
             Get.to(
-                  () => EditOrderScreen(orderId: order.id),
+              () => EditOrderScreen(orderId: order.id),
               binding: EditOrderBinding(orderId: order.id, order: order),
             );
           },
         );
       }),
     );
-
   }
-
 }

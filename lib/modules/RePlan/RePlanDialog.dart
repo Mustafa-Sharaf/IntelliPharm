@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
-
 import '../../Widgets/AppSnackBar.dart';
 import '../../app_theme/theme_extension.dart';
 

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
 import 'AddPharmacy_Controller.dart';
 
 class PharmacyContactSection extends StatelessWidget {
   const PharmacyContactSection({
     super.key,
-   // required this.addPharmacyController,
+
   });
 
-  //final AddPharmacyController addPharmacyController;
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +82,10 @@ class PharmacyContactSection extends StatelessWidget {
                 return 'This_field_is_required'.tr;
               }
               if (!GetUtils.isNumericOnly(value)) {
-                return 'Please_enter_numbers_only';
+                return 'Please_enter_numbers_only'.tr;
               }
               if (value.length != 10) {
-                return 'Phone_number_must_be_exactly_10_digits';
+                return 'Phone_number_must_be_exactly_10_digits'.tr;
               }
               return null;
             },

@@ -77,10 +77,6 @@ class AddPharmacyScreen extends StatelessWidget {
                         ),
                         child: Text('PHARMACY_NAME'.tr, style: sectionTitleStyle),
                       ),
-                     /* PharmacyNameSection(
-                        addPharmacyController: addPharmacyController,
-                      ),
-*/
                       const PharmacyNameSection(),
                       SizedBox(height: size.height * 0.02),
 
@@ -101,13 +97,19 @@ class AddPharmacyScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(height: size.height * 0.008),
+                        /*    MapHelperScreen(
+                              tag: "addPharmacy",
+                              height: MediaQuery.of(context).size.height * 0.45,
+                              right: size.height * -0.005,
+                              bottom: size.height * 0.4,
+                            ),*/
                             MapHelperScreen(
                               tag: "addPharmacy",
                               height: MediaQuery.of(context).size.height * 0.45,
                               right: size.height * -0.005,
                               bottom: size.height * 0.4,
+                              isDraggable: true, // 👈 نسمح بالضغط وتعيين الماركر هنا فقط
                             ),
-
                             LocationCoordinateSection(),
                           ],
                         ),
@@ -177,9 +179,7 @@ class AddPharmacyScreen extends StatelessWidget {
                         ),
                         child: Text('CONTACT_INF'.tr, style: sectionTitleStyle),
                       ),
-                     /* PharmacyContactSection(
-                        addPharmacyController: addPharmacyController,
-                      ),*/
+
                       const PharmacyContactSection(),
 
                       SizedBox(height: size.height * 0.01),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
+import '../../Widgets/AppSnackBar.dart';
 import '../../Widgets/Tabs.dart';
 import '../MedicineDetails/MedicineDetails_Screen.dart';
 import '../NewOrder/NewOrder_Controller.dart';
@@ -193,10 +194,7 @@ class AddOrderScreen extends StatelessWidget {
                             addOrderController.decreaseStock(med.id, qty);
                             controller.clear();
                           } else if (qty > med.availableQuantity) {
-                            Get.snackbar(
-                              "خطأ",
-                              "الكمية المطلوبة أكبر من المتوفر في المخزون",
-                            );
+                            AppSnackBar.error("The quantity requested is greater than what is available in stock.".tr);
                           }
                         },
                         isImported: med.isImported,

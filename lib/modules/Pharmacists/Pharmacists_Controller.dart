@@ -79,7 +79,7 @@ class PharmacistsController extends GetxController {
         currentPage.value++;
       }
     } catch (e) {
-      Get.snackbar("Error", e.toString());
+      print(e.toString());
     } finally {
       isLoading.value = false;
       isMoreLoading.value = false;

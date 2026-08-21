@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intellipharm/widgets/AppSnackBar.dart';
 import 'package:intl/intl.dart';
 import '../../services/ServiceApi/RecordPaymentService.dart';
 import '../PharmacyDebts/PharmacyDebt_Model.dart';
@@ -49,13 +50,8 @@ class RecordPaymentController extends GetxController {
   }
   Future<void> submitPayment() async {
     if (enteredAmount.value <= 0) {
-      Get.snackbar(
-        'Error'.tr,
-        'invalid_amount_err'.tr,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red.shade400,
-        colorText: Colors.white,
-      );
+      AppSnackBar.error('invalid_amount_err'.tr,);
+
       return;
     }
 
@@ -75,31 +71,14 @@ class RecordPaymentController extends GetxController {
 
       if (responseData != null && responseData['isSuccess'] == true) {
         Get.back(result: true);
-        Get.snackbar(
-          'Success'.tr,
-          'payment_success_msg'.tr,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        AppSnackBar.success('payment_success_msg'.tr,);
       } else {
-        String msg = responseData?['message'] ?? 'Failed to process payment';
-        Get.snackbar(
-          'Error'.tr,
-          msg,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        String msg = responseData?['message'] ?? '';
+        AppSnackBar.error('Failed to process payment'.tr,);
       }
     } catch (e) {
-      Get.snackbar(
-        'Error'.tr,
-        e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
+      print(e.toString(),);
+
     } finally {
       isLoading.value = false;
     }

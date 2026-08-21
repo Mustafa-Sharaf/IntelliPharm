@@ -167,7 +167,7 @@ class DeliveryTimelineItem extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () async {
+                   /*       onPressed: () async {
                             final isSuccess = await Get.toNamed(
                               '/confirmDelivery',
                               arguments: {
@@ -178,6 +178,21 @@ class DeliveryTimelineItem extends StatelessWidget {
                             if (isSuccess == true) {
                               final mainController =
                                   Get.find<ActiveDeliveryRouteController>();
+                              mainController.markVisitAsCompleted(visit.id);
+                            }
+                          },*/
+                          // داخل DeliveryTimelineItem.dart
+                          // 🟢 الكود الصحيح داخل DeliveryTimelineItem.dart
+                          onPressed: () async {
+                            final isSuccess = await Get.toNamed(
+                              '/confirmDelivery',
+                              arguments: {
+                                'visit': visit, // 👈 مرر الكائن كما هو دون التلاعب بـ deliveryId
+                                'regionName': regionName,
+                              },
+                            );
+                            if (isSuccess == true) {
+                              final mainController = Get.find<ActiveDeliveryRouteController>();
                               mainController.markVisitAsCompleted(visit.id);
                             }
                           },
@@ -247,8 +262,8 @@ class DeliveryTimelineItem extends StatelessWidget {
 
     showDialog(
       context: context,
-      builder: (ctx) => Obx(() => ChangeStatusDialog(
-        isLoading: mainController.isLoading.value,
+      builder: (ctx) => ChangeStatusDialog(
+        //isLoading: mainController.isLoading.value,
         onSubmit: (status, cause, notes) async {
           await mainController.updateVisitStatus(
             visitId: visit.id,
@@ -257,7 +272,7 @@ class DeliveryTimelineItem extends StatelessWidget {
             notes: notes,
           );
         },
-      )),
+      ),
     );
   }
 }

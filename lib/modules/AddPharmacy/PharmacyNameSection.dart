@@ -6,10 +6,10 @@ import '../../app_theme/theme_extension.dart';
 import 'AddPharmacy_Controller.dart';
 
 class PharmacyNameSection extends StatelessWidget {
-  const PharmacyNameSection({super.key, //required this.addPharmacyController
+  const PharmacyNameSection({super.key,
   });
 
-  //final AddPharmacyController addPharmacyController;
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class PharmacyNameSection extends StatelessWidget {
               ),
             ),
             validator: (value) =>
-                value!.isEmpty ? 'This_field_is_required'.tr.tr : null,
+                value!.isEmpty ? 'This_field_is_required'.tr : null,
           ),
           SizedBox(height: size.width * 0.02),
 

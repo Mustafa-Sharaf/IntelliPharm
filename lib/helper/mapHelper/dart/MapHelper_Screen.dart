@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,6 +17,7 @@ class MapHelperScreen extends StatelessWidget {
     this.showRefreshButton = false,
     this.refreshButtonBottom,
     this.refreshButtonRight,
+    this.isDraggable = false,
   });
 
   final String tag;
@@ -26,6 +28,7 @@ class MapHelperScreen extends StatelessWidget {
   final bool showRefreshButton;
   final double? refreshButtonBottom;
   final double? refreshButtonRight;
+  final bool isDraggable;
 
   @override
   Widget build(BuildContext context) {
@@ -43,24 +46,30 @@ class MapHelperScreen extends StatelessWidget {
               final lat = mapHelperController.latitude.value;
               final lng = mapHelperController.longitude.value;
               final isDark = Get.isDarkMode;
+
+              final currentMarkers = mapHelperController.markers.toSet();
+              final currentPolylines = mapHelperController.polyLines.toSet();
+
               return GoogleMap(
-                key: ValueKey("map_theme_$isDark"),
+                key: ValueKey("map_theme_${isDark}_${currentMarkers.length}_${currentPolylines.length}"),
                 onMapCreated: (mapCtrl) {
                   mapHelperController.setMapController(mapCtrl);
                 },
-                polylines: mapHelperController.polyLines,
-                markers: mapHelperController.markers,
+                polylines: currentPolylines,
+                markers: currentMarkers,
                 initialCameraPosition: CameraPosition(
                   target: LatLng(lat, lng),
                   zoom: 14,
                 ),
                 style: mapHelperController.mapStyleString.value,
-                onTap: (point) {
+                onTap: isDraggable
+                    ? (point) {
                   mapHelperController.setLocation(
                     point.latitude,
                     point.longitude,
                   );
-                },
+                }
+                    : null,
                 myLocationEnabled: false,
                 myLocationButtonEnabled: false,
               );
@@ -74,7 +83,7 @@ class MapHelperScreen extends StatelessWidget {
             right: right,
             bottom: bottom,
             child: FloatingActionButton(
-            heroTag: "fab_my_location",
+              heroTag: "fab_my_location_$tag",
               mini: true,
               onPressed: mapHelperController.moveToCurrentLocation,
               backgroundColor: colors.component,
@@ -91,7 +100,7 @@ class MapHelperScreen extends StatelessWidget {
             right: refreshButtonRight,
             bottom: refreshButtonBottom,
             child: FloatingActionButton(
-              heroTag: "fab_refresh_route",
+              heroTag: "fab_refresh_route_$tag",
               mini: true,
               onPressed: () {
                 Get.toNamed("/rePlanRoute");

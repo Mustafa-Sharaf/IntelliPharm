@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app_theme/AppColors.dart';
 import '../../app_theme/theme_extension.dart';
+import '../ActiveDeliveryRoute/ActiveDeliveryRoute_Controller.dart';
 import '../ActiveDeliveryRoute/ActiveDeliveryRoute_Model.dart';
+import '../ActiveOptimizedRouteTracking/ActiveOptimizedRouteTracking_Controller.dart';
 import 'PlanRouteCalculator.dart';
 
 class CurrentRouteHeader extends StatelessWidget {
@@ -58,7 +60,6 @@ class CurrentRouteHeader extends StatelessWidget {
                         height: 1.5,
                       ),
                     ),
-
                     Obx(() {
                       final rawPlan = planRx.value;
                       if (rawPlan == null) {
@@ -75,7 +76,6 @@ class CurrentRouteHeader extends StatelessWidget {
                           ? rawPlan.toPlanResponse()
                           : rawPlan;
 
-                      // 🟢 تم إغلاق الـ Row بداخل SingleChildScrollView أفقية لحل مشكلة Overflow
                       return Padding(
                         padding: const EdgeInsets.only(top: 2.0),
                         child: SingleChildScrollView(
@@ -91,7 +91,8 @@ class CurrentRouteHeader extends StatelessWidget {
                               ),
                               SizedBox(width: size.width * 0.01),
                               Text(
-                                'STOPS_COUNT'.trParams({'count': plan.visits.length.toString()}),
+                                'STOPS_COUNT'.trParams(
+                                    {'count': plan.visits.length.toString()}),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: colors.textDefault,
@@ -140,11 +141,49 @@ class CurrentRouteHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              CircleAvatar(
-                backgroundColor: AppColors.primaryColor,
-                radius: 22,
-                child: Icon(Icons.person, size: 26, color: AppColors.white),
-              ),
+
+              ///  زر التبديل المشترك بين المندوب والموزع
+              Obx(() {
+                final bool isTrackingController = Get.isRegistered<ActiveOptimizedRouteTrackingController>();
+                final bool isDeliveryController = Get.isRegistered<ActiveDeliveryRouteController>();
+
+                bool isShowOnlyNextLeg = false;
+                VoidCallback? onToggle;
+
+                if (isTrackingController) {
+                  final c = Get.find<ActiveOptimizedRouteTrackingController>();
+                  isShowOnlyNextLeg = c.showOnlyNextLeg.value;
+                  onToggle = c.toggleRouteMode;
+                } else if (isDeliveryController) {
+                  final c = Get.find<ActiveDeliveryRouteController>();
+                  isShowOnlyNextLeg = c.showOnlyNextLeg.value;
+                  onToggle = c.toggleRouteMode;
+                }
+
+                if (onToggle == null) return const SizedBox.shrink();
+
+                return Container(
+                  decoration: BoxDecoration(
+                    color: isShowOnlyNextLeg
+                        ? AppColors.primaryColor.withValues(alpha: 0.15)
+                        : colors.backgroundMain,
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    tooltip: isShowOnlyNextLeg
+                        ? "Show_Full_Route".tr
+                        : "Show_Next_Leg".tr,
+                    onPressed: onToggle,
+                    icon: Icon(
+                      isShowOnlyNextLeg
+                          ? Icons.navigation_rounded
+                          : Icons.alt_route_rounded,
+                      color: AppColors.primaryColor,
+                      size: 22,
+                    ),
+                  ),
+                );
+              }),
             ],
           ),
         ),

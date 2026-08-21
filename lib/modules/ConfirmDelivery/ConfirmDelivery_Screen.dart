@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
@@ -12,12 +11,13 @@ class ConfirmDeliveryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ConfirmDeliveryController>();
+
+    //  خذ الـ visit والـ regionName من الكنترولر مباشرة لمنع التضارب
+    final visit = controller.visit;
     final Map<String, dynamic> args = Get.arguments ?? {};
-    final DeliveryVisit visit = args['visit'];
     final String regionName = args['regionName'] ?? '';
 
-
-    final controller = Get.find<ConfirmDeliveryController>();
     final colors = Theme.of(context).extension<ThemeColors>()!;
     final size = MediaQuery.of(context).size;
 
@@ -57,7 +57,7 @@ class ConfirmDeliveryScreen extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.01),
                 Obx(
-                      () => GestureDetector(
+                  () => GestureDetector(
                     onTap: controller.pickImage,
                     child: Container(
                       height: size.height * 0.2,
@@ -72,39 +72,39 @@ class ConfirmDeliveryScreen extends StatelessWidget {
                       ),
                       child: controller.selectedImage.value != null
                           ? ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.file(
-                          controller.selectedImage.value!,
-                          fit: BoxFit.cover,
-                        ),
-                      )
+                              borderRadius: BorderRadius.circular(16),
+                              child: Image.file(
+                                controller.selectedImage.value!,
+                                fit: BoxFit.cover,
+                              ),
+                            )
                           : Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.camera_alt_outlined,
-                            size: 40,
-                            color: AppColors.primaryColor,
-                          ),
-                          SizedBox(height: size.height * 0.01),
-                          Text(
-                            "Take_Photo".tr,
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: colors.textDefault,
-                              fontFamily: 'Cairo',
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 40,
+                                  color: AppColors.primaryColor,
+                                ),
+                                SizedBox(height: size.height * 0.01),
+                                Text(
+                                  "Take_Photo".tr,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: colors.textDefault,
+                                    fontFamily: 'Cairo',
+                                  ),
+                                ),
+                                Text(
+                                  "Tap_to_capture_parcel".tr,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: colors.textSecondary,
+                                    fontFamily: 'Cairo',
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          Text(
-                            "Tap_to_capture_parcel".tr,
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: colors.textSecondary,
-                              fontFamily: 'Cairo',
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
                   ),
                 ),
@@ -170,16 +170,19 @@ class ConfirmDeliveryScreen extends StatelessWidget {
               width: double.infinity,
               height: size.height * 0.06,
               child: Obx(
-                    () => ElevatedButton.icon(
+                () => ElevatedButton.icon(
                   onPressed: controller.isSubmitting.value
                       ? null
                       : () async => await controller.submitDelivery(),
                   icon: controller.isSubmitting.value
                       ? const CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2,
-                  )
-                      : const Icon(Icons.check_circle_outline, color: Colors.white),
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        )
+                      : const Icon(
+                          Icons.check_circle_outline,
+                          color: Colors.white,
+                        ),
                   label: Text(
                     controller.isSubmitting.value
                         ? "Processing...".tr
@@ -208,12 +211,12 @@ class ConfirmDeliveryScreen extends StatelessWidget {
   }
 
   Widget _buildTextField(
-      TextEditingController controller,
-      String hint,
-      ThemeColors colors, {
-        TextInputType keyboardType = TextInputType.text,
-        int maxLines = 1,
-      }) {
+    TextEditingController controller,
+    String hint,
+    ThemeColors colors, {
+    TextInputType keyboardType = TextInputType.text,
+    int maxLines = 1,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: colors.component,

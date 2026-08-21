@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intellipharm/app_theme/AppColors.dart';
 
 class FloatingAction extends StatelessWidget {
   final VoidCallback onPressed;
@@ -22,7 +23,7 @@ class FloatingAction extends StatelessWidget {
         ),
         child: FloatingActionButton(
           onPressed: onPressed,
-          backgroundColor: const Color(0xff0C8A7B),
+          backgroundColor: AppColors.primaryColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

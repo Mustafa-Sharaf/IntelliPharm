@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intellipharm/app_theme/AppColors.dart';
-import '../../app_theme/theme_extension.dart';
+import '../../Widgets/RegionSelector/RegionSelector_Model.dart';
 import '../../helper/ContactLauncher/ContactLauncher.dart';
-import '../NewOrder/NewOrder_Screen.dart';
 import '../PlanYourRoute/PlanYourRoute_Controller.dart';
 
 
@@ -14,14 +13,13 @@ class BuildActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final colors = Theme.of(context).extension<ThemeColors>()!;
+    //final colors = Theme.of(context).extension<ThemeColors>()!;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
           onTap: () {
-            //Get.to(() => NewOrderScreen());
             Get.toNamed("/newOrderScreen");
           },
           borderRadius: BorderRadius.circular(16),
@@ -59,6 +57,9 @@ class BuildActionButtons extends StatelessWidget {
                   final planYourRouteController = Get.find<PlanYourRouteController>();
                   if (planYourRouteController.selectedType.value.isEmpty) {
                     planYourRouteController.selectedType.value = "Driving";
+                  }
+                  if (planYourRouteController.selectedProfileKey.value == null) {
+                    planYourRouteController.selectedProfileKey.value = "Fastest";
                   }
                   planYourRouteController.initiatePlan(singlePharmacy: pharmacy);
                 },

@@ -202,7 +202,6 @@ class MedicineCard extends StatelessWidget {
                     ),
                   ),
 
-                  //SizedBox(width: size.width * 0.005),
                   SizedBox(
                     width: size.width * 0.33,
                     height: size.height * 0.04,

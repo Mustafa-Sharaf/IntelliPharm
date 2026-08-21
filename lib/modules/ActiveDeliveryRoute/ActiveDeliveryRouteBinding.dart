@@ -13,7 +13,7 @@ class ActiveDeliveryRouteBinding extends Bindings {
     );
     Get.lazyPut<MapHelperController>(
           () => MapHelperController(),
-      tag: "route",
+      tag: "routeDelivery",
       fenix: true,
     );
   }

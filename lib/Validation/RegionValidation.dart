@@ -2,6 +2,7 @@
 
 
 
+import 'package:get/get.dart';
 import 'package:intellipharm/Validation/validation_strategy.dart';
 
 import '../Widgets/RegionSelector/RegionSelector_Model.dart';
@@ -14,7 +15,7 @@ class RegionValidation implements ValidationStrategy {
   @override
   String? validate() {
     if (region == null) {
-      return "Please select a region";
+      return "Please select a region".tr;
     }
     return null;
   }

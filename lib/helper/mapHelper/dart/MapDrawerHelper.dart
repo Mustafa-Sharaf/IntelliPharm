@@ -1,10 +1,10 @@
+
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'MapHelper_Controller.dart';
 
 class MapDrawerHelper {
-
   static List<LatLng> decodePolyline(String encoded) {
     List<LatLng> points = [];
     int index = 0, len = encoded.length;
@@ -37,8 +37,11 @@ class MapDrawerHelper {
     return points;
   }
 
-
-  static Future<BitmapDescriptor> createMarkerWithNumber(int number) async {
+  ///  دالة رسم الدبوس مع إمكانية تحديد اللون (أزرق للمسار المتبقي / أخضر للمزار)
+  static Future<BitmapDescriptor> createMarkerWithNumber(
+      int number, {
+        Color mainColor = const Color(0xFF1E88E5),
+      }) async {
     final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
     final Canvas canvas = Canvas(pictureRecorder);
 
@@ -47,34 +50,24 @@ class MapDrawerHelper {
     final double height = 110.0 * scale;
 
     final Paint pinPaint = Paint()
-      ..color = Colors.blue.shade600
+      ..color = mainColor
       ..style = PaintingStyle.fill;
 
     final Path pinPath = Path();
     pinPath.moveTo(width / 2, height);
-
+    pinPath.cubicTo(width * 0.1, height * 0.7, 0, height * 0.5, 0, width / 2);
+    pinPath.arcTo(Rect.fromLTWH(0, 0, width, width), 3.14, 3.14, false);
     pinPath.cubicTo(
-      width * 0.1, height * 0.7,
-      0, height * 0.5,
-      0, width / 2,
-    );
-
-    pinPath.arcTo(
-      Rect.fromLTWH(0, 0, width, width),
-      3.14,
-      3.14,
-      false,
-    );
-
-    pinPath.cubicTo(
-      width, height * 0.5,
-      width * 0.9, height * 0.7,
-      width / 2, height,
+      width,
+      height * 0.5,
+      width * 0.9,
+      height * 0.7,
+      width / 2,
+      height,
     );
     pinPath.close();
 
     canvas.drawPath(pinPath, pinPaint);
-
 
     final Paint borderPaint = Paint()
       ..color = Colors.white
@@ -82,20 +75,24 @@ class MapDrawerHelper {
       ..strokeWidth = 4.0 * scale;
     canvas.drawPath(pinPath, borderPaint);
 
-
     final Paint centerCirclePaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(Offset(width / 2, width / 2), width * 0.28, centerCirclePaint);
+    canvas.drawCircle(
+      Offset(width / 2, width / 2),
+      width * 0.28,
+      centerCirclePaint,
+    );
 
-
-    final TextPainter textPainter = TextPainter(textDirection: TextDirection.ltr);
+    final TextPainter textPainter = TextPainter(
+      textDirection: TextDirection.ltr,
+    );
     textPainter.text = TextSpan(
       text: number.toString(),
       style: TextStyle(
         fontSize: 32.0 * scale,
         fontWeight: FontWeight.bold,
-        color: Colors.blue.shade700,
+        color: mainColor,
       ),
     );
     textPainter.layout();
@@ -105,11 +102,13 @@ class MapDrawerHelper {
       Offset((width - textPainter.width) / 2, (width - textPainter.height) / 2),
     );
 
-    final ui.Image image = await pictureRecorder.endRecording().toImage(width.toInt(), height.toInt());
+    final ui.Image image = await pictureRecorder.endRecording().toImage(
+      width.toInt(),
+      height.toInt(),
+    );
     final data = await image.toByteData(format: ui.ImageByteFormat.png);
     return BitmapDescriptor.bytes(data!.buffer.asUint8List());
   }
-
 
   static Future<void> drawFullRoute({
     required MapHelperController routeMapController,
@@ -117,46 +116,64 @@ class MapDrawerHelper {
   }) async {
     if (plan == null) return;
 
-    List<List<LatLng>> allPaths = [];
-
     routeMapController.clearAll();
 
+    // 1. إضافة الماركر الخاص بموقعي الحالي
     routeMapController.markers.add(
       Marker(
         markerId: const MarkerId('current_location'),
-        position: LatLng(routeMapController.latitude.value, routeMapController.longitude.value),
+        position: LatLng(
+          routeMapController.latitude.value,
+          routeMapController.longitude.value,
+        ),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
         infoWindow: const InfoWindow(title: "موقعي الحالي (نقطة الانطلاق)"),
       ),
     );
 
-    for (var path in plan.paths) {
-      final decoded = decodePolyline(path.geometry);
-      if (decoded.isNotEmpty) {
-        allPaths.add(decoded);
-      }
-    }
-
-    routeMapController.drawRoutes(allPaths);
+    List<LatLng> allBoundsPoints = [];
 
     for (int i = 0; i < plan.paths.length; i++) {
       final path = plan.paths[i];
       final decoded = decodePolyline(path.geometry);
 
       if (decoded.isNotEmpty) {
+        allBoundsPoints.addAll(decoded);
         final lastPoint = decoded.last;
 
         String markerTitle = "Pharmacy";
-        int orderNumber = i + 1; // قيمة افتراضية احتياطية
+        int orderNumber = i + 1;
+        bool isVisited = false;
 
-        // 🟢 التعديل هنا: جلب الاسم ورقم الترتيب الحقيقي من الباك إند
+        // فحص حالة الزيارة من الكائن القادم من الباك إند
+        //  استخدام المتغير الصحيح visited الموجود في PlanVisit
         if (i < plan.visits.length) {
-          markerTitle = plan.visits[i].name;
-          orderNumber = plan.visits[i].visitOrder; // أخذ الرقم الفعلي (مثلاً 2، 3، 5...)
+          final visit = plan.visits[i];
+          markerTitle = visit.name;
+          orderNumber = visit.visitOrder;
+
+          // استخدام المتغير الصحيح من المودل لديك
+          isVisited = visit.visited;
         }
 
-        // 🟢 تمرير رقم الترتيب الحقيقي لرسمه على الدبوس
-        BitmapDescriptor pinIcon = await createMarkerWithNumber(orderNumber);
+        // اختيار لون الخط والماركر: أخضر للتمت زيارته، أزرق للمتبقي
+        final Color routeColor = isVisited ? Colors.green.shade600 : const Color(0xFF2196F3);
+
+        // إضافة الخط باللون المناسب
+        routeMapController.polyLines.add(
+          Polyline(
+            polylineId: PolylineId("path_$i"),
+            color: routeColor,
+            width: 5,
+            points: decoded,
+          ),
+        );
+
+        // إنشاء الدبوس باللون المناسب
+        BitmapDescriptor pinIcon = await createMarkerWithNumber(
+          orderNumber,
+          mainColor: isVisited ? Colors.green.shade600 : Colors.blue.shade600,
+        );
 
         routeMapController.addMarker(
           position: lastPoint,
@@ -165,62 +182,10 @@ class MapDrawerHelper {
         );
       }
     }
+
+    // ضبط الكاميرا لتشمل جميع النقاط
+    routeMapController.moveCameraToBounds(allBoundsPoints);
   }
-
-/*  static Future<void> drawFullRoute({
-    required MapHelperController routeMapController,
-    required dynamic plan,
-  }) async {
-    if (plan == null) return;
-
-    List<List<LatLng>> allPaths = [];
-
-
-    routeMapController.clearAll();
-
-
-    routeMapController.markers.add(
-      Marker(
-        markerId: const MarkerId('current_location'),
-        position: LatLng(routeMapController.latitude.value, routeMapController.longitude.value),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-        infoWindow: const InfoWindow(title: "موقعي الحالي (نقطة الانطلاق)"),
-      ),
-    );
-
-
-    for (var path in plan.paths) {
-      final decoded = decodePolyline(path.geometry);
-      if (decoded.isNotEmpty) {
-        allPaths.add(decoded);
-      }
-    }
-
-    routeMapController.drawRoutes(allPaths);
-
-    for (int i = 0; i < plan.paths.length; i++) {
-      final path = plan.paths[i];
-      final decoded = decodePolyline(path.geometry);
-
-      if (decoded.isNotEmpty) {
-        final lastPoint = decoded.last;
-
-        String markerTitle = "Pharmacy";
-        if (i < plan.visits.length) {
-          markerTitle = plan.visits[i].name;
-        }
-
-
-        BitmapDescriptor pinIcon = await createMarkerWithNumber(i + 1);
-
-        routeMapController.addMarker(
-          position: lastPoint,
-          title: markerTitle,
-          icon: pinIcon,
-        );
-      }
-    }
-  }*/
 
   static Future<void> drawSingleDirectPath({
     required MapHelperController mapController,
@@ -228,10 +193,15 @@ class MapDrawerHelper {
     required double destLng,
     required String destinationName,
     String? geometry,
+    int orderNumber = 1,
+    bool isVisited = false,
   }) async {
     mapController.clearAll();
 
-    final LatLng startPoint = LatLng(mapController.latitude.value, mapController.longitude.value);
+    final LatLng startPoint = LatLng(
+      mapController.latitude.value,
+      mapController.longitude.value,
+    );
     final LatLng endPoint = LatLng(destLat, destLng);
 
     mapController.markers.add(
@@ -243,24 +213,35 @@ class MapDrawerHelper {
       ),
     );
 
-    // 2. إضافة ماركر الصيدلية الهدف
+    final Color statusColor = isVisited ? Colors.green.shade600 : Colors.blue.shade600;
+
+    BitmapDescriptor pinIcon = await createMarkerWithNumber(
+      orderNumber,
+      mainColor: statusColor,
+    );
+
     mapController.markers.add(
       Marker(
         markerId: const MarkerId('destination_location'),
         position: endPoint,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        icon: pinIcon,
         infoWindow: InfoWindow(title: destinationName),
       ),
     );
 
-    List<LatLng> pathPoints = [];
-    if (geometry != null && geometry.isNotEmpty) {
-      pathPoints = decodePolyline(geometry);
-    } else {
-      pathPoints = [startPoint, endPoint];
-    }
+    List<LatLng> pathPoints = (geometry != null && geometry.isNotEmpty)
+        ? decodePolyline(geometry)
+        : [startPoint, endPoint];
 
-    mapController.drawRoutes([pathPoints]);
+    mapController.polyLines.add(
+      Polyline(
+        polylineId: const PolylineId("single_path"),
+        color: statusColor,
+        width: 5,
+        points: pathPoints,
+      ),
+    );
+
+    mapController.moveCameraToBounds(pathPoints);
   }
-
 }

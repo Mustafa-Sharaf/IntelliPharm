@@ -7,9 +7,9 @@ class PharmacyDebtController extends GetxController {
   List<PharmacyDebtModel> _allDebts = [];
 
   final ValueNotifier<List<PharmacyDebtModel>> filteredDebtsNotifier =
-      ValueNotifier([]);
+  ValueNotifier([]);
   final ValueNotifier<String> selectedFilterNotifier = ValueNotifier('All');
-
+  final RxBool isLoading = true.obs;
   var searchQuery = "".obs;
   double _totalBilled = 0.0;
   double _totalCollected = 0.0;
@@ -21,8 +21,15 @@ class PharmacyDebtController extends GetxController {
   double get collectedPercentage =>
       _totalBilled == 0 ? 0 : (_totalCollected / _totalBilled);
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadDebts();
+  }
+
   Future<void> loadDebts() async {
     try {
+      isLoading.value = true;
       final response = await DebtsService.getDebts();
       _allDebts = response.debts;
       _totalBilled = response.totalDebtAmount;
@@ -32,6 +39,8 @@ class PharmacyDebtController extends GetxController {
       _applyFilter();
     } catch (e) {
       print("Error loading debts: $e");
+    } finally {
+      isLoading.value = false; // لإيقاف مؤشر التحميل سواء نجح الطلب أو فشل
     }
   }
 
@@ -49,7 +58,7 @@ class PharmacyDebtController extends GetxController {
     filteredDebtsNotifier.value = _allDebts.where((item) {
       final matchesSearch =
           item.name.toLowerCase().contains(searchQuery.value.toLowerCase()) ||
-          item.location.toLowerCase().contains(searchQuery.value.toLowerCase());
+              item.location.toLowerCase().contains(searchQuery.value.toLowerCase());
 
       bool matchesStatus = true;
       if (selectedFilterNotifier.value == 'Fully Paid') {

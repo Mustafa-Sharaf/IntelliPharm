@@ -8,6 +8,7 @@ import '../../services/ServiceApi/PharmacyService.dart';
 import 'AddPharmacy_Model.dart';
 
 class AddPharmacyController extends GetxController {
+  late MapHelperController mapController;
   var openTime = Rx<TimeOfDay?>(null);
   var closeTime = Rx<TimeOfDay?>(null);
   final formKey = GlobalKey<FormState>();
@@ -37,6 +38,7 @@ class AddPharmacyController extends GetxController {
   var holidays = <String>[].obs;
   final maxHolidays = 2.obs;
   final shake = false.obs;
+
   void toggleHoliday(String day) {
     if (holidays.contains(day)) {
       holidays.remove(day);
@@ -61,19 +63,19 @@ class AddPharmacyController extends GetxController {
   Future<void> createPharmacy() async {
     if (!formKey.currentState!.validate()) return;
     if (selectedRegion.value == null) {
-      AppSnackBar.error("الرجاء اختيار المنطقة أولاً");
+      AppSnackBar.error("Please select your region first.".tr);
       return;
     }
 
     if (openTime.value == null || closeTime.value == null) {
-      AppSnackBar.error("الرجاء تحديد أوقات الفتح والإغلاق");
+      AppSnackBar.error("Please specify your opening and closing times.".tr);
       return;
     }
 
     final mapController = Get.find<MapHelperController>(tag: "addPharmacy");
     if (mapController.latitude.value == 0.0 ||
         mapController.longitude.value == 0.0) {
-      AppSnackBar.error("الرجاء تحديد موقع الصيدلية على الخريطة");
+      AppSnackBar.error("Please locate the pharmacy on the map".tr);
       return;
     }
 
@@ -100,11 +102,11 @@ class AddPharmacyController extends GetxController {
       final response = await PharmacyService.createPharmacy(requestData);
 
       if (response["isSuccess"] == true) {
-        AppSnackBar.success("تمت إضافة الصيدلية بنجاح");
+        AppSnackBar.success("The pharmacy has been successfully added.".tr);
       }
       clearFields();
     } catch (e) {
-      AppSnackBar.error("فشلت عملية الحفظ");
+      AppSnackBar.error("The preservation process failed.".tr);
       print("فشلت عملية الحفظ: $e");
     } finally {
       isLoading.value = false;

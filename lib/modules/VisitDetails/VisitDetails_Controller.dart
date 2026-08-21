@@ -28,12 +28,12 @@ class VisitDetailsController extends GetxController {
       );
 
       await VisitsService.checkVisit(visitId: visitId, requestData: request);
-      AppSnackBar.success("Visit status updated successfully");
+      AppSnackBar.success("Visit status updated successfully".tr);
 
 
     } catch (e) {
-      //print("CHECK VISIT ERROR: $e");
-      AppSnackBar.error("An error occurred while saving the visit status.");
+      print("CHECK VISIT ERROR: $e");
+      AppSnackBar.error("An error occurred while saving the visit status.".tr);
     } finally {
       isSubmittingCheck.value = false;
     }

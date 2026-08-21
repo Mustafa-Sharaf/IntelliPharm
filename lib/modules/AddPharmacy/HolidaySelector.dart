@@ -37,7 +37,6 @@ class HolidaySelector extends StatelessWidget {
           children: [
             //  Counter
             Text(
-              //"${controller.holidays.length}/${controller.maxHolidays.value} selected",
               "HOLIDAYS_SELECTED".trParams({
                 'selected': controller.holidays.length.toString(),
                 'max': controller.maxHolidays.value.toString(),
