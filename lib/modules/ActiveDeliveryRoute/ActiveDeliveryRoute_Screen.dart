@@ -38,7 +38,7 @@ class ActiveDeliveryRouteScreen extends StatelessWidget {
                 subtitle: "AllDestinationsHaveBeenVisitedOrThereIsNoCurrentRoute".tr,
                 buttonText: "CreatePlan".tr,
                 onPressed: () {
-                  Get.toNamed('/planYourRoute');
+                  Get.back();
                 },
               ),
             ),

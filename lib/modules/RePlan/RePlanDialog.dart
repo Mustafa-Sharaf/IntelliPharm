@@ -134,6 +134,7 @@ class _RePlanDialogState extends State<RePlanDialog> {
                         : reasons.firstWhere((r) => r["value"] == selectedReason)["label"]!;
                     Get.back();
                     widget.onSubmit(reasonValue, reasonDetails);
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primaryColor,

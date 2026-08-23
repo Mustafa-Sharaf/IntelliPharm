@@ -207,7 +207,7 @@ class MyLanguage implements Translations {
       //Nav Item
       "HOME": "HOME",
       "ORDERS": "ORDERS",
-      "AskGemini": "AskGemini",
+      "AskAi": "Ask Ai",
       "Debts": "Debts",
       "Pharmacies": "Pharmacies",
       "Deliveries": "Deliveries",
@@ -795,7 +795,7 @@ class MyLanguage implements Translations {
       // Nav Item
       "HOME": "الرئيسية",
       "ORDERS": "الطلبات",
-      "AskGemini": "المساعد الذكي",
+      "AskAi": "المساعد الذكي",
       "Debts": "الديون",
       "Pharmacies": "الصيدليات",
       "Deliveries": "الشحنات",

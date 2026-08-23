@@ -13,7 +13,7 @@ class NavItem {
 List<NavItem> repItems = [
   NavItem(Icons.home_rounded, "HOME"),
   NavItem(Icons.receipt_long_rounded, "ORDERS"),
-  NavItem(Icons.smart_toy, "AskGemini"),
+  NavItem(Icons.smart_toy, "AskAi"),
   NavItem(Icons.account_balance_wallet, "Debts"),
   NavItem(Icons.local_pharmacy, "Pharmacies"),
 ];

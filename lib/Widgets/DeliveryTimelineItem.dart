@@ -167,27 +167,11 @@ class DeliveryTimelineItem extends StatelessWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                   /*       onPressed: () async {
-                            final isSuccess = await Get.toNamed(
-                              '/confirmDelivery',
-                              arguments: {
-                                'visit': visit,
-                                'regionName': regionName,
-                              },
-                            );
-                            if (isSuccess == true) {
-                              final mainController =
-                                  Get.find<ActiveDeliveryRouteController>();
-                              mainController.markVisitAsCompleted(visit.id);
-                            }
-                          },*/
-                          // داخل DeliveryTimelineItem.dart
-                          // 🟢 الكود الصحيح داخل DeliveryTimelineItem.dart
                           onPressed: () async {
                             final isSuccess = await Get.toNamed(
                               '/confirmDelivery',
                               arguments: {
-                                'visit': visit, // 👈 مرر الكائن كما هو دون التلاعب بـ deliveryId
+                                'visit': visit,
                                 'regionName': regionName,
                               },
                             );

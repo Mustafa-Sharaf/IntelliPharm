@@ -348,16 +348,12 @@ class ActiveDeliveryRouteController extends GetxController {
       AppSnackBar.error("NoActiveRouteToRePlan".tr);
       return;
     }
-
     Get.dialog(
       RePlanDialog(
         onSubmit: (reason, reasonDetails) async {
-          Get.back();
           try {
             isLoading.value = true;
-
             await routeMapController.moveToCurrentLocation();
-
             final responseData = await PlannerService.rePlanRoute(
               planId: plan.value!.id,
               latitude: routeMapController.latitude.value,
@@ -365,13 +361,12 @@ class ActiveDeliveryRouteController extends GetxController {
               reason: reason,
               reasonDetails: reasonDetails,
             );
-
             if (responseData != null && responseData['isSuccess'] == true) {
               final planData = responseData['data'];
-
               if (planData != null &&
                   (planData['visits'] != null || planData['stops'] != null)) {
                 await updatePlanFromStatusResponse(planData);
+                await fetchTodayDeliveryPlan();
                 AppSnackBar.success("NextLegOptimizedSuccessfully".tr);
               }
             } else {
@@ -384,6 +379,7 @@ class ActiveDeliveryRouteController extends GetxController {
             isLoading.value = false;
           }
         },
+
       ),
     );
   }

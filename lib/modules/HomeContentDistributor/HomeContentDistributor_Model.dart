@@ -29,12 +29,14 @@ class TodayDeliveryModel {
   final String pharmacyName;
   final int itemsCount;
   final String urgency;
+  final String status;
 
   TodayDeliveryModel({
     required this.orderId,
     required this.pharmacyName,
     required this.itemsCount,
     required this.urgency,
+    required this.status,
   });
 
   factory TodayDeliveryModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +45,7 @@ class TodayDeliveryModel {
       pharmacyName: json['pharmacy_name'] ?? '',
       itemsCount: json['number_of_items'] ?? 0,
       urgency: json['urgency'] ?? 'normal',
+      status: json['status']?? 'pending'
     );
   }
 }
@@ -58,6 +61,22 @@ extension UrgencyParser on String {
       case 'normal':
       default:
         return OrderPriority.normal;
+    }
+  }
+}
+
+extension StringToOrderStatus on String {
+  OrderStatus toOrderStatus() {
+    switch (toLowerCase()) {
+      case 'completed':
+      case 'delivered':
+        return OrderStatus.delivered;
+      case 'in_transit':
+      case 'intransit':
+        return OrderStatus.inTransit;
+      case 'pending':
+      default:
+        return OrderStatus.pending;
     }
   }
 }

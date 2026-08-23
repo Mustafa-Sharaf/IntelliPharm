@@ -85,7 +85,7 @@ class HomeContentScreen extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: ()  {
+                          onTap: () {
                             Get.toNamed("/activeOptimizedRouteTracking");
                           },
                           child: Text(
@@ -126,27 +126,28 @@ class HomeContentScreen extends StatelessWidget {
                           buttonText: "CreatePlan".tr,
                           onPressed: () {
                             Get.toNamed('/planYourRoute');
-
                           },
                         ),
                       );
                     }
 
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: homeContentController.todayVisits.length,
-                      itemBuilder: (context, index) {
-                        final visit = homeContentController.todayVisits[index];
-                        return PharmacyCard(
-                          name: visit.pharmacyName,
-                          address: visit.planName,
-                          time: visit.createdAt,
-                          status: visit.visited
-                              ? VisitStatus.visited
-                              : VisitStatus.pending,
-                        );
-                      },
+                    return SizedBox(
+                      height: size.height * 0.35,
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: homeContentController.todayVisits.length,
+                        itemBuilder: (context, index) {
+                          final visit = homeContentController.todayVisits[index];
+                          return PharmacyCard(
+                            name: visit.pharmacyName,
+                            address: visit.planName,
+                            time: visit.createdAt,
+                            status: visit.visited
+                                ? VisitStatus.visited
+                                : VisitStatus.pending,
+                          );
+                        },
+                      ),
                     );
                   }),
                   Padding(
@@ -170,25 +171,29 @@ class HomeContentScreen extends StatelessWidget {
                     if (homeContentController.activeOffers.isEmpty) {
                       return const SizedBox.shrink();
                     }
-
-                    return GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.97,
+                    return SizedBox(
+                      height: size.height * 0.3,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: size.width * 0.02,
+                        ),
+                        itemCount: homeContentController.activeOffers.length,
+                        itemBuilder: (context, index) {
+                          final offer =
+                              homeContentController.activeOffers[index];
+                          return SizedBox(
+                            width: size.width * 0.45,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: OfferCard(offer: offer),
+                            ),
+                          );
+                        },
                       ),
-                      itemCount: homeContentController.activeOffers.length,
-                      itemBuilder: (context, index) {
-                        final offer = homeContentController.activeOffers[index];
-                        return OfferCard(offer: offer);
-                      },
                     );
                   }),
-                  SizedBox(height: size.height*0.02),
+                  SizedBox(height: size.height * 0.02),
                 ],
               ),
             ),

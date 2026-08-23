@@ -99,7 +99,6 @@ class ActivePharmacyCard extends StatelessWidget {
                     ),
                     SizedBox(width: size.width * 0.01),
                     Text(
-                      //"${activeVisit.orderItemCount} items",
                       "Items".trParams({'items': "${activeVisit.orderItemCount}" }),
                       style: TextStyle(
                         fontSize: 12,
@@ -119,7 +118,6 @@ class ActivePharmacyCard extends StatelessWidget {
                   },
                   icon: const Icon(Icons.refresh, color: Colors.white),
                   label: Text(
-                    //"NAVIGATE".tr,
                     "RePlan".tr,
                     style: const TextStyle(
                       color: Colors.white,

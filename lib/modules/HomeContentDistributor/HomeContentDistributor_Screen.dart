@@ -194,10 +194,10 @@ class HomeContentDistributorScreen extends StatelessWidget {
                     ),
                     child: Text(
                       "ViewMap".tr,
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff016E65),
+                        color: AppColors.primaryColor,
                         fontFamily: 'Cairo',
                       ),
                     ),
@@ -225,7 +225,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                       pharmacyName: delivery.pharmacyName,
                       itemsCount: delivery.itemsCount,
                       priority: delivery.urgency.toOrderPriority(),
-                      status: OrderStatus.pending,
+                      status: delivery.status.toOrderStatus(),
                       onTap: () {},
                     );
                   }).toList(),
