@@ -5,6 +5,29 @@ IntelliPharma is a Flutter-based mobile application designed for pharmaceutical 
 The application supports route optimization, pharmacy visits, order management, debt tracking, promotions, targets, delivery tracking, notifications, and communication, with dedicated workflows for both medical representatives and distributors.
 
 ---
+---
+
+## 📋 Table of Contents
+
+* [📱 Application Screenshots](#-application-screenshots)
+* [🎯 Project Overview](#-project-overview)
+* [✨ Key Features](#-key-features)
+  * [📍 Field Operations & Route Optimization](#-field-operations--route-optimization)
+  * [🛒 Fast Ordering & Sales Management](#-fast-ordering--sales-management)
+  * [💼 Financial & Performance Tracking](#-financial--performance-tracking)
+  * [🤖 AI Assistant & Communication](#-ai-assistant--communication)
+  * [⚠️ Stock & Expiration Alerts](#%EF%B8%8F-stock--expiration-alerts)
+  * [💊 Smart Catalog & Medicine Discovery](#-smart-catalog--medicine-discovery)
+* [🏗️ System Architecture](#%EF%B8%8F-system-architecture)
+* [🛠️ Technology Stack](#%EF%B8%8F-technology-stack)
+* [📂 Project Structure](#-project-structure)
+* [🚀 Getting Started & Installation](#-getting-started)
+* [👥 Role-Based Access Control (RBAC)](#-role-based-access-control-rbac)
+* [📈 Business Benefits & Operational Impact](#-business-benefits--operational-impact)
+* [🧩 Future Roadmap](#-future-roadmap--roadmap-expansion)
+* [💬 Feedback & Contact](#-feedback--contact)
+
+---
 
 ## 📱 Application Screenshots
 
