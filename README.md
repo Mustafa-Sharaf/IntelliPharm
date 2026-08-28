@@ -6,47 +6,31 @@ The application supports route optimization, pharmacy visits, order management, 
 
 ---
 
-## 📱 Screenshots
+## 📱 Application Screenshots
 
-> Replace the image paths below with your actual screenshots.
+> *Note: A representative sample of core mobile app interfaces. Additional screens and workflows are available upon request or inside the repository.*
 
-### Dashboard
-
+### 🔐 Authentication & Role Selection
 <p align="center">
-  <img src="assets/Screens/LogIn.png" width="30%" />
-  <img src="assets/screenshots/dashboard_dark.png" width="30%" />
+  <img src="assets/Screens/LogIn.png" width="30%" alt="Login Screen" />
 </p>
 
-### Inventory Management
+### 👨‍⚕️ Medical Representative Workflow (المندوب)
+*(Visit Execution, Ordering & AI Chatbot)*
 
 <p align="center">
-  <img src="assets/screenshots/inventory.png" width="30%" />
-  <img src="assets/screenshots/medicine_details.png" width="30%" />
-  <img src="assets/screenshots/add_medicine.png" width="30%" />
+  <img src="assets/screenshots/routes.png" width="30%" alt="Route Optimization" />
+  <img src="assets/screenshots/map.png" width="30%" alt="Live Tracking & Navigation" />
+  <img src="assets/screenshots/medicine_details.png" width="30%" alt="Smart Catalog & Alternatives" />
 </p>
 
-### Medical Representatives
+### 🚚 Distributor Workflow & Deliveries (الموزع)
+*(Delivery Routes & Financial Collections)*
 
 <p align="center">
-  <img src="assets/screenshots/representatives.png" width="30%" />
-  <img src="assets/screenshots/representative_details.png" width="30%" />
+  <img src="assets/screenshots/inventory.png" width="30%" alt="Deliveries List" />
+  <img src="assets/screenshots/statistics.png" width="30%" alt="Target & Collections Dashboard" />
 </p>
-
-### Route Optimization
-
-<p align="center">
-  <img src="assets/screenshots/routes.png" width="30%" />
-  <img src="assets/screenshots/map.png" width="30%" />
-</p>
-
-### Reports & Analytics
-
-<p align="center">
-  <img src="assets/screenshots/reports.png" width="30%" />
-  <img src="assets/screenshots/statistics.png" width="30%" />
-</p>
-
----
 
 ## 🎯 Project Overview
 
