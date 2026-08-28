@@ -427,7 +427,7 @@ If you find IntelliPharma useful or interesting:
 ---
 
 <p align="center">
-  <strong>IntelliPharm</strong>
+  <strong>IntelliPharma</strong>
   <br />
   Smart technology for smarter pharmaceutical operations.
 </p>
