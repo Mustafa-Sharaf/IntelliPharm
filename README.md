@@ -8,7 +8,7 @@ The application supports route optimization, pharmacy visits, order management, 
 
 ## 📱 Application Screenshots
 
-> *Note: A representative sample of core mobile app interfaces. Additional screens and workflows are available upon request or inside the repository.*
+> *Note: This is a selected showcase of key app interfaces. Further screens and detailed user flows are available in the repository.*
 
 | Screen 1 | Screen 2 | Screen 3 |
 | :---: | :---: | :---: |
@@ -349,25 +349,6 @@ Planned features to scale IntelliPharm into a multi-warehouse enterprise ecosyst
 * [ ] **Multi-Warehouse Architecture:** Centralized support for managing multiple warehouse branches, regional inventories, and inter-warehouse transfers.
 * [ ] **Digital Payment Gateway Integration:** Secure in-app digital payments, e-wallets, and automated financial reconciliation for orders.
 * [ ] **Fleet Management & Cold-Chain Logistics:** Advanced vehicle capacity management and temperature-sensitive (cold-chain) route planning for specialized delivery trucks.
-
----
-
-
-## 🎥 Demo
-
-### Application Demo
-
-Add your demo video or GIF here:
-
-```markdown
-[![IntelliPharm Demo](assets/screenshots/demo-preview.png)](YOUR_DEMO_URL)
-```
-
-Or add a GIF directly:
-
-```markdown
-![IntelliPharm Demo](assets/demo/intellipharm-demo.gif)
-```
 
 ---
 
