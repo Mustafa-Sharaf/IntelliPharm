@@ -117,7 +117,12 @@ class ActiveOptimizedRouteTrackingController extends GetxController {
           try {
             isLoading.value = true;
             final mapController = Get.find<MapHelperController>(tag: "route");
+            mapController.clearAll();
+            mapController.markers.refresh();
+            mapController.polyLines.refresh();
+
             await mapController.moveToCurrentLocation();
+
             final responseData = await PlannerService.rePlanRoute(
               planId: currentPlan.id,
               latitude: mapController.latitude.value,
@@ -125,14 +130,22 @@ class ActiveOptimizedRouteTrackingController extends GetxController {
               reason: reason,
               reasonDetails: reasonDetails,
             );
+
             print("🔍 RePlan API Response: $responseData");
+
             if (responseData != null && responseData['isSuccess'] == true) {
               final planData = responseData['data'];
+
               if (planData != null &&
                   (planData['visits'] != null || planData['stops'] != null)) {
+
+                // 🔄 2. استبدال الخطة القديمة بالخطة الناقصة الجديدة القادمة من الـ API
                 final updatedPlan = PlanResponse.fromJson(planData);
                 planYourRouteController.plan.value = updatedPlan;
+
+                // 🗺️ 3. إعادة رسم الخريطة بناءً على الخطة الجديدة الناقصة
                 await redrawRouteOnMap();
+
                 AppSnackBar.success("Next leg optimized successfully".tr);
               } else if (planData != null && planData['request_id'] != null) {
                 print(
@@ -146,7 +159,6 @@ class ActiveOptimizedRouteTrackingController extends GetxController {
               AppSnackBar.error("Failed to re-plan route".tr);
             }
           } catch (e, stackTrace) {
-            // 2. طباعة الاستثناء والـ StackTrace بالتفصيل عند حدوث Exception
             print("Exception in handleRePlan: $e");
             print("StackTrace: $stackTrace");
             AppSnackBar.error("An error occurred while re-planning the route".tr);

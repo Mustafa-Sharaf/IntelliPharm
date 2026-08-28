@@ -84,6 +84,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                   await deliveryController.fetchTodayDeliveryPlan();
                   if (success) {
                     Get.toNamed('/activeDeliveryRoute');
+                    controller.fetchDeliveryHome(showLoading: false);
                   }
                 },
                 splashColor: Colors.white24,
@@ -186,6 +187,7 @@ class HomeContentDistributorScreen extends StatelessWidget {
                     onPressed: ()async {
                       await deliveryController.fetchTodayDeliveryPlan();
                       Get.toNamed('/activeDeliveryRoute');
+                      controller.fetchDeliveryHome(showLoading: false);
                     },
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
