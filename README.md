@@ -10,27 +10,17 @@ The application supports route optimization, pharmacy visits, order management, 
 
 > *Note: A representative sample of core mobile app interfaces. Additional screens and workflows are available upon request or inside the repository.*
 
-### 🔐 Authentication & Role Selection
-<p align="center">
-  <img src="assets/Screens/LogIn.png" width="30%" alt="Login Screen" />
-</p>
+| Screen 1 | Screen 2 | Screen 3 |
+| :---: | :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/cfeb58e9-eda6-49a1-95b7-a50e5033bfc2" width="100%" /> | <img src="https://github.com/user-attachments/assets/91a18f09-b968-4332-81e5-6779a6f7c349" width="100%" /> | <img src="https://github.com/user-attachments/assets/4f11bc05-aba1-4200-9729-cdd4bd9ce96b" width="100%" /> |
+| <img src="https://github.com/user-attachments/assets/8751e789-9234-4ee6-8829-dff4d85d91cb" width="100%" /> | <img src="https://github.com/user-attachments/assets/85773b7e-bc5b-446c-972a-1f6a1207abfe" width="100%" /> | <img src="https://github.com/user-attachments/assets/e992684d-b2df-4598-b7ef-aa3f8eb7542e" width="100%" /> |
+| <img src="https://github.com/user-attachments/assets/17b1abe1-69a1-49b7-8413-c6631b105ecd" width="100%" /> | <img src="https://github.com/user-attachments/assets/a6879960-21b3-431b-830b-f2d678c1ef05" width="100%" /> | <img src="https://github.com/user-attachments/assets/0f0b7461-09bc-4823-b387-860796e911f4" width="100%" /> |
+| <img src="https://github.com/user-attachments/assets/b8cd2f1e-8ae9-407d-8f96-343d3de58f8b" width="100%" /> | <img src="https://github.com/user-attachments/assets/8c9fd009-9cd8-457a-8279-71e8c9a7c74b" width="100%" /> | <img src="https://github.com/user-attachments/assets/6388475d-9ddb-4542-8ee6-f77fcb8ffd44" width="100%" /> |
+| <img src="https://github.com/user-attachments/assets/56691e23-e344-4087-b5fd-6f69297c8e02" width="100%" /> | <img src="https://github.com/user-attachments/assets/324ff84d-ad4c-40d4-a787-d750805106b9" width="100%" /> | <img src="https://github.com/user-attachments/assets/03c42f5c-425c-4970-bc04-5ba413ae5278" width="100%" /> |
+| <img src="https://github.com/user-attachments/assets/e30a6965-3ea6-417b-8bbd-78e124ebff47" width="100%" /> | <img src="https://github.com/user-attachments/assets/7a61f790-08ad-478d-87ad-717bb1b25200" width="100%" /> | <img src="https://github.com/user-attachments/assets/08c552cb-29a4-46d2-a525-e6c1b2fa6ffc" width="100%" /> |
 
-### 👨‍⚕️ Medical Representative Workflow (المندوب)
-*(Visit Execution, Ordering & AI Chatbot)*
 
-<p align="center">
-  <img src="assets/screenshots/routes.png" width="30%" alt="Route Optimization" />
-  <img src="assets/screenshots/map.png" width="30%" alt="Live Tracking & Navigation" />
-  <img src="assets/screenshots/medicine_details.png" width="30%" alt="Smart Catalog & Alternatives" />
-</p>
 
-### 🚚 Distributor Workflow & Deliveries (الموزع)
-*(Delivery Routes & Financial Collections)*
-
-<p align="center">
-  <img src="assets/screenshots/inventory.png" width="30%" alt="Deliveries List" />
-  <img src="assets/screenshots/statistics.png" width="30%" alt="Target & Collections Dashboard" />
-</p>
 
 ## 🎯 Project Overview
 
