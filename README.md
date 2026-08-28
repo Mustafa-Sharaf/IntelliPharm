@@ -13,7 +13,7 @@ The application supports route optimization, pharmacy visits, order management, 
 ### Dashboard
 
 <p align="center">
-  <img src="assets/screenshots/dashboard.png" width="30%" />
+  <img src="assets/Screens/LogIn.png" width="30%" />
   <img src="assets/screenshots/dashboard_dark.png" width="30%" />
 </p>
 
@@ -202,10 +202,6 @@ IntelliPharma is built with Flutter and can be prepared for multiple platforms:
 
 * Android
 * iOS
-* Web
-* Windows
-* Linux
-* macOS
 
 ### Development Tools
 
@@ -344,179 +340,44 @@ Recommended production practices include:
 * Regular dependency updates
 
 ---
+## 👥 Role-Based Access Control (RBAC)
 
-## 👥 User Roles
+The system dynamically adapts its interface and feature set based on two core operational roles:
 
-The system can support multiple operational roles.
+### 👨‍⚕️ Medical Sales Representative (المندوب)
+* **Field Execution & Route Optimization:** Access daily optimized visit paths, perform verified GPS check-ins, and adjust schedules dynamically.
+* **Smart Catalog & Fast Ordering:** Search drugs with smart filters/substitutes, create orders instantly, and apply promotional offers/bonuses.
+* **CRM & Financial Insights:** View pharmacy debt ledgers, past order histories, targets progress, and interact with the built-in AI Assistant.
 
-### 👨‍💼 Administrator
+### 🚚 Medical Distributor (الموزع)
+* **Delivery Workflow:** Follow assigned distribution routes, track packages, and confirm order handovers in real time.
+* **Payment Settlement:** Record financial collections, issue payment updates, and review personal delivery logs.
+---
 
-Responsible for overall system management.
+## 📈 Business Benefits & Operational Impact
 
-Possible permissions:
+IntelliPharma addresses key industry bottlenecks to deliver measurable operational improvements:
 
-* Manage users
-* Manage medicines
-* Manage inventory
-* Manage representatives
-* View reports
-* Configure system settings
-
-### 📦 Warehouse Staff
-
-Responsible for inventory operations.
-
-Possible permissions:
-
-* Add medicines
-* Update stock
-* Monitor inventory
-* Track batches
-* Monitor expiration dates
-
-### 👨‍⚕️ Medical Representative
-
-Responsible for field activities.
-
-Possible permissions:
-
-* View assigned visits
-* View customers
-* Manage daily routes
-* Update visit status
-* Track completed activities
+* **Field Efficiency & Reduced Costs:** Route optimization and GPS-verified visits minimize travel time, reduce fuel expenses, and maximize daily pharmacy coverage.
+* **Minimized Product Expiry & Wastage:** Automated batch tracking and proactive expiry alerts prevent dead stock and eliminate losses from expired pharmaceuticals.
+* **Streamlined Order Processing:** Rapid field ordering combined with real-time stock lookups reduces order processing cycles and eliminates manual entry errors.
+* **Enhanced Financial Control:** Immediate visibility into pharmacy ledgers and debt tracking helps representatives collect payments faster and reduces outstanding receivables.
+* **Data-Driven Sales Strategy:** Live target tracking, client transaction history, and smart AI assistance empower teams to close deals more effectively.
 
 ---
 
-## 🔄 Typical Workflow
+## 🧩 Future Roadmap & Roadmap Expansion
 
-```text
-                ┌─────────────────────┐
-                │       Login         │
-                └──────────┬──────────┘
-                           │
-                           ▼
-                ┌─────────────────────┐
-                │     Dashboard       │
-                └──────────┬──────────┘
-                           │
-          ┌────────────────┼────────────────┐
-          │                │                │
-          ▼                ▼                ▼
-     Inventory       Representatives     Reports
-          │                │
-          ▼                ▼
-   Stock Monitoring   Customer Visits
-          │                │
-          └───────┬────────┘
-                  ▼
-           Route Planning
-                  │
-                  ▼
-          Optimized Daily Route
-```
+Planned features to scale IntelliPharm into a multi-warehouse enterprise ecosystem:
+
+* [ ] **Pharmacy Self-Service Portal:** Extend the app to pharmacists for direct order placement, catalog browsing, and real-time order tracking.
+* [ ] **Gamified Loyalty & Rewards System:** Automated tiered reward programs (e.g., automated bonus/gift triggers upon reaching turnover milestones like 100M SYP).
+* [ ] **Multi-Warehouse Architecture:** Centralized support for managing multiple warehouse branches, regional inventories, and inter-warehouse transfers.
+* [ ] **Digital Payment Gateway Integration:** Secure in-app digital payments, e-wallets, and automated financial reconciliation for orders.
+* [ ] **Fleet Management & Cold-Chain Logistics:** Advanced vehicle capacity management and temperature-sensitive (cold-chain) route planning for specialized delivery trucks.
 
 ---
 
-## 📈 Business Benefits
-
-IntelliPharm is designed to help pharmaceutical organizations improve operational efficiency.
-
-### Reduced Manual Work
-
-Centralizing inventory and representative information reduces dependency on manual processes.
-
-### Better Inventory Visibility
-
-Warehouse teams can quickly understand current stock conditions and identify products requiring attention.
-
-### Improved Expiration Management
-
-Expiration-date monitoring helps reduce the risk of medicines remaining unnoticed until they expire.
-
-### More Efficient Field Operations
-
-Route planning can help medical representatives organize their daily visits and reduce unnecessary travel.
-
-### Centralized Information
-
-Important pharmaceutical and operational information can be accessed through a single system.
-
----
-
-## 🧩 Future Improvements
-
-The project can be extended with additional enterprise-level functionality.
-
-### 🔮 Planned / Possible Features
-
-* [ ] Backend API integration
-* [ ] Cloud database
-* [ ] Role-based authentication
-* [ ] Advanced inventory forecasting
-* [ ] Automatic stock replenishment suggestions
-* [ ] Barcode / QR code scanning
-* [ ] Prescription management
-* [ ] Purchase and sales management
-* [ ] Supplier management
-* [ ] Customer management
-* [ ] Advanced analytics dashboard
-* [ ] PDF report generation
-* [ ] Excel export
-* [ ] Push notifications
-* [ ] Expiration alerts
-* [ ] Low-stock notifications
-* [ ] GPS-based representative tracking
-* [ ] Advanced route optimization
-* [ ] Offline-first functionality
-* [ ] Multi-language support
-* [ ] Dark mode
-* [ ] Cloud synchronization
-
----
-
-## 📊 Example Dashboard Metrics
-
-A production deployment could provide metrics such as:
-
-```text
-┌─────────────────────────────────────────────┐
-│                IntelliPharm                 │
-├──────────────┬──────────────┬───────────────┤
-│ Total Drugs  │ Low Stock    │ Expiring Soon │
-│     1,250    │      34      │       18      │
-├──────────────┼──────────────┼───────────────┤
-│ Representatives │ Today's Visits │ Routes   │
-│       24         │       67       │    12    │
-└─────────────────┴────────────────┴───────────┘
-```
-
----
-
-## 🖼️ Assets & Screenshots
-
-Recommended screenshot structure:
-
-```text
-assets/
-└── screenshots/
-    ├── splash.png
-    ├── login.png
-    ├── dashboard.png
-    ├── inventory.png
-    ├── medicine_details.png
-    ├── add_medicine.png
-    ├── representatives.png
-    ├── representative_details.png
-    ├── routes.png
-    ├── map.png
-    ├── reports.png
-    └── settings.png
-```
-
-You can replace the placeholder images in this README with screenshots from the actual application.
-
----
 
 ## 🎥 Demo
 
@@ -540,12 +401,9 @@ Or add a GIF directly:
 
 | Platform | Status |
 | -------- | ------ |
-| Android  | ✅      |
-| iOS      | ✅      |
-| Web      | ✅      |
-| Windows  | ✅      |
-| Linux    | ✅      |
-| macOS    | ✅      |
+| Android  | ✅     |
+| iOS      | ✅     |
+
 
 > Platform availability may depend on the application's current implementation and platform-specific integrations.
 
@@ -559,37 +417,13 @@ The application is designed as a foundation for a real-world pharmaceutical ware
 
 ---
 
-## 🤝 Contributing
+## 💬 Feedback & Contact
 
-Contributions, suggestions, and improvements are welcome.
+Suggestions, feedback, and ideas are always welcome! If you have any questions or recommendations regarding the project, feel free to reach out:
 
-### 1. Fork the repository
-
-```bash
-git fork https://github.com/Mustafa-Sharaf/IntelliPharm.git
-```
-
-### 2. Create a feature branch
-
-```bash
-git checkout -b feature/your-feature
-```
-
-### 3. Commit your changes
-
-```bash
-git commit -m "feat: add your feature"
-```
-
-### 4. Push the branch
-
-```bash
-git push origin feature/your-feature
-```
-
-### 5. Open a Pull Request
-
-Please provide a clear description of the changes and explain why the feature or improvement is useful.
+* **Email:** [mustafa.sharaf10@gmail.com](mailto:mustafa.sharaf10@gmail.com)
+* **LinkedIn:** [Mustafa Sharaf](https://www.linkedin.com/in/mustafa-sharaf-285763353)
+* **GitHub Issues:** You can also open an issue on this repository to discuss improvements.
 
 ---
 
@@ -609,14 +443,6 @@ When reporting a bug, include:
 
 ---
 
-## 📄 License
-
-This project is currently maintained by **Mustafa Sharaf**.
-
-If you plan to publish IntelliPharm as an open-source project, consider adding an appropriate license such as MIT, Apache 2.0, or another license that matches your intended usage.
-
----
-
 ## 👨‍💻 Author
 
 ### Mustafa Sharaf
@@ -625,7 +451,7 @@ Flutter Developer interested in building practical software solutions for real-w
 
 ### Project
 
-**IntelliPharm — Smart Pharmaceutical Management System**
+**IntelliPharma — Smart Pharmaceutical Management System**
 
 GitHub Repository:
 
@@ -635,7 +461,7 @@ GitHub Repository:
 
 ## ⭐ Support the Project
 
-If you find IntelliPharm useful or interesting:
+If you find IntelliPharma useful or interesting:
 
 * ⭐ Star the repository
 * 🍴 Fork the project
